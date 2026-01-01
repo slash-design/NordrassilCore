@@ -35,7 +35,7 @@ public:
 
         if (!toBeMailedCurrentEquipment.empty())
         {
-            SQLTransaction trans = CharacterDatabase.BeginTransaction();
+            CharacterDatabaseTransaction trans = CharacterDatabase.BeginTransaction();
             MailDraft draft("Inventory Full: Old Equipment.",
                 "To equip your new level boost gear, your old gear had to be unequiped. You did not have enough free bag space, the items that could not be added to your bag you can find in this mail.");
 
@@ -59,7 +59,7 @@ public:
 
         if (!toBeMailedNewItems.empty())
         {
-            SQLTransaction trans = CharacterDatabase.BeginTransaction();
+            CharacterDatabaseTransaction trans = CharacterDatabase.BeginTransaction();
             MailDraft draft("Inventory Full: Level Boost Items.",
                 "You did not have enough free bag space to add all your complementary level boost items to your bags, those that did not fit you can find in this mail.");
 
