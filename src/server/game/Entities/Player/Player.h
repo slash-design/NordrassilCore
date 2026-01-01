@@ -1504,7 +1504,6 @@ class Player : public Unit, public GridObject<Player>
 
         bool IsInWater() const override { return m_isInWater; }
         bool IsUnderWater() const override;
-        bool IsFalling() { return GetPositionZ() < m_lastFallZ; }
 
         bool IsInAreaTriggerRadius(AreaTriggerEntry const* trigger) const;
         bool IsInAreaTriggerRadius(uint32 areatriggerID) const;
@@ -3104,9 +3103,6 @@ class Player : public Unit, public GridObject<Player>
         void SendMovementSetCollisionHeight(float height, uint8 Reason = 1);
 
         bool CanFly() const override { return m_movementInfo.HasMovementFlag(MOVEMENTFLAG_CAN_FLY); }
-
-        //! Return collision height sent to client
-        float GetCollisionHeight(bool mounted);
 
         // Void Storage
         bool IsVoidStorageUnlocked() const;
