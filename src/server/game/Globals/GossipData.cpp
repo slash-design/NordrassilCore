@@ -33,7 +33,7 @@ void GossipDataStoreMgr::LoadGossipMenuItemsLocales()
             continue;
 
 
-        auto& data = _gossipMenuItemsLocaleStore[MAKE_PAIR32(fields[0].GetUInt16(), fields[1].GetUInt16())];
+        auto& data = _gossipMenuItemsLocaleStore[MAKE_PAIR32(fields[0].GetUInt32(), fields[1].GetUInt16())];
         ObjectMgr::AddLocaleString(fields[3].GetString(), locale, data.OptionText);
         ObjectMgr::AddLocaleString(fields[4].GetString(), locale, data.BoxText);
 

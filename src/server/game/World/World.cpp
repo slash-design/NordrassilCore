@@ -3431,7 +3431,7 @@ void World::UpdateRealmCharCount(uint32 accountId)
 {
     CharacterDatabasePreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_SEL_CHARACTER_COUNT);
     stmt->setUInt32(0, accountId);
-    _queryProcessor.AddQuery(CharacterDatabase.AsyncQuery(stmt).WithPreparedCallback(std::bind(&World::_UpdateRealmCharCount, this, std::placeholders::_1)));
+    _queryProcessor.AddCallback(CharacterDatabase.AsyncQuery(stmt).WithPreparedCallback(std::bind(&World::_UpdateRealmCharCount, this, std::placeholders::_1)));
 }
 
 void World::_UpdateRealmCharCount(PreparedQueryResult resultCharCount)
@@ -3842,7 +3842,6 @@ void World::InstanceDailyResetTime()
         }
     }
     CharacterDatabase.CommitTransaction(trans);
-    CharacterDatabase.WaitExecution();
 
     if (sWorld->getBoolConfig(CONFIG_WORLD_QUEST))
         sQuestDataStore->GenerateWorldQuestUpdate();
@@ -3873,7 +3872,6 @@ void World::InstanceWeeklyResetTime()
         }
     }
     CharacterDatabase.CommitTransaction(trans);
-    CharacterDatabase.WaitExecution();
 }
 
 void World::ChallengeKeyResetTime()
@@ -4238,7 +4236,7 @@ uint32 World::getWorldState(uint32 index) const
 
 void World::ProcessQueryCallbacks()
 {
-    _queryProcessor.ProcessReadyQueries();
+    _queryProcessor.ProcessReadyCallbacks();
 }
 
 void World::LoadCharacterNameData()

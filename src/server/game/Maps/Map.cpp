@@ -5405,7 +5405,8 @@ void Map::UpdateLoop(volatile uint32 _mapID)
         }
     }
 
-    TC_LOG_ERROR("server", "Map::UpdateLoop Stop _mapID %u thread %u", _mapID, std::this_thread::get_id());
+    //TC_LOG_ERROR("server", "Map::UpdateLoop Stop _mapID %u thread %u", _mapID, std::this_thread::get_id());
+    TC_LOG_ERROR("server", "Map::UpdateLoop Crash _mapID %u thread %zu", _mapID, std::hash<std::thread::id>()(std::this_thread::get_id()));
 
     cds::threading::Manager::detachThread();
 }
