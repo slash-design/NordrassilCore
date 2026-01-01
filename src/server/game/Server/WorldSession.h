@@ -1597,8 +1597,6 @@ class WorldSession
 
         void HandleTransmogrifyItems(WorldPackets::Transmogrification::TransmogrifyItems& transmogrifyItems);
 
-        void SendQuestgiverStatusMultipleQuery();
-
         bool processChatmessageFurtherAfterSecurityChecks(std::string&, uint32);
         void HandleChatMessageOpcode(WorldPackets::Chat::ChatMessage& packet);
         void HandleChatMessageAFK(WorldPackets::Chat::ChatMessageAFK& packet);
