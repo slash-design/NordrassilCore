@@ -1,8 +1,8 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Versión del servidor:         5.7.21-log - MySQL Community Server (GPL)
+-- Versi�n del servidor:         5.7.21-log - MySQL Community Server (GPL)
 -- SO del servidor:              Win64
--- HeidiSQL Versión:             11.3.0.6295
+-- HeidiSQL Versi�n:             11.3.0.6295
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;

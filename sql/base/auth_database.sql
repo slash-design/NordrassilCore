@@ -1,8 +1,8 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Versión del servidor:         5.7.21-log - MySQL Community Server (GPL)
+-- Versi�n del servidor:         5.7.21-log - MySQL Community Server (GPL)
 -- SO del servidor:              Win64
--- HeidiSQL Versión:             11.3.0.6295
+-- HeidiSQL Versi�n:             11.3.0.6295
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -764,36 +764,36 @@ DELETE FROM `store_categories`;
 -- Volcando estructura para tabla auth.store_category_locales
 CREATE TABLE IF NOT EXISTS `store_category_locales` (
   `category` int(11) NOT NULL DEFAULT '0',
-  `name_us` varchar(255) NOT NULL DEFAULT '',
-  `name_gb` varchar(255) NOT NULL DEFAULT '',
-  `name_kr` varchar(255) NOT NULL DEFAULT '',
-  `name_fr` varchar(255) NOT NULL DEFAULT '',
-  `name_de` varchar(255) NOT NULL DEFAULT '',
-  `name_cn` varchar(255) NOT NULL DEFAULT '',
-  `name_tw` varchar(255) NOT NULL DEFAULT '',
-  `name_es` varchar(255) NOT NULL DEFAULT '',
-  `name_mx` varchar(255) NOT NULL DEFAULT '',
-  `name_ru` varchar(255) NOT NULL DEFAULT '',
-  `name_pt` varchar(255) NOT NULL DEFAULT '',
-  `name_br` varchar(255) NOT NULL DEFAULT '',
-  `name_it` varchar(255) NOT NULL DEFAULT '',
-  `name_ua` varchar(255) NOT NULL DEFAULT '',
-  `description_us` varchar(255) NOT NULL DEFAULT '',
-  `description_gb` varchar(255) NOT NULL DEFAULT '',
-  `description_kr` varchar(255) NOT NULL DEFAULT '',
-  `description_fr` varchar(255) NOT NULL DEFAULT '',
-  `description_de` varchar(255) NOT NULL DEFAULT '',
-  `description_cn` varchar(255) NOT NULL DEFAULT '',
-  `description_tw` varchar(255) NOT NULL DEFAULT '',
-  `description_es` varchar(255) NOT NULL DEFAULT '',
-  `description_mx` varchar(255) NOT NULL DEFAULT '',
-  `description_ru` varchar(255) NOT NULL DEFAULT '',
-  `description_pt` varchar(255) NOT NULL DEFAULT '',
-  `description_br` varchar(255) NOT NULL DEFAULT '',
-  `description_it` varchar(255) NOT NULL DEFAULT '',
-  `description_ua` varchar(255) NOT NULL DEFAULT '',
+  `name_us` varchar(32) NOT NULL DEFAULT '',
+  `name_gb` varchar(32) NOT NULL DEFAULT '',
+  `name_kr` varchar(32) NOT NULL DEFAULT '',
+  `name_fr` varchar(32) NOT NULL DEFAULT '',
+  `name_de` varchar(32) NOT NULL DEFAULT '',
+  `name_cn` varchar(32) NOT NULL DEFAULT '',
+  `name_tw` varchar(32) NOT NULL DEFAULT '',
+  `name_es` varchar(32) NOT NULL DEFAULT '',
+  `name_mx` varchar(32) NOT NULL DEFAULT '',
+  `name_ru` varchar(32) NOT NULL DEFAULT '',
+  `name_pt` varchar(32) NOT NULL DEFAULT '',
+  `name_br` varchar(32) NOT NULL DEFAULT '',
+  `name_it` varchar(32) NOT NULL DEFAULT '',
+  `name_ua` varchar(32) NOT NULL DEFAULT '',
+  `description_us` varchar(128) NOT NULL DEFAULT '',
+  `description_gb` varchar(128) NOT NULL DEFAULT '',
+  `description_kr` varchar(128) NOT NULL DEFAULT '',
+  `description_fr` varchar(128) NOT NULL DEFAULT '',
+  `description_de` varchar(128) NOT NULL DEFAULT '',
+  `description_cn` varchar(128) NOT NULL DEFAULT '',
+  `description_tw` varchar(128) NOT NULL DEFAULT '',
+  `description_es` varchar(128) NOT NULL DEFAULT '',
+  `description_mx` varchar(128) NOT NULL DEFAULT '',
+  `description_ru` varchar(128) NOT NULL DEFAULT '',
+  `description_pt` varchar(128) NOT NULL DEFAULT '',
+  `description_br` varchar(128) NOT NULL DEFAULT '',
+  `description_it` varchar(128) NOT NULL DEFAULT '',
+  `description_ua` varchar(128) NOT NULL DEFAULT '',
   PRIMARY KEY (`category`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT ;
 
 -- Volcando datos para la tabla auth.store_category_locales: ~0 rows (aproximadamente)
 DELETE FROM `store_category_locales`;
@@ -938,20 +938,20 @@ DELETE FROM `store_products`;
 CREATE TABLE IF NOT EXISTS `store_product_locales` (
   `product` int(11) NOT NULL DEFAULT '0',
   `type` smallint(10) NOT NULL DEFAULT '0',
-  `us` varchar(255) NOT NULL DEFAULT '',
-  `gb` varchar(255) NOT NULL DEFAULT '',
-  `kr` varchar(255) NOT NULL DEFAULT '',
-  `fr` varchar(255) NOT NULL DEFAULT '',
-  `de` varchar(255) NOT NULL DEFAULT '',
-  `cn` varchar(255) NOT NULL DEFAULT '',
-  `tw` varchar(255) NOT NULL DEFAULT '',
-  `es` varchar(255) NOT NULL DEFAULT '',
-  `mx` varchar(255) NOT NULL DEFAULT '',
-  `ru` varchar(255) NOT NULL DEFAULT '',
-  `pt` varchar(255) NOT NULL DEFAULT '',
-  `br` varchar(255) NOT NULL DEFAULT '',
-  `it` varchar(255) NOT NULL DEFAULT '',
-  `ua` varchar(255) NOT NULL DEFAULT '',
+  `us` varchar(128) NOT NULL DEFAULT '',
+  `gb` varchar(128) NOT NULL DEFAULT '',
+  `kr` varchar(128) NOT NULL DEFAULT '',
+  `fr` varchar(128) NOT NULL DEFAULT '',
+  `de` varchar(128) NOT NULL DEFAULT '',
+  `cn` varchar(128) NOT NULL DEFAULT '',
+  `tw` varchar(128) NOT NULL DEFAULT '',
+  `es` varchar(128) NOT NULL DEFAULT '',
+  `mx` varchar(128) NOT NULL DEFAULT '',
+  `ru` varchar(128) NOT NULL DEFAULT '',
+  `pt` varchar(128) NOT NULL DEFAULT '',
+  `br` varchar(128) NOT NULL DEFAULT '',
+  `it` varchar(128) NOT NULL DEFAULT '',
+  `ua` varchar(128) NOT NULL DEFAULT '',
   PRIMARY KEY (`product`,`type`) USING BTREE,
   UNIQUE KEY `unique` (`product`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
