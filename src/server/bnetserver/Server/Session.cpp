@@ -29,8 +29,6 @@
 #include <zlib.h>
 #include <memory>
 
-#pragma pack(push, 1)
-
 void Battlenet::Session::AccountInfo::LoadResult(PreparedQueryResult result)
 {
     // ba.id, ba.email, ba.locked, ba.lock_country, ba.last_ip, ba.failed_logins, bab.unbandate > UNIX_TIMESTAMP() OR bab.unbandate = bab.bandate, bab.unbandate = bab.bandate FROM battlenet_accounts ba LEFT JOIN battlenet_account_bans bab WHERE email = ?
