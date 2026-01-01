@@ -158,7 +158,7 @@ void WorldSession::HandleVoidStorageTransfer(WorldPackets::VoidStorage::VoidStor
 
         { // donate status before destroy item
             SQLTransaction transs = LoginDatabase.BeginTransaction();
-            TC_LOG_DEBUG(LOG_FILTER_DONATE, "[Status] Status = 5 item guid = %u, entry = %u, %s", itemVS.ItemId, item->GetEntry(), player->GetInfoForDonate().c_str());
+            TC_LOG_DEBUG("entities.player.items", "[Status] Status = 5 item guid = %u, entry = %u, %s", itemVS.ItemId, item->GetEntry(), player->GetInfoForDonate().c_str());
             uint8 index = 0;
             PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_UPD_HISTORY_STATUS_AND_GUID_BY_STATUS);
             stmt->setUInt32(index, 5);
@@ -231,7 +231,7 @@ void WorldSession::HandleVoidStorageTransfer(WorldPackets::VoidStorage::VoidStor
         
         { // donate status before destroy VS
             SQLTransaction transs = LoginDatabase.BeginTransaction();
-            TC_LOG_DEBUG(LOG_FILTER_DONATE, "[Status] (Return from void storage) Status = 0 item guid = %u, entry = %u, %s", item->GetGUID().GetGUIDLow(), itemVS->ItemId, player->GetInfoForDonate().c_str());
+            TC_LOG_DEBUG("entities.player.items", "[Status] (Return from void storage) Status = 0 item guid = %u, entry = %u, %s", item->GetGUID().GetGUIDLow(), itemVS->ItemId, player->GetInfoForDonate().c_str());
             uint8 index = 0;
             PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_UPD_HISTORY_STATUS_AND_GUID_BY_STATUS);
             stmt->setUInt32(  index, 0);

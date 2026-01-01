@@ -23,28 +23,25 @@
 * authentication server
 */
 
-#include <boost/asio/signal_set.hpp>
-#include <boost/program_options.hpp>
-#include <cds/gc/hp.h>
-#include <cds/init.h>
-#include <google/protobuf/stubs/common.h>
-#include <iostream>
-#include <csignal>
-
-#include "DatabaseLoader.h"
 #include "AppenderDB.h"
-#include "Common.h"
+#include "Banner.h"
+#include "Config.h"
 #include "DatabaseEnv.h"
-#include "DeadlineTimer.h"
+#include "DatabaseLoader.h"
 #include "GitRevision.h"
-#include "IoContext.h"
 #include "LoginRESTService.h"
+#include "MySQLThreading.h"
 #include "ProcessPriority.h"
 #include "RealmList.h"
 #include "SessionManager.h"
 #include "SslContext.h"
 #include "Util.h"
-#include "Banner.h"
+#include <boost/asio/signal_set.hpp>
+#include <boost/program_options.hpp>
+#include <boost/filesystem/operations.hpp>
+#include <google/protobuf/stubs/common.h>
+#include <iostream>
+#include <csignal>
 
 using boost::asio::ip::tcp;
 using namespace boost::program_options;
@@ -53,7 +50,7 @@ using namespace boost::program_options;
 # define _TRINITY_BNET_CONFIG  "bnetserver.conf"
 #endif
 
-#if PLATFORM == TC_PLATFORM_WINDOWS
+#if TRINITY_PLATFORM == TRINITY_PLATFORM_WINDOWS
 #include "ServiceWin32.h"
 char serviceName[] = "bnetserver";
 char serviceLongName[] = "NordrassilCore bnet service";
@@ -91,7 +88,7 @@ int main(int argc, char** argv)
 
     std::shared_ptr<void> protobufHandle(nullptr, [](void*) { google::protobuf::ShutdownProtobufLibrary(); });
 
-#if PLATFORM == TC_PLATFORM_WINDOWS
+#if TRINITY_PLATFORM == TRINITY_PLATFORM_WINDOWS
     if (configService.compare("install") == 0)
         return WinServiceInstall() ? 0 : 1;
     if (configService.compare("uninstall") == 0)
@@ -111,12 +108,12 @@ int main(int argc, char** argv)
 
     Trinity::Banner::Show("bnetserver", [](char const* text)
     {
-        TC_LOG_INFO(LOG_FILTER_BATTLENET, "%s", text);
+        TC_LOG_INFO("server.bnetserver", "%s", text);
     }, []()
     {
-        TC_LOG_INFO(LOG_FILTER_BATTLENET, "Using configuration file %s.", sConfigMgr->GetFilename().c_str());
-        TC_LOG_INFO(LOG_FILTER_BATTLENET, "Using SSL version: %s (library: %s)", OPENSSL_VERSION_TEXT, SSLeay_version(SSLEAY_VERSION));
-        TC_LOG_INFO(LOG_FILTER_BATTLENET, "Using Boost version: %i.%i.%i", BOOST_VERSION / 100000, BOOST_VERSION / 100 % 1000, BOOST_VERSION % 100);
+        TC_LOG_INFO("server.bnetserver", "Using configuration file %s.", sConfigMgr->GetFilename().c_str());
+        TC_LOG_INFO("server.bnetserver", "Using SSL version: %s (library: %s)", OPENSSL_VERSION_TEXT, SSLeay_version(SSLEAY_VERSION));
+        TC_LOG_INFO("server.bnetserver", "Using Boost version: %i.%i.%i", BOOST_VERSION / 100000, BOOST_VERSION / 100 % 1000, BOOST_VERSION % 100);
     }
     );
 
@@ -136,17 +133,17 @@ int main(int argc, char** argv)
     if (!pidFile.empty())
     {
         if (uint32 pid = CreatePIDFile(pidFile))
-            TC_LOG_INFO(LOG_FILTER_BATTLENET, "Daemon PID: %u\n", pid);
+            TC_LOG_INFO("server.bnetserver", "Daemon PID: %u\n", pid);
         else
         {
-            TC_LOG_ERROR(LOG_FILTER_BATTLENET, "Cannot create PID file %s.\n", pidFile.c_str());
+            TC_LOG_ERROR("server.bnetserver", "Cannot create PID file %s.\n", pidFile.c_str());
             return 1;
         }
     }
 
     if (!Battlenet::SslContext::Initialize())
     {
-        TC_LOG_ERROR(LOG_FILTER_BATTLENET, "Failed to initialize SSL context");
+        TC_LOG_ERROR("server.bnetserver", "Failed to initialize SSL context");
         return 1;
     }
 
@@ -162,13 +159,13 @@ int main(int argc, char** argv)
     int32 bnport = sConfigMgr->GetIntDefault("BattlenetPort", 1119);
     if (bnport < 0 || bnport > 0xFFFF)
     {
-        TC_LOG_ERROR(LOG_FILTER_BATTLENET, "Specified battle.net port (%d) out of allowed range (1-65535)", bnport);
+        TC_LOG_ERROR("server.bnetserver", "Specified battle.net port (%d) out of allowed range (1-65535)", bnport);
         return 1;
     }
 
     if (!sLoginService.Start(ioContext.get()))
     {
-        TC_LOG_ERROR(LOG_FILTER_BATTLENET, "Failed to initialize login service");
+        TC_LOG_ERROR("server.bnetserver", "Failed to initialize login service");
         return 1;
     }
 
@@ -184,20 +181,20 @@ int main(int argc, char** argv)
     int networkThreads = sConfigMgr->GetIntDefault("Network.Threads", 1);
     if (networkThreads <= 0)
     {
-        TC_LOG_ERROR(LOG_FILTER_BATTLENET, "Network.Threads must be greater than 0");
+        TC_LOG_ERROR("server.bnetserver", "Network.Threads must be greater than 0");
         return 0;
     }
 
     if (!sSessionMgr.StartNetwork(*ioContext, bindIp, bnport, networkThreads))
     {
-        TC_LOG_ERROR(LOG_FILTER_BATTLENET, "Failed to initialize network");
+        TC_LOG_ERROR("server.bnetserver", "Failed to initialize network");
         return 1;
     }
 
     std::shared_ptr<void> sSessionMgrHandle(nullptr, [](void*) { sSessionMgr.StopNetwork(); });
 
     boost::asio::signal_set signals(*ioContext, SIGINT, SIGTERM);
-#if PLATFORM == TC_PLATFORM_WINDOWS
+#if TRINITY_PLATFORM == TRINITY_PLATFORM_WINDOWS
     signals.add(SIGBREAK);
 #endif
     signals.async_wait(std::bind(&SignalHandler, std::weak_ptr<Trinity::Asio::IoContext>(ioContext), std::placeholders::_1, std::placeholders::_2));
@@ -216,9 +213,9 @@ int main(int argc, char** argv)
     banExpiryCheckTimer->expires_from_now(boost::posix_time::seconds(banExpiryCheckInterval));
     banExpiryCheckTimer->async_wait(std::bind(&BanExpiryHandler, std::weak_ptr<Trinity::Asio::DeadlineTimer>(banExpiryCheckTimer), banExpiryCheckInterval, std::placeholders::_1));
 
-    TC_LOG_INFO(LOG_FILTER_BATTLENET, "Battlenet::Initialized");
+    TC_LOG_INFO("server.bnetserver", "%s (bnetserver-daemon) ready...", GitRevision::GetFullVersion());
 
-#if PLATFORM == TC_PLATFORM_WINDOWS
+#if TRINITY_PLATFORM == TRINITY_PLATFORM_WINDOWS
     std::shared_ptr<Trinity::Asio::DeadlineTimer> serviceStatusWatchTimer;
     if (m_ServiceStatus != -1)
     {
@@ -237,7 +234,7 @@ int main(int argc, char** argv)
     banExpiryCheckTimer->cancel();
     dbPingTimer->cancel();
 
-    TC_LOG_INFO(LOG_FILTER_BATTLENET, "Halting process...");
+    TC_LOG_INFO("server.bnetserver", "Halting process...");
 
     signals.cancel();
 
@@ -249,15 +246,16 @@ bool StartDB()
 {
     MySQL::Library_Init();
 
-	DatabaseLoader loader("server.bnetserver", DatabaseLoader::DATABASE_NONE);
-	loader
-		.AddDatabase(LoginDatabase, "Login");
+    // Load databases
+    DatabaseLoader loader("server.bnetserver", DatabaseLoader::DATABASE_NONE);
+    loader
+        .AddDatabase(LoginDatabase, "Login");
 
-	if (!loader.Load())
-		return false;
+    if (!loader.Load())
+        return false;
 
-    TC_LOG_INFO(LOG_FILTER_BATTLENET, "Started auth database connection pool.");
-    sLog->SetRealmID(0); // Enables DB appenders when realm is set.
+    TC_LOG_INFO("server.bnetserver", "Started auth database connection pool.");
+    sLog->SetRealmId(0); // Enables DB appenders when realm is set.
     return true;
 }
 
@@ -281,7 +279,7 @@ void KeepDatabaseAliveHandler(std::weak_ptr<Trinity::Asio::DeadlineTimer> dbPing
     {
         if (std::shared_ptr<Trinity::Asio::DeadlineTimer> dbPingTimer = dbPingTimerRef.lock())
         {
-            TC_LOG_INFO(LOG_FILTER_BATTLENET, "Ping MySQL to keep connection alive");
+            TC_LOG_INFO("server.bnetserver", "Ping MySQL to keep connection alive");
             LoginDatabase.KeepAlive();
 
             dbPingTimer->expires_from_now(boost::posix_time::minutes(dbPingInterval));
@@ -305,7 +303,7 @@ void BanExpiryHandler(std::weak_ptr<Trinity::Asio::DeadlineTimer> banExpiryCheck
     }
 }
 
-#if PLATFORM == TC_PLATFORM_WINDOWS
+#if TRINITY_PLATFORM == TRINITY_PLATFORM_WINDOWS
 void ServiceStatusWatcher(std::weak_ptr<Trinity::Asio::DeadlineTimer> serviceStatusWatchTimerRef, std::weak_ptr<Trinity::Asio::IoContext> ioContextRef, boost::system::error_code const& error)
 {
     if (!error)
@@ -336,7 +334,7 @@ variables_map GetConsoleArguments(int argc, char** argv, std::string& configFile
         ("version,v", "print version build info")
         ("config,c", value<std::string>(&configFile)->default_value(_TRINITY_BNET_CONFIG), "use <arg> as configuration file")
         ;
-#if PLATFORM == TC_PLATFORM_WINDOWS
+#if TRINITY_PLATFORM == TRINITY_PLATFORM_WINDOWS
     options_description win("Windows platform specific options");
     win.add_options()
         ("service,s", value<std::string>(&configService)->default_value(""), "Windows service options: [install | uninstall]")

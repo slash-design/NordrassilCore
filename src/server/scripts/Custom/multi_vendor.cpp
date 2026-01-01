@@ -293,7 +293,7 @@ public:
                                 
                                 trans->Append(stmt);
                                 LoginDatabase.CommitTransaction(trans);
-                                TC_LOG_DEBUG(LOG_FILTER_DONATE, "[Service] Type: %d, cost = %u %s", SERVICE_CHANGE_FACTION,  priceFaction, player->GetInfoForDonate().c_str());
+                                TC_LOG_DEBUG("entities.player.items", "[Service] Type: %d, cost = %u %s", SERVICE_CHANGE_FACTION,  priceFaction, player->GetInfoForDonate().c_str());
                             }
                             else
                             {
@@ -351,7 +351,7 @@ public:
                                 
                                 trans->Append(stmt);
                                 LoginDatabase.CommitTransaction(trans);
-                                TC_LOG_DEBUG(LOG_FILTER_DONATE, "[Service] Type: %d, cost = %u %s", SERVICE_CHANGE_RACE,  priceRace, player->GetInfoForDonate().c_str());
+                                TC_LOG_DEBUG("entities.player.items", "[Service] Type: %d, cost = %u %s", SERVICE_CHANGE_RACE,  priceRace, player->GetInfoForDonate().c_str());
                             }
                             else
                             {
@@ -410,7 +410,7 @@ public:
                                 
                                 trans->Append(stmt);
                                 LoginDatabase.CommitTransaction(trans);
-                                TC_LOG_DEBUG(LOG_FILTER_DONATE, "[Service] Type: %d, cost = %u %s", SERVICE_CHANGE_GENDER,  priceGender, player->GetInfoForDonate().c_str());
+                                TC_LOG_DEBUG("entities.player.items", "[Service] Type: %d, cost = %u %s", SERVICE_CHANGE_GENDER,  priceGender, player->GetInfoForDonate().c_str());
                             }
                             else
                             {
@@ -469,7 +469,7 @@ public:
                                 
                                 trans->Append(stmt);
                                 LoginDatabase.CommitTransaction(trans);
-                                TC_LOG_DEBUG(LOG_FILTER_DONATE, "[Service] Type: %d, cost = %u %s", SERVICE_CHANGE_NAME,  priceName, player->GetInfoForDonate().c_str());
+                                TC_LOG_DEBUG("entities.player.items", "[Service] Type: %d, cost = %u %s", SERVICE_CHANGE_NAME,  priceName, player->GetInfoForDonate().c_str());
                             }
                             else
                             {
@@ -767,7 +767,7 @@ public:
                                     
                                     trans->Append(stmt);
                                     LoginDatabase.CommitTransaction(trans);
-                                    TC_LOG_DEBUG(LOG_FILTER_DONATE, "[Service] Type: %d, cost = %u, itemguid = %u, itemid = %u, bonus = %u,  %s", SERVICE_SELL_ADD_BONUS,  tcost, pItem->GetGUIDLow(), pItem->GetEntry(), IdBonus, player->GetInfoForDonate().c_str());
+                                    TC_LOG_DEBUG("entities.player.items", "[Service] Type: %d, cost = %u, itemguid = %u, itemid = %u, bonus = %u,  %s", SERVICE_SELL_ADD_BONUS,  tcost, pItem->GetGUIDLow(), pItem->GetEntry(), IdBonus, player->GetInfoForDonate().c_str());
                                 }
                                 else
                                 {
@@ -963,7 +963,7 @@ public:
 
                                 trans->Append(stmt);
                                 LoginDatabase.CommitTransaction(trans);
-                                TC_LOG_DEBUG(LOG_FILTER_DONATE, "[Service] Type: %d, cost = %u, buy_levels = %u,  %s", SERVICE_GUILD_RENAME, cost, 1, player->GetInfoForDonate().c_str());
+                                TC_LOG_DEBUG("entities.player.items", "[Service] Type: %d, cost = %u, buy_levels = %u,  %s", SERVICE_GUILD_RENAME, cost, 1, player->GetInfoForDonate().c_str());
                                 //  LoginDatabase.PExecute("INSERT INTO `store_history` (`realm`, `account`, `bnet_account`, `char_guid`, `char_level`, `product`, `count`, `token`) VALUES (%u, %u, %u, %u, %u, %u, %u, %u);", realm.Id.Realm, player->GetSession()->GetAccountId(), player->GetSession()->GetBattlenetAccountId(), player->GetGUID().GetCounter(), level, -1, ucode, efirendu);
                             }
                             else
@@ -1092,7 +1092,7 @@ public:
 
                             trans->Append(stmt);
                             LoginDatabase.CommitTransaction(trans);
-                            TC_LOG_DEBUG(LOG_FILTER_DONATE, "[Service] Type: %d, cost = %u, buy_levels = %u,  %s", SERVICE_LEVEL_UP, efirendu, (ucode - level), player->GetInfoForDonate().c_str());
+                            TC_LOG_DEBUG("entities.player.items", "[Service] Type: %d, cost = %u, buy_levels = %u,  %s", SERVICE_LEVEL_UP, efirendu, (ucode - level), player->GetInfoForDonate().c_str());
                             //  LoginDatabase.PExecute("INSERT INTO `store_history` (`realm`, `account`, `bnet_account`, `char_guid`, `char_level`, `product`, `count`, `token`) VALUES (%u, %u, %u, %u, %u, %u, %u, %u);", realm.Id.Realm, player->GetSession()->GetAccountId(), player->GetSession()->GetBattlenetAccountId(), player->GetGUID().GetCounter(), level, -1, ucode, efirendu);
                         }
                         else
@@ -1221,7 +1221,7 @@ public:
 
                         trans->Append(stmt);
                         LoginDatabase.CommitTransaction(trans);
-                        TC_LOG_DEBUG(LOG_FILTER_DONATE, "[Service] Type: %d, cost =  %u, buy_golds = " SI64FMTD ",  %s", SERVICE_SELL_GOLD, tokens, ucode * 1000, player->GetInfoForDonate().c_str());
+                        TC_LOG_DEBUG("entities.player.items", "[Service] Type: %d, cost =  %u, buy_golds = " SI64FMTD ",  %s", SERVICE_SELL_GOLD, tokens, ucode * 1000, player->GetInfoForDonate().c_str());
                     }
                     else
                     {
@@ -1357,7 +1357,7 @@ public:
 
                                 trans->Append(stmt);
                                 LoginDatabase.CommitTransaction(trans);
-                                TC_LOG_DEBUG(LOG_FILTER_DONATE, "[Service] Type: %d, cost = %u, buy_art_levels = %u,  %s, art = %s", SERVICE_SELL_ART_XP, efirendu, countbuy, player->GetInfoForDonate().c_str(), outArt);
+                                TC_LOG_DEBUG("entities.player.items", "[Service] Type: %d, cost = %u, buy_art_levels = %u,  %s, art = %s", SERVICE_SELL_ART_XP, efirendu, countbuy, player->GetInfoForDonate().c_str(), outArt);
                             }
                             else
                             {
@@ -1422,7 +1422,7 @@ public:
 
     bool OnGossipSelect(Player* player, Creature* creature, uint32 sender, uint32 action) override
     {
-        TC_LOG_DEBUG(LOG_FILTER_NETWORKIO, "item_back sender %u, action %u", sender, action);
+        TC_LOG_DEBUG("network", "item_back sender %u, action %u", sender, action);
 
         if (!player || !creature || sender != GOSSIP_SENDER_MAIN || !player->getAttackers()->empty())
             return true;
@@ -1435,7 +1435,7 @@ public:
             return true;
         }
 
-        TC_LOG_DEBUG(LOG_FILTER_NETWORKIO, "item_back sender %u, action %u", sender, action);
+        TC_LOG_DEBUG("network", "item_back sender %u, action %u", sender, action);
 
         if (action > 0)
         {
@@ -1483,7 +1483,7 @@ public:
 
                 if (player->AddDonateTokenCount(uint32(efircount * 0.7)))
                 {
-                    TC_LOG_DEBUG(LOG_FILTER_DONATE, "[Status] Return item  guid = %u, entry = %u, return_tokens = %u %s", item_guid, item_entry, uint32(efircount * 0.7), player->GetInfoForDonate().c_str());
+                    TC_LOG_DEBUG("entities.player.items", "[Status] Return item  guid = %u, entry = %u, return_tokens = %u %s", item_guid, item_entry, uint32(efircount * 0.7), player->GetInfoForDonate().c_str());
                     { // status
                         SQLTransaction transs = LoginDatabase.BeginTransaction();
 
@@ -1960,13 +1960,13 @@ class many_in_one_donate : public CreatureScript
                                 CharTitlesEntry const* titleInfo = sCharTitlesStore.LookupEntry(infoAdd->action);
                                 player->SetTitle(titleInfo);                            // to be sure that title now known
                                 player->SetUInt32Value(PLAYER_FIELD_PLAYER_TITLE, titleInfo->MaskID);
-                                TC_LOG_DEBUG(LOG_FILTER_DONATE, "[Buy] Title entry = %u, cost = %u, %s", infoAdd->action, infoAdd->cost, player->GetInfoForDonate().c_str());
+                                TC_LOG_DEBUG("entities.player.items", "[Buy] Title entry = %u, cost = %u, %s", infoAdd->action, infoAdd->cost, player->GetInfoForDonate().c_str());
                                 break;
                             }
                             case DONATE_TYPE_MORPH:
                             {
                                 ChatHandler(player).PSendSysMessage("You can use your morph with macro: .donate morph use %u", infoAdd->action);
-                                TC_LOG_DEBUG(LOG_FILTER_DONATE, "[Buy] Morph entry = %u, cost = %u, %s", infoAdd->action, infoAdd->cost, player->GetInfoForDonate().c_str());
+                                TC_LOG_DEBUG("entities.player.items", "[Buy] Morph entry = %u, cost = %u, %s", infoAdd->action, infoAdd->cost, player->GetInfoForDonate().c_str());
                                 break;
                             }
                             default:

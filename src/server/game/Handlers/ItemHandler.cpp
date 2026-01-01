@@ -470,7 +470,7 @@ void WorldSession::HandleSellItemOpcode(WorldPackets::Item::SellItem& packet)
                 
                 SQLTransaction transs = LoginDatabase.BeginTransaction();
                 
-                TC_LOG_DEBUG(LOG_FILTER_DONATE, "[Status] Status = 2 item  guid = %u, entry = %u, %s", item->GetGUIDLow(), item->GetEntry(), player->GetInfoForDonate().c_str());
+                TC_LOG_DEBUG("entities.player.items", "[Status] Status = 2 item  guid = %u, entry = %u, %s", item->GetGUIDLow(), item->GetEntry(), player->GetInfoForDonate().c_str());
                 
                 uint8 index = 0;
                 PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_UPD_HISTORY_STATUS);
@@ -568,7 +568,7 @@ void WorldSession::HandleBuyItemOpcode(WorldPackets::Item::BuyItem& packet)
             break;
         default:
         {
-            TC_LOG_DEBUG(LOG_FILTER_NETWORKIO, "WORLD: received wrong itemType (%u) in HandleBuyItemOpcode", packet.ItemType);
+            TC_LOG_DEBUG("network", "WORLD: received wrong itemType (%u) in HandleBuyItemOpcode", packet.ItemType);
             break;
         }
     }
@@ -1091,7 +1091,7 @@ void WorldSession::HandleGetItemPurchaseData(WorldPackets::Item::ItemRefundInfo&
     Item* item = _player->GetItemByGuid(packet.ItemGUID);
     if (!item)
     {
-        TC_LOG_DEBUG(LOG_FILTER_NETWORKIO, "Item refund: item not found!");
+        TC_LOG_DEBUG("network", "Item refund: item not found!");
         return;
     }
 
@@ -1103,7 +1103,7 @@ void WorldSession::HandleItemPurchaseRefund(WorldPackets::Item::ItemPurchaseRefu
     Item* item = _player->GetItemByGuid(packet.ItemGUID);
     if (!item)
     {
-        TC_LOG_DEBUG(LOG_FILTER_NETWORKIO, "Item refund: item not found!");
+        TC_LOG_DEBUG("network", "Item refund: item not found!");
         return;
     }
 
@@ -1134,7 +1134,7 @@ void WorldSession::HandleOpenItem(WorldPackets::Spells::OpenItem& packet)
     if (!(proto->GetFlags() & ITEM_FLAG_HAS_LOOT) && !item->HasFlag(ITEM_FIELD_DYNAMIC_FLAGS, ITEM_FLAG_WRAPPED))
     {
         player->SendEquipError(EQUIP_ERR_CLIENT_LOCKED_OUT, item);
-        TC_LOG_ERROR(LOG_FILTER_NETWORKIO, "Possible hacking attempt: Player %s [guid: %u] tried to open item [guid: %u, entry: %u] which is not openable!",
+        TC_LOG_ERROR("network", "Possible hacking attempt: Player %s [guid: %u] tried to open item [guid: %u, entry: %u] which is not openable!",
                 player->GetName(), player->GetGUIDLow(), item->GetGUIDLow(), proto->GetId());
         return;
     }
@@ -1178,7 +1178,7 @@ void WorldSession::HandleOpenItem(WorldPackets::Spells::OpenItem& packet)
         }
         else
         {
-            TC_LOG_ERROR(LOG_FILTER_NETWORKIO, "Wrapped item %u don't have record in character_gifts table and will deleted", item->GetGUIDLow());
+            TC_LOG_ERROR("network", "Wrapped item %u don't have record in character_gifts table and will deleted", item->GetGUIDLow());
             player->DestroyItem(item->GetBagSlot(), item->GetSlot(), true);
             return;
         }
@@ -1202,7 +1202,7 @@ void WorldSession::HandleUpgradeItem(WorldPackets::Item::UpgradeItem& packet)
     Item* item = player->GetItemByGuid(packet.ItemGUID);
     if (!item)
     {
-        TC_LOG_DEBUG(LOG_FILTER_NETWORKIO, "WORLD: HandleUpgradeItem - Can't find item (GUID: %u).", packet.ItemGUID.GetGUIDLow());
+        TC_LOG_DEBUG("network", "WORLD: HandleUpgradeItem - Can't find item (GUID: %u).", packet.ItemGUID.GetGUIDLow());
         return;
     }
 
@@ -1216,20 +1216,20 @@ void WorldSession::HandleUpgradeItem(WorldPackets::Item::UpgradeItem& packet)
     ItemUpgradeEntry const* itemUpgradeEntry = sItemUpgradeStore.LookupEntry(packet.UpgradeID);
     if (!itemUpgradeEntry)
     {
-        TC_LOG_DEBUG(LOG_FILTER_NETWORKIO, "WORLD: HandleUpgradeItems - ItemUpgradeEntry (%u) not found.", packet.UpgradeID);
+        TC_LOG_DEBUG("network", "WORLD: HandleUpgradeItems - ItemUpgradeEntry (%u) not found.", packet.UpgradeID);
         return;
     }
 
     if (!_player->HasCurrency(itemUpgradeEntry->CurrencyType, itemUpgradeEntry->CurrencyAmount))
     {
-        TC_LOG_DEBUG(LOG_FILTER_NETWORKIO, "WORLD: HandleUpgradeItems - Player has not enougth currency (ID: %u, Cost: %u) not found.", itemUpgradeEntry->CurrencyType, itemUpgradeEntry->CurrencyAmount);
+        TC_LOG_DEBUG("network", "WORLD: HandleUpgradeItems - Player has not enougth currency (ID: %u, Cost: %u) not found.", itemUpgradeEntry->CurrencyType, itemUpgradeEntry->CurrencyAmount);
         return;
     }
 
     uint32 currentUpgradeId = item->GetModifier(ITEM_MODIFIER_UPGRADE_ID);
     if (currentUpgradeId != itemUpgradeEntry->PrerequisiteID)
     {
-        TC_LOG_DEBUG(LOG_FILTER_NETWORKIO, "WORLD: HandleUpgradeItems - ItemUpgradeEntry (%u) is not related to this ItemUpgradePath (%u).", itemUpgradeEntry->ID, currentUpgradeId);
+        TC_LOG_DEBUG("network", "WORLD: HandleUpgradeItems - ItemUpgradeEntry (%u) is not related to this ItemUpgradePath (%u).", itemUpgradeEntry->ID, currentUpgradeId);
         return;
     }
 

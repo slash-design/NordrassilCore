@@ -46,7 +46,7 @@ public:
 
         
         if(!pet->InitStatsForLevel(player->getLevel()))
-            TC_LOG_ERROR(LOG_FILTER_NETWORKIO, "Pet Create fail: no init stats for entry %u", entry);
+            TC_LOG_ERROR("network", "Pet Create fail: no init stats for entry %u", entry);
 
         pet->UpdateAllStats();
         

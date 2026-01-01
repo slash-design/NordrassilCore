@@ -6161,6 +6161,8 @@ enum class UIErrors : uint32
     ERR_CLAIMED_CHALLENGE_MODE_REWARD_OLD                   = 983,
 };
 
+#define MAX_ACCOUNT_TUTORIAL_VALUES 8
+
 enum class RaidGroupReason : uint8
 {
     NONE                    = 0,

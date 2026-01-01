@@ -277,8 +277,8 @@ LoginDatabase.WorkerThreads = 1
 #                         Example:  536870912 (512 mb)
 #
 
-Appender.Console=1,2,0,13 7 11 10 3 1
-Appender.Bnet=2,2,0,Bnet.log,a
+Appender.Console=1,2,0
+Appender.Bnet=2,2,0,Bnet.log,w
 
 Appenders=Console Bnet
 
@@ -300,15 +300,11 @@ Appenders=Console Bnet
 #                     (Using spaces as separator).
 #
 
-Logger.Root=0,3,Console Bnet
-Logger.Realmlist=44,3,Console Bnet
-Logger.Bnet=45,3,Console Bnet
-Logger.Session=47,3,Console Bnet
-Logger.SQL=26,3,Console Bnet
-Logger.SQLDriver=36,3,Console Bnet
-Logger.NetworkInfo=7,3,Console Bnet
-
-Loggers=Root Realmlist Bnet Session SQL SQLDriver NetworkInfo
+Logger.root=3,Console Bnet
+Logger.realmlist=3,Console Bnet
+Logger.session=3,Console Bnet
+Logger.session.packets=3,Console Bnet
+Logger.sql.updates=3,Console Bnet
 
 #
 ###################################################################################################

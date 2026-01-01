@@ -26,13 +26,17 @@
 #include <cstdarg>
 #include "StringFormat.h"
 #include <boost/asio/ip/address.hpp>
-#include <boost/algorithm/string/case_conv.hpp>
+#include <thread>
 
-#if COMPILER == COMPILER_GNU
+#ifdef _WIN32
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#else
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #endif
+#include <boost/algorithm/string/case_conv.hpp>
 
 bool m_worldCrashChecker;
 std::atomic<bool> m_stopEvent;
@@ -609,7 +613,7 @@ std::wstring GetMainPartOfName(std::wstring wname, uint32 declension)
 
 bool utf8ToConsole(const std::string& utf8str, std::string& conStr)
 {
-#if PLATFORM == TC_PLATFORM_WINDOWS
+#if TRINITY_PLATFORM == TRINITY_PLATFORM_WINDOWS
     std::wstring wstr;
     if (!Utf8toWStr(utf8str, wstr))
         return false;
@@ -626,7 +630,7 @@ bool utf8ToConsole(const std::string& utf8str, std::string& conStr)
 
 bool consoleToUtf8(const std::string& conStr, std::string& utf8str)
 {
-#if PLATFORM == TC_PLATFORM_WINDOWS
+#if TRINITY_PLATFORM == TRINITY_PLATFORM_WINDOWS
     std::wstring wstr;
     wstr.resize(conStr.size());
     OemToCharBuffW(&conStr[0], &wstr[0], conStr.size());
@@ -662,7 +666,7 @@ void utf8printf(FILE* out, const char *str, ...)
 
 void vutf8printf(FILE* out, const char *str, va_list* ap)
 {
-#if PLATFORM == TC_PLATFORM_WINDOWS
+#if TRINITY_PLATFORM == TRINITY_PLATFORM_WINDOWS
     char temp_buf[32 * 1024];
     wchar_t wtemp_buf[32 * 1024];
 

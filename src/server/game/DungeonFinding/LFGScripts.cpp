@@ -86,7 +86,7 @@ void LFGPlayerScript::OnMapChanged(Player* player)
             sLFGMgr->LeaveLfg(player->GetGUID(), queueId);
             player->RemoveAurasDueToSpell(LFG_SPELL_LUCK_OF_THE_DRAW);
             player->TeleportTo(player->m_homebindMapId, player->m_homebindX, player->m_homebindY, player->m_homebindZ, 0.0f);
-            TC_LOG_ERROR(LOG_FILTER_LFG, "LFGPlayerScript::OnMapChanged, Player %s (%u) is in LFG dungeon map but does not have a valid group! Teleporting to homebind.", player->GetName(), player->GetGUIDLow());
+            TC_LOG_ERROR("lfg", "LFGPlayerScript::OnMapChanged, Player %s (%u) is in LFG dungeon map but does not have a valid group! Teleporting to homebind.", player->GetName(), player->GetGUIDLow());
             return;
         }
 
@@ -120,14 +120,14 @@ void LFGGroupScript::OnAddMember(Group* group, ObjectGuid const& guid)
 
     if (leader == guid)
     {
-        TC_LOG_DEBUG(LOG_FILTER_LFG, "LFGScripts::OnAddMember [%s]: added [%s] leader [%s]", gguid.ToString().c_str(), guid.ToString().c_str(), leader.ToString().c_str());
+        TC_LOG_DEBUG("lfg", "LFGScripts::OnAddMember [%s]: added [%s] leader [%s]", gguid.ToString().c_str(), guid.ToString().c_str(), leader.ToString().c_str());
         sLFGMgr->SetLeader(gguid, guid);
     }
     else
     {
         LfgState gstate = sLFGMgr->GetState(gguid, queueId);
         LfgState state = sLFGMgr->GetState(guid, queueId);
-        TC_LOG_DEBUG(LOG_FILTER_LFG, "LFGScripts::OnAddMember [%s]: added [%s] leader [%s] gstate: %u, state: %u", gguid.ToString().c_str(), guid.ToString().c_str(), leader.ToString().c_str(), gstate, state);
+        TC_LOG_DEBUG("lfg", "LFGScripts::OnAddMember [%s]: added [%s] leader [%s] gstate: %u, state: %u", gguid.ToString().c_str(), guid.ToString().c_str(), leader.ToString().c_str(), gstate, state);
 
         if (state == LFG_STATE_QUEUED)
             sLFGMgr->LeaveLfg(guid, queueId);
@@ -147,7 +147,7 @@ void LFGGroupScript::OnRemoveMember(Group* group, ObjectGuid const& guid, Remove
 
     ObjectGuid gguid = group->GetGUID();
 
-    TC_LOG_DEBUG(LOG_FILTER_LFG, "LFGScripts::OnRemoveMember [%s]: remove [%s] Method: %d Kicker: [%s] Reason: %s", gguid.ToString().c_str(), guid.ToString().c_str(), method, kicker.ToString().c_str(), (reason ? reason : ""));
+    TC_LOG_DEBUG("lfg", "LFGScripts::OnRemoveMember [%s]: remove [%s] Method: %d Kicker: [%s] Reason: %s", gguid.ToString().c_str(), guid.ToString().c_str(), method, kicker.ToString().c_str(), (reason ? reason : ""));
 
     uint32 queueId = sLFGMgr->GetQueueId(gguid);
 
@@ -205,7 +205,7 @@ void LFGGroupScript::OnDisband(Group* group)
         return;
 
     ObjectGuid gguid = group->GetGUID();
-    TC_LOG_DEBUG(LOG_FILTER_LFG, "LFGScripts::OnDisband %s", gguid.ToString().c_str());
+    TC_LOG_DEBUG("lfg", "LFGScripts::OnDisband %s", gguid.ToString().c_str());
 
     sLFGMgr->RemoveGroupData(gguid);
 }
@@ -217,7 +217,7 @@ void LFGGroupScript::OnChangeLeader(Group* group, ObjectGuid const& newLeaderGui
 
     ObjectGuid gguid = group->GetGUID();
 
-    TC_LOG_DEBUG(LOG_FILTER_LFG, "LFGScripts::OnChangeLeader %s: old %s new %s", gguid.ToString().c_str(), newLeaderGuid.ToString().c_str(), oldLeaderGuid.ToString().c_str());
+    TC_LOG_DEBUG("lfg", "LFGScripts::OnChangeLeader %s: old %s new %s", gguid.ToString().c_str(), newLeaderGuid.ToString().c_str(), oldLeaderGuid.ToString().c_str());
     sLFGMgr->SetLeader(gguid, newLeaderGuid);
 }
 
@@ -229,7 +229,7 @@ void LFGGroupScript::OnInviteMember(Group* group, ObjectGuid const& guid)
     ObjectGuid gguid = group->GetGUID();
     ObjectGuid leader = group->GetLeaderGUID();
     uint32 queueId = sLFGMgr->GetQueueId(gguid);
-    TC_LOG_DEBUG(LOG_FILTER_LFG, "LFGScripts::OnInviteMember %s: invite %s leader %s", gguid.ToString().c_str(), guid.ToString().c_str(), leader.ToString().c_str());
+    TC_LOG_DEBUG("lfg", "LFGScripts::OnInviteMember %s: invite %s leader %s", gguid.ToString().c_str(), guid.ToString().c_str(), leader.ToString().c_str());
     // No gguid ==  new group being formed
     // No leader == after group creation first invite is new leader
     // leader and no gguid == first invite after leader is added to new group (this is the real invite)

@@ -74,7 +74,7 @@ public:
         }
 
         //SetColor(true, CYAN);
-        TC_LOG_INFO(LOG_FILTER_WORLDSERVER, "Player '%s' has logged in : Level '%u' : Class '%s' : IP '%s' : AccountID '%u'", playerName.c_str(), pLevel, pClass.c_str(), playerIP.c_str(), pAccountID);
+        TC_LOG_INFO("server", "Player '%s' has logged in : Level '%u' : Class '%s' : IP '%s' : AccountID '%u'", playerName.c_str(), pLevel, pClass.c_str(), playerIP.c_str(), pAccountID);
         //ResetColor(true);
     }
 };

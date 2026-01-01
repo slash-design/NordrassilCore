@@ -32,7 +32,7 @@ namespace Trinity
 /// When an input path is given, the file will be routed to the processes stdin.
 /// When the process is marked as secure no arguments are leaked to logs.
 /// Note that most executables expect it's name as the first argument.
-int StartProcess(std::string const& executable, std::vector<std::string> const& args,
+TC_COMMON_API int StartProcess(std::string const& executable, std::vector<std::string> const& args,
                                std::string const& logger, std::string input_file = "",
                                bool secure = false);
 
@@ -56,14 +56,14 @@ public:
 /// When an input path is given, the file will be routed to the processes stdin.
 /// When the process is marked as secure no arguments are leaked to logs.
 /// Note that most executables expect it's name as the first argument.
-std::shared_ptr<AsyncProcessResult>
+TC_COMMON_API std::shared_ptr<AsyncProcessResult>
     StartAsyncProcess(std::string executable, std::vector<std::string> args,
                       std::string logger, std::string input_file = "",
                       bool secure = false);
 
 /// Searches for the given executable in the PATH variable
 /// and returns a present optional when it was found.
-std::string SearchExecutableInPath(std::string const& filename);
+TC_COMMON_API std::string SearchExecutableInPath(std::string const& filename);
 
 } // namespace Trinity
 

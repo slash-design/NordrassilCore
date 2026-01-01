@@ -59,7 +59,7 @@ bool WorldSocketMgr::StartNetwork(boost::asio::io_service& service, std::string 
 {
     _tcpNoDelay = sConfigMgr->GetBoolDefault("Network.TcpNodelay", true);
 
-    TC_LOG_DEBUG(LOG_FILTER_NETWORKIO, "Max allowed socket connections %d", boost::asio::socket_base::max_connections);
+    TC_LOG_DEBUG("network", "Max allowed socket connections %d", boost::asio::socket_base::max_connections);
 
     // -1 means use default
     _socketSendBufferSize = sConfigMgr->GetIntDefault("Network.OutKBuff", -1);
@@ -68,7 +68,7 @@ bool WorldSocketMgr::StartNetwork(boost::asio::io_service& service, std::string 
 
     if (m_SockOutUBuff <= 0)
     {
-        TC_LOG_ERROR(LOG_FILTER_NETWORKIO, "Network.OutUBuff is wrong in your config file");
+        TC_LOG_ERROR("network", "Network.OutUBuff is wrong in your config file");
         return false;
     }
 
@@ -102,7 +102,7 @@ void WorldSocketMgr::OnSocketOpen(tcp::socket&& sock, uint32 threadIndex)
         sock.set_option(boost::asio::socket_base::send_buffer_size(_socketSendBufferSize), err);
         if (err && err != boost::system::errc::not_supported)
         {
-            TC_LOG_ERROR(LOG_FILTER_NETWORKIO, "WorldSocketMgr::OnSocketOpen sock.set_option(boost::asio::socket_base::send_buffer_size) err = %s", err.message().c_str());
+            TC_LOG_ERROR("network", "WorldSocketMgr::OnSocketOpen sock.set_option(boost::asio::socket_base::send_buffer_size) err = %s", err.message().c_str());
             return;
         }
     }
@@ -114,7 +114,7 @@ void WorldSocketMgr::OnSocketOpen(tcp::socket&& sock, uint32 threadIndex)
         sock.set_option(boost::asio::ip::tcp::no_delay(true), err);
         if (err)
         {
-            TC_LOG_ERROR(LOG_FILTER_NETWORKIO, "WorldSocketMgr::OnSocketOpen sock.set_option(boost::asio::ip::tcp::no_delay) err = %s", err.message().c_str());
+            TC_LOG_ERROR("network", "WorldSocketMgr::OnSocketOpen sock.set_option(boost::asio::ip::tcp::no_delay) err = %s", err.message().c_str());
             return;
         }
     }

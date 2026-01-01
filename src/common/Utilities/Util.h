@@ -345,10 +345,8 @@ public:
         //This shouldn't happend.
         if (ptr)
         {
-            sLog->outU("Already initiated numerator %u", bool(numerator));
             if (numerator)
             {
-                sLog->outU("numerator >> numerator->counter %u numerator->ready %u parent %u", numerator->counter.load(), numerator->ready, parent);
                 if (numerator->ready)
                     return;
             }

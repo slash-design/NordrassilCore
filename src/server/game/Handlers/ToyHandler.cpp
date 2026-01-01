@@ -49,7 +49,7 @@ void WorldSession::HandleAddToy(WorldPackets::Toy::AddToy& packet)
     {
         { // donate status
             SQLTransaction transs = LoginDatabase.BeginTransaction();
-            TC_LOG_DEBUG(LOG_FILTER_DONATE, "[Status] Status = 3 item guid = %u, entry = %u, %s", item->GetGUID().GetGUIDLow(), item->GetEntry(), player->GetInfoForDonate().c_str());
+            TC_LOG_DEBUG("entities.player.items", "[Status] Status = 3 item guid = %u, entry = %u, %s", item->GetGUID().GetGUIDLow(), item->GetEntry(), player->GetInfoForDonate().c_str());
             uint8 index = 0;
             PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_UPD_HISTORY_STATUS);
             stmt->setUInt32(  index, 3);

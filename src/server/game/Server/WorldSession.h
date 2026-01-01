@@ -1247,7 +1247,6 @@ class WorldSession
 
         void ProcessAnticheatAction(const char* detector, const char* reason, uint32 action, uint32 banTime = 0 /* Perm ban */);
 
-        void LookupPlayerSearchCommand(PreparedQueryResult result, int32 limit);
         void BanListHelper(PreparedQueryResult result);
 
         void Handle_NULL(WorldPackets::Null& null);
@@ -2113,7 +2112,7 @@ class WorldSession
         uint32 _tutorials[MAX_ACCOUNT_TUTORIAL_VALUES];
         bool   _tutorialsChanged;
         AddonsList m_addonsList;
-        StringSet _registeredAddonPrefixes;
+        std::vector<std::string> _registeredAddonPrefixes;
         bool _filterAddonMessages;
         uint32 recruiterId;
         bool isRecruiter;

@@ -175,7 +175,7 @@ public:
             return true;
         }
         
-        TC_LOG_DEBUG(LOG_FILTER_DONATE, "[Buy] Morph entry = %u, cost = %u, %s", morphId, tokenCount, target->GetInfoForDonate().c_str());
+        TC_LOG_DEBUG("entities.player.items", "[Buy] Morph entry = %u, cost = %u, %s", morphId, tokenCount, target->GetInfoForDonate().c_str());
 
         LoginDatabase.PExecute("INSERT INTO `store_history` (`realm`, `account`, `bnet_account`, `char_guid`, `item_guid`, `item`, `count`, `token`, `char_level`, `product`, `bonus`) VALUES (%u, %u, %u, %u, %u, %d, 1, %u, %u, (select `id` from `store_products` where `item` = %d), %u);", realm.Id.Realm, accountId, bnaccountId, target_guid.GetGUIDLow(), 0, -9, tokenCount, target->getLevel(), -9, morphId);
         handler->PSendSysMessage("Morph add %u for %u tokens", morphId, tokenCount);
@@ -215,7 +215,7 @@ public:
 
                 if (target->AddDonateTokenCount(tokenCount))
                 {
-                    TC_LOG_DEBUG(LOG_FILTER_DONATE, "[Status] Return morph entry = %u, return_tokens = %u, %s", morphId, tokenCount, target->GetInfoForDonate().c_str());
+                    TC_LOG_DEBUG("entities.player.items", "[Status] Return morph entry = %u, return_tokens = %u, %s", morphId, tokenCount, target->GetInfoForDonate().c_str());
                     LoginDatabase.PExecute("update `store_history` set `status` = 7 WHERE account = '%u' AND bnet_account = '%u' AND `item` = '-9' AND `status` = '0' AND bonus = '%u' and realm = '%u';", accountId, bnaccountId, morphId, realm.Id.Realm);
                     handler->PSendSysMessage("Morph %u delete and %u tokens give player", morphId, tokenCount);
                 }
@@ -343,7 +343,7 @@ public:
         }
        
         
-       TC_LOG_DEBUG(LOG_FILTER_DONATE, "[But] Fly mount entry = %u, cost = %u, %s", mountId, tokenCount, target->GetInfoForDonate().c_str());
+       TC_LOG_DEBUG("entities.player.items", "[But] Fly mount entry = %u, cost = %u, %s", mountId, tokenCount, target->GetInfoForDonate().c_str());
        
        LoginDatabase.PExecute("INSERT INTO `store_history` (`realm`, `account`, `bnet_account`, `char_guid`, `item_guid`, `item`, `count`, `token`, `char_level`, `product`, `bonus`) VALUES (%u, %u, %u, %u, %u, %d, 1, %u, %u, (select `id` from `store_products` where `item` = %d), %u);", realm.Id.Realm, accountId, bnaccountId, target_guid.GetGUIDLow(), 0, -11, tokenCount, target->getLevel(), -11, mountId);
        handler->PSendSysMessage("Fly mount add %u for %u tokens", mountId, tokenCount);
@@ -385,7 +385,7 @@ public:
                 if (target->AddDonateTokenCount(tokenCount))
                 {
                 
-                    TC_LOG_DEBUG(LOG_FILTER_DONATE, "[Status] Return fly mount entry = %u, return_tokens = %u, %s", mountId, tokenCount, target->GetInfoForDonate().c_str());
+                    TC_LOG_DEBUG("entities.player.items", "[Status] Return fly mount entry = %u, return_tokens = %u, %s", mountId, tokenCount, target->GetInfoForDonate().c_str());
                     
                     LoginDatabase.PExecute("update `store_history` set `status` = 7 WHERE account = '%u' AND bnet_account = '%u' AND `item` = '-11' AND `status` = '0' AND bonus = '%u' and realm = '%u';", accountId, bnaccountId, mountId, realm.Id.Realm);
                     handler->PSendSysMessage("Fly mount %u delete and %u tokens give player", mountId, tokenCount);
@@ -511,7 +511,7 @@ public:
             return true;
         }
         
-        TC_LOG_DEBUG(LOG_FILTER_DONATE, "[Buy] Ground mount entry = %u, cost = %u, %s", mountId, tokenCount, target->GetInfoForDonate().c_str());
+        TC_LOG_DEBUG("entities.player.items", "[Buy] Ground mount entry = %u, cost = %u, %s", mountId, tokenCount, target->GetInfoForDonate().c_str());
         
         LoginDatabase.PExecute("INSERT INTO `store_history` (`realm`, `account`, `bnet_account`, `char_guid`, `item_guid`, `item`, `count`, `token`, `char_level`, `product`, `bonus`) VALUES (%u, %u, %u, %u, %u, %d, 1, %u, %u, (select `id` from `store_products` where `item` = %d), %u);", realm.Id.Realm, accountId, bnaccountId, target_guid.GetGUIDLow(), 0, -10, tokenCount, target->getLevel(), -10, mountId);
         handler->PSendSysMessage("Ground mount add %u for %u tokens", mountId, tokenCount);
@@ -552,7 +552,7 @@ public:
 
                 if (target->AddDonateTokenCount(tokenCount))
                 {
-                    TC_LOG_DEBUG(LOG_FILTER_DONATE, "[Status] Return ground mount entry = %u, return_tokens = %u, %s", mountId, tokenCount, target->GetInfoForDonate().c_str());
+                    TC_LOG_DEBUG("entities.player.items", "[Status] Return ground mount entry = %u, return_tokens = %u, %s", mountId, tokenCount, target->GetInfoForDonate().c_str());
                     LoginDatabase.PExecute("update `store_history` set `status` = 7 WHERE account = '%u' AND bnet_account = '%u' AND `item` = '-10' AND `status` = '0' AND bonus = '%u' and realm = '%u';", accountId, bnaccountId, mountId, realm.Id.Realm);
                     handler->PSendSysMessage("Ground mount %u delete and %u tokens give player", mountId, tokenCount);
                 }
@@ -608,7 +608,7 @@ public:
         
         target->AddItem(itemId, 1);
         
-        TC_LOG_DEBUG(LOG_FILTER_DONATE, "[Buy Online] item entry = %u, cost = %u, %s", itemId, tokenCount, target->GetInfoForDonate().c_str());
+        TC_LOG_DEBUG("entities.player.items", "[Buy Online] item entry = %u, cost = %u, %s", itemId, tokenCount, target->GetInfoForDonate().c_str());
         
         SQLTransaction trans = LoginDatabase.BeginTransaction();
         

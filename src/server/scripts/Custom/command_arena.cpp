@@ -816,7 +816,7 @@ public:
                 else
                     target->ModifyMoney(int64(addmoney));
             }
-            TC_LOG_DEBUG(LOG_FILTER_GENERAL, handler->GetTrinityString(LANG_NEW_MONEY), moneyuser, uint32(addmoney), target->GetMoney());
+            TC_LOG_DEBUG("misc", handler->GetTrinityString(LANG_NEW_MONEY), moneyuser, uint32(addmoney), target->GetMoney());
         }
         else if (target_guid)
         {

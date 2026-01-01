@@ -37,11 +37,13 @@
 #include "Common.h"
 #include "Configuration/Config.h"
 #include "DatabaseEnv.h"
+#include "DatabaseLoader.h"
 #include "DeadlineTimer.h"
 #include "GitRevision.h"
 #include "IoContext.h"
 #include "MapInstanced.h"
 #include "MapManager.h"
+#include "MySQLThreading.h"
 #include "ObjectAccessor.h"
 #include "OpenSSLCrypto.h"
 #include "OutdoorPvPMgr.h"
@@ -50,7 +52,6 @@
 #include "RealmList.h"
 #include "ScriptLoader.h"
 #include "ScriptMgr.h"
-#include "segvcatch.h"
 #include "TCSoap.h"
 #include "World.h"
 #include "WorldSocket.h"
@@ -158,12 +159,12 @@ extern int main(int argc, char **argv)
 
     Trinity::Banner::Show("worldserver-daemon", [](char const* text)
     {
-        TC_LOG_INFO(LOG_FILTER_WORLDSERVER, "%s", text);
+        TC_LOG_INFO("server.worldserver", "%s", text);
     }, []()
     {
-        TC_LOG_INFO(LOG_FILTER_WORLDSERVER, "Using configuration file %s.", sConfigMgr->GetFilename().c_str());
-        TC_LOG_INFO(LOG_FILTER_WORLDSERVER, "Using SSL version: %s (library: %s)", OPENSSL_VERSION_TEXT, SSLeay_version(SSLEAY_VERSION));
-        TC_LOG_INFO(LOG_FILTER_WORLDSERVER, "Using Boost version: %i.%i.%i", BOOST_VERSION / 100000, BOOST_VERSION / 100 % 1000, BOOST_VERSION % 100);
+        TC_LOG_INFO("server.worldserver", "Using configuration file %s.", sConfigMgr->GetFilename().c_str());
+        TC_LOG_INFO("server.worldserver", "Using SSL version: %s (library: %s)", OPENSSL_VERSION_TEXT, SSLeay_version(SSLEAY_VERSION));
+        TC_LOG_INFO("server.worldserver", "Using Boost version: %i.%i.%i", BOOST_VERSION / 100000, BOOST_VERSION / 100 % 1000, BOOST_VERSION % 100);
     }
     );
 
@@ -188,17 +189,17 @@ extern int main(int argc, char **argv)
     if (!pidFile.empty())
     {
         if (pid = CreatePIDFile(pidFile))
-            TC_LOG_INFO(LOG_FILTER_WORLDSERVER, "Daemon PID: %u\n", pid);
+            TC_LOG_INFO("server.worldserver", "Daemon PID: %u\n", pid);
         else
         {
-            TC_LOG_ERROR(LOG_FILTER_WORLDSERVER, "Cannot create PID file %s.\n", pidFile.c_str());
+            TC_LOG_ERROR("server.worldserver", "Cannot create PID file %s.\n", pidFile.c_str());
             return 1;
         }
     }
 
     // Set signal handlers (this must be done before starting io_service threads, because otherwise they would unblock and exit)
     boost::asio::signal_set signals(*ioContext, SIGINT, SIGTERM);
-#if PLATFORM == TC_PLATFORM_WINDOWS
+#if TRINITY_PLATFORM == TRINITY_PLATFORM_WINDOWS
     signals.add(SIGBREAK);
 #endif
     signals.async_wait(SignalHandler);
@@ -279,13 +280,13 @@ extern int main(int argc, char **argv)
     int networkThreads = sConfigMgr->GetIntDefault("Network.Threads", 1);
     if (networkThreads <= 0)
     {
-        TC_LOG_ERROR(LOG_FILTER_WORLDSERVER, "Network.Threads must be greater than 0");
+        TC_LOG_ERROR("server.worldserver", "Network.Threads must be greater than 0");
         return 1;
     }
 
     if (!sWorldSocketMgr.StartNetwork(*ioContext, worldListener, worldPort, networkThreads))
     {
-        TC_LOG_ERROR(LOG_FILTER_WORLDSERVER, "Failed to initialize network");
+        TC_LOG_ERROR("server.worldserver", "Failed to initialize network");
         return 1;
     }
 
@@ -322,29 +323,14 @@ extern int main(int argc, char **argv)
     {
         freezeDetector = std::make_shared<FreezeDetector>(*ioContext, coreStuckTime * 1000);
         FreezeDetector::Start(freezeDetector);
-        TC_LOG_INFO(LOG_FILTER_WORLDSERVER, "Starting up anti-freeze thread (%u seconds max stuck time)...", coreStuckTime);
+        TC_LOG_INFO("server.worldserver", "Starting up anti-freeze thread (%u seconds max stuck time)...", coreStuckTime);
     }
 
     // custom core loaded script
     sScriptMgr->OnStartup();
 
     // original core loaded message
-    TC_LOG_INFO(LOG_FILTER_WORLDSERVER, "%s (worldserver-daemon) ready...", GitRevision::GetFullVersion());
-
-    if (sConfigMgr->GetBoolDefault("Segvcatch.Enable", false))
-    {
-        segvcatch::init_segv();
-        segvcatch::init_abrt();
-        segvcatch::init_fpe();
-    }
-    else if (sConfigMgr->GetBoolDefault("DumpHandler.Enable", false))
-    {
-        #ifndef WIN32
-        signal(SIGSEGV, &Trinity::DumpHandler);
-        signal(SIGABRT, &Trinity::DumpHandler);
-        signal(SIGFPE, &Trinity::DumpHandler);
-        #endif
-    }
+    TC_LOG_INFO("server.worldserver", "%s (worldserver-daemon) ready...", GitRevision::GetFullVersion());
 
     WorldUpdateLoop();
 
@@ -358,7 +344,7 @@ extern int main(int argc, char **argv)
     // set server offline
     LoginDatabase.DirectPExecute("UPDATE realmlist SET flag = flag | %u WHERE id = '%d'", REALM_FLAG_OFFLINE, realm.Id.Realm);
 
-    TC_LOG_INFO(LOG_FILTER_WORLDSERVER, "Halting process...");
+    TC_LOG_INFO("server.worldserver", "Halting process...");
 
     // 0 - normal shutdown
     // 1 - shutdown at error
@@ -490,7 +476,7 @@ void FreezeDetector::Handler(std::weak_ptr<FreezeDetector> freezeDetectorRef, bo
             // possible freeze
             else if (getMSTimeDiff(freezeDetector->_lastChangeMsTime, curtime) > freezeDetector->_maxCoreStuckTimeInMs)
             {
-                TC_LOG_ERROR(LOG_FILTER_WORLDSERVER, "World Thread hangs, kicking out server!");
+                TC_LOG_ERROR("server.worldserver", "World Thread hangs, kicking out server!");
                 ABORT();
             }
 
@@ -515,26 +501,25 @@ bool StartDB()
 {
     MySQL::Library_Init();
 
-	// Load databases
-	DatabaseLoader loader("server.worldserver", DatabaseLoader::DATABASE_NONE);
-	loader
-		.AddDatabase(LoginDatabase, "Login")
-		.AddDatabase(CharacterDatabase, "Character")
-		.AddDatabase(WorldDatabase, "World")
-		.AddDatabase(HotfixDatabase, "Hotfix");
+    DatabaseLoader loader("server.worldserver", DatabaseLoader::DATABASE_NONE);
+    loader
+        .AddDatabase(LoginDatabase, "Login")
+        .AddDatabase(CharacterDatabase, "Character")
+        .AddDatabase(WorldDatabase, "World")
+        .AddDatabase(HotfixDatabase, "Hotfix");
 
-	if (!loader.Load())
-		return false;
+    if (!loader.Load())
+        return false;
 
     ///- Get the realm Id from the configuration file
     realm.Id.Realm = sConfigMgr->GetIntDefault("RealmID", 0);
     if (!realm.Id.Realm)
     {
-        TC_LOG_ERROR(LOG_FILTER_WORLDSERVER, "Realm ID not defined in configuration file");
+        TC_LOG_ERROR("server.worldserver", "Realm ID not defined in configuration file");
         return false;
     }
 
-    TC_LOG_INFO(LOG_FILTER_WORLDSERVER, "Realm running as realm ID %u", realm.Id.Realm);
+    TC_LOG_INFO("server.worldserver", "Realm running as realm ID %u", realm.Id.Realm);
 
     ///- Clean the database before starting
     ClearOnlineAccounts();
@@ -544,7 +529,7 @@ bool StartDB()
 
     sWorld->LoadDBVersion();
 
-    TC_LOG_INFO(LOG_FILTER_WORLDSERVER, "Using World DB: %s", sWorld->GetDBVersion());
+    TC_LOG_INFO("server.worldserver", "Using World DB: %s", sWorld->GetDBVersion());
     return true;
 }
 
