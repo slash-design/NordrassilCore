@@ -278,8 +278,8 @@ public:
                             {
                                 player->UpdateDonateStatistics(SERVICE_CHANGE_FACTION);
                                 uint8 index = 0;
-                                SQLTransaction trans = LoginDatabase.BeginTransaction();
-                                PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_INS_STORE_ADD_ITEM_LOG_SERVICE);
+                                LoginDatabaseTransaction trans = LoginDatabase.BeginTransaction();
+                                LoginDatabasePreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_INS_STORE_ADD_ITEM_LOG_SERVICE);
                                 stmt->setUInt32(  index, realm.Id.Realm);
                                 stmt->setUInt32(  ++index, player->GetSession()->GetAccountId()); 
                                 stmt->setUInt32(  ++index, player->GetSession()->GetBattlenetAccountId()); // select battlenet_account from account where id = %u
@@ -336,8 +336,8 @@ public:
                             {
                                 player->UpdateDonateStatistics(SERVICE_CHANGE_RACE);
                                 uint8 index = 0;
-                                SQLTransaction trans = LoginDatabase.BeginTransaction();
-                                PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_INS_STORE_ADD_ITEM_LOG_SERVICE);
+                                LoginDatabaseTransaction trans = LoginDatabase.BeginTransaction();
+                                LoginDatabasePreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_INS_STORE_ADD_ITEM_LOG_SERVICE);
                                 stmt->setUInt32(  index, realm.Id.Realm);
                                 stmt->setUInt32(  ++index, player->GetSession()->GetAccountId()); 
                                 stmt->setUInt32(  ++index, player->GetSession()->GetBattlenetAccountId()); // select battlenet_account from account where id = %u
@@ -394,8 +394,8 @@ public:
                             if (player->DestroyDonateTokenCount(priceGender))
                             {
                                 player->UpdateDonateStatistics(SERVICE_CHANGE_GENDER);
-                                SQLTransaction trans = LoginDatabase.BeginTransaction();
-                                PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_INS_STORE_ADD_ITEM_LOG_SERVICE);
+                                LoginDatabaseTransaction trans = LoginDatabase.BeginTransaction();
+                                LoginDatabasePreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_INS_STORE_ADD_ITEM_LOG_SERVICE);
                                 uint8 index = 0;
                                 stmt->setUInt32(  index, realm.Id.Realm);
                                 stmt->setUInt32(  ++index, player->GetSession()->GetAccountId()); 
@@ -453,8 +453,8 @@ public:
                             if (player->DestroyDonateTokenCount(priceName))
                             {
                                 player->UpdateDonateStatistics(SERVICE_CHANGE_NAME);
-                                SQLTransaction trans = LoginDatabase.BeginTransaction();
-                                PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_INS_STORE_ADD_ITEM_LOG_SERVICE);
+                                LoginDatabaseTransaction trans = LoginDatabase.BeginTransaction();
+                                LoginDatabasePreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_INS_STORE_ADD_ITEM_LOG_SERVICE);
                                 uint8 index = 0;
                                 stmt->setUInt32(  index, realm.Id.Realm);
                                 stmt->setUInt32(  ++index, player->GetSession()->GetAccountId()); 
@@ -751,8 +751,8 @@ public:
                                 {
                                     player->UpdateDonateStatistics(SERVICE_SELL_ADD_BONUS);
                                     uint8 index = 0;
-                                    SQLTransaction trans = LoginDatabase.BeginTransaction();
-                                    PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_INS_STORE_ADD_ITEM_LOG_BONUS);
+                                    LoginDatabaseTransaction trans = LoginDatabase.BeginTransaction();
+                                    LoginDatabasePreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_INS_STORE_ADD_ITEM_LOG_BONUS);
                                     stmt->setUInt32(  index, realm.Id.Realm);
                                     stmt->setUInt32(  ++index, player->GetSession()->GetAccountId()); 
                                     stmt->setUInt32(  ++index, player->GetSession()->GetBattlenetAccountId()); // select battlenet_account from account where id = %u
@@ -947,8 +947,8 @@ public:
                             {
                                 player->UpdateDonateStatistics(SERVICE_GUILD_RENAME);
                                 uint8 index = 0;
-                                SQLTransaction trans = LoginDatabase.BeginTransaction();
-                                PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_INS_STORE_ADD_ITEM_LOG_GUILD_RENAME);
+                                LoginDatabaseTransaction trans = LoginDatabase.BeginTransaction();
+                                LoginDatabasePreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_INS_STORE_ADD_ITEM_LOG_GUILD_RENAME);
                                 stmt->setUInt32(index, realm.Id.Realm);
                                 stmt->setUInt32(++index, player->GetSession()->GetAccountId());
                                 stmt->setUInt32(++index, player->GetSession()->GetBattlenetAccountId()); // select battlenet_account from account where id = %u
@@ -1077,8 +1077,8 @@ public:
                         {
                             player->UpdateDonateStatistics(SERVICE_LEVEL_UP);
                             uint8 index = 0;
-                            SQLTransaction trans = LoginDatabase.BeginTransaction();
-                            PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_INS_STORE_ADD_ITEM_LOG_SERVICE);
+                            LoginDatabaseTransaction trans = LoginDatabase.BeginTransaction();
+                            LoginDatabasePreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_INS_STORE_ADD_ITEM_LOG_SERVICE);
                             stmt->setUInt32(index, realm.Id.Realm);
                             stmt->setUInt32(++index, player->GetSession()->GetAccountId());
                             stmt->setUInt32(++index, player->GetSession()->GetBattlenetAccountId()); // select battlenet_account from account where id = %u
@@ -1206,8 +1206,8 @@ public:
                     {
                         player->UpdateDonateStatistics(SERVICE_SELL_GOLD);
                         uint8 index = 0;
-                        SQLTransaction trans = LoginDatabase.BeginTransaction();
-                        PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_INS_STORE_ADD_ITEM_LOG_SERVICE);
+                        LoginDatabaseTransaction trans = LoginDatabase.BeginTransaction();
+                        LoginDatabasePreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_INS_STORE_ADD_ITEM_LOG_SERVICE);
                         stmt->setUInt32(index, realm.Id.Realm);
                         stmt->setUInt32(++index, player->GetSession()->GetAccountId());
                         stmt->setUInt32(++index, player->GetSession()->GetBattlenetAccountId()); // select battlenet_account from account where id = %u
@@ -1336,8 +1336,8 @@ public:
                             {
                                 player->UpdateDonateStatistics(SERVICE_SELL_ART_XP);
                                 uint8 index = 0;
-                                SQLTransaction trans = LoginDatabase.BeginTransaction();
-                                PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_INS_STORE_ADD_ITEM_LOG_SERVICE_ART);
+                                LoginDatabaseTransaction trans = LoginDatabase.BeginTransaction();
+                                LoginDatabasePreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_INS_STORE_ADD_ITEM_LOG_SERVICE_ART);
                                 stmt->setUInt32(index, realm.Id.Realm);
                                 stmt->setUInt32(++index, player->GetSession()->GetAccountId());
                                 stmt->setUInt32(++index, player->GetSession()->GetBattlenetAccountId()); // select battlenet_account from account where id = %u
@@ -1485,10 +1485,10 @@ public:
                 {
                     TC_LOG_DEBUG("entities.player.items", "[Status] Return item  guid = %u, entry = %u, return_tokens = %u %s", item_guid, item_entry, uint32(efircount * 0.7), player->GetInfoForDonate().c_str());
                     { // status
-                        SQLTransaction transs = LoginDatabase.BeginTransaction();
+                        LoginDatabaseTransaction transs = LoginDatabase.BeginTransaction();
 
                         uint8 index = 0;
-                        PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_UPD_HISTORY_RETURN);
+                        LoginDatabasePreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_UPD_HISTORY_RETURN);
                         // stmt->setString(  ++index, TimeToTimestampStr(time(NULL)).c_str());
                         stmt->setUInt32(index, action); // return
                         stmt->setUInt32(++index, realm.Id.Realm);
@@ -1639,7 +1639,7 @@ public:
                         return false;
                     }
 
-                    PreparedStatement * stmt = LoginDatabase.GetPreparedStatement(LOGIN_SET_DUMP);
+                    LoginDatabasePreparedStatement * stmt = LoginDatabase.GetPreparedStatement(LOGIN_SET_DUMP);
                     if(stmt)
                     {
                         stmt->setUInt32(0, account_id);
@@ -1930,8 +1930,8 @@ class many_in_one_donate : public CreatureScript
                     
                     if (player->HasDonateToken(infoAdd->cost) && player->DestroyDonateTokenCount(infoAdd->cost))
                     {
-                        SQLTransaction trans = LoginDatabase.BeginTransaction();
-                        PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_INS_STORE_ADD_ITEM_LOG_ADDITIONAL);
+                        LoginDatabaseTransaction trans = LoginDatabase.BeginTransaction();
+                        LoginDatabasePreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_INS_STORE_ADD_ITEM_LOG_ADDITIONAL);
                         uint8 index = 0;
                         stmt->setUInt32(  index, realm.Id.Realm);
                         stmt->setUInt32(  ++index, player->GetSession()->GetAccountId()); 

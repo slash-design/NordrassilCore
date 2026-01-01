@@ -412,7 +412,7 @@ public:
         {
             uint32 entry = uint32(atoi(*itr));
 
-            PreparedStatement* stmt = WorldDatabase.GetPreparedStatement(WORLD_SEL_CREATURE_TEMPLATE);
+            WorldDatabasePreparedStatement* stmt = WorldDatabase.GetPreparedStatement(WORLD_SEL_CREATURE_TEMPLATE);
             stmt->setUInt32(0, entry);
             PreparedQueryResult result = WorldDatabase.Query(stmt);
 
@@ -1295,7 +1295,7 @@ public:
             return true;
         }
 
-        SQLTransaction trans = WorldDatabase.BeginTransaction();
+        WorldDatabaseTransaction trans = WorldDatabase.BeginTransaction();
 
         do
         {

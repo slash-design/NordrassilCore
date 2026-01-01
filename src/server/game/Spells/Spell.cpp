@@ -5873,10 +5873,10 @@ void Spell::TakeCastItem()
     if (expendable && withoutCharges)
     {
         { // donate
-            SQLTransaction transs = LoginDatabase.BeginTransaction();
-            TC_LOG_DEBUG("entities.player.items", "[Status] Status = 3 item  guid = %u, entry = %u, %s", m_CastItem->GetGUID().GetGUIDLow(), m_CastItem->GetEntry(), m_caster->ToPlayer()->GetInfoForDonate().c_str());
+            LoginDatabaseTransaction transs = LoginDatabase.BeginTransaction();
+            TC_LOG_DEBUG("misc", "[Status] Status = 3 item  guid = %u, entry = %u, %s", m_CastItem->GetGUID().GetGUIDLow(), m_CastItem->GetEntry(), m_caster->ToPlayer()->GetInfoForDonate().c_str());
             uint8 index = 0;
-            PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_UPD_HISTORY_STATUS);
+            LoginDatabasePreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_UPD_HISTORY_STATUS);
             stmt->setUInt32(  index, 3); // used and del
             stmt->setUInt32(  ++index, m_CastItem->GetGUID().GetGUIDLow()); 
             stmt->setUInt32(  ++index, realm.Id.Realm); 
@@ -5900,10 +5900,10 @@ void Spell::TakeCastItem()
     else
     {
         { // donate
-            SQLTransaction transs = LoginDatabase.BeginTransaction();
-            TC_LOG_DEBUG("entities.player.items", "[Status] Status = 6 item  guid = %u, entry = %u, %s", m_CastItem->GetGUID().GetGUIDLow(), m_CastItem->GetEntry(), m_caster->ToPlayer()->GetInfoForDonate().c_str());
+            LoginDatabaseTransaction transs = LoginDatabase.BeginTransaction();
+            TC_LOG_DEBUG("misc", "[Status] Status = 6 item  guid = %u, entry = %u, %s", m_CastItem->GetGUID().GetGUIDLow(), m_CastItem->GetEntry(), m_caster->ToPlayer()->GetInfoForDonate().c_str());
             uint8 index = 0;
-            PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_UPD_HISTORY_STATUS);
+            LoginDatabasePreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_UPD_HISTORY_STATUS);
             stmt->setUInt32(  index, 6); // used without del
             stmt->setUInt32(  ++index, m_CastItem->GetGUID().GetGUIDLow()); 
             stmt->setUInt32(  ++index, realm.Id.Realm); 

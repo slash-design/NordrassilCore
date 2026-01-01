@@ -607,24 +607,24 @@ public:
         }
         
         target->AddItem(itemId, 1);
-        
-        TC_LOG_DEBUG("entities.player.items", "[Buy Online] item entry = %u, cost = %u, %s", itemId, tokenCount, target->GetInfoForDonate().c_str());
-        
-        SQLTransaction trans = LoginDatabase.BeginTransaction();
-        
-		uint8 index = 0;
-        PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_INS_STORE_ADD_ITEM_LOG);
-        stmt->setUInt32(  index, realm.Id.Realm);
-        stmt->setUInt32(  ++index, target->GetSession()->GetAccountId()); 
-        stmt->setUInt32(  ++index, target->GetSession()->GetBattlenetAccountId()); // select battlenet_account from account where id = %u
-        stmt->setUInt64(  ++index, target->GetGUIDLow());
-        stmt->setUInt64(  ++index, 0); // item_guid
-        stmt->setUInt32(  ++index, itemId); // item entry
-        stmt->setUInt32(  ++index, 1); // item count
-        stmt->setInt64(  ++index, tokenCount); // cost
-        stmt->setUInt32(  ++index, target->getLevel()); // level
-        stmt->setInt32(  ++index, 0); // donate Store id
-        stmt->setInt32(  ++index, 0); // select for bonus
+
+        TC_LOG_DEBUG("misc", "[Buy Online] item entry = %u, cost = %u, %s", itemId, tokenCount, target->GetInfoForDonate().c_str());
+
+        LoginDatabaseTransaction trans = LoginDatabase.BeginTransaction();
+
+        uint8 index = 0;
+        LoginDatabasePreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_INS_STORE_ADD_ITEM_LOG);
+        stmt->setUInt32(index, realm.Id.Realm);
+        stmt->setUInt32(++index, target->GetSession()->GetAccountId());
+        //stmt->setUInt32(  ++index, target->GetSession()->GetBattlenetAccountId()); // select battlenet_account from account where id = %u
+        stmt->setUInt64(++index, target->GetGUIDLow());
+        stmt->setUInt64(++index, 0); // item_guid
+        stmt->setUInt32(++index, itemId); // item entry
+        stmt->setUInt32(++index, 1); // item count
+        stmt->setInt64(++index, tokenCount); // cost
+        stmt->setUInt32(++index, target->getLevel()); // level
+        stmt->setInt32(++index, 0); // donate Store id
+        stmt->setInt32(++index, 0); // select for bonus
 
         trans->Append(stmt);
         LoginDatabase.CommitTransaction(trans);        

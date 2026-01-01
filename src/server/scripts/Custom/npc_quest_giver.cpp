@@ -59,9 +59,9 @@ public:
 
                 creature->AddDelayedEvent(1000, [this, lowGuid, id]() -> void
                 {
-                    SQLTransaction trans = CharacterDatabase.BeginTransaction();
+                        CharacterDatabaseTransaction trans = CharacterDatabase.BeginTransaction();
 
-                    PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_CHARACTER_GARRISON_ONLY);
+                    CharacterDatabasePreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_CHARACTER_GARRISON_ONLY);
                     stmt->setUInt64(0, lowGuid);
                     trans->Append(stmt);
 

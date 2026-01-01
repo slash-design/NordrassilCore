@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `account` (
   `failed_logins` int(10) unsigned NOT NULL DEFAULT '0',
   `locked` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `lock_country` varchar(2) NOT NULL DEFAULT '00',
-  `last_login` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `last_login` timestamp NULL DEFAULT NULL,
   `online` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `expansion` tinyint(3) unsigned NOT NULL DEFAULT '5',
   `mutetime` bigint(20) NOT NULL DEFAULT '0',
@@ -793,7 +793,7 @@ CREATE TABLE IF NOT EXISTS `store_category_locales` (
   `description_it` varchar(255) NOT NULL DEFAULT '',
   `description_ua` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`category`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC ;
 
 -- Volcando datos para la tabla auth.store_category_locales: ~0 rows (aproximadamente)
 DELETE FROM `store_category_locales`;
@@ -873,7 +873,7 @@ CREATE TABLE IF NOT EXISTS `store_history` (
   `trans_project` varchar(255) NOT NULL DEFAULT '',
   `trans_realm` int(11) unsigned NOT NULL DEFAULT '0',
   `dt_buy` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `dt_return` timestamp NULL DEFAULT '0000-00-00 00:00:00',
+  `dt_return` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   KEY `item_guid` (`item_guid`) USING BTREE,
   KEY `realm` (`realm`) USING BTREE,

@@ -66,8 +66,8 @@ target_include_directories(scripts
     ${CMAKE_CURRENT_BINARY_DIR})
 
 target_link_libraries(scripts
-    PRIVATE
-      trinity-core-interface
+  PRIVATE
+    trinity-core-interface
   PUBLIC
     game)
 

@@ -4619,7 +4619,8 @@ public:
 			//
 			// Exportar para el fichero
 			_FileName << "Export/" << "GameObject " << "[" << aEntry << "] " << CheckName(_GameObjectName) << ".sql";
-			this->FlushToFile(_FileName.str(), aEntry, _GameObjectName);
+			std::string _fName = _FileName.str();
+			this->FlushToFile(_fName, aEntry, _GameObjectName);
 
 			this->fHandler->PSendSysMessage("%s gameobject_template exported in: %u ms.", _GameObjectName.c_str(), ::GetMSTimeDiffToNow(_StartTime));
 			return true;
@@ -4728,7 +4729,8 @@ public:
 			//
 			// Exportar para el fichero
 			_FileName << "Export/" << "Quest " << "[" << aEntry << "] " << CheckName(_QuestName) << ".sql";
-			this->FlushToFile(_FileName.str(), aEntry, _QuestName);
+			std::string _fName = _FileName.str();
+			this->FlushToFile(_fName, aEntry, _QuestName);
 
 			this->fHandler->PSendSysMessage("%s quest_template exported in: %u ms.", _QuestName.c_str(), ::GetMSTimeDiffToNow(_StartTime));
 			return true;
@@ -4807,7 +4809,8 @@ public:
 			this->exportNpcSpellclickSpells(aEntry);
 
 			_FileName << "Export/" << "Creature " << "[" << aEntry << "] " << CheckName(_CreatureName) << " " << ".sql";
-			this->FlushToFile(_FileName.str(), aEntry, _CreatureName);
+			std::string _fName = _FileName.str();
+			this->FlushToFile(_fName, aEntry, _CreatureName);
 			//
 			// Notificar q todo acabo ok
 			this->fHandler->PSendSysMessage("%s creature exported in: %u ms.", _CreatureName.c_str(), ::getMSTime() - _StartTime);

@@ -468,12 +468,12 @@ void WorldSession::HandleSellItemOpcode(WorldPackets::Item::SellItem& packet)
                 player->UpdateAchievementCriteria(CRITERIA_TYPE_MONEY_FROM_VENDORS, money);
                 player->SendSellError(SELL_ERR_OK, creature, packet.ItemGUID);
                 
-                SQLTransaction transs = LoginDatabase.BeginTransaction();
+                LoginDatabaseTransaction transs = LoginDatabase.BeginTransaction();
                 
                 TC_LOG_DEBUG("entities.player.items", "[Status] Status = 2 item  guid = %u, entry = %u, %s", item->GetGUIDLow(), item->GetEntry(), player->GetInfoForDonate().c_str());
                 
                 uint8 index = 0;
-                PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_UPD_HISTORY_STATUS);
+                LoginDatabasePreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_UPD_HISTORY_STATUS);
                 stmt->setUInt32(  index, 2);
                 stmt->setUInt32(  ++index, item->GetGUID().GetGUIDLow());
                 stmt->setUInt32(  ++index, realm.Id.Realm);                 
@@ -796,9 +796,9 @@ void WorldSession::HandleWrapItem(WorldPackets::Item::WrapItem& packet)
         return;
     }
 
-    SQLTransaction trans = CharacterDatabase.BeginTransaction();
+    CharacterDatabaseTransaction trans = CharacterDatabase.BeginTransaction();
 
-    PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_INS_CHAR_GIFT);
+    CharacterDatabasePreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_INS_CHAR_GIFT);
     stmt->setUInt64(0, item->GetOwnerGUID().GetCounter());
     stmt->setUInt64(1, item->GetGUIDLow());
     stmt->setUInt32(2, item->GetEntry());
@@ -1159,7 +1159,7 @@ void WorldSession::HandleOpenItem(WorldPackets::Spells::OpenItem& packet)
 
     if (item->HasFlag(ITEM_FIELD_DYNAMIC_FLAGS, ITEM_FLAG_WRAPPED))
     {
-        PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_SEL_CHARACTER_GIFT_BY_ITEM);
+        CharacterDatabasePreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_SEL_CHARACTER_GIFT_BY_ITEM);
 
         stmt->setUInt64(0, item->GetGUIDLow());
 

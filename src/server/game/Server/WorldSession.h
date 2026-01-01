@@ -1072,7 +1072,7 @@ class WorldSession
         void SendAuthResponse(uint8 code, bool CharacterTemplate, bool queued = false, uint32 queuePos = 0);
         void SendClientCacheVersion(uint32 version);
         void InitializeSession();
-        void InitializeSessionCallback(SQLQueryHolder* realmHolder, SQLQueryHolder* holder);
+        void InitializeSessionCallback(LoginDatabaseQueryHolder* realmHolder, CharacterDatabaseQueryHolder* holder);
 
         void HandleGetPurchaseListQuery(WorldPackets::BattlePay::GetPurchaseListQuery& packet);
         void HandleBattlePayQueryClassTrialResult(WorldPackets::BattlePay::BattlePayQueryClassTrialResult& packet);
@@ -1172,7 +1172,7 @@ class WorldSession
 
         void LoadTutorialsData(PreparedQueryResult const& result);
         void SendTutorialsData();
-        void SaveTutorialsData(SQLTransaction& trans);
+        void SaveTutorialsData(CharacterDatabaseTransaction& trans);
         uint32 GetTutorialInt(uint8 index) const;
         void SetTutorialInt(uint8 index, uint32 value);
         //auction

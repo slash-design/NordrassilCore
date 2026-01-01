@@ -4979,7 +4979,7 @@ void Map::SaveCreatureRespawnTime(ObjectGuid::LowType const& dbGuid, time_t resp
 
     if (respawnTime > (time(nullptr) + 900))
     {
-        PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_REP_CREATURE_RESPAWN);
+        CharacterDatabasePreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_REP_CREATURE_RESPAWN);
         stmt->setUInt64(0, dbGuid);
         stmt->setUInt32(1, uint32(respawnTime));
         stmt->setUInt16(2, GetId());
@@ -4994,7 +4994,7 @@ void Map::RemoveCreatureRespawnTime(ObjectGuid::LowType const& dbGuid)
     _creatureRespawnTimes.erase(dbGuid);
     i_lockCreatureRespawn.unlock();
 
-    PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_CREATURE_RESPAWN);
+    CharacterDatabasePreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_CREATURE_RESPAWN);
     stmt->setUInt64(0, dbGuid);
     stmt->setUInt16(1, GetId());
     stmt->setUInt32(2, GetInstanceId());
@@ -5016,7 +5016,7 @@ void Map::SaveGORespawnTime(ObjectGuid::LowType const& dbGuid, time_t respawnTim
 
     if (respawnTime > (time(nullptr) + 900))
     {
-        PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_REP_GO_RESPAWN);
+        CharacterDatabasePreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_REP_GO_RESPAWN);
         stmt->setUInt64(0, dbGuid);
         stmt->setUInt32(1, uint32(respawnTime));
         stmt->setUInt16(2, GetId());
@@ -5031,7 +5031,7 @@ void Map::RemoveGORespawnTime(ObjectGuid::LowType const& dbGuid)
     _goRespawnTimes.erase(dbGuid);
     i_lockGoRespawn.unlock();
 
-    PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_GO_RESPAWN);
+    CharacterDatabasePreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_GO_RESPAWN);
     stmt->setUInt64(0, dbGuid);
     stmt->setUInt16(1, GetId());
     stmt->setUInt32(2, GetInstanceId());
@@ -5040,7 +5040,7 @@ void Map::RemoveGORespawnTime(ObjectGuid::LowType const& dbGuid)
 
 void Map::LoadRespawnTimes()
 {
-    PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_SEL_CREATURE_RESPAWNS);
+    CharacterDatabasePreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_SEL_CREATURE_RESPAWNS);
     stmt->setUInt16(0, GetId());
     stmt->setUInt32(1, GetInstanceId());
     if (PreparedQueryResult result = CharacterDatabase.Query(stmt))
@@ -5086,7 +5086,7 @@ void Map::DeleteRespawnTimes()
 
 void Map::DeleteRespawnTimesInDB(uint16 mapId, uint32 instanceId)
 {
-    PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_CREATURE_RESPAWN_BY_INSTANCE);
+    CharacterDatabasePreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_CREATURE_RESPAWN_BY_INSTANCE);
     stmt->setUInt16(0, mapId);
     stmt->setUInt32(1, instanceId);
     CharacterDatabase.Execute(stmt);

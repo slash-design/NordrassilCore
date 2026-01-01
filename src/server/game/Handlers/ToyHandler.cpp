@@ -48,10 +48,10 @@ void WorldSession::HandleAddToy(WorldPackets::Toy::AddToy& packet)
     if (player->GetCollectionMgr()->AddToy(item->GetEntry(), false))
     {
         { // donate status
-            SQLTransaction transs = LoginDatabase.BeginTransaction();
-            TC_LOG_DEBUG("entities.player.items", "[Status] Status = 3 item guid = %u, entry = %u, %s", item->GetGUID().GetGUIDLow(), item->GetEntry(), player->GetInfoForDonate().c_str());
+            LoginDatabaseTransaction transs = LoginDatabase.BeginTransaction();
+            TC_LOG_DEBUG("misc", "[Status] Status = 3 item guid = %u, entry = %u, %s", item->GetGUID().GetGUIDLow(), item->GetEntry(), player->GetInfoForDonate().c_str());
             uint8 index = 0;
-            PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_UPD_HISTORY_STATUS);
+            LoginDatabasePreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_UPD_HISTORY_STATUS);
             stmt->setUInt32(  index, 3);
             stmt->setUInt32(  ++index, item->GetGUID().GetGUIDLow()); 
             stmt->setUInt32(  ++index, realm.Id.Realm); 

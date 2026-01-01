@@ -254,8 +254,8 @@ int32 LoginRESTService::HandlePost(soap* soapClient)
 
     Utf8ToUpperOnlyLatin(login);
     Utf8ToUpperOnlyLatin(password);
-    
-    PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_SEL_BNET_ACCOUNT_EMAIL_BY_ACC);
+
+    LoginDatabasePreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_SEL_BNET_ACCOUNT_EMAIL_BY_ACC);
 
     if (sConfigMgr->GetBoolDefault("Login.with.account", false))
     {

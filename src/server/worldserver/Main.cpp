@@ -20,8 +20,10 @@
 /// @{
 /// \file
 
+#include <boost/asio/signal_set.hpp>
 #include <boost/bind/bind.hpp>
 #include <boost/program_options.hpp>
+#include <boost/dll/runtime_symbol_info.hpp>
 #include <cds/gc/hp.h>
 #include <cds/init.h>
 #include <google/protobuf/stubs/common.h>
@@ -168,7 +170,7 @@ extern int main(int argc, char **argv)
     }
     );
 
-    OpenSSLCrypto::threadsSetup();
+    OpenSSLCrypto::threadsSetup(boost::dll::program_location().remove_filename());
 
     std::shared_ptr<void> opensslHandle(nullptr, [](void*) { OpenSSLCrypto::threadsCleanup(); });
 
