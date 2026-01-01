@@ -556,6 +556,12 @@ PoolMgr::PoolMgr() : max_pool_id(0)
 {
 }
 
+PoolMgr* PoolMgr::instance()
+{
+    static PoolMgr instance;
+    return &instance;
+}
+
 void PoolMgr::Initialize()
 {
     QueryResult result = WorldDatabase.Query("SELECT MAX(entry) FROM pool_template");
