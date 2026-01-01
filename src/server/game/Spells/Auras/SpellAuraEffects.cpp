@@ -1683,7 +1683,7 @@ void AuraEffect::CalculateFromDummyAmount(Unit* caster, Unit* target, float &amo
         if (check && itr.removeAura)
             _caster->RemoveAurasDueToSpell(itr.removeAura);
     }
-    TC_LOG_DEBUG("spells", "AuraEffect::CalculateFromDummyAmount end GetId %i, amount %i m_effIndex %u m_amount_mod %u", GetId(), amount, m_effIndex, m_amount_mod);
+    TC_LOG_DEBUG("spells", "AuraEffect::CalculateFromDummyAmount end GetId %i, amount %f m_effIndex %u m_amount_mod %f", GetId(), amount, m_effIndex, m_amount_mod);
 }
 
 void AuraEffect::CalculatePeriodic(Unit* caster, bool resetPeriodicTimer /*= true*/, bool load /*= false*/)
@@ -5126,7 +5126,7 @@ void AuraEffect::HandleModPowerRegenPCT(AuraApplication const* aurApp, uint8 mod
             break;
     }
 
-    TC_LOG_DEBUG("spells", "AuraEffect::HandleModPowerRegenPCT mode %i, apply %i, GetAmount %i", mode, apply, GetAmount());
+    TC_LOG_DEBUG("spells", "AuraEffect::HandleModPowerRegenPCT mode %i, apply %i, GetAmount %f", mode, apply, GetAmount());
 }
 
 void AuraEffect::HandleModManaRegen(AuraApplication const* aurApp, uint8 mode, bool /*apply*/) const
@@ -8022,7 +8022,7 @@ void AuraEffect::HandlePeriodicDamageAurasTick(Unit* target, Unit* caster, Spell
 
     damage = caster->InterceptionOfDamage(target, dmg, m_spellInfo->GetSchoolMask());
 
-    TC_LOG_INFO("spells", "PeriodicTick: Caster %u attacked %u dmg %u damage %i GetId %u absorb %u", GetCasterGUID().GetGUIDLow(), target->GetGUIDLow(), dmg, damage, GetId(), absorb);
+    TC_LOG_INFO("spells", "PeriodicTick: Caster %u attacked %u dmg %f damage %i GetId %u absorb %u", GetCasterGUID().GetGUIDLow(), target->GetGUIDLow(), dmg, damage, GetId(), absorb);
 
     caster->DealDamageMods(target, damage, &absorb, GetSpellInfo(), GetBase()->GetTriggeredCastFlags() & TRIGGERED_CASTED_BY_AREATRIGGER);
 
@@ -8227,7 +8227,7 @@ void AuraEffect::HandlePeriodicHealthLeechAuraTick(Unit* target, Unit* caster, S
     damage = caster->InterceptionOfDamage(target, dmg, m_spellInfo->GetSchoolMask());
     caster->CalcAbsorbResist(target, GetSpellInfo()->GetSchoolMask(), DOT, damage, &absorb, &resist, m_spellInfo);
 
-    TC_LOG_INFO("spells", "PeriodicTick: %s health leech of %s for %u dmg inflicted by %u abs is %u",
+    TC_LOG_INFO("spells", "PeriodicTick: %s health leech of %s for %f dmg inflicted by %u abs is %u",
         GetCasterGUID().ToString().c_str(), target->GetGUID().ToString().c_str(), damage, GetId(), absorb);
 
     uint32 tempDmg = damage;
@@ -8287,7 +8287,7 @@ void AuraEffect::HandlePeriodicHealthFunnelAuraTick(Unit* target, Unit* caster, 
     GetBase()->CallScriptEffectChangeTickDamageHandlers(const_cast<AuraEffect const*>(this), damage, target);
 
     caster->ModifyHealth(-static_cast<int32>(damage), nullptr, GetId());
-    TC_LOG_DEBUG("spells", "PeriodicTick: donator %u target %u damage %u.", caster->GetEntry(), target->GetEntry(), damage);
+    TC_LOG_DEBUG("spells", "PeriodicTick: donator %u target %u damage %f.", caster->GetEntry(), target->GetEntry(), damage);
 
     float gainMultiplier = GetSpellInfo()->GetEffect(GetEffIndex(), m_diffMode)->CalcValueMultiplier(caster);
 
@@ -8514,7 +8514,7 @@ void AuraEffect::HandlePeriodicHealAurasTick(Unit* target, Unit* caster, SpellEf
     if (crit)
         damage = caster->SpellCriticalHealingBonus(m_spellInfo, damage);
 
-    TC_LOG_INFO("spells", "PeriodicTick: %s heal of %s for %u health inflicted by %u",
+    TC_LOG_INFO("spells", "PeriodicTick: %s heal of %s for %f health inflicted by %u",
         GetCasterGUID().ToString().c_str(), target->GetGUID().ToString().c_str(), damage, GetId());
 
     GetBase()->CallScriptEffectChangeTickDamageHandlers(const_cast<AuraEffect const*>(this), damage, target);
@@ -8590,7 +8590,7 @@ void AuraEffect::HandlePeriodicManaLeechAuraTick(Unit* target, Unit* caster, Spe
 
     GetBase()->CallScriptEffectChangeTickDamageHandlers(const_cast<AuraEffect const*>(this), drainAmount, target);
 
-    TC_LOG_INFO("spells", "PeriodicTick: %s power leech of %s for %u dmg inflicted by %u",
+    TC_LOG_INFO("spells", "PeriodicTick: %s power leech of %s for %f dmg inflicted by %u",
         GetCasterGUID().ToString().c_str(), target->GetGUID().ToString().c_str(), drainAmount, GetId());
 
     int32 drainedAmount = -target->ModifyPower(powerType, -drainAmount, true);
@@ -8649,7 +8649,7 @@ void AuraEffect::HandleObsModPowerAuraTick(Unit* target, Unit* caster, SpellEffI
 
     GetBase()->CallScriptEffectChangeTickDamageHandlers(const_cast<AuraEffect const*>(this), amount, target);
     
-    TC_LOG_INFO("spells", "PeriodicTick: %s energize of %s for %u dmg inflicted by %u",
+    TC_LOG_INFO("spells", "PeriodicTick: %s energize of %s for %f dmg inflicted by %u",
         GetCasterGUID().ToString().c_str(), target->GetGUID().ToString().c_str(), amount, GetId());
 
     SpellPeriodicAuraLogInfo pInfo(this, amount, 0, 0, 0, 0.0f, false);
@@ -8696,7 +8696,7 @@ void AuraEffect::HandlePeriodicEnergizeAuraTick(Unit* target, Unit* caster, Spel
     SpellPeriodicAuraLogInfo pInfo(this, amount, 0, 0, 0, 0.0f, false);
     target->SendPeriodicAuraLog(&pInfo);
 
-    TC_LOG_INFO("spells", "PeriodicTick: %s energize of %s for %u dmg inflicted by %u",
+    TC_LOG_INFO("spells", "PeriodicTick: %s energize of %s for %f dmg inflicted by %u",
         GetCasterGUID().ToString().c_str(), target->GetGUID().ToString().c_str(), amount, GetId());
 
     int32 gain = target->ModifyPower(powerType, amount, true);
@@ -8800,7 +8800,7 @@ void AuraEffect::HandleProcTriggerSpellWithValueAuraProc(AuraApplication* aurApp
     if (SpellInfo const* triggeredSpellInfo = sSpellMgr->GetSpellInfo(triggerSpellId))
     {
         float basepoints0 = GetAmount();
-        TC_LOG_DEBUG("spells", "AuraEffect::HandleProcTriggerSpellWithValueAuraProc: Triggering spell %u with value %d from aura %u proc", triggeredSpellInfo->Id, basepoints0, GetId());
+        TC_LOG_DEBUG("spells", "AuraEffect::HandleProcTriggerSpellWithValueAuraProc: Triggering spell %u with value %f from aura %u proc", triggeredSpellInfo->Id, basepoints0, GetId());
         triggerCaster->CastCustomSpell(triggerTarget, triggerSpellId, &basepoints0, nullptr, nullptr, true, nullptr, this);
     }
     else

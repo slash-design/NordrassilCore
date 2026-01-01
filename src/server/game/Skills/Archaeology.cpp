@@ -525,7 +525,7 @@ void Player::GenerateResearchSites()
 
 	_archaeologyChanged = true;
 	std::vector<uint32> const research = GetDynamicValues(PLAYER_DYNAMIC_FIELD_RESEARCH_SITES);
-	TC_LOG_INFO("spells", "Player::GenerateResearchSites(): %u", research.size());
+	TC_LOG_INFO("spells", "Player::GenerateResearchSites(): %zu", research.size());
 }
 
 float Player::GetRareArtifactChance(uint32 skill_value)
