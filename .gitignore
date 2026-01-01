@@ -22,3 +22,5 @@ nbproject/*
 .vscode
 cmake-build-*/
 .vs
+*.user
+.cache/
