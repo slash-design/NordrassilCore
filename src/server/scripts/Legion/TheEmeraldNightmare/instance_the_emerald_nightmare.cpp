@@ -197,6 +197,21 @@ public:
                                     if (!egg->IsAlive())
                                         egg->Respawn();
                             break;
+                        case NOT_STARTED:
+                            // TODO: handle NOT_STARTED if needed
+                            break;
+                        case DONE:
+                            // TODO: handle DONE if needed
+                            break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                     }
                     break;
                 }

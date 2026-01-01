@@ -235,6 +235,18 @@ public:
                             break;
                         default:
                             break;
+                        case IN_PROGRESS:
+                            // TODO: handle IN_PROGRESS if needed
+                            break;
+                        case DONE:
+                            // TODO: handle DONE if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                     }
                     break;
             }
@@ -280,7 +292,7 @@ public:
                             SetData(DATA_EGG_EVENT, IN_PROGRESS);
                         ++EggCount;
                         if (EggCount < 15)
-                            this->DoSendNotifyToInstance("Осталось %i яиц.", 15-EggCount);
+                            this->DoSendNotifyToInstance("ÐÑÑÐ°Ð»Ð¾ÑÑ %i ÑÐ¸Ñ.", 15-EggCount);
                         else if (EggCount == 15)
                         {
                             if (Creature* razor = instance->GetCreature(RazorgoreTheUntamedGUID))

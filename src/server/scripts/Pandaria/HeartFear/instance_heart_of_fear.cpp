@@ -235,6 +235,15 @@ public:
                         for (GuidVector::const_iterator guid = vizierarenadoorGuids.begin(); guid != vizierarenadoorGuids.end(); guid++)
                             HandleGameObject(*guid, false);
                         break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                     }
                     break;
                 }
@@ -253,6 +262,15 @@ public:
                     case IN_PROGRESS:
                         HandleGameObject(vizierexdoorGuid, false);
                         break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                     }
                     break;
                 }
@@ -275,6 +293,15 @@ public:
                         for (GuidVector::const_iterator guid = garaloncdoorGuids.begin(); guid != garaloncdoorGuids.end(); guid++)
                             HandleGameObject(*guid, false);
                         break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                     }
                     break;
                 }
@@ -319,6 +346,15 @@ public:
                         for (GuidVector::const_iterator guids = garalonexdoorGuids.begin(); guids != garalonexdoorGuids.end(); guids++)
                             HandleGameObject(*guids, true);
                         break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                     }
                     break;
                 }
@@ -336,6 +372,15 @@ public:
                         HandleGameObject(unsokendoorGuid, true);
                         HandleGameObject(unsokexdoorGuid, true);
                         break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                     }
                     break;
                 }
@@ -350,6 +395,15 @@ public:
                     case IN_PROGRESS:
                         HandleGameObject(unsokexdoorGuid, false);
                         break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                     }
                     break;
                 }

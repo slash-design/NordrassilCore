@@ -170,6 +170,15 @@ public:
                         HandleGameObject(doorGuid, true);
                         HandleGameObject(door2Guid, true);
                         break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                     }
                 }
                 break;
@@ -187,6 +196,15 @@ public:
                         HandleGameObject(door2Guid, true);
                         HandleGameObject(door3Guid, true);
                         break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                     }
                 }
                 break;
@@ -205,6 +223,15 @@ public:
                         HandleGameObject(door4Guid, true);
                         HandleGameObject(door5Guid, true);
                         break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                     }
                 }
                 break;
@@ -223,6 +250,15 @@ public:
                         HandleGameObject(door6Guid, true);
                         HandleGameObject(door7Guid, true);
                         break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                     }
                 }
                 break;
@@ -237,6 +273,15 @@ public:
                     case IN_PROGRESS:
                         HandleGameObject(lastdoorGuid, false);
                         break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                     }
                 }                
                 break;

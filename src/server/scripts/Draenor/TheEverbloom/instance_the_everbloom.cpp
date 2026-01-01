@@ -66,6 +66,15 @@ public:
                             if (auto dulhu = instance->GetCreature(protectorsGUIDconteiner[NPC_DULHU]))
                                 dulhu->SetFlag(OBJECT_FIELD_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
                             break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                     }
                     break;
                 }
@@ -80,6 +89,21 @@ public:
                                     yalnuTrash->DespawnOrUnsummon();
                             break;
                         }
+                        case IN_PROGRESS:
+                            // TODO: handle IN_PROGRESS if needed
+                            break;
+                        case DONE:
+                            // TODO: handle DONE if needed
+                            break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                     }
                     break;
                 }

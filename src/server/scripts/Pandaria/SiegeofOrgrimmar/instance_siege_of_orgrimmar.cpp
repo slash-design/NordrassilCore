@@ -992,6 +992,15 @@ public:
                     if (Creature* bq = instance->GetCreature(LorewalkerChoGUIDtmp))
                         bq->DespawnOrUnsummon();
                     break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                 }
                 break;
             }
@@ -1039,6 +1048,18 @@ public:
                     break;
                 default:
                     break;
+                        case DONE:
+                            // TODO: handle DONE if needed
+                            break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                 }
                 break;
             }
@@ -1062,6 +1083,15 @@ public:
                         SendEncounterUnit(ENCOUNTER_FRAME_ENGAGE, ij);
                     HandleGameObject(winddoorGuid, false);
                     break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                 }
                 break;
             }
@@ -1088,6 +1118,15 @@ public:
                             SendEncounterUnit(ENCOUNTER_FRAME_ENGAGE, shaman);
                     HandleGameObject(orgrimmargate2Guid, false);
                     break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                 }
                 break;
             }
@@ -1111,6 +1150,15 @@ public:
                     HandleGameObject(nazgrimdoorGuid, true);
                     HandleGameObject(nazgrimexdoorGuid, true);
                     break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                 }
                 break;
             }
@@ -1130,6 +1178,15 @@ public:
                     for (std::vector<ObjectGuid>::const_iterator itr = malkorokfenchGuids.begin(); itr != malkorokfenchGuids.end(); itr++)
                         HandleGameObject(*itr, true);
                     break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                 }
                 break;
             }
@@ -1253,6 +1310,12 @@ public:
                             if (spoil->GetEntry() == NPC_MOGU_SPOILS || spoil->GetEntry() == NPC_MANTIS_SPOILS)
                                 spoil->AI()->DoAction(ACTION_IN_PROGRESS);
                     break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                 }
                 break;
             }
@@ -1289,6 +1352,15 @@ public:
                     for (std::vector<ObjectGuid>::const_iterator itr = klaxxiarenagateGuid.begin(); itr != klaxxiarenagateGuid.end(); itr++)
                         HandleGameObject(*itr, true);
                     break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                 }
                 break;
             }
@@ -1330,6 +1402,15 @@ public:
                         SendEncounterUnit(ENCOUNTER_FRAME_DISENGAGE, thok);
                     HandleGameObject(thokentdoorGuid, true);
                     break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                 }
                 break;
             }
@@ -1349,6 +1430,15 @@ public:
                 case DONE:
                     HandleGameObject(blackfuseentdoorGuid, true);
                     break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                 }
             }
             break;
@@ -1381,6 +1471,15 @@ public:
                         if (Creature* kgs = instance->GetCreature(korkrongunshipGuid))
                             kgs->AI()->DoAction(ACTION_RESET);
                     break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                 }
             }
             break;

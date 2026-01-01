@@ -110,6 +110,18 @@ public:
                             if (Creature* skulloc = instance->GetCreature(skullocGUIDconteiner[NPC_SKULLOC]))
                                 skulloc->CastSpell(skulloc, SPELL_IRON_DOCKS_BANTER_5, true);
                             break;
+                        case IN_PROGRESS:
+                            // TODO: handle IN_PROGRESS if needed
+                            break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                     }
                     break;
                 }
@@ -133,6 +145,18 @@ public:
                         }
                         case DONE:
                             break;
+                        case IN_PROGRESS:
+                            // TODO: handle IN_PROGRESS if needed
+                            break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                     }
                     break;
                 }
@@ -155,6 +179,15 @@ public:
                                 skulloc->SetFlag(OBJECT_FIELD_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
 
                             DoUpdateAchievementCriteria(CRITERIA_TYPE_COMPLETE_DUNGEON_ENCOUNTER, 1754);
+                            break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
                             break;
                     }
                     break;

@@ -190,6 +190,18 @@ class instance_blood_furnace : public InstanceMapScript
                                 break;
                             default:
                                 break;
+                        case DONE:
+                            // TODO: handle DONE if needed
+                            break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                         }
                         break;
                     default:

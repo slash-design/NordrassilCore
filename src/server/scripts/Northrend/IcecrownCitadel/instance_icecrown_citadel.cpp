@@ -817,6 +817,18 @@ class instance_icecrown_citadel : public InstanceMapScript
                                 break;
                             default:
                                 break;
+                        case IN_PROGRESS:
+                            // TODO: handle IN_PROGRESS if needed
+                            break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                         }
                         break;
                     case DATA_FESTERGUT:

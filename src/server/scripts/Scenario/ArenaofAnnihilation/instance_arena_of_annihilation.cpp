@@ -81,6 +81,18 @@ public:
                     if (Creature* gurgthock = instance->GetCreature(GetGuidData(NPC_GURGTHOCK)))
                         gurgthock->AI()->Talk(SAY_SCAR_SHELL_END);
                     break;
+                        case NOT_STARTED:
+                            // TODO: handle NOT_STARTED if needed
+                            break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                 }
                 break;
             }
@@ -96,6 +108,18 @@ public:
                     if (Creature* gurgthock = instance->GetCreature(GetGuidData(NPC_GURGTHOCK)))
                         gurgthock->AI()->Talk(SAY_JOLGRUM_END);
                     break;
+                        case NOT_STARTED:
+                            // TODO: handle NOT_STARTED if needed
+                            break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                 }
                 break;
             }
@@ -111,6 +135,18 @@ public:
                     if (Creature* gurgthock = instance->GetCreature(GetGuidData(NPC_GURGTHOCK)))
                         gurgthock->AI()->Talk(SAY_LIUYANG_END);
                     break;
+                        case NOT_STARTED:
+                            // TODO: handle NOT_STARTED if needed
+                            break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                 }
                 break;
             }
@@ -126,6 +162,18 @@ public:
                     if (Creature* gurgthock = instance->GetCreature(GetGuidData(NPC_GURGTHOCK)))
                         gurgthock->AI()->Talk(SAY_CHAGAN_END);
                     break;
+                        case NOT_STARTED:
+                            // TODO: handle NOT_STARTED if needed
+                            break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                 }
                 break;
             }

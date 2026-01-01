@@ -432,6 +432,21 @@ struct instance_antorus : InstanceScript
                 }
                 break;
             }
+                        case NOT_STARTED:
+                            // TODO: handle NOT_STARTED if needed
+                            break;
+                        case IN_PROGRESS:
+                            // TODO: handle IN_PROGRESS if needed
+                            break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
         }
         return true;
     }

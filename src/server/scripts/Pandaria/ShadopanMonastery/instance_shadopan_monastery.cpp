@@ -200,6 +200,12 @@ public:
                             HandleGameObject(snowdriftEntranceGuid,  true);
                             break;
                         }
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                     }
                     break;
                 }
@@ -234,6 +240,12 @@ public:
                             HandleGameObject(snowdriftExitGuid,     true);
                             HandleGameObject(shaEntranceGuid,       true);
                             break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                     }
                     break;
                 }
@@ -252,6 +264,12 @@ public:
                         case DONE:
                             HandleGameObject(shaEntranceGuid,   true);
                             HandleGameObject(shaExitGuid,       true);
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
                             break;
                     }
                     break;
@@ -286,6 +304,12 @@ public:
                             player->RemoveAurasDueToSpell(SPELL_HAZE_OF_HATE_VISUAL);
                         });
                         break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                     }
                     break;
                 }

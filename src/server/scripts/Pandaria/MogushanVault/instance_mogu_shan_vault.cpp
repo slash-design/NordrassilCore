@@ -235,6 +235,15 @@ public:
                             HandleGameObject(stoneexitdoorGuid, true);
                             HandleGameObject(stoneentrdoorGuid, true);
                             break;
+                        case NOT_STARTED:
+                            // TODO: handle NOT_STARTED if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                     }
                     break;
                 }
@@ -255,6 +264,15 @@ public:
                             for (GuidVector::const_iterator guid = fengdoorGUIDs.begin(); guid != fengdoorGUIDs.end(); guid++)
                                 HandleGameObject(*guid, false);
                             break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                         }
                         break;
                     }
@@ -274,6 +292,15 @@ public:
                             for (GuidVector::const_iterator guid = garajaldoorGUIDs.begin(); guid != garajaldoorGUIDs.end(); guid++)
                                 HandleGameObject(*guid, true);
                             HandleGameObject(garajalexitdoorGuid, true);
+                            break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
                             break;
                         }
                         break;
@@ -296,6 +323,15 @@ public:
                         HandleGameObject(spiritexitdoorGuid, true);
                         HandleGameObject(elegonentdoorGuid, true);
                         break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                     }
                     break;
                 }
@@ -313,6 +349,15 @@ public:
                         HandleGameObject(elegonceldoorGuid, true);
                         HandleGameObject(imperatorentdoorGuid, true);
                         break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                     }
                     break;
                 }
@@ -329,6 +374,15 @@ public:
                     case DONE:
                         HandleGameObject(imperatorentdoorGuid, true);
                         break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                     }
                     break;
                 }

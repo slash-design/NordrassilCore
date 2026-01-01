@@ -268,6 +268,15 @@ class instance_trial_of_the_crusader : public InstanceMapScript
                                 break;
                             default:
                                 break;
+                        case NOT_STARTED:
+                            // TODO: handle NOT_STARTED if needed
+                            break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                         }
                         break;
                     case BOSS_VALKIRIES:
@@ -292,6 +301,15 @@ class instance_trial_of_the_crusader : public InstanceMapScript
                                 break;
                             default:
                                 break;
+                        case NOT_STARTED:
+                            // TODO: handle NOT_STARTED if needed
+                            break;
+                        case IN_PROGRESS:
+                            // TODO: handle IN_PROGRESS if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                         }
                         break;
                     case BOSS_LICH_KING:
@@ -345,6 +363,21 @@ class instance_trial_of_the_crusader : public InstanceMapScript
                             }
                             default:
                                 break;
+                        case NOT_STARTED:
+                            // TODO: handle NOT_STARTED if needed
+                            break;
+                        case IN_PROGRESS:
+                            // TODO: handle IN_PROGRESS if needed
+                            break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                         }
                         break;
                     default:

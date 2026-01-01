@@ -605,6 +605,15 @@ public:
                     HandleGameObject(jinrokhentdoorGuid, true);
                     HandleGameObject(jinrokhexdoorGuid, true);
                     break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                 }
             }
             break;
@@ -628,6 +637,15 @@ public:
                     HandleGameObject(horridonentdoorGuid, true);
                     HandleGameObject(horridonexdoorGuid, true);
                     break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                 }
             }
             break;
@@ -651,6 +669,15 @@ public:
                     HandleGameObject(councilexdoorGuid, true);
                     HandleGameObject(councilex2doorGuid, true);
                     break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                 }
             }
             break;
@@ -709,6 +736,12 @@ public:
                     break;
                 default:
                     break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                 }
                 break;
             case DATA_JI_KUN:
@@ -736,6 +769,15 @@ public:
                         if (GameObject* feather = instance->GetGameObject(*guid))
                             feather->SetFlag(GAMEOBJECT_FIELD_FLAGS, GO_FLAG_NOT_SELECTABLE);
                     break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                 }
             }
             break;
@@ -756,6 +798,15 @@ public:
                     HandleGameObject(durumucombatfench2Guid, false);
                     HandleGameObject(durumucombatfenchGuid, false);
                     break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                 }
                 break;
             }
@@ -773,6 +824,15 @@ public:
                     HandleGameObject(primordiusentdoorGuid, true);
                     HandleGameObject(primordiusexdoorGuid, true);
                     break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                 }
             }
             break;
@@ -817,6 +877,15 @@ public:
                     HandleGameObject(danimusentdoorGuid, true);
                     HandleGameObject(danimusexdoorGuid, true);
                     break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                 }
             }
             break;
@@ -834,6 +903,15 @@ public:
                     HandleGameObject(ironqonentdoorGuid, true);
                     HandleGameObject(ironqonexdoorGuid, true);
                     break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                 }
             }
             break;
@@ -857,6 +935,15 @@ public:
                     HandleGameObject(twinentdoorGuid, true);
                     HandleGameObject(twinexdoorGuid, true);
                     break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                 }
             }
             break;
@@ -871,6 +958,15 @@ public:
                 case IN_PROGRESS:
                     HandleGameObject(radenentdoorGuid, false);
                     break;
+                        case FAIL:
+                            // TODO: handle FAIL if needed
+                            break;
+                        case SPECIAL:
+                            // TODO: handle SPECIAL if needed
+                            break;
+                        case TO_BE_DECIDED:
+                            // TODO: handle TO_BE_DECIDED if needed
+                            break;
                 }
             }
             break;
