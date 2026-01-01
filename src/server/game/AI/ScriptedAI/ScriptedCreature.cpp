@@ -328,6 +328,12 @@ void ScriptedAI::DoStartNoMovement(Unit* victim)
     me->GetMotionMaster()->MoveIdle();
 }
 
+void ScriptedAI::DoStopAttack()
+{
+    me->AttackStop();
+    me->SetReactState(REACT_PASSIVE);
+}
+
 void ScriptedAI::DoCastSpell(Unit* target, SpellInfo const* spellInfo, bool triggered)
 {
     if (!target || me->IsNonMeleeSpellCast(false))
@@ -854,7 +860,7 @@ void BossAI::_EnterCombat()
         if (!instance->CheckRequiredBosses(_bossId, me->GetEntry()))
         {
             EnterEvadeMode();
-            AddDelayedEvent(200, [=]() -> void
+            AddDelayedEvent(200, [=, this]() -> void
             {
                 if (instance)
                     instance->RepopPlayersAtGraveyard();
