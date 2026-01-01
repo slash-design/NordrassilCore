@@ -100,63 +100,63 @@ public:
             switch (id)
             {
             case DATA_OOK_OOK:
+            {
+                if (state == DONE)
                 {
-                    if (state == DONE)
+                    HandleGameObject(ookexitdoorGuid, true);
+                    HandleGameObject(doorGuid, true);
+                    HandleGameObject(door2Guid, true);
+                    if (auto trigger = instance->GetCreature(sTriggerGuid))
                     {
-                        HandleGameObject(ookexitdoorGuid, true);
-                        HandleGameObject(doorGuid, true);
-                        HandleGameObject(door2Guid, true);
-                        if (auto trigger = instance->GetCreature(sTriggerGuid))
-                        {
-                            trigger->CastSpell(trigger, SPELL_HOPPER_SUM_EXPLOSIVE);
-                            trigger->CastSpell(trigger, SPELL_HOPPER_SUM_HAMMER);
-                            trigger->CastSpell(trigger, SPELL_HOPLING_AURA_3);
-                        }
+                        trigger->CastSpell(trigger, SPELL_HOPPER_SUM_EXPLOSIVE);
+                        trigger->CastSpell(trigger, SPELL_HOPPER_SUM_HAMMER);
+                        trigger->CastSpell(trigger, SPELL_HOPLING_AURA_3);
                     }
                 }
-                break;
+            }
+            break;
             case DATA_HOPTALLUS:
+            {
+                switch (state)
                 {
-                    switch (state)
+                case NOT_STARTED:
+                    HandleGameObject(door2Guid, true);
+                    break;
+                case IN_PROGRESS:
+                    HandleGameObject(door2Guid, false);
+                    if (auto trigger = instance->GetCreature(sTriggerGuid))
                     {
-                    case NOT_STARTED:
-                        HandleGameObject(door2Guid, true);
-                        break;
-                    case IN_PROGRESS:
-                        HandleGameObject(door2Guid, false);
-                        if (auto trigger = instance->GetCreature(sTriggerGuid))
-                        {
-                            trigger->RemoveAurasDueToSpell(SPELL_HOPPER_SUM_EXPLOSIVE);
-                            trigger->RemoveAurasDueToSpell(SPELL_HOPPER_SUM_HAMMER);
-                            trigger->RemoveAurasDueToSpell(SPELL_HOPLING_AURA_3);
-                        }
-                        break;
-                    case DONE:
-                        {
-                            HandleGameObject(door2Guid, true);
-                            HandleGameObject(door3Guid, true);
-                            HandleGameObject(door4Guid, true);
-                            if (auto go = instance->GetGameObject(carrotdoorGuid))
-                                go->Delete();
-                        }
-                        break;
+                        trigger->RemoveAurasDueToSpell(SPELL_HOPPER_SUM_EXPLOSIVE);
+                        trigger->RemoveAurasDueToSpell(SPELL_HOPPER_SUM_HAMMER);
+                        trigger->RemoveAurasDueToSpell(SPELL_HOPLING_AURA_3);
                     }
+                    break;
+                case DONE:
+                {
+                    HandleGameObject(door2Guid, true);
+                    HandleGameObject(door3Guid, true);
+                    HandleGameObject(door4Guid, true);
+                    if (auto go = instance->GetGameObject(carrotdoorGuid))
+                        go->Delete();
                 }
                 break;
+                }
+            }
+            break;
             case DATA_YAN_ZHU:
+            {
+                switch (state)
                 {
-                    switch (state)
-                    {
-                    case NOT_STARTED:
-                    case DONE:
-                        HandleGameObject(lastdoorGuid, true);
-                        break;
-                    case IN_PROGRESS:
-                        HandleGameObject(lastdoorGuid, false);
-                        break;
-                    }
+                case NOT_STARTED:
+                case DONE:
+                    HandleGameObject(lastdoorGuid, true);
+                    break;
+                case IN_PROGRESS:
+                    HandleGameObject(lastdoorGuid, false);
+                    break;
                 }
-                break;
+            }
+            break;
             }
             return true;
         }
@@ -189,12 +189,12 @@ public:
         {
             switch (type)
             {
-                case NPC_OOK_OOK:
-                    return ookookGuid;
-                case NPC_HOPTALLUS:
-                    return hoptallusGuid;
-                case NPC_YAN_ZHU:
-                    return yanzhuGuid;
+            case NPC_OOK_OOK:
+                return ookookGuid;
+            case NPC_HOPTALLUS:
+                return hoptallusGuid;
+            case NPC_YAN_ZHU:
+                return yanzhuGuid;
             }
 
             return ObjectGuid::Empty;

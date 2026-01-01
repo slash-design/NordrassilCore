@@ -589,71 +589,71 @@ public:
                     HandleGameObject(jinrokhpredoorGuid, true);
                 break;
             case DATA_JINROKH:
+            {
+                switch (state)
                 {
-                    switch (state)
-                    {
-                    case NOT_STARTED:
-                        for (GuidVector::const_iterator guid = mogufontsGuids.begin(); guid != mogufontsGuids.end(); guid++)
-                            HandleGameObject(*guid, false);
-                        HandleGameObject(jinrokhentdoorGuid, true);
-                        SetData(DATA_RESET_MOGU_FONTS, 0);
-                        break;
-                    case IN_PROGRESS:
-                        HandleGameObject(jinrokhentdoorGuid, false);
-                        break;
-                    case DONE:
-                        HandleGameObject(jinrokhentdoorGuid, true);
-                        HandleGameObject(jinrokhexdoorGuid, true); 
-                        break;
-                    }
+                case NOT_STARTED:
+                    for (GuidVector::const_iterator guid = mogufontsGuids.begin(); guid != mogufontsGuids.end(); guid++)
+                        HandleGameObject(*guid, false);
+                    HandleGameObject(jinrokhentdoorGuid, true);
+                    SetData(DATA_RESET_MOGU_FONTS, 0);
+                    break;
+                case IN_PROGRESS:
+                    HandleGameObject(jinrokhentdoorGuid, false);
+                    break;
+                case DONE:
+                    HandleGameObject(jinrokhentdoorGuid, true);
+                    HandleGameObject(jinrokhexdoorGuid, true);
+                    break;
                 }
-                break;
+            }
+            break;
             case DATA_STORMBRINGER:
                 if (state == DONE)
                     HandleGameObject(horridonpredoorGuid, true);
                 break;
             case DATA_HORRIDON:
+            {
+                switch (state)
                 {
-                    switch (state)
-                    {
-                    case NOT_STARTED:
-                        ResetHorridonAddGates();
-                        HandleGameObject(horridonentdoorGuid, true);
-                        break;
-                    case IN_PROGRESS:
-                        ResetHorridonAddGates();
-                        HandleGameObject(horridonentdoorGuid, false);
-                        break;
-                    case DONE:
-                        HandleGameObject(horridonentdoorGuid, true);
-                        HandleGameObject(horridonexdoorGuid, true);
-                        break;
-                    }
+                case NOT_STARTED:
+                    ResetHorridonAddGates();
+                    HandleGameObject(horridonentdoorGuid, true);
+                    break;
+                case IN_PROGRESS:
+                    ResetHorridonAddGates();
+                    HandleGameObject(horridonentdoorGuid, false);
+                    break;
+                case DONE:
+                    HandleGameObject(horridonentdoorGuid, true);
+                    HandleGameObject(horridonexdoorGuid, true);
+                    break;
                 }
-                break;
+            }
+            break;
             case DATA_COUNCIL_OF_ELDERS:
+            {
+                switch (state)
                 {
-                    switch (state)
-                    {
-                    case NOT_STARTED:
-                        for (GuidVector::const_iterator guids = councilentdoorGuids.begin(); guids != councilentdoorGuids.end(); guids++)
-                            HandleGameObject(*guids, true);
-                        break;
-                    case IN_PROGRESS:
-                        for (GuidVector::const_iterator guids = councilentdoorGuids.begin(); guids != councilentdoorGuids.end(); guids++)
-                            HandleGameObject(*guids, false);
-                        break;
-                    case DONE:
-                        for (GuidVector::const_iterator guids = councilentdoorGuids.begin(); guids != councilentdoorGuids.end(); guids++)
-                            HandleGameObject(*guids, true);
-                        if (Creature* gs = instance->GetCreature(garajalsoulGuid))
-                            gs->DespawnOrUnsummon();
-                        HandleGameObject(councilexdoorGuid, true);
-                        HandleGameObject(councilex2doorGuid, true);
-                        break;
-                    }
+                case NOT_STARTED:
+                    for (GuidVector::const_iterator guids = councilentdoorGuids.begin(); guids != councilentdoorGuids.end(); guids++)
+                        HandleGameObject(*guids, true);
+                    break;
+                case IN_PROGRESS:
+                    for (GuidVector::const_iterator guids = councilentdoorGuids.begin(); guids != councilentdoorGuids.end(); guids++)
+                        HandleGameObject(*guids, false);
+                    break;
+                case DONE:
+                    for (GuidVector::const_iterator guids = councilentdoorGuids.begin(); guids != councilentdoorGuids.end(); guids++)
+                        HandleGameObject(*guids, true);
+                    if (Creature* gs = instance->GetCreature(garajalsoulGuid))
+                        gs->DespawnOrUnsummon();
+                    HandleGameObject(councilexdoorGuid, true);
+                    HandleGameObject(councilex2doorGuid, true);
+                    break;
                 }
-                break;
+            }
+            break;
             case DATA_TORTOS:
                 if (state == DONE)
                 {
@@ -675,7 +675,7 @@ public:
                         for (GuidVector::const_iterator itr = megaeralist.begin(); itr != megaeralist.end(); itr++)
                             if (Creature* mh = instance->GetCreature(*itr))
                                 if (mh->GetEntry() == NPC_FLAMING_HEAD_MELEE || mh->GetEntry() == NPC_FROZEN_HEAD_MELEE || mh->GetEntry() == NPC_VENOMOUS_HEAD_MELEE)
-                                    SendEncounterUnit(ENCOUNTER_FRAME_ENGAGE, mh);        
+                                    SendEncounterUnit(ENCOUNTER_FRAME_ENGAGE, mh);
                     break;
                 case DONE:
                     DespawnMegaeraSummons();
@@ -712,33 +712,33 @@ public:
                 }
                 break;
             case DATA_JI_KUN:
+            {
+                switch (state)
                 {
-                    switch (state)
+                case NOT_STARTED:
+                    nestnum = 0;
+                    HandleGameObject(megaeraexdoorGuid, true);
+                    break;
+                case DONE:
+                    HandleGameObject(jikunexdoorGuid, true);
+                    for (GuidVector::const_iterator guid = jikunfeatherGuids.begin(); guid != jikunfeatherGuids.end(); guid++)
                     {
-                    case NOT_STARTED:
-                        nestnum = 0;
-                        HandleGameObject(megaeraexdoorGuid, true);
-                        break;
-                    case DONE:
-                        HandleGameObject(jikunexdoorGuid, true);
-                        for (GuidVector::const_iterator guid = jikunfeatherGuids.begin(); guid != jikunfeatherGuids.end(); guid++)
+                        if (GameObject* feather = instance->GetGameObject(*guid))
                         {
-                            if (GameObject* feather = instance->GetGameObject(*guid))
-                            {
-                                feather->SetRespawnTime(604800);
-                                feather->RemoveFlag(GAMEOBJECT_FIELD_FLAGS, GO_FLAG_NOT_SELECTABLE);
-                            }
+                            feather->SetRespawnTime(604800);
+                            feather->RemoveFlag(GAMEOBJECT_FIELD_FLAGS, GO_FLAG_NOT_SELECTABLE);
                         }
-                        break;
-                    case IN_PROGRESS:
-                        HandleGameObject(megaeraexdoorGuid, false);
-                        for (GuidVector::const_iterator guid = jikunfeatherGuids.begin(); guid != jikunfeatherGuids.end(); guid++)
-                            if (GameObject* feather = instance->GetGameObject(*guid))
-                                feather->SetFlag(GAMEOBJECT_FIELD_FLAGS, GO_FLAG_NOT_SELECTABLE);
-                        break;
                     }
+                    break;
+                case IN_PROGRESS:
+                    HandleGameObject(megaeraexdoorGuid, false);
+                    for (GuidVector::const_iterator guid = jikunfeatherGuids.begin(); guid != jikunfeatherGuids.end(); guid++)
+                        if (GameObject* feather = instance->GetGameObject(*guid))
+                            feather->SetFlag(GAMEOBJECT_FIELD_FLAGS, GO_FLAG_NOT_SELECTABLE);
+                    break;
                 }
-                break;
+            }
+            break;
             case DATA_DURUMU:
             {
                 switch (state)
@@ -760,124 +760,124 @@ public:
                 break;
             }
             case DATA_PRIMORDIUS:
+            {
+                switch (state)
                 {
-                    switch (state)
-                    {
-                    case NOT_STARTED:
-                        HandleGameObject(primordiusentdoorGuid, true);
-                        break;
-                    case IN_PROGRESS:
-                        HandleGameObject(primordiusentdoorGuid, false);
-                        break;
-                    case DONE:
-                        HandleGameObject(primordiusentdoorGuid, true);
-                        HandleGameObject(primordiusexdoorGuid, true);
-                        break;
-                    }
+                case NOT_STARTED:
+                    HandleGameObject(primordiusentdoorGuid, true);
+                    break;
+                case IN_PROGRESS:
+                    HandleGameObject(primordiusentdoorGuid, false);
+                    break;
+                case DONE:
+                    HandleGameObject(primordiusentdoorGuid, true);
+                    HandleGameObject(primordiusexdoorGuid, true);
+                    break;
                 }
-                break;
+            }
+            break;
             case DATA_DARK_ANIMUS:
+            {
+                switch (state)
                 {
-                    switch (state)
+                case NOT_STARTED:
+                    for (GuidVector::const_iterator guid = massiveanimagolemGuids.begin(); guid != massiveanimagolemGuids.end(); guid++)
                     {
-                    case NOT_STARTED:
-                        for (GuidVector::const_iterator guid = massiveanimagolemGuids.begin(); guid != massiveanimagolemGuids.end(); guid++)
+                        if (Creature* mag = instance->GetCreature(*guid))
                         {
-                            if (Creature* mag = instance->GetCreature(*guid))
+                            if (mag->IsAlive() && mag->isInCombat())
+                                mag->AI()->EnterEvadeMode();
+                            else if (!mag->IsAlive())
                             {
-                                if (mag->IsAlive() && mag->isInCombat())
-                                    mag->AI()->EnterEvadeMode();
-                                else if (!mag->IsAlive())
-                                {
-                                    mag->Respawn();
-                                    mag->GetMotionMaster()->MoveTargetedHome();
-                                }
+                                mag->Respawn();
+                                mag->GetMotionMaster()->MoveTargetedHome();
                             }
                         }
-                        HandleGameObject(danimusentdoorGuid, true);
-                        break;
-                    case IN_PROGRESS:
-                        if (Creature* animus = instance->GetCreature(darkanimusGuid))
-                        {
-                            if (animus->IsAlive() && !animus->isInCombat())
-                                animus->AI()->DoZoneInCombat(animus, 150.0f);
-                        }
+                    }
+                    HandleGameObject(danimusentdoorGuid, true);
+                    break;
+                case IN_PROGRESS:
+                    if (Creature* animus = instance->GetCreature(darkanimusGuid))
+                    {
+                        if (animus->IsAlive() && !animus->isInCombat())
+                            animus->AI()->DoZoneInCombat(animus, 150.0f);
+                    }
 
-                        for (GuidVector::const_iterator guid = massiveanimagolemGuids.begin(); guid != massiveanimagolemGuids.end(); guid++)
+                    for (GuidVector::const_iterator guid = massiveanimagolemGuids.begin(); guid != massiveanimagolemGuids.end(); guid++)
+                    {
+                        if (Creature* mag = instance->GetCreature(*guid))
                         {
-                            if (Creature* mag = instance->GetCreature(*guid))
-                            {
-                                if (mag->IsAlive() && !mag->isInCombat())
-                                    mag->AI()->DoZoneInCombat(mag, 150.0f);
-                            }
+                            if (mag->IsAlive() && !mag->isInCombat())
+                                mag->AI()->DoZoneInCombat(mag, 150.0f);
                         }
-                        HandleGameObject(danimusentdoorGuid, false);
-                        break;
-                    case DONE:
-                        HandleGameObject(danimusentdoorGuid, true);
-                        HandleGameObject(danimusexdoorGuid, true);
-                        break;
                     }
+                    HandleGameObject(danimusentdoorGuid, false);
+                    break;
+                case DONE:
+                    HandleGameObject(danimusentdoorGuid, true);
+                    HandleGameObject(danimusexdoorGuid, true);
+                    break;
                 }
-                break;
+            }
+            break;
             case DATA_IRON_QON:
+            {
+                switch (state)
                 {
-                    switch (state)
-                    {
-                    case NOT_STARTED:
-                        HandleGameObject(ironqonentdoorGuid, true);
-                        break;
-                    case IN_PROGRESS:
-                        HandleGameObject(ironqonentdoorGuid, false);
-                        break;
-                    case DONE:
-                        HandleGameObject(ironqonentdoorGuid, true);
-                        HandleGameObject(ironqonexdoorGuid, true);
-                        break;
-                    }
+                case NOT_STARTED:
+                    HandleGameObject(ironqonentdoorGuid, true);
+                    break;
+                case IN_PROGRESS:
+                    HandleGameObject(ironqonentdoorGuid, false);
+                    break;
+                case DONE:
+                    HandleGameObject(ironqonentdoorGuid, true);
+                    HandleGameObject(ironqonexdoorGuid, true);
+                    break;
                 }
-                break;
+            }
+            break;
             case DATA_TWIN_CONSORTS:
+            {
+                switch (state)
                 {
-                    switch (state)
-                    {
-                        case NOT_STARTED:
-                            for (GuidVector::const_iterator guid = twinfencedoorGuids.begin(); guid != twinfencedoorGuids.end(); guid++)
-                                HandleGameObject(*guid, true);
-                            HandleGameObject(twinentdoorGuid, true);
-                            break;
-                        case IN_PROGRESS:
-                            for (GuidVector::const_iterator guid = twinfencedoorGuids.begin(); guid != twinfencedoorGuids.end(); guid++)
-                                HandleGameObject(*guid, false);
-                            HandleGameObject(twinentdoorGuid, false);
-                            break;
-                        case DONE:
-                            for (GuidVector::const_iterator guid = twinfencedoorGuids.begin(); guid != twinfencedoorGuids.end(); guid++)
-                                HandleGameObject(*guid, true);
-                            HandleGameObject(twinentdoorGuid, true);
-                            HandleGameObject(twinexdoorGuid, true);
-                            break;                         
-                    }
+                case NOT_STARTED:
+                    for (GuidVector::const_iterator guid = twinfencedoorGuids.begin(); guid != twinfencedoorGuids.end(); guid++)
+                        HandleGameObject(*guid, true);
+                    HandleGameObject(twinentdoorGuid, true);
+                    break;
+                case IN_PROGRESS:
+                    for (GuidVector::const_iterator guid = twinfencedoorGuids.begin(); guid != twinfencedoorGuids.end(); guid++)
+                        HandleGameObject(*guid, false);
+                    HandleGameObject(twinentdoorGuid, false);
+                    break;
+                case DONE:
+                    for (GuidVector::const_iterator guid = twinfencedoorGuids.begin(); guid != twinfencedoorGuids.end(); guid++)
+                        HandleGameObject(*guid, true);
+                    HandleGameObject(twinentdoorGuid, true);
+                    HandleGameObject(twinexdoorGuid, true);
+                    break;
                 }
-                break;
+            }
+            break;
             case DATA_RA_DEN:
+            {
+                switch (state)
                 {
-                    switch (state)
-                    {
-                    case NOT_STARTED:
-                    case DONE:
-                        HandleGameObject(radenentdoorGuid, true);
-                        break;
-                    case IN_PROGRESS:
-                        HandleGameObject(radenentdoorGuid, false);
-                        break;
-                    }
+                case NOT_STARTED:
+                case DONE:
+                    HandleGameObject(radenentdoorGuid, true);
+                    break;
+                case IN_PROGRESS:
+                    HandleGameObject(radenentdoorGuid, false);
+                    break;
                 }
-                break;
+            }
+            break;
             default:
                 break;
             }
-           
+
             if (state == DONE && id != DATA_RA_DEN)
                 if (GameObject* go = instance->GetGameObject(secretradendoorGuid))
                     LoadSecretRaDenDoor(go);
@@ -1165,7 +1165,7 @@ public:
             {
             case NPC_JINROKH:
                 return jinrokhGuid;
-            case NPC_HORRIDON: 
+            case NPC_HORRIDON:
                 return horridonGuid;
             case NPC_JALAK:
                 return jalakGuid;
@@ -1179,18 +1179,18 @@ public:
                     if (GameObject* gate = instance->GetGameObject(*itr))
                         if (gate->GetEntry() == type)
                             return gate->GetGUID();
-            //Council of Elders
+                //Council of Elders
             case NPC_FROST_KING_MALAKK:
                 return mallakGuid;
             case NPC_PRINCESS_MARLI:
                 return marliGuid;
-            case NPC_KAZRAJIN:  
+            case NPC_KAZRAJIN:
                 return kazrajinGuid;
-            case NPC_SUL_SANDCRAWLER: 
+            case NPC_SUL_SANDCRAWLER:
                 return sulGuid;
             case NPC_GARAJAL_SOUL:
                 return garajalsoulGuid;
-            //Megaera
+                //Megaera
             case NPC_MEGAERA:
                 return megaeraGuid;
             case NPC_FLAMING_HEAD_MELEE:
@@ -1214,33 +1214,33 @@ public:
                                 if (mh->GetEntry() != othermeleehead_convert && mh->GetEntry() != lastdiedhead_convert)
                                     return mh->GetGUID();
             }
-            case NPC_TORTOS: 
+            case NPC_TORTOS:
                 return tortosGuid;
-            case NPC_JI_KUN:  
+            case NPC_JI_KUN:
                 return jikunGuid;
-            case NPC_DURUMU:  
+            case NPC_DURUMU:
                 return durumuGuid;
             case NPC_EYEBEAM_TARGET_DURUMU:
                 return durumueyetargetGuid;
-            case NPC_PRIMORDIUS: 
+            case NPC_PRIMORDIUS:
                 return primordiusGuid;
             case NPC_AT_CASTER_STALKER:
                 return atcasterstalkerGuid;
-            case NPC_DARK_ANIMUS:  
+            case NPC_DARK_ANIMUS:
                 return darkanimusGuid;
             case NPC_IRON_QON:
                 return ironqonGuid;
-            //Iron Qon Maunts
+                //Iron Qon Maunts
             case NPC_ROSHAK:
                 return roshakGuid;
             case NPC_QUETZAL:
                 return quetzalGuid;
             case NPC_DAMREN:
                 return damrenGuid;
-            //Twin consorts
-            case NPC_SULIN:   
+                //Twin consorts
+            case NPC_SULIN:
                 return sulinGuid;
-            case NPC_LULIN: 
+            case NPC_LULIN:
                 return lulinGuid;
             case NPC_LEI_SHEN:
                 return leishenGuid;
@@ -1253,7 +1253,7 @@ public:
             }
             return ObjectGuid::Empty;
         }
-        
+
         bool IsWipe() const override
         {
             Map::PlayerList const& PlayerList = instance->GetPlayers();
@@ -1566,21 +1566,6 @@ public:
             if (nestnum >= nestmaxcount)
                 nestnum = 0;
         }
-
-        std::string GetSaveData()
-        {
-            std::ostringstream saveStream;
-            saveStream << GetBossSaveData() << " ";
-            return saveStream.str();
-        }
-
-        void Load(const char* data)
-        {
-            std::istringstream loadStream(LoadBossState(data));
-            uint32 buff;
-            for (uint32 i = 0; i < 16; ++i)
-                loadStream >> buff;
-        }
     };
 
     InstanceScript* GetInstanceScript(InstanceMap* map) const
@@ -1591,182 +1576,182 @@ public:
 
 enum sSpells
 {
-    SPELL_STORM_WEAPON   = 139319,
-    SPELL_STORM_ENERGY   = 139322,
+    SPELL_STORM_WEAPON = 139319,
+    SPELL_STORM_ENERGY = 139322,
     SPELL_CHAIN_LIGHTNIG = 139903,
-    SPELL_STORMCLOUD     = 139900,
+    SPELL_STORMCLOUD = 139900,
 };
 
 enum sEvent
 {
-    EVENT_STORM_ENERGY   = 1,
+    EVENT_STORM_ENERGY = 1,
     EVENT_CHAIN_LIGHTNIG = 2,
 };
 
 //Mini boss, guard Jinrokh entrance
 class npc_storm_caller : public CreatureScript
 {
-    public:
-        npc_storm_caller() : CreatureScript("npc_storm_caller") { }
-        
-        struct npc_storm_callerAI : public BossAI
+public:
+    npc_storm_caller() : CreatureScript("npc_storm_caller") {}
+
+    struct npc_storm_callerAI : public BossAI
+    {
+        npc_storm_callerAI(Creature* pCreature) : BossAI(pCreature, DATA_STORM_CALLER)
         {
-            npc_storm_callerAI(Creature* pCreature) : BossAI(pCreature, DATA_STORM_CALLER)
-            {
-                pInstance = pCreature->GetInstanceScript();
-            }
-            
-            InstanceScript* pInstance;
-
-            void Reset()
-            {
-                _Reset();
-                me->RemoveAurasDueToSpell(SPELL_STORM_WEAPON);
-            }
-
-            void EnterCombat(Unit* who)
-            {
-                _EnterCombat();
-                me->AddAura(SPELL_STORM_WEAPON, me);
-                events.RescheduleEvent(EVENT_STORM_ENERGY, urand(15000, 20000));
-            }
-
-            void JustDied(Unit* killer)
-            {
-                _JustDied();
-            }
-            
-            void UpdateAI(uint32 diff)
-            {
-                if (!UpdateVictim())
-                    return;
-
-                events.Update(diff);
-
-                if (uint32 eventId = events.ExecuteEvent())
-                {
-                    if (eventId == EVENT_STORM_ENERGY)
-                    {
-                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 30.0f, true))
-                            DoCast(target, SPELL_STORM_ENERGY);
-                        events.RescheduleEvent(EVENT_STORM_ENERGY, urand(15000, 20000));
-                    }
-                }
-                DoMeleeAttackIfReady();
-            }
-        };
-        
-        CreatureAI* GetAI(Creature* pCreature) const
-        {
-            return new npc_storm_callerAI(pCreature);
+            pInstance = pCreature->GetInstanceScript();
         }
+
+        InstanceScript* pInstance;
+
+        void Reset()
+        {
+            _Reset();
+            me->RemoveAurasDueToSpell(SPELL_STORM_WEAPON);
+        }
+
+        void EnterCombat(Unit* who)
+        {
+            _EnterCombat();
+            me->AddAura(SPELL_STORM_WEAPON, me);
+            events.RescheduleEvent(EVENT_STORM_ENERGY, urand(15000, 20000));
+        }
+
+        void JustDied(Unit* killer)
+        {
+            _JustDied();
+        }
+
+        void UpdateAI(uint32 diff)
+        {
+            if (!UpdateVictim())
+                return;
+
+            events.Update(diff);
+
+            if (uint32 eventId = events.ExecuteEvent())
+            {
+                if (eventId == EVENT_STORM_ENERGY)
+                {
+                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 30.0f, true))
+                        DoCast(target, SPELL_STORM_ENERGY);
+                    events.RescheduleEvent(EVENT_STORM_ENERGY, urand(15000, 20000));
+                }
+            }
+            DoMeleeAttackIfReady();
+        }
+    };
+
+    CreatureAI* GetAI(Creature* pCreature) const
+    {
+        return new npc_storm_callerAI(pCreature);
+    }
 };
 
 //Mini boss, guard Horridon entrance
 class npc_stormbringer : public CreatureScript
 {
-    public:
-        npc_stormbringer() : CreatureScript("npc_stormbringer") { }
-        
-        struct npc_stormbringerAI : public BossAI
+public:
+    npc_stormbringer() : CreatureScript("npc_stormbringer") {}
+
+    struct npc_stormbringerAI : public BossAI
+    {
+        npc_stormbringerAI(Creature* pCreature) : BossAI(pCreature, DATA_STORMBRINGER)
         {
-            npc_stormbringerAI(Creature* pCreature) : BossAI(pCreature, DATA_STORMBRINGER)
-            {
-                pInstance = pCreature->GetInstanceScript();
-            }
-            
-            InstanceScript* pInstance;
-
-            void Reset()
-            {
-                _Reset();
-                me->RemoveAurasDueToSpell(SPELL_STORMCLOUD);
-            }
-
-            void EnterCombat(Unit* who)
-            {
-                _EnterCombat();
-                DoCast(me, SPELL_STORMCLOUD);
-                events.RescheduleEvent(EVENT_CHAIN_LIGHTNIG, urand(15000, 20000));
-            }
-
-            void JustDied(Unit* killer)
-            {
-                _JustDied();
-            }
-            
-            void UpdateAI(uint32 diff)
-            {
-                if (!UpdateVictim() || me->HasUnitState(UNIT_STATE_CASTING))
-                    return;
-
-                events.Update(diff);
-
-                if (uint32 eventId = events.ExecuteEvent())
-                {
-                    if (eventId == EVENT_CHAIN_LIGHTNIG)
-                    {
-                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 30.0f, true))
-                            DoCast(target, SPELL_CHAIN_LIGHTNIG);
-                        events.RescheduleEvent(EVENT_STORM_ENERGY, urand(15000, 20000));
-                    }
-                }
-                DoMeleeAttackIfReady();
-            }
-        };
-        
-        CreatureAI* GetAI(Creature* pCreature) const
-        {
-            return new npc_stormbringerAI(pCreature);
+            pInstance = pCreature->GetInstanceScript();
         }
+
+        InstanceScript* pInstance;
+
+        void Reset()
+        {
+            _Reset();
+            me->RemoveAurasDueToSpell(SPELL_STORMCLOUD);
+        }
+
+        void EnterCombat(Unit* who)
+        {
+            _EnterCombat();
+            DoCast(me, SPELL_STORMCLOUD);
+            events.RescheduleEvent(EVENT_CHAIN_LIGHTNIG, urand(15000, 20000));
+        }
+
+        void JustDied(Unit* killer)
+        {
+            _JustDied();
+        }
+
+        void UpdateAI(uint32 diff)
+        {
+            if (!UpdateVictim() || me->HasUnitState(UNIT_STATE_CASTING))
+                return;
+
+            events.Update(diff);
+
+            if (uint32 eventId = events.ExecuteEvent())
+            {
+                if (eventId == EVENT_CHAIN_LIGHTNIG)
+                {
+                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 30.0f, true))
+                        DoCast(target, SPELL_CHAIN_LIGHTNIG);
+                    events.RescheduleEvent(EVENT_STORM_ENERGY, urand(15000, 20000));
+                }
+            }
+            DoMeleeAttackIfReady();
+        }
+    };
+
+    CreatureAI* GetAI(Creature* pCreature) const
+    {
+        return new npc_stormbringerAI(pCreature);
+    }
 };
 
-Position const onbridge    = {6045.42f, 5163.28f, 148.1146f, 1.548f};
-Position const underbridge = {6042.31f, 5088.96f,  -43.152f, 4.654f};
+Position const onbridge = { 6045.42f, 5163.28f, 148.1146f, 1.548f };
+Position const underbridge = { 6042.31f, 5088.96f,  -43.152f, 4.654f };
 
 //Te;eport to Tortos, and back
 class npc_teleporter : public CreatureScript
 {
-    public:
-        npc_teleporter() : CreatureScript("npc_teleporter") {}
+public:
+    npc_teleporter() : CreatureScript("npc_teleporter") {}
 
-        struct npc_teleporterAI : public CreatureAI
+    struct npc_teleporterAI : public CreatureAI
+    {
+        npc_teleporterAI(Creature* creature) : CreatureAI(creature)
         {
-            npc_teleporterAI(Creature* creature) : CreatureAI(creature)
-            {
-                instance = creature->GetInstanceScript();
-                me->AddAura(126493, me); //Visual
-            }
+            instance = creature->GetInstanceScript();
+            me->AddAura(126493, me); //Visual
+        }
 
-            InstanceScript* instance;
+        InstanceScript* instance;
 
-            void Reset(){}
-            
-            void OnSpellClick(Unit* clicker)
+        void Reset() {}
+
+        void OnSpellClick(Unit* clicker)
+        {
+            if (instance)
             {
-                if (instance)
+                if (clicker->GetTypeId() == TYPEID_PLAYER)
                 {
-                   if (clicker->GetTypeId() == TYPEID_PLAYER)
-                   {
-                       if (me->GetPositionZ() > 140.0f)
-                           clicker->NearTeleportTo(underbridge.GetPositionX(), underbridge.GetPositionY(), underbridge.GetPositionZ(), underbridge.GetOrientation());
-                       else
-                           clicker->NearTeleportTo(onbridge.GetPositionX(), onbridge.GetPositionY(), onbridge.GetPositionZ(), onbridge.GetOrientation());
-                   }
+                    if (me->GetPositionZ() > 140.0f)
+                        clicker->NearTeleportTo(underbridge.GetPositionX(), underbridge.GetPositionY(), underbridge.GetPositionZ(), underbridge.GetOrientation());
+                    else
+                        clicker->NearTeleportTo(onbridge.GetPositionX(), onbridge.GetPositionY(), onbridge.GetPositionZ(), onbridge.GetOrientation());
                 }
             }
-            
-            void EnterEvadeMode(){}
-
-            void EnterCombat(Unit* who){}
-
-            void UpdateAI(uint32 diff){}
-        };
-
-        CreatureAI* GetAI(Creature* creature) const
-        {
-            return new npc_teleporterAI(creature);
         }
+
+        void EnterEvadeMode() {}
+
+        void EnterCombat(Unit* who) {}
+
+        void UpdateAI(uint32 diff) {}
+    };
+
+    CreatureAI* GetAI(Creature* creature) const
+    {
+        return new npc_teleporterAI(creature);
+    }
 };
 
 void AddSC_instance_throne_of_thunder()
@@ -1774,5 +1759,5 @@ void AddSC_instance_throne_of_thunder()
     new instance_throne_of_thunder();
     new npc_storm_caller();
     new npc_stormbringer();
-    new npc_teleporter();
+    //new npc_teleporter();
 }

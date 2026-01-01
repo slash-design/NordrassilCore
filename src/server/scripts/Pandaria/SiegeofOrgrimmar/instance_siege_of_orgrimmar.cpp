@@ -492,249 +492,249 @@ public:
         {
             switch (creature->GetEntry())
             {
-                case NPC_LOREWALKER_CHO:
-                case NPC_LOREWALKER_CHO2:
-                case NPC_LOREWALKER_CHO3:
-                    LorewalkerChoGUIDtmp = creature->GetGUID();
-                    break;
-                case NPC_IMMERSEUS:
-                case NPC_PUDDLE_POINT:
-                case NPC_GOLD_LOTOS_MOVER:
-                case NPC_GOLD_LOTOS_MAIN:
-                case NPC_GOLD_LOTOS_HE:
-                case NPC_GOLD_LOTOS_SUN:
-                case NPC_SHA_NORUSHEN:
-                case NPC_SHA_TARAN_ZHU:
-                case NPC_SHA_OF_PRIDE_END_LADY_JAINA:
-                case NPC_SHA_OF_PRIDE_END_THERON:
-                case NPC_NORUSHEN:
-                case NPC_AMALGAM_OF_CORRUPTION:
-                case NPC_B_H_CONTROLLER:
-                case NPC_BLIND_HATRED:
-                case NPC_GALAKRAS:
-                case NPC_WARLORD_ZAELA:
-                case NPC_TOWER_SOUTH:
-                case NPC_TOWER_NORTH:
-                case NPC_ANTIAIR_TURRET:
-                case NPC_BLACKFUSE:
-                    easyGUIDconteiner[creature->GetEntry()] = creature->GetGUID();
+            case NPC_LOREWALKER_CHO:
+            case NPC_LOREWALKER_CHO2:
+            case NPC_LOREWALKER_CHO3:
+                LorewalkerChoGUIDtmp = creature->GetGUID();
                 break;
-           
+            case NPC_IMMERSEUS:
+            case NPC_PUDDLE_POINT:
+            case NPC_GOLD_LOTOS_MOVER:
+            case NPC_GOLD_LOTOS_MAIN:
+            case NPC_GOLD_LOTOS_HE:
+            case NPC_GOLD_LOTOS_SUN:
+            case NPC_SHA_NORUSHEN:
+            case NPC_SHA_TARAN_ZHU:
+            case NPC_SHA_OF_PRIDE_END_LADY_JAINA:
+            case NPC_SHA_OF_PRIDE_END_THERON:
+            case NPC_NORUSHEN:
+            case NPC_AMALGAM_OF_CORRUPTION:
+            case NPC_B_H_CONTROLLER:
+            case NPC_BLIND_HATRED:
+            case NPC_GALAKRAS:
+            case NPC_WARLORD_ZAELA:
+            case NPC_TOWER_SOUTH:
+            case NPC_TOWER_NORTH:
+            case NPC_ANTIAIR_TURRET:
+            case NPC_BLACKFUSE:
+                easyGUIDconteiner[creature->GetEntry()] = creature->GetGUID();
+                break;
+
                 //Fallen Protectors
-                case NPC_ROOK_STONETOE: 
-                    fpGUID[0] = creature->GetGUID();
-                    break;
-                case NPC_SUN_TENDERHEART:
-                    fpGUID[1] = creature->GetGUID();
-                    break;
-                case NPC_HE_SOFTFOOT:
-                    fpGUID[2] = creature->GetGUID();
-                    break;
-                case NPC_EMBODIED_MISERY_OF_ROOK:
-                case NPC_EMBODIED_GLOOM_OF_ROOK:
-                case NPC_EMBODIED_SORROW_OF_ROOK:
-                    if (creature->ToTempSummon())
-                        if (creature->ToTempSummon()->GetSummoner()->GetGUID() == fpGUID[0])
-                            rookmeasureGuids.push_back(creature->GetGUID());
-                    break;
-                case NPC_EMBODIED_DESPERATION_OF_SUN:
-                case NPC_EMBODIED_DESPIRE_OF_SUN:
-                    if (creature->ToTempSummon())
-                        if (creature->ToTempSummon()->GetSummoner()->GetGUID() == fpGUID[1])
-                            sunmeasureGuids.push_back(creature->GetGUID());
-                    break;
-                case NPC_EMBODIED_ANGUISH_OF_HE:
-                    if (creature->ToTempSummon())
-                        if (creature->ToTempSummon()->GetSummoner()->GetGUID() == fpGUID[2])
-                            hemeasureGuid = creature->GetGUID();
-                    break;
+            case NPC_ROOK_STONETOE:
+                fpGUID[0] = creature->GetGUID();
+                break;
+            case NPC_SUN_TENDERHEART:
+                fpGUID[1] = creature->GetGUID();
+                break;
+            case NPC_HE_SOFTFOOT:
+                fpGUID[2] = creature->GetGUID();
+                break;
+            case NPC_EMBODIED_MISERY_OF_ROOK:
+            case NPC_EMBODIED_GLOOM_OF_ROOK:
+            case NPC_EMBODIED_SORROW_OF_ROOK:
+                if (creature->ToTempSummon())
+                    if (creature->ToTempSummon()->GetSummoner()->GetGUID() == fpGUID[0])
+                        rookmeasureGuids.push_back(creature->GetGUID());
+                break;
+            case NPC_EMBODIED_DESPERATION_OF_SUN:
+            case NPC_EMBODIED_DESPIRE_OF_SUN:
+                if (creature->ToTempSummon())
+                    if (creature->ToTempSummon()->GetSummoner()->GetGUID() == fpGUID[1])
+                        sunmeasureGuids.push_back(creature->GetGUID());
+                break;
+            case NPC_EMBODIED_ANGUISH_OF_HE:
+                if (creature->ToTempSummon())
+                    if (creature->ToTempSummon()->GetSummoner()->GetGUID() == fpGUID[2])
+                        hemeasureGuid = creature->GetGUID();
+                break;
                 //Sha
-                case NPC_SHA_OF_PRIDE:
-                    easyGUIDconteiner[creature->GetEntry()] = creature->GetGUID();
-                    creature->SetVisible(false);
-                    break;
-                case NPC_LINGERING_CORRUPTION:
-                    ++lingering_corruption_count;
-                    if (!creature->IsAlive())
-                        creature->Respawn(true);
-                    break;
-                case NPC_SLG_GENERIC_MOP:
-                    shaSlgGUID.insert(creature->GetGUID());
-                    break;
-                case NPC_PORTAL_TO_ORGRIMMAR:
-                    PortalOrgrimmarGUID.push_back(creature->GetGUID());
-                    creature->SetDisplayId(51795);
-                    creature->SetVisible((GetBossState(DATA_SHA_OF_PRIDE)==DONE) ? true : false);
-                    break;
+            case NPC_SHA_OF_PRIDE:
+                easyGUIDconteiner[creature->GetEntry()] = creature->GetGUID();
+                creature->SetVisible(false);
+                break;
+            case NPC_LINGERING_CORRUPTION:
+                ++lingering_corruption_count;
+                if (!creature->IsAlive())
+                    creature->Respawn(true);
+                break;
+            case NPC_SLG_GENERIC_MOP:
+                shaSlgGUID.insert(creature->GetGUID());
+                break;
+            case NPC_PORTAL_TO_ORGRIMMAR:
+                PortalOrgrimmarGUID.push_back(creature->GetGUID());
+                creature->SetDisplayId(51795);
+                creature->SetVisible((GetBossState(DATA_SHA_OF_PRIDE) == DONE) ? true : false);
+                break;
 
                 //Galakras:
-                case NPC_KING_VARIAN_WRYNN_A:
-                case NPC_LORTHEMAR_THERON_H:
-                    WrynOrLorthemarGUID = creature->GetGUID();
-                    easyGUIDconteiner[creature->GetEntry()] = creature->GetGUID();
-                    break;
-                case NPC_LADY_JAINA_PROUDMOORE_A:
-                case NPC_LADY_SYLVANAS_WINDRUNNER_H:
-                    JainaOrSylvanaGUID = creature->GetGUID();
-                    easyGUIDconteiner[creature->GetEntry()] = creature->GetGUID();
-                    break;
-                case NPC_VEREESA_WINDRUNNER_A:
-                case NPC_ARCHMAGE_AETHAS_SUNREAVER_H:
-                    VereesaOrAethasGUID = creature->GetGUID();
-                    easyGUIDconteiner[creature->GetEntry()] = creature->GetGUID();
-                    break;
-                case NPC_DEMOLITIONS_EXPERT_S_A:
-                case NPC_DEMOLITIONS_EXPERT_S_H:
-                    sExpertGUID = creature->GetGUID();
-                    break;
-                case NPC_DEMOLITIONS_EXPERT_N_A:
-                case NPC_DEMOLITIONS_EXPERT_N_H:
-                    nExpertGUID = creature->GetGUID();
-                    break;
-                case NPC_IRON_JUGGERNAUT:
-                    ironjuggGuid = creature->GetGUID();
-                    break;
+            case NPC_KING_VARIAN_WRYNN_A:
+            case NPC_LORTHEMAR_THERON_H:
+                WrynOrLorthemarGUID = creature->GetGUID();
+                easyGUIDconteiner[creature->GetEntry()] = creature->GetGUID();
+                break;
+            case NPC_LADY_JAINA_PROUDMOORE_A:
+            case NPC_LADY_SYLVANAS_WINDRUNNER_H:
+                JainaOrSylvanaGUID = creature->GetGUID();
+                easyGUIDconteiner[creature->GetEntry()] = creature->GetGUID();
+                break;
+            case NPC_VEREESA_WINDRUNNER_A:
+            case NPC_ARCHMAGE_AETHAS_SUNREAVER_H:
+                VereesaOrAethasGUID = creature->GetGUID();
+                easyGUIDconteiner[creature->GetEntry()] = creature->GetGUID();
+                break;
+            case NPC_DEMOLITIONS_EXPERT_S_A:
+            case NPC_DEMOLITIONS_EXPERT_S_H:
+                sExpertGUID = creature->GetGUID();
+                break;
+            case NPC_DEMOLITIONS_EXPERT_N_A:
+            case NPC_DEMOLITIONS_EXPERT_N_H:
+                nExpertGUID = creature->GetGUID();
+                break;
+            case NPC_IRON_JUGGERNAUT:
+                ironjuggGuid = creature->GetGUID();
+                break;
                 //Korkron Dark Shamans
-                case NPC_WAVEBINDER_KARDRIS:
-                    kardrisGuid = creature->GetGUID();
-                    break;
-                case NPC_EARTHBREAKER_HAROMM:
-                    harommGuid = creature->GetGUID();
-                    break;
-                case NPC_BLOODCLAW:
-                    bloodclawGuid = creature->GetGUID();
-                    break;
-                case NPC_DARKFANG:
-                    darkfangGuid = creature->GetGUID();
-                    break;
+            case NPC_WAVEBINDER_KARDRIS:
+                kardrisGuid = creature->GetGUID();
+                break;
+            case NPC_EARTHBREAKER_HAROMM:
+                harommGuid = creature->GetGUID();
+                break;
+            case NPC_BLOODCLAW:
+                bloodclawGuid = creature->GetGUID();
+                break;
+            case NPC_DARKFANG:
+                darkfangGuid = creature->GetGUID();
+                break;
                 //
                 //General Nazgrim
-                case NPC_GENERAL_NAZGRIM:
-                    gnazgrimGuid = creature->GetGUID();
-                    break;
+            case NPC_GENERAL_NAZGRIM:
+                gnazgrimGuid = creature->GetGUID();
+                break;
                 //Malkorok
-                case NPC_ANCIENT_MIASMA:
-                    amGuid = creature->GetGUID();
-                    break;
+            case NPC_ANCIENT_MIASMA:
+                amGuid = creature->GetGUID();
+                break;
                 //Spoils of Pandaria
-                case NPC_SSOP_SPOILS:
-                    npcssopsGuid = creature->GetGUID();
-                    break;
-                case NPC_MOGU_SPOILS:
-                case NPC_MOGU_SPOILS2:
-                case NPC_MANTIS_SPOILS:
-                case NPC_MANTIS_SPOILS2:
-                    if (uint32(creature->GetPositionZ()) == -271)
-                        spoilsGuids.push_back(creature->GetGUID());
-                    else
-                        spoils2Guids.push_back(creature->GetGUID());
-                    break;
-                case NPC_LEVER:
-                    npcleverlistGuids.push_back(creature->GetGUID());
-                    break;
+            case NPC_SSOP_SPOILS:
+                npcssopsGuid = creature->GetGUID();
+                break;
+            case NPC_MOGU_SPOILS:
+            case NPC_MOGU_SPOILS2:
+            case NPC_MANTIS_SPOILS:
+            case NPC_MANTIS_SPOILS2:
+                if (uint32(creature->GetPositionZ()) == -271)
+                    spoilsGuids.push_back(creature->GetGUID());
+                else
+                    spoils2Guids.push_back(creature->GetGUID());
+                break;
+            case NPC_LEVER:
+                npcleverlistGuids.push_back(creature->GetGUID());
+                break;
                 //Paragons of the Klaxxi
-                case NPC_KILRUK:
-                case NPC_XARIL:
-                case NPC_KAZTIK:
-                case NPC_KORVEN:
-                case NPC_IYYOKYK:
-                case NPC_KAROZ:
-                case NPC_SKEER:
-                case NPC_RIKKAL:
-                case NPC_HISEK:
-                    klaxxilist.push_back(creature->GetGUID());
-                    break;
-                case NPC_AMBER_PIECE:
-                    amberpieceGuid = creature->GetGUID();
-                    break;
-                case NPC_KLAXXI_CONTROLLER:
-                    klaxxicontrollerGuid = creature->GetGUID();
-                    break;
+            case NPC_KILRUK:
+            case NPC_XARIL:
+            case NPC_KAZTIK:
+            case NPC_KORVEN:
+            case NPC_IYYOKYK:
+            case NPC_KAROZ:
+            case NPC_SKEER:
+            case NPC_RIKKAL:
+            case NPC_HISEK:
+                klaxxilist.push_back(creature->GetGUID());
+                break;
+            case NPC_AMBER_PIECE:
+                amberpieceGuid = creature->GetGUID();
+                break;
+            case NPC_KLAXXI_CONTROLLER:
+                klaxxicontrollerGuid = creature->GetGUID();
+                break;
                 //Thok
-                case NPC_THOK:
-                    thokGuid = creature->GetGUID();
-                    break;
-                case NPC_BODY_STALKER:
-                    bsGuid = creature->GetGUID();
-                    break;
+            case NPC_THOK:
+                thokGuid = creature->GetGUID();
+                break;
+            case NPC_BODY_STALKER:
+                bsGuid = creature->GetGUID();
+                break;
                 //Prisoners
-                case NPC_AKOLIK:
-                case NPC_MONTAK:
-                case NPC_WATERSPEAKER_GORAI:
-                    prisonerGuids.push_back(creature->GetGUID());
-                    break;
+            case NPC_AKOLIK:
+            case NPC_MONTAK:
+            case NPC_WATERSPEAKER_GORAI:
+                prisonerGuids.push_back(creature->GetGUID());
+                break;
                 //BlackFuse
-                case NPC_BLACKFUSE_MAUNT:
-                    blackfuseGuid = creature->GetGUID();
-                    break;
-                case NPC_DISASSEMBLED_CRAWLER_MINE:
-                case NPC_DEACTIVATED_LASER_TURRET:
-                case NPC_DEACTIVATED_ELECTROMAGNET:
-                case NPC_DEACTIVATED_MISSILE_TURRET:
-                    dweaponGuids.push_back(creature->GetGUID());
-                    break;
-                case NPC_BLACKFUSE_CRAWLER_MINE:
-                    crawlermineGuids.push_back(creature->GetGUID());
-                    break;
-                case NPC_SHOCKWAVE_MISSILE_STALKER:
-                    if (!creature->ToTempSummon())
-                        swmstalkerGuid = creature->GetGUID();
-                    break;
-                case NPC_ACTIVATED_ELECTROMAGNET:
-                    electromagnetGuid = creature->GetGUID();
-                    break;
+            case NPC_BLACKFUSE_MAUNT:
+                blackfuseGuid = creature->GetGUID();
+                break;
+            case NPC_DISASSEMBLED_CRAWLER_MINE:
+            case NPC_DEACTIVATED_LASER_TURRET:
+            case NPC_DEACTIVATED_ELECTROMAGNET:
+            case NPC_DEACTIVATED_MISSILE_TURRET:
+                dweaponGuids.push_back(creature->GetGUID());
+                break;
+            case NPC_BLACKFUSE_CRAWLER_MINE:
+                crawlermineGuids.push_back(creature->GetGUID());
+                break;
+            case NPC_SHOCKWAVE_MISSILE_STALKER:
+                if (!creature->ToTempSummon())
+                    swmstalkerGuid = creature->GetGUID();
+                break;
+            case NPC_ACTIVATED_ELECTROMAGNET:
+                electromagnetGuid = creature->GetGUID();
+                break;
                 //Garrosh
-                case NPC_GARROSH:
-                    if (Unit* garrosh = creature->ToUnit())
+            case NPC_GARROSH:
+                if (Unit* garrosh = creature->ToUnit())
+                {
+                    if (garrosh->ToTempSummon())
                     {
-                        if (garrosh->ToTempSummon())
-                        {
-                            if (garrosh->GetMap()->GetAreaId(garrosh->GetPositionX(), garrosh->GetPositionY(), garrosh->GetPositionZ()) == 6816)
-                                garroshstormwindGuid = creature->GetGUID();
-                            else
-                                garroshrealmGuid = creature->GetGUID();
-                        }
+                        if (garrosh->GetMap()->GetAreaId(garrosh->GetPositionX(), garrosh->GetPositionY(), garrosh->GetPositionZ()) == 6816)
+                            garroshstormwindGuid = creature->GetGUID();
                         else
-                            garroshGuid = creature->GetGUID();
+                            garroshrealmGuid = creature->GetGUID();
                     }
-                    break;
-                case NPC_HEART_OF_YSHAARJ:
-                    heartofyshaarjGuid = creature->GetGUID();
-                    break;
-                case NPC_SHA_VORTEX:
-                    shavortexGuids.push_back(creature->GetGUID());
-                    break;
-                case NPC_EMBODIED_DESPAIR:
-                    edespairGuids.push_back(creature->GetGUID());
-                    creature->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
-                    creature->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-                    creature->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK_DEST, true);
-                    break;
-                case NPC_EMBODIED_DOUBT:
-                    edoubtGuids.push_back(creature->GetGUID());
-                    creature->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
-                    creature->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-                    creature->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK_DEST, true);
-                    break;
-                case NPC_EMBODIED_FEAR:
-                    efearGuids.push_back(creature->GetGUID());
-                    creature->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
-                    creature->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-                    creature->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK_DEST, true);
-                    break;
-                case NPC_SIEGE_ENGINEER:
-                    engeneerGuids.push_back(creature->GetGUID());
-                    break;
-                case NPC_WARBRINGER:
-                case NPC_WOLF_RIDER:
-                    garroshsoldiersGuids.push_back(creature->GetGUID());
-                    break;
-                case NPC_KORKRON_GUNSHIP:
-                    korkrongunshipGuid = creature->GetGUID();
-                    break;
-                case NPC_HORDE_CANNON:
-                    hordecannonlistGuids.push_back(creature->GetGUID());
-                    break;
+                    else
+                        garroshGuid = creature->GetGUID();
+                }
+                break;
+            case NPC_HEART_OF_YSHAARJ:
+                heartofyshaarjGuid = creature->GetGUID();
+                break;
+            case NPC_SHA_VORTEX:
+                shavortexGuids.push_back(creature->GetGUID());
+                break;
+            case NPC_EMBODIED_DESPAIR:
+                edespairGuids.push_back(creature->GetGUID());
+                creature->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
+                creature->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+                creature->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK_DEST, true);
+                break;
+            case NPC_EMBODIED_DOUBT:
+                edoubtGuids.push_back(creature->GetGUID());
+                creature->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
+                creature->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+                creature->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK_DEST, true);
+                break;
+            case NPC_EMBODIED_FEAR:
+                efearGuids.push_back(creature->GetGUID());
+                creature->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
+                creature->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+                creature->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK_DEST, true);
+                break;
+            case NPC_SIEGE_ENGINEER:
+                engeneerGuids.push_back(creature->GetGUID());
+                break;
+            case NPC_WARBRINGER:
+            case NPC_WOLF_RIDER:
+                garroshsoldiersGuids.push_back(creature->GetGUID());
+                break;
+            case NPC_KORKRON_GUNSHIP:
+                korkrongunshipGuid = creature->GetGUID();
+                break;
+            case NPC_HORDE_CANNON:
+                hordecannonlistGuids.push_back(creature->GetGUID());
+                break;
             }
         }
 
@@ -742,195 +742,195 @@ public:
         {
             switch (go->GetEntry())
             {
-                case GO_NORUSHEN_EX_DOOR:
-                case GO_CORRUPTED_PRISON_WEST:
-                case GO_CORRUPTED_BUTTON_WEST_1:
-                case GO_CORRUPTED_BUTTON_WEST_2:
-                case GO_CORRUPTED_BUTTON_WEST_3:
-                case GO_CORRUPTED_PRISON_EAST:
-                case GO_CORRUPTED_BUTTON_EAST_1:
-                case GO_CORRUPTED_BUTTON_EAST_2:
-                case GO_CORRUPTED_BUTTON_EAST_3:
-                case GO_CORRUPTED_PRISON_NORTH:
-                case GO_CORRUPTED_BUTTON_NORTH_1:
-                case GO_CORRUPTED_BUTTON_NORTH_2:
-                case GO_CORRUPTED_BUTTON_NORTH_3:
-                case GO_CORRUPTED_PRISON_SOUTH:
-                case GO_CORRUPTED_BUTTON_SOUTH_1:
-                case GO_CORRUPTED_BUTTON_SOUTH_2:
-                case GO_CORRUPTED_BUTTON_SOUTH_3:
-                case GO_SOUTH_DOOR:
-                case GO_NORTH_DOOR:
-                    easyGUIDconteiner[go->GetEntry()] = go->GetGUID();
-                    break;
-                case GO_VAULT_OF_FORBIDDEN_TREASURES_1:
-                    chestShaVaultOfForbiddenTreasures = go->GetGUID();
-                    break;
-                case GO_IMMERSEUS_EX_DOOR:
-                    AddDoor(go, true);
-                    break;
-                case GO_SHA_FIELD:
-                    AddDoor(go, true);
-                    fprotectorexdoorGUID = go->GetGUID();
-                    break;
-                case GO_LIGTH_QUARANTINE:
-                case GO_LIGTH_QUARANTINE_2:
-                case GO_LIGTH_QUARANTINE_3:
-                case GO_LIGTH_QUARANTINE_4:
-                case GO_LIGTH_QUARANTINE_5:
-                case GO_LIGTH_QUARANTINE_6:
-                case GO_LIGHT_RAY_01:
-                case GO_LIGHT_RAY_02:
-                case GO_LIGHT_RAY_03:
-                case GO_LIGHT_RAY_04:
-                case GO_LIGHT_RAY_05:
-                case GO_LIGHT_RAY_06:
-                case GO_LIGHT_RAY_07:
-                case GO_LIGHT_RAY_08:
-                case GO_LIGHT_RAY_09:
-                case GO_LIGHT_RAY_10:
-                case GO_LIGHT_RAY_11:
-                case GO_LIGHT_RAY_12:
-                case GO_LIGHT_RAY_13:
-                case GO_LIGHT_RAY_14:
-                case GO_LIGHT_RAY_15:
-                case GO_LIGHT_RAY_16:
-                    go->setIgnorePhaseIdCheck(true);
-                    lightqGUIDs.push_back(go->GetGUID());
-                    break;
-                case GO_SHA_ENERGY_WALL:
-                    easyGUIDconteiner[go->GetEntry()] = go->GetGUID();
-                    if (EventfieldOfSha >= 3)
-                        HandleGameObject(go->GetGUID(), true, go);
-                    break;
-                case GO_ROPE:
-                    if (go->GetPositionZ() > 35.0f && go->GetPositionZ() < 40.0f)
-                        southropeGuid = go->GetGUID();
-                    else if (go->GetPositionZ() < 35.0f)
-                        northropeGuid = go->GetGUID();
-                    break;
-                case GO_NORTH_ROPE_SKEIN:
-                    northropeskeinGuid = go->GetGUID();
-                    break;
-                case GO_SOUTH_ROPE_SKEIN:
-                    southropeskeinGuid = go->GetGUID();
-                    break;
-                case GO_WIND_DOOR:
-                    winddoorGuid = go->GetGUID();
-                    break;
-                case GO_ORGRIMMAR_GATE:
-                    AddDoor(go, true);
-                    orgrimmargateGuid = go->GetGUID();
-                    break;
-                case GO_ORGRIMMAR_GATE2:
-                    orgrimmargate2Guid = go->GetGUID();
-                    break;
-                case GO_RUSTY_BARS:
-                    rustybarsGuid = go->GetGUID();
-                    break;
-                case GO_NAZGRIM_DOOR:
-                    nazgrimdoorGuid = go->GetGUID();
-                    break;
-                case GO_NAZGRIM_EX_DOOR:
-                    AddDoor(go, true);
-                    nazgrimexdoorGuid = go->GetGUID();
-                    break;
-                case GO_MALKOROK_FENCH:
-                case GO_MALKOROK_FENCH_2:
-                    malkorokfenchGuids.push_back(go->GetGUID());
-                    break;
-                case GO_BLACKFUSE_ENT_DOOR:
-                    AddDoor(go, true);
-                    blackfuseentdoorGuid = go->GetGUID();
-                    break;
-                case GO_ENT_GATE:
-                    AddDoor(go, true);
-                    spentdoorGuid = go->GetGUID();
-                    break;
-                case GO_SP_EX_DOOR:
-                    AddDoor(go, true);
-                    spexdoorGuid = go->GetGUID();
-                    break;
+            case GO_NORUSHEN_EX_DOOR:
+            case GO_CORRUPTED_PRISON_WEST:
+            case GO_CORRUPTED_BUTTON_WEST_1:
+            case GO_CORRUPTED_BUTTON_WEST_2:
+            case GO_CORRUPTED_BUTTON_WEST_3:
+            case GO_CORRUPTED_PRISON_EAST:
+            case GO_CORRUPTED_BUTTON_EAST_1:
+            case GO_CORRUPTED_BUTTON_EAST_2:
+            case GO_CORRUPTED_BUTTON_EAST_3:
+            case GO_CORRUPTED_PRISON_NORTH:
+            case GO_CORRUPTED_BUTTON_NORTH_1:
+            case GO_CORRUPTED_BUTTON_NORTH_2:
+            case GO_CORRUPTED_BUTTON_NORTH_3:
+            case GO_CORRUPTED_PRISON_SOUTH:
+            case GO_CORRUPTED_BUTTON_SOUTH_1:
+            case GO_CORRUPTED_BUTTON_SOUTH_2:
+            case GO_CORRUPTED_BUTTON_SOUTH_3:
+            case GO_SOUTH_DOOR:
+            case GO_NORTH_DOOR:
+                easyGUIDconteiner[go->GetEntry()] = go->GetGUID();
+                break;
+            case GO_VAULT_OF_FORBIDDEN_TREASURES_1:
+                chestShaVaultOfForbiddenTreasures = go->GetGUID();
+                break;
+            case GO_IMMERSEUS_EX_DOOR:
+                AddDoor(go, true);
+                break;
+            case GO_SHA_FIELD:
+                AddDoor(go, true);
+                fprotectorexdoorGUID = go->GetGUID();
+                break;
+            case GO_LIGTH_QUARANTINE:
+            case GO_LIGTH_QUARANTINE_2:
+            case GO_LIGTH_QUARANTINE_3:
+            case GO_LIGTH_QUARANTINE_4:
+            case GO_LIGTH_QUARANTINE_5:
+            case GO_LIGTH_QUARANTINE_6:
+            case GO_LIGHT_RAY_01:
+            case GO_LIGHT_RAY_02:
+            case GO_LIGHT_RAY_03:
+            case GO_LIGHT_RAY_04:
+            case GO_LIGHT_RAY_05:
+            case GO_LIGHT_RAY_06:
+            case GO_LIGHT_RAY_07:
+            case GO_LIGHT_RAY_08:
+            case GO_LIGHT_RAY_09:
+            case GO_LIGHT_RAY_10:
+            case GO_LIGHT_RAY_11:
+            case GO_LIGHT_RAY_12:
+            case GO_LIGHT_RAY_13:
+            case GO_LIGHT_RAY_14:
+            case GO_LIGHT_RAY_15:
+            case GO_LIGHT_RAY_16:
+                go->setIgnorePhaseIdCheck(true);
+                lightqGUIDs.push_back(go->GetGUID());
+                break;
+            case GO_SHA_ENERGY_WALL:
+                easyGUIDconteiner[go->GetEntry()] = go->GetGUID();
+                if (EventfieldOfSha >= 3)
+                    HandleGameObject(go->GetGUID(), true, go);
+                break;
+            case GO_ROPE:
+                if (go->GetPositionZ() > 35.0f && go->GetPositionZ() < 40.0f)
+                    southropeGuid = go->GetGUID();
+                else if (go->GetPositionZ() < 35.0f)
+                    northropeGuid = go->GetGUID();
+                break;
+            case GO_NORTH_ROPE_SKEIN:
+                northropeskeinGuid = go->GetGUID();
+                break;
+            case GO_SOUTH_ROPE_SKEIN:
+                southropeskeinGuid = go->GetGUID();
+                break;
+            case GO_WIND_DOOR:
+                winddoorGuid = go->GetGUID();
+                break;
+            case GO_ORGRIMMAR_GATE:
+                AddDoor(go, true);
+                orgrimmargateGuid = go->GetGUID();
+                break;
+            case GO_ORGRIMMAR_GATE2:
+                orgrimmargate2Guid = go->GetGUID();
+                break;
+            case GO_RUSTY_BARS:
+                rustybarsGuid = go->GetGUID();
+                break;
+            case GO_NAZGRIM_DOOR:
+                nazgrimdoorGuid = go->GetGUID();
+                break;
+            case GO_NAZGRIM_EX_DOOR:
+                AddDoor(go, true);
+                nazgrimexdoorGuid = go->GetGUID();
+                break;
+            case GO_MALKOROK_FENCH:
+            case GO_MALKOROK_FENCH_2:
+                malkorokfenchGuids.push_back(go->GetGUID());
+                break;
+            case GO_BLACKFUSE_ENT_DOOR:
+                AddDoor(go, true);
+                blackfuseentdoorGuid = go->GetGUID();
+                break;
+            case GO_ENT_GATE:
+                AddDoor(go, true);
+                spentdoorGuid = go->GetGUID();
+                break;
+            case GO_SP_EX_DOOR:
+                AddDoor(go, true);
+                spexdoorGuid = go->GetGUID();
+                break;
                 //Thok
-                case GO_THOK_ENT_DOOR:
-                    thokentdoorGuid = go->GetGUID();
-                    break;
-                case GO_JINUI_JAIL:
-                case GO_JINUI_JAIL2:
-                case GO_SAUROK_JAIL:
-                case GO_SAUROK_JAIL2:
-                case GO_YAUNGOLIAN_JAIL:
-                case GO_YAUNGOLIAN_JAIL2:
-                    jaillistGuids.push_back(go->GetGUID());
-                    break;
+            case GO_THOK_ENT_DOOR:
+                thokentdoorGuid = go->GetGUID();
+                break;
+            case GO_JINUI_JAIL:
+            case GO_JINUI_JAIL2:
+            case GO_SAUROK_JAIL:
+            case GO_SAUROK_JAIL2:
+            case GO_YAUNGOLIAN_JAIL:
+            case GO_YAUNGOLIAN_JAIL2:
+                jaillistGuids.push_back(go->GetGUID());
+                break;
                 //Spoils of pandaria
-                case GO_SSOP_SPOILS:
-                    if (GetBossState(DATA_SPOILS_OF_PANDARIA) != DONE)
-                    {
-                        SetBossState(DATA_SPOILS_OF_PANDARIA, NOT_STARTED);
-                        gossopsGuid = go->GetGUID();
-                    }
-                    else if ((GetBossState(DATA_SPOILS_OF_PANDARIA) == DONE))
-                        go->Delete();
-                    break;
-                case GO_NSOP_SPOILS:
-                    gonsopsGuid = go->GetGUID();
-                    break;
-                case GO_SMALL_MOGU_BOX:
-                case GO_MEDIUM_MOGU_BOX:
-                case GO_BIG_MOGU_BOX:
-                case GO_SMALL_MANTIS_BOX:
-                case GO_MEDIUM_MANTIS_BOX:
-                case GO_BIG_MANTIS_BOX:
-                case GO_PANDAREN_RELIC_BOX:
-                    sopboxGuids.push_back(go->GetGUID());
-                    break;
-                case GO_ENT_DOOR_LEFT:
-                case GO_ENT_DOOR_RIGHT:
-                case GO_EX_DOOR_RIGHT:
-                case GO_EX_DOOR_LEFT:
-                    roomdoorGuids.push_back(go->GetGUID());
-                    break;
-                case GO_ROOM_GATE:
-                case GO_ROOM_GATE2:
-                case GO_ROOM_GATE3:
-                case GO_ROOM_GATE4:
-                    roomgateGuids.push_back(go->GetGUID());
-                    break;
-                case GO_IRON_DOOR_R:
-                case GO_IRON_DOOR_L:
-                    irondoorGuids.push_back(go->GetGUID());
-                    break;
-                case GO_LEVER_R:
-                case GO_LEVER_L:
-                    leverGuids.push_back(go->GetGUID());
-                    break;
+            case GO_SSOP_SPOILS:
+                if (GetBossState(DATA_SPOILS_OF_PANDARIA) != DONE)
+                {
+                    SetBossState(DATA_SPOILS_OF_PANDARIA, NOT_STARTED);
+                    gossopsGuid = go->GetGUID();
+                }
+                else if ((GetBossState(DATA_SPOILS_OF_PANDARIA) == DONE))
+                    go->Delete();
+                break;
+            case GO_NSOP_SPOILS:
+                gonsopsGuid = go->GetGUID();
+                break;
+            case GO_SMALL_MOGU_BOX:
+            case GO_MEDIUM_MOGU_BOX:
+            case GO_BIG_MOGU_BOX:
+            case GO_SMALL_MANTIS_BOX:
+            case GO_MEDIUM_MANTIS_BOX:
+            case GO_BIG_MANTIS_BOX:
+            case GO_PANDAREN_RELIC_BOX:
+                sopboxGuids.push_back(go->GetGUID());
+                break;
+            case GO_ENT_DOOR_LEFT:
+            case GO_ENT_DOOR_RIGHT:
+            case GO_EX_DOOR_RIGHT:
+            case GO_EX_DOOR_LEFT:
+                roomdoorGuids.push_back(go->GetGUID());
+                break;
+            case GO_ROOM_GATE:
+            case GO_ROOM_GATE2:
+            case GO_ROOM_GATE3:
+            case GO_ROOM_GATE4:
+                roomgateGuids.push_back(go->GetGUID());
+                break;
+            case GO_IRON_DOOR_R:
+            case GO_IRON_DOOR_L:
+                irondoorGuids.push_back(go->GetGUID());
+                break;
+            case GO_LEVER_R:
+            case GO_LEVER_L:
+                leverGuids.push_back(go->GetGUID());
+                break;
                 //Paragons of Klaxxi
-                case GO_PRE_ENT_KLAXXI_DOOR:
-                    klaxxientdoorGuid = go->GetGUID();
-                    CheckProgressForKlaxxi();
-                    break;
-                case GO_ARENA_WALL:
-                    klaxxiarenagateGuid.push_back(go->GetGUID());
-                    break;
-                case GO_KLAXXI_EX_DOOR:
-                    AddDoor(go, true);
-                    klaxxiexdoorGuid = go->GetGUID();
-                    break;
-                case GO_GARROSH_FENCH:
-                case GO_GARROSH_FENCH2:
-                    garroshfenchGuids.push_back(go->GetGUID());
-                    break;
-                case GO_SOLDIER_RIGHT_DOOR:
-                case GO_SOLDIER_LEFT_DOOR:
-                    soldierfenchGuids.push_back(go->GetGUID());
-                    break;
-                case GO_GARROSH_ENT_DOOR:
-                    garroshentdoorGuid = go->GetGUID();
-                    break;
-                case GO_SHA_VORTEX:
-                    goshavortexGuids.push_back(go->GetGUID());
-                    break;
+            case GO_PRE_ENT_KLAXXI_DOOR:
+                klaxxientdoorGuid = go->GetGUID();
+                CheckProgressForKlaxxi();
+                break;
+            case GO_ARENA_WALL:
+                klaxxiarenagateGuid.push_back(go->GetGUID());
+                break;
+            case GO_KLAXXI_EX_DOOR:
+                AddDoor(go, true);
+                klaxxiexdoorGuid = go->GetGUID();
+                break;
+            case GO_GARROSH_FENCH:
+            case GO_GARROSH_FENCH2:
+                garroshfenchGuids.push_back(go->GetGUID());
+                break;
+            case GO_SOLDIER_RIGHT_DOOR:
+            case GO_SOLDIER_LEFT_DOOR:
+                soldierfenchGuids.push_back(go->GetGUID());
+                break;
+            case GO_GARROSH_ENT_DOOR:
+                garroshentdoorGuid = go->GetGUID();
+                break;
+            case GO_SHA_VORTEX:
+                goshavortexGuids.push_back(go->GetGUID());
+                break;
             }
         }
 
@@ -956,7 +956,7 @@ public:
 
             if (!InstanceScript::SetBossState(id, state))
                 return false;
-            
+
             switch (id)
             {
             case DATA_IMMERSEUS:
@@ -1207,7 +1207,7 @@ public:
                     //Open Room's Doors
                     for (std::vector<ObjectGuid>::const_iterator itr = roomdoorGuids.begin(); itr != roomdoorGuids.end(); itr++)
                         HandleGameObject(*itr, true);
-                    
+
                     if (Creature* ssops = instance->GetCreature(npcssopsGuid))
                         ssops->AI()->DoAction(ACTION_SSOPS_DONE);
 
@@ -1943,44 +1943,44 @@ public:
         {
             switch (type)
             {
-                case DATA_TEAM_IN_INSTANCE:
-                    /* if (!TeamInInstance)
-                    {
-                        Map::PlayerList const &players = instance->GetPlayers();
-                        if (!players.isEmpty())
-                            if (Player* player = players.begin()->getSource())
-                                TeamInInstance = player->GetTeam();
-                    } */
-                    return TeamInInstance;
-                case DATA_GALAKRAS_PRE_EVENT:
-                    return ShowCannon;
-                case DATA_GALAKRAS_PRE_EVENT_COUNT:
-                    return CannonCount;
-                case DATA_SOUTH_TOWER:
-                    return ShowSouthTower;
-                case DATA_SOUTH_COUNT:
-                    return SouthTowerCount;
-                case DATA_NORTH_TOWER:
-                    return ShowNorthTower;
-                case DATA_NORTH_COUNT:
-                    return NorthTowerCount;
-                case DATA_IS_KLAXXI_DONE:
-                    return uint32(const_cast<instance_siege_of_orgrimmar_InstanceMapScript*>(this)->IsKlaxxiDone());
-                case DATA_CHECK_INSTANCE_PROGRESS:
-                    return uint32(const_cast<instance_siege_of_orgrimmar_InstanceMapScript*>(this)->CheckProgressForGarrosh());
-                case DATA_GET_REALM_OF_YSHAARJ:
-                    switch (rycount)
-                    {
-                        case 0:
-                            const_cast<instance_siege_of_orgrimmar_InstanceMapScript*>(this)->ResetBuffOnEmbodiedDoubts();
-                            break;
-                        case 1:
-                            const_cast<instance_siege_of_orgrimmar_InstanceMapScript*>(this)->ResetBuffOnEmbodiedFears();
-                            break;
-                        default:
-                            break;
-                    }  
-                    return rycount;
+            case DATA_TEAM_IN_INSTANCE:
+                /* if (!TeamInInstance)
+                {
+                    Map::PlayerList const &players = instance->GetPlayers();
+                    if (!players.isEmpty())
+                        if (Player* player = players.begin()->getSource())
+                            TeamInInstance = player->GetTeam();
+                } */
+                return TeamInInstance;
+            case DATA_GALAKRAS_PRE_EVENT:
+                return ShowCannon;
+            case DATA_GALAKRAS_PRE_EVENT_COUNT:
+                return CannonCount;
+            case DATA_SOUTH_TOWER:
+                return ShowSouthTower;
+            case DATA_SOUTH_COUNT:
+                return SouthTowerCount;
+            case DATA_NORTH_TOWER:
+                return ShowNorthTower;
+            case DATA_NORTH_COUNT:
+                return NorthTowerCount;
+            case DATA_IS_KLAXXI_DONE:
+                return uint32(const_cast<instance_siege_of_orgrimmar_InstanceMapScript*>(this)->IsKlaxxiDone());
+            case DATA_CHECK_INSTANCE_PROGRESS:
+                return uint32(const_cast<instance_siege_of_orgrimmar_InstanceMapScript*>(this)->CheckProgressForGarrosh());
+            case DATA_GET_REALM_OF_YSHAARJ:
+                switch (rycount)
+                {
+                case 0:
+                    const_cast<instance_siege_of_orgrimmar_InstanceMapScript*>(this)->ResetBuffOnEmbodiedDoubts();
+                    break;
+                case 1:
+                    const_cast<instance_siege_of_orgrimmar_InstanceMapScript*>(this)->ResetBuffOnEmbodiedFears();
+                    break;
+                default:
+                    break;
+                }
+                return rycount;
             }
             return 0;
         }
@@ -2084,183 +2084,183 @@ public:
             switch (type)
             {
                 //Fallen Protectors
-                case NPC_ROOK_STONETOE: 
-                    return fpGUID[0];
-                case NPC_SUN_TENDERHEART:
-                    return fpGUID[1];
-                case NPC_HE_SOFTFOOT:
-                    return fpGUID[2];
-                case NPC_EMBODIED_MISERY_OF_ROOK:
-                case NPC_EMBODIED_GLOOM_OF_ROOK:
-                case NPC_EMBODIED_SORROW_OF_ROOK:
-                    if (!rookmeasureGuids.empty())
-                        for (std::vector<ObjectGuid>::const_iterator itr = rookmeasureGuids.begin(); itr != rookmeasureGuids.end(); itr++)
-                            if (Creature* measure = instance->GetCreature(*itr))
-                                if (measure->GetEntry() == type)
-                                    return measure->GetGUID();
+            case NPC_ROOK_STONETOE:
+                return fpGUID[0];
+            case NPC_SUN_TENDERHEART:
+                return fpGUID[1];
+            case NPC_HE_SOFTFOOT:
+                return fpGUID[2];
+            case NPC_EMBODIED_MISERY_OF_ROOK:
+            case NPC_EMBODIED_GLOOM_OF_ROOK:
+            case NPC_EMBODIED_SORROW_OF_ROOK:
+                if (!rookmeasureGuids.empty())
+                    for (std::vector<ObjectGuid>::const_iterator itr = rookmeasureGuids.begin(); itr != rookmeasureGuids.end(); itr++)
+                        if (Creature* measure = instance->GetCreature(*itr))
+                            if (measure->GetEntry() == type)
+                                return measure->GetGUID();
                 //Galakras
-                case DATA_JAINA_OR_SYLVANA:
-                    return JainaOrSylvanaGUID;
-                case DATA_VEREESA_OR_AETHAS:
-                    return VereesaOrAethasGUID;
-                case DATA_DEMOLITIONS_EXPERT_S:
-                    return sExpertGUID;
-                case DATA_DEMOLITIONS_EXPERT_N:
-                    return nExpertGUID;
-                case NPC_LOREWALKER_CHO:
-                case NPC_LOREWALKER_CHO3:
-                    return LorewalkerChoGUIDtmp;
+            case DATA_JAINA_OR_SYLVANA:
+                return JainaOrSylvanaGUID;
+            case DATA_VEREESA_OR_AETHAS:
+                return VereesaOrAethasGUID;
+            case DATA_DEMOLITIONS_EXPERT_S:
+                return sExpertGUID;
+            case DATA_DEMOLITIONS_EXPERT_N:
+                return nExpertGUID;
+            case NPC_LOREWALKER_CHO:
+            case NPC_LOREWALKER_CHO3:
+                return LorewalkerChoGUIDtmp;
                 //Korkron Dark Shaman
-                case NPC_WAVEBINDER_KARDRIS:
-                    return kardrisGuid;
-                case NPC_EARTHBREAKER_HAROMM:
-                    return harommGuid;
-                case NPC_BLOODCLAW:
-                    return bloodclawGuid;
-                case NPC_DARKFANG:
-                    return darkfangGuid;
+            case NPC_WAVEBINDER_KARDRIS:
+                return kardrisGuid;
+            case NPC_EARTHBREAKER_HAROMM:
+                return harommGuid;
+            case NPC_BLOODCLAW:
+                return bloodclawGuid;
+            case NPC_DARKFANG:
+                return darkfangGuid;
                 //Malkorok
-                case NPC_ANCIENT_MIASMA:
-                    return amGuid;
+            case NPC_ANCIENT_MIASMA:
+                return amGuid;
                 //Spoils of Pandaria
-                case GO_LEVER_R:
-                case GO_LEVER_L:
-                    for (std::vector<ObjectGuid>::const_iterator itr = leverGuids.begin(); itr != leverGuids.end(); itr++)
-                        if (GameObject* lever = instance->GetGameObject(*itr))
-                            if (lever->GetEntry() == type)
-                                return lever->GetGUID();
-                case GO_IRON_DOOR_R:
-                case GO_IRON_DOOR_L:
-                    for (std::vector<ObjectGuid>::const_iterator itr = irondoorGuids.begin(); itr != irondoorGuids.end(); itr++)
-                        if (GameObject* door = instance->GetGameObject(*itr))
-                            if (door->GetEntry() == type)
-                                return door->GetGUID();
-                case DATA_SPOIL_MANTIS: 
-                    for (std::vector<ObjectGuid>::const_iterator itr = spoilsGuids.begin(); itr != spoilsGuids.end(); itr++)
+            case GO_LEVER_R:
+            case GO_LEVER_L:
+                for (std::vector<ObjectGuid>::const_iterator itr = leverGuids.begin(); itr != leverGuids.end(); itr++)
+                    if (GameObject* lever = instance->GetGameObject(*itr))
+                        if (lever->GetEntry() == type)
+                            return lever->GetGUID();
+            case GO_IRON_DOOR_R:
+            case GO_IRON_DOOR_L:
+                for (std::vector<ObjectGuid>::const_iterator itr = irondoorGuids.begin(); itr != irondoorGuids.end(); itr++)
+                    if (GameObject* door = instance->GetGameObject(*itr))
+                        if (door->GetEntry() == type)
+                            return door->GetGUID();
+            case DATA_SPOIL_MANTIS:
+                for (std::vector<ObjectGuid>::const_iterator itr = spoilsGuids.begin(); itr != spoilsGuids.end(); itr++)
+                {
+                    if (Creature* spoil = instance->GetCreature(*itr))
                     {
-                        if (Creature* spoil = instance->GetCreature(*itr))
+                        if (GetBossState(DATA_SPOILS_OF_PANDARIA) == IN_PROGRESS)
                         {
-                            if (GetBossState(DATA_SPOILS_OF_PANDARIA) == IN_PROGRESS)
-                            {
-                                if (spoil->GetEntry() == NPC_MANTIS_SPOILS2)
-                                    return spoil->GetGUID();
-                            }
-                            else if (GetBossState(DATA_SPOILS_OF_PANDARIA) == SPECIAL)
-                                if (spoil->GetEntry() == NPC_MANTIS_SPOILS)
-                                    return spoil->GetGUID();
+                            if (spoil->GetEntry() == NPC_MANTIS_SPOILS2)
+                                return spoil->GetGUID();
                         }
+                        else if (GetBossState(DATA_SPOILS_OF_PANDARIA) == SPECIAL)
+                            if (spoil->GetEntry() == NPC_MANTIS_SPOILS)
+                                return spoil->GetGUID();
                     }
-                case DATA_SPOIL_MOGU: 
-                    for (std::vector<ObjectGuid>::const_iterator itr = spoilsGuids.begin(); itr != spoilsGuids.end(); itr++)
+                }
+            case DATA_SPOIL_MOGU:
+                for (std::vector<ObjectGuid>::const_iterator itr = spoilsGuids.begin(); itr != spoilsGuids.end(); itr++)
+                {
+                    if (Creature* spoil = instance->GetCreature(*itr))
                     {
-                        if (Creature* spoil = instance->GetCreature(*itr))
+                        if (GetBossState(DATA_SPOILS_OF_PANDARIA) == IN_PROGRESS)
                         {
-                            if (GetBossState(DATA_SPOILS_OF_PANDARIA) == IN_PROGRESS)
-                            {
-                                if (spoil->GetEntry() == NPC_MOGU_SPOILS2)
-                                    return spoil->GetGUID();
-                            }
-                            else if (GetBossState(DATA_SPOILS_OF_PANDARIA) == SPECIAL)
-                                if (spoil->GetEntry() == NPC_MOGU_SPOILS)
-                                    return spoil->GetGUID();
+                            if (spoil->GetEntry() == NPC_MOGU_SPOILS2)
+                                return spoil->GetGUID();
                         }
+                        else if (GetBossState(DATA_SPOILS_OF_PANDARIA) == SPECIAL)
+                            if (spoil->GetEntry() == NPC_MOGU_SPOILS)
+                                return spoil->GetGUID();
                     }
-                case NPC_MOGU_SPOILS:    
-                case NPC_MOGU_SPOILS2:   
-                case NPC_MANTIS_SPOILS:
-                case NPC_MANTIS_SPOILS2: 
-                    for (std::vector<ObjectGuid>::const_iterator itr = spoils2Guids.begin(); itr != spoils2Guids.end(); itr++)
-                        if (Creature* spoil2 = instance->GetCreature(*itr))
-                            if (spoil2->GetEntry() == type)
-                                return spoil2->GetGUID();
+                }
+            case NPC_MOGU_SPOILS:
+            case NPC_MOGU_SPOILS2:
+            case NPC_MANTIS_SPOILS:
+            case NPC_MANTIS_SPOILS2:
+                for (std::vector<ObjectGuid>::const_iterator itr = spoils2Guids.begin(); itr != spoils2Guids.end(); itr++)
+                    if (Creature* spoil2 = instance->GetCreature(*itr))
+                        if (spoil2->GetEntry() == type)
+                            return spoil2->GetGUID();
                 //Mogu
-                case GO_SMALL_MOGU_BOX:
-                case GO_MEDIUM_MOGU_BOX:
-                case GO_BIG_MOGU_BOX:
-                    for (std::vector<ObjectGuid>::const_iterator itr = spoils2Guids.begin(); itr != spoils2Guids.end(); itr++)
+            case GO_SMALL_MOGU_BOX:
+            case GO_MEDIUM_MOGU_BOX:
+            case GO_BIG_MOGU_BOX:
+                for (std::vector<ObjectGuid>::const_iterator itr = spoils2Guids.begin(); itr != spoils2Guids.end(); itr++)
+                {
+                    if (Creature* spoil = instance->GetCreature(*itr))
                     {
-                        if (Creature* spoil = instance->GetCreature(*itr))
+                        if (GetBossState(DATA_SPOILS_OF_PANDARIA) == IN_PROGRESS)
                         {
-                            if (GetBossState(DATA_SPOILS_OF_PANDARIA) == IN_PROGRESS)
-                            {
-                                if (spoil->GetEntry() == NPC_MOGU_SPOILS2)
-                                    return spoil->GetGUID();
-                            }
-                            else if (GetBossState(DATA_SPOILS_OF_PANDARIA) == SPECIAL)
-                                if (spoil->GetEntry() == NPC_MOGU_SPOILS)
-                                    return spoil->GetGUID();
+                            if (spoil->GetEntry() == NPC_MOGU_SPOILS2)
+                                return spoil->GetGUID();
                         }
+                        else if (GetBossState(DATA_SPOILS_OF_PANDARIA) == SPECIAL)
+                            if (spoil->GetEntry() == NPC_MOGU_SPOILS)
+                                return spoil->GetGUID();
                     }
+                }
                 //Mantis
-                case GO_SMALL_MANTIS_BOX:
-                case GO_MEDIUM_MANTIS_BOX:
-                case GO_BIG_MANTIS_BOX:
-                    for (std::vector<ObjectGuid>::const_iterator itr = spoils2Guids.begin(); itr != spoils2Guids.end(); itr++)
+            case GO_SMALL_MANTIS_BOX:
+            case GO_MEDIUM_MANTIS_BOX:
+            case GO_BIG_MANTIS_BOX:
+                for (std::vector<ObjectGuid>::const_iterator itr = spoils2Guids.begin(); itr != spoils2Guids.end(); itr++)
+                {
+                    if (Creature* spoil = instance->GetCreature(*itr))
                     {
-                        if (Creature* spoil = instance->GetCreature(*itr))
+                        if (GetBossState(DATA_SPOILS_OF_PANDARIA) == IN_PROGRESS)
                         {
-                            if (GetBossState(DATA_SPOILS_OF_PANDARIA) == IN_PROGRESS)
-                            {
-                                if (spoil->GetEntry() == NPC_MANTIS_SPOILS2)
-                                    return spoil->GetGUID();
-                            }
-                            else if (GetBossState(DATA_SPOILS_OF_PANDARIA) == SPECIAL)
-                                if (spoil->GetEntry() == NPC_MANTIS_SPOILS)
-                                    return spoil->GetGUID();
+                            if (spoil->GetEntry() == NPC_MANTIS_SPOILS2)
+                                return spoil->GetGUID();
                         }
+                        else if (GetBossState(DATA_SPOILS_OF_PANDARIA) == SPECIAL)
+                            if (spoil->GetEntry() == NPC_MANTIS_SPOILS)
+                                return spoil->GetGUID();
                     }
-                case NPC_SSOP_SPOILS:
-                case GO_PANDAREN_RELIC_BOX:
-                    return npcssopsGuid;
+                }
+            case NPC_SSOP_SPOILS:
+            case GO_PANDAREN_RELIC_BOX:
+                return npcssopsGuid;
                 //Paragons of the Klaxxi
-                case NPC_KILRUK:
-                case NPC_XARIL:
-                case NPC_KAZTIK:
-                case NPC_KORVEN:
-                case NPC_IYYOKYK:
-                case NPC_KAROZ:
-                case NPC_SKEER:
-                case NPC_RIKKAL:
-                case NPC_HISEK:
-                    for (std::vector<ObjectGuid>::const_iterator itr = klaxxilist.begin(); itr != klaxxilist.end(); itr++)
-                        if (Creature* klaxxi = instance->GetCreature(*itr))
-                            if (klaxxi->GetEntry() == type)
-                                return klaxxi->GetGUID();
-                case NPC_AMBER_PIECE:
-                    return amberpieceGuid;
-                case NPC_KLAXXI_CONTROLLER:
-                    return klaxxicontrollerGuid;
+            case NPC_KILRUK:
+            case NPC_XARIL:
+            case NPC_KAZTIK:
+            case NPC_KORVEN:
+            case NPC_IYYOKYK:
+            case NPC_KAROZ:
+            case NPC_SKEER:
+            case NPC_RIKKAL:
+            case NPC_HISEK:
+                for (std::vector<ObjectGuid>::const_iterator itr = klaxxilist.begin(); itr != klaxxilist.end(); itr++)
+                    if (Creature* klaxxi = instance->GetCreature(*itr))
+                        if (klaxxi->GetEntry() == type)
+                            return klaxxi->GetGUID();
+            case NPC_AMBER_PIECE:
+                return amberpieceGuid;
+            case NPC_KLAXXI_CONTROLLER:
+                return klaxxicontrollerGuid;
                 //Thok
-                case NPC_THOK:
-                    return thokGuid;
-                case NPC_BODY_STALKER:
-                    return bsGuid;
+            case NPC_THOK:
+                return thokGuid;
+            case NPC_BODY_STALKER:
+                return bsGuid;
                 //Blackfuse
-                case NPC_BLACKFUSE_MAUNT:
-                    return blackfuseGuid;
-                case NPC_SHOCKWAVE_MISSILE_STALKER:
-                    return swmstalkerGuid;
-                case NPC_ACTIVATED_ELECTROMAGNET:
-                    return electromagnetGuid;
-                case NPC_ACTIVATED_LASER_TURRET:
-                    return laserturretGuid;
-                case NPC_HEART_OF_YSHAARJ:
-                    return heartofyshaarjGuid;
-                case DATA_GARROSH:
-                    return garroshGuid;
-                case DATA_GARROSH_REALM:
-                    return garroshrealmGuid;
-                case NPC_HORDE_CANNON:
-                    if (!hordecannonlistGuids.empty())
-                    {
-                        std::vector<ObjectGuid>::const_iterator itr = hordecannonlistGuids.begin();
-                        std::advance(itr, urand(0, hordecannonlistGuids.size() - 1));
-                        return *itr;
-                    }
-                case NPC_KORKRON_GUNSHIP:
-                    return korkrongunshipGuid;
-                case DATA_GARROSH_STORMWIND:
-                    return garroshstormwindGuid;
+            case NPC_BLACKFUSE_MAUNT:
+                return blackfuseGuid;
+            case NPC_SHOCKWAVE_MISSILE_STALKER:
+                return swmstalkerGuid;
+            case NPC_ACTIVATED_ELECTROMAGNET:
+                return electromagnetGuid;
+            case NPC_ACTIVATED_LASER_TURRET:
+                return laserturretGuid;
+            case NPC_HEART_OF_YSHAARJ:
+                return heartofyshaarjGuid;
+            case DATA_GARROSH:
+                return garroshGuid;
+            case DATA_GARROSH_REALM:
+                return garroshrealmGuid;
+            case NPC_HORDE_CANNON:
+                if (!hordecannonlistGuids.empty())
+                {
+                    std::vector<ObjectGuid>::const_iterator itr = hordecannonlistGuids.begin();
+                    std::advance(itr, urand(0, hordecannonlistGuids.size() - 1));
+                    return *itr;
+                }
+            case NPC_KORKRON_GUNSHIP:
+                return korkrongunshipGuid;
+            case DATA_GARROSH_STORMWIND:
+                return garroshstormwindGuid;
             }
             std::map<uint32, ObjectGuid>::const_iterator itr = easyGUIDconteiner.find(type);
             if (itr != easyGUIDconteiner.end())
@@ -2530,7 +2530,7 @@ public:
 
             OUT_LOAD_INST_DATA_COMPLETE;
         }
-        
+
         bool CheckRequiredBosses(uint32 bossId, uint32 entry, Player const* player = NULL) const
         {
             if (player && AccountMgr::IsGMAccount(player->GetSession()->GetSecurity()))
@@ -2538,12 +2538,12 @@ public:
 
             switch (bossId)
             {
-                case DATA_IMMERSEUS:
-                    return true;
-                case DATA_F_PROTECTORS:
-                    return GetBossState(DATA_IMMERSEUS) == DONE;
-                case DATA_NORUSHEN:
-                    return GetBossState(DATA_F_PROTECTORS) == DONE;
+            case DATA_IMMERSEUS:
+                return true;
+            case DATA_F_PROTECTORS:
+                return GetBossState(DATA_IMMERSEUS) == DONE;
+            case DATA_NORUSHEN:
+                return GetBossState(DATA_F_PROTECTORS) == DONE;
             }
             return true;
         }
@@ -2590,7 +2590,7 @@ public:
             {
                 switch (eventId)
                 {
-                // Galakras finish event. Horde
+                    // Galakras finish event. Horde
                 case EVENT_FINISH_1_H:
                     if (Creature* Lorthemar = instance->GetCreature(GetGuidData(NPC_LORTHEMAR_THERON_H)))
                         Lorthemar->AI()->Talk(7);

@@ -69,71 +69,71 @@ public:
 
             switch (type)
             {
-                case DATA_SCAR_SHELL:
+            case DATA_SCAR_SHELL:
+            {
+                switch (state)
                 {
-                    switch (state)
-                    {
-                        case IN_PROGRESS:
-                            if (Creature* gurgthock = instance->GetCreature(GetGuidData(NPC_GURGTHOCK)))
-                                gurgthock->AI()->Talk(SAY_SCAR_SHELL_START);
-                            break;
-                        case DONE:
-                            if (Creature* gurgthock = instance->GetCreature(GetGuidData(NPC_GURGTHOCK)))
-                                gurgthock->AI()->Talk(SAY_SCAR_SHELL_END);
-                            break;
-                    }
+                case IN_PROGRESS:
+                    if (Creature* gurgthock = instance->GetCreature(GetGuidData(NPC_GURGTHOCK)))
+                        gurgthock->AI()->Talk(SAY_SCAR_SHELL_START);
+                    break;
+                case DONE:
+                    if (Creature* gurgthock = instance->GetCreature(GetGuidData(NPC_GURGTHOCK)))
+                        gurgthock->AI()->Talk(SAY_SCAR_SHELL_END);
                     break;
                 }
-                case DATA_JOLGRUM:
+                break;
+            }
+            case DATA_JOLGRUM:
+            {
+                switch (state)
                 {
-                    switch (state)
-                    {
-                        case IN_PROGRESS:
-                            if (Creature* gurgthock = instance->GetCreature(GetGuidData(NPC_GURGTHOCK)))
-                                gurgthock->AI()->Talk(SAY_JOLGRUM_START);
-                            break;
-                        case DONE:
-                            if (Creature* gurgthock = instance->GetCreature(GetGuidData(NPC_GURGTHOCK)))
-                                gurgthock->AI()->Talk(SAY_JOLGRUM_END);
-                            break;
-                    }
+                case IN_PROGRESS:
+                    if (Creature* gurgthock = instance->GetCreature(GetGuidData(NPC_GURGTHOCK)))
+                        gurgthock->AI()->Talk(SAY_JOLGRUM_START);
+                    break;
+                case DONE:
+                    if (Creature* gurgthock = instance->GetCreature(GetGuidData(NPC_GURGTHOCK)))
+                        gurgthock->AI()->Talk(SAY_JOLGRUM_END);
                     break;
                 }
-                case DATA_LIUYANG:
+                break;
+            }
+            case DATA_LIUYANG:
+            {
+                switch (state)
                 {
-                    switch (state)
-                    {
-                        case IN_PROGRESS:
-                            if (Creature* gurgthock = instance->GetCreature(GetGuidData(NPC_GURGTHOCK)))
-                                gurgthock->AI()->Talk(SAY_LIUYANG_START);
-                            break;
-                        case DONE:
-                            if (Creature* gurgthock = instance->GetCreature(GetGuidData(NPC_GURGTHOCK)))
-                                gurgthock->AI()->Talk(SAY_LIUYANG_END);
-                            break;
-                    }
+                case IN_PROGRESS:
+                    if (Creature* gurgthock = instance->GetCreature(GetGuidData(NPC_GURGTHOCK)))
+                        gurgthock->AI()->Talk(SAY_LIUYANG_START);
+                    break;
+                case DONE:
+                    if (Creature* gurgthock = instance->GetCreature(GetGuidData(NPC_GURGTHOCK)))
+                        gurgthock->AI()->Talk(SAY_LIUYANG_END);
                     break;
                 }
-                case DATA_CHAGAN:
+                break;
+            }
+            case DATA_CHAGAN:
+            {
+                switch (state)
                 {
-                    switch (state)
-                    {
-                        case IN_PROGRESS:
-                            if (Creature* gurgthock = instance->GetCreature(GetGuidData(NPC_GURGTHOCK)))
-                                gurgthock->AI()->Talk(SAY_CHAGAN_START);
-                            break;
-                        case DONE:
-                            if (Creature* gurgthock = instance->GetCreature(GetGuidData(NPC_GURGTHOCK)))
-                                gurgthock->AI()->Talk(SAY_CHAGAN_END);
-                            break;
-                    }
+                case IN_PROGRESS:
+                    if (Creature* gurgthock = instance->GetCreature(GetGuidData(NPC_GURGTHOCK)))
+                        gurgthock->AI()->Talk(SAY_CHAGAN_START);
+                    break;
+                case DONE:
+                    if (Creature* gurgthock = instance->GetCreature(GetGuidData(NPC_GURGTHOCK)))
+                        gurgthock->AI()->Talk(SAY_CHAGAN_END);
                     break;
                 }
-                case DATA_FINAL_STAGE:
-                    if (state == DONE)
-                        if (Creature* gurgthock = instance->GetCreature(GetGuidData(NPC_GURGTHOCK)))
-                            gurgthock->AI()->DoAction(ACTION_2);
-                    break;
+                break;
+            }
+            case DATA_FINAL_STAGE:
+                if (state == DONE)
+                    if (Creature* gurgthock = instance->GetCreature(GetGuidData(NPC_GURGTHOCK)))
+                        gurgthock->AI()->DoAction(ACTION_2);
+                break;
             }
             return true;
         }
@@ -142,11 +142,11 @@ public:
         {
             switch (go->GetEntry())
             {
-                case GO_INNER_DOORS:
-                    go_doors = go->GetGUID();
-                    break;
-                default:
-                    break;
+            case GO_INNER_DOORS:
+                go_doors = go->GetGUID();
+                break;
+            default:
+                break;
             }
         }
 
@@ -154,36 +154,36 @@ public:
         {
             switch (creature->GetEntry())
             {
-                case NPC_SCAR_SHELL:
-                    scarshellGUID = creature->GetGUID();
-                    break;
-                case NPC_JOLGRUM:
-                    jolgrumGUID = creature->GetGUID();
-                    break;
-                case NPC_LIUYANG:
-                    liuyangGUID = creature->GetGUID();
-                    break;
-                case NPC_FIREHOOF:
-                    chaganGUID = creature->GetGUID();
-                    break;
-                case NPC_GURGTHOCK:
-                    gurgthockGUID = creature->GetGUID();
-                    break;
+            case NPC_SCAR_SHELL:
+                scarshellGUID = creature->GetGUID();
+                break;
+            case NPC_JOLGRUM:
+                jolgrumGUID = creature->GetGUID();
+                break;
+            case NPC_LIUYANG:
+                liuyangGUID = creature->GetGUID();
+                break;
+            case NPC_FIREHOOF:
+                chaganGUID = creature->GetGUID();
+                break;
+            case NPC_GURGTHOCK:
+                gurgthockGUID = creature->GetGUID();
+                break;
             }
         }
 
         void SetData(uint32 type, uint32 data) override
         {
-            switch(type)
+            switch (type)
             {
-                case DATA_START_EVENT:
-                    startevent = data;
-                    break;
-                case DATA_SATAY:
-                case DATA_KOBO:
-                case DATA_MAKI:
-                    finaldata = data;
-                    break;
+            case DATA_START_EVENT:
+                startevent = data;
+                break;
+            case DATA_SATAY:
+            case DATA_KOBO:
+            case DATA_MAKI:
+                finaldata = data;
+                break;
             }
         }
 
@@ -191,20 +191,20 @@ public:
         {
             switch (type)
             {
-                case DATA_DOOR:
-                    return go_doors;
-                case NPC_GURGTHOCK:
-                    return gurgthockGUID;
-                case DATA_SCAR_SHELL:
-                    return scarshellGUID;
-                case DATA_JOLGRUM:
-                    return jolgrumGUID;
-                case DATA_LIUYANG:
-                    return liuyangGUID;
-                case DATA_CHAGAN:
-                    return chaganGUID;
-                case DATA_FINAL_STAGE:
-                    return finalbossGUID;
+            case DATA_DOOR:
+                return go_doors;
+            case NPC_GURGTHOCK:
+                return gurgthockGUID;
+            case DATA_SCAR_SHELL:
+                return scarshellGUID;
+            case DATA_JOLGRUM:
+                return jolgrumGUID;
+            case DATA_LIUYANG:
+                return liuyangGUID;
+            case DATA_CHAGAN:
+                return chaganGUID;
+            case DATA_FINAL_STAGE:
+                return finalbossGUID;
             }
             return ObjectGuid::Empty;
         }
@@ -213,12 +213,12 @@ public:
         {
             switch (type)
             {
-                case DATA_SATAY:
-                case DATA_KOBO:
-                case DATA_MAKI:
-                    return finaldata;
-                case DATA_START_EVENT:
-                    return startevent;
+            case DATA_SATAY:
+            case DATA_KOBO:
+            case DATA_MAKI:
+                return finaldata;
+            case DATA_START_EVENT:
+                return startevent;
             }
             return 0;
         }

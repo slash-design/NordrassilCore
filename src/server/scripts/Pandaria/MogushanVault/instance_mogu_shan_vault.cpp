@@ -279,59 +279,59 @@ public:
                         break;
                     }
                 case DATA_SPIRIT_KINGS:
+                {
+                    switch (state)
                     {
-                        switch (state)
-                        {
-                        case NOT_STARTED:
-                            for (GuidVector::const_iterator guid = kingsdoorGUIDs.begin(); guid != kingsdoorGUIDs.end(); guid++)
-                                HandleGameObject(*guid, true);
-                            break;
-                        case IN_PROGRESS:
-                            for (GuidVector::const_iterator guid = kingsdoorGUIDs.begin(); guid != kingsdoorGUIDs.end(); guid++)
-                                HandleGameObject(*guid, false);
-                            break;
-                        case DONE:
-                            for (GuidVector::const_iterator guid = kingsdoorGUIDs.begin(); guid != kingsdoorGUIDs.end(); guid++)
-                                HandleGameObject(*guid, true);
-                            HandleGameObject(spiritexitdoorGuid, true);
-                            HandleGameObject(elegonentdoorGuid, true);
-                            break;
-                        }
+                    case NOT_STARTED:
+                        for (GuidVector::const_iterator guid = kingsdoorGUIDs.begin(); guid != kingsdoorGUIDs.end(); guid++)
+                            HandleGameObject(*guid, true);
+                        break;
+                    case IN_PROGRESS:
+                        for (GuidVector::const_iterator guid = kingsdoorGUIDs.begin(); guid != kingsdoorGUIDs.end(); guid++)
+                            HandleGameObject(*guid, false);
+                        break;
+                    case DONE:
+                        for (GuidVector::const_iterator guid = kingsdoorGUIDs.begin(); guid != kingsdoorGUIDs.end(); guid++)
+                            HandleGameObject(*guid, true);
+                        HandleGameObject(spiritexitdoorGuid, true);
+                        HandleGameObject(elegonentdoorGuid, true);
+                        break;
+                    }
                     break;
-                    }
+                }
                 case DATA_ELEGON:
+                {
+                    switch (state)
                     {
-                        switch (state)
-                        {
-                        case NOT_STARTED:
-                            HandleGameObject(elegonceldoorGuid, true);
-                            break;
-                        case IN_PROGRESS:
-                            HandleGameObject(elegonceldoorGuid, false);
-                            break;
-                        case DONE:
-                            HandleGameObject(elegonceldoorGuid, true);
-                            HandleGameObject(imperatorentdoorGuid, true);
-                            break;
-                        }
+                    case NOT_STARTED:
+                        HandleGameObject(elegonceldoorGuid, true);
+                        break;
+                    case IN_PROGRESS:
+                        HandleGameObject(elegonceldoorGuid, false);
+                        break;
+                    case DONE:
+                        HandleGameObject(elegonceldoorGuid, true);
+                        HandleGameObject(imperatorentdoorGuid, true);
                         break;
                     }
+                    break;
+                }
                 case DATA_WILL_OF_EMPEROR:
+                {
+                    switch (state)
                     {
-                        switch (state)
-                        {
-                        case NOT_STARTED:
-                            HandleGameObject(imperatorentdoorGuid, true);
-                            break;
-                        case IN_PROGRESS:
-                            HandleGameObject(imperatorentdoorGuid, false);
-                            break;
-                        case DONE:
-                            HandleGameObject(imperatorentdoorGuid, true);
-                            break;
-                        }
+                    case NOT_STARTED:
+                        HandleGameObject(imperatorentdoorGuid, true);
+                        break;
+                    case IN_PROGRESS:
+                        HandleGameObject(imperatorentdoorGuid, false);
+                        break;
+                    case DONE:
+                        HandleGameObject(imperatorentdoorGuid, true);
                         break;
                     }
+                    break;
+                }
             }
             return true;
         }
