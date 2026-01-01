@@ -56,7 +56,7 @@ namespace boost
         template <typename Time, typename TimeTraits, typename TimerService>
         class basic_deadline_timer;
 
-        typedef basic_deadline_timer<posix_time::ptime, time_traits<posix_time::ptime>, deadline_timer_service<posix_time::ptime, time_traits<posix_time::ptime>>> deadline_timer;
+        //typedef basic_deadline_timer<posix_time::ptime, time_traits<posix_time::ptime>, deadline_timer_service<posix_time::ptime, time_traits<posix_time::ptime>>> deadline_timer;
     }
 }
 

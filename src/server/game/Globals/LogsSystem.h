@@ -1,5 +1,8 @@
 
 #pragma once
+#include "Define.h"
+#include <vector>
+#include <boost/optional.hpp>
 
 namespace LogsSystem
 {
@@ -60,9 +63,9 @@ namespace LogsSystem
         std::string const& Serealize() const;
 
         std::vector<RosterData> Rosters;
-        Optional<EncounterData> Encounter;
-        Optional<ArenaData> Arena;
-        Optional<GuildData> Guild;
+        boost::optional<EncounterData> Encounter;
+        boost::optional<ArenaData> Arena;
+        boost::optional<GuildData> Guild;
         uint32 RealmID = 0;
         uint32 MapID = 0;
     };
