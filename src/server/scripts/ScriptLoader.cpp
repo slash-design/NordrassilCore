@@ -50,6 +50,7 @@ void AddSC_darkmoon();
 void AddSC_event_tarecgosa();
 void Addsc_dalaran_invasion();
 void AddSC_solocraft();
+void AddLfgSoloScripts();
 
 // spells
 void AddSC_demonhunter_spell_scripts();
@@ -1935,6 +1936,7 @@ void AddCustomScripts()
     AddSC_event_tarecgosa();
     Addsc_dalaran_invasion();
     AddSC_solocraft();
+    AddLfgSoloScripts();
 #endif
 }
 
