@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -49,6 +49,7 @@ void AddSC_npc_PetBattleTrainer();
 void AddSC_darkmoon();
 void AddSC_event_tarecgosa();
 void Addsc_dalaran_invasion();
+void AddSC_solocraft();
 
 // spells
 void AddSC_demonhunter_spell_scripts();
@@ -1933,6 +1934,7 @@ void AddCustomScripts()
     AddSC_darkmoon();
     AddSC_event_tarecgosa();
     Addsc_dalaran_invasion();
+    AddSC_solocraft();
 #endif
 }
 

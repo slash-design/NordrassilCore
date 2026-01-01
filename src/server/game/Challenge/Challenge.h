@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2014 TrinityCore <http://www.trinitycore.org/>
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -15,8 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TRINITY_CHALLENGE_H
-#define TRINITY_CHALLENGE_H
+#ifndef CHALLENGE_H
+#define CHALLENGE_H
 
 #include "Common.h"
 #include "Scenario.h"
@@ -47,6 +47,8 @@ enum ChallengeSpells : uint32
     SPELL_FEL_EXPLOSIVES_DMG        = 240446,
 
     SPELL_CHALLENGE_ANTIKICK        = 305284,
+
+    SPELL_MINERVA_BUFF              = 305306,
 };
 
 enum ChallengeNpcs : uint32
