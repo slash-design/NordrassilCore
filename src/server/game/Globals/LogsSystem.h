@@ -60,7 +60,7 @@ namespace LogsSystem
 
     struct MainData
     {
-        std::string const& Serealize() const;
+        std::string const Serealize() const;
 
         std::vector<RosterData> Rosters;
         boost::optional<EncounterData> Encounter;
