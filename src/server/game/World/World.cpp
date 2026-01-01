@@ -1451,7 +1451,7 @@ void World::LoadConfigSettings(bool reload)
     m_bool_configs[CONFIG_CHECK_MT_SESSION] = sConfigMgr->GetBoolDefault("World.MT.Session", false);
 
     // Garrison
-    m_bool_configs[CONFIG_DISABLE_GARE_UPGRADE] = sConfigMgr->GetBoolDefault("Garrisone.DisableUpgrade", true);
+    m_bool_configs[CONFIG_DISABLE_GARE_UPGRADE] = sConfigMgr->GetBoolDefault("Garrison.DisableUpgrade", false);
 
     // For test server not save cooldown for personal loot
     m_bool_configs[CONFIG_IS_TEST_SERVER] = sConfigMgr->GetBoolDefault("Is.Test.Server", false);
