@@ -187,9 +187,9 @@ void BattlePayDataStoreMgr::LoadProduct()
 		if (productItem.DisplayInfoID != 0 && _displayInfos.find(productItem.DisplayInfoID) == _displayInfos.end())
 			continue;
 
-		productItem.ItemID = fields[2].GetUInt32();
-		if (!sItemStore[productItem.ItemID])
-			continue;
+        productItem.ItemID = fields[2].GetUInt32();
+        if (!sItemStore.LookupEntry(productItem.ItemID))
+            continue;
 
 		productItem.ID = fields[0].GetUInt32();
 		productItem.Quantity = fields[3].GetUInt32();

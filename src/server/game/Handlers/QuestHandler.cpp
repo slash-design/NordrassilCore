@@ -786,7 +786,7 @@ void WorldSession::HandleAdventureJournalStartQuest(WorldPackets::Quest::Adventu
 
 bool WorldSession::AdventureMapPOIAvailable(uint32 adventureMapPOIID)
 {
-    auto adventureMapPOIEntry = sAdventureMapPOIStore[adventureMapPOIID];
+    auto adventureMapPOIEntry = sAdventureMapPOIStore.LookupEntry(adventureMapPOIID);
     if (!adventureMapPOIEntry)
         return false;
 
