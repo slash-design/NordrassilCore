@@ -1000,6 +1000,15 @@ StartJusticePoints = 0
 
 
 #
+#    FastFishing
+#        Description: Makes fishing faster, or removes the wait entirely.
+#        Default:     0  - (Disabled)
+#                     1  - (Faster)
+#                     2  - (Instant)
+
+FastFishing = 0
+
+#
 #    MaxArenaPoints
 #        Description: Maximum arena points a character can have.
 #        Default:     10000
