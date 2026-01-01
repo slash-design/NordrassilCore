@@ -1004,7 +1004,7 @@ void WorldSession::HandleStartWarGame(WorldPackets::Battleground::StartWargame& 
     auto request = new WargameRequest();
     request->OpposingPartyMemberGUID = packet.OpposingPartyMember;
     request->TournamentRules = packet.TournamentRules;
-    request->CreationDate = time(nullptr);
+    request->CreationDate = GameTime::GetGameTime();
     request->QueueID = packet.QueueID;
 
     _player->SetWargameRequest(request);

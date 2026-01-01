@@ -458,7 +458,7 @@ bool WorldSession::Update(uint32 diff, Map* map)
             canLogout = false;
         }
 
-        time_t currTime = time(nullptr);
+        time_t currTime = GameTime::GetGameTime();
         ///- If necessary, log the player out
         if (ShouldLogOut(currTime) && m_playerLoading.IsEmpty())
         {

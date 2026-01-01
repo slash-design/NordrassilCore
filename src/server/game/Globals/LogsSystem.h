@@ -1,8 +1,9 @@
-
 #pragma once
 #include "Define.h"
 #include <vector>
 #include <boost/optional.hpp>
+
+#include "Optional.h"
 
 namespace LogsSystem
 {

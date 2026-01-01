@@ -3925,30 +3925,30 @@ public:
 		player->PlayerTalkClass->ClearMenus();
 		CurrencyTypesEntry const* currencyType = sCurrencyTypesStore.LookupEntry(1160);
 
-		switch (action)
-		{
-		case GOSSIP_ACTION_INFO_DEF + 1:
-			if (currencyType) //if currency not found = vendor not open for avoid buy items for free
-				player->GetSession()->SendListInventory(creature->GetGUID());
-			break;
-		case GOSSIP_ACTION_INFO_DEF + 2:
-		{
-			auto itr = RewardsPreview.find(player->GetGUID());
-			if ((itr != RewardsPreview.end() && time(NULL) - (*itr).second >= 90) || itr == RewardsPreview.end())
-			{
-				if (auto prev = player->SummonCreature(542002, creature->GetPosition(), TEMPSUMMON_TIMED_DESPAWN, 90000, 0, player->GetGUID()))
-				{
-					RewardsPreview[player->GetGUID()] = time(NULL);
-					prev->AddPlayerInPersonnalVisibilityList(player->GetGUID());
-					prev->GetMotionMaster()->MoveFollow(player, 1.f, 2.f);
-				}
-			}
-		}
-		break;
-		case GOSSIP_ACTION_INFO_DEF + 3:
-			ChatHandler(player).PSendSysMessage(542144);
-			break;
-		}
+        switch (action)
+        {
+        case GOSSIP_ACTION_INFO_DEF + 1:
+            if (currencyType) //if currency not found = vendor not open for avoid buy items for free
+                player->GetSession()->SendListInventory(creature->GetGUID());
+        break;
+        case GOSSIP_ACTION_INFO_DEF + 2:
+        {
+            auto itr = RewardsPreview.find(player->GetGUID());
+            if ((itr != RewardsPreview.end() && GameTime::GetGameTime() - (*itr).second >= 90) || itr == RewardsPreview.end())
+            {
+                if (auto prev = player->SummonCreature(542002, creature->GetPosition(), TEMPSUMMON_TIMED_DESPAWN, 90000, 0, player->GetGUID()))
+                {
+                    RewardsPreview[player->GetGUID()] = GameTime::GetGameTime();
+                    prev->AddPlayerInPersonnalVisibilityList(player->GetGUID());
+                    prev->GetMotionMaster()->MoveFollow(player, 1.f, 2.f);
+                }
+            }
+        }
+        break;
+        case GOSSIP_ACTION_INFO_DEF + 3:
+            ChatHandler(player).PSendSysMessage(542144);
+            break;
+        }
 
 		player->CLOSE_GOSSIP_MENU();
 		return true;

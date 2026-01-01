@@ -98,7 +98,7 @@ void WorldSession::HandleTogglePvP(WorldPackets::Misc::TogglePvP& /*packet*/)
     else
     {
         if (!player->pvpInfo.inHostileArea && player->IsPvP())
-            player->pvpInfo.endTimer = time(nullptr);
+            player->pvpInfo.endTimer = GameTime::GetGameTime();
     }
 }
 
@@ -119,7 +119,7 @@ void WorldSession::HandleSetPvP(WorldPackets::Misc::SetPvP& packet)
     else
     {
         if (!player->pvpInfo.inHostileArea && player->IsPvP())
-            player->pvpInfo.endTimer = time(nullptr);
+            player->pvpInfo.endTimer = GameTime::GetGameTime();
     }
 }
 
@@ -154,7 +154,7 @@ void WorldSession::HandleReclaimCorpse(WorldPackets::Misc::ReclaimCorpse& /*pack
     if (!corpse)
         return;
 
-    if (time_t(corpse->GetGhostTime() + player->GetCorpseReclaimDelay(corpse->GetType() == CORPSE_RESURRECTABLE_PVP)) > time_t(time(nullptr)))
+    if (time_t(corpse->GetGhostTime() + player->GetCorpseReclaimDelay(corpse->GetType() == CORPSE_RESURRECTABLE_PVP)) > time_t(GameTime::GetGameTime()))
         return;
 
     if (!corpse->IsWithinDist(player, CORPSE_RECLAIM_RADIUS, true) || !corpse->IsInMap(player))
@@ -492,7 +492,7 @@ void WorldSession::HandleRequestPetInfo(WorldPackets::PetPackets::RequestPetInfo
 void WorldSession::HandleUITimeRequest(WorldPackets::Misc::UITimeRequest& /*request*/)
 {
     WorldPackets::Misc::UITime response;
-    response.Time = time(nullptr);
+    response.Time = GameTime::GetGameTime();
     SendPacket(response.Write());
 }
 

@@ -16,8 +16,9 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Arena.h"
 #include "Battleground.h"
+#include "Arena.h"
+#include "BattlegroundDM.h"
 #include "BattlegroundMgr.h"
 #include "BattlegroundPackets.h"
 #include "Bracket.h"
@@ -29,6 +30,7 @@
 #include "Duration.h"
 #include "Formulas.h"
 #include "GameObjectPackets.h"
+#include "GameTime.h"
 #include "GridNotifiersImpl.h"
 #include "Group.h"
 #include "GroupMgr.h"
@@ -260,7 +262,7 @@ inline void Battleground::_ProcessOfflineQueue()
         auto itr = _players.find(*m_OfflineQueue.begin());
         if (itr != _players.end())
         {
-            if (itr->second.OfflineRemoveTime <= sWorld->GetGameTime())
+            if (itr->second.OfflineRemoveTime <= GameTime::GetGameTime())
             {
                 RemovePlayerAtLeave(itr->first, true, true);
                 m_OfflineQueue.pop_front();
@@ -1614,7 +1616,7 @@ void Battleground::EventPlayerLoggedOut(Player* player)
         return;
 
     m_OfflineQueue.push_back(player->GetGUID());
-    _players[guid].OfflineRemoveTime = sWorld->GetGameTime() + MAX_OFFLINE_TIME;
+    _players[guid].OfflineRemoveTime = GameTime::GetGameTime() + MAX_OFFLINE_TIME;
     if (GetStatus() == STATUS_IN_PROGRESS && !player->IsSpectator())
     {
         RemovePlayer(player, guid, GetPlayerTeam(guid));

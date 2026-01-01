@@ -2004,8 +2004,8 @@ void QuestDataStoreMgr::GenerateInvasionPointUpdate()
                     if (questUpdate->VariableID1)
                         Wq.State.insert(std::make_pair(questUpdate->VariableID1, questUpdate->Value1));
                     Wq.Timer = questUpdate->Timer;
-                    Wq.StartTime = time(nullptr);
-                    Wq.ResetTime = time(nullptr) + questUpdate->Timer;
+                    Wq.StartTime = GameTime::GetGameTime();
+                    Wq.ResetTime = GameTime::GetGameTime() + questUpdate->Timer;
                     Wq.quest = questUpdate->quest;
                     Wq.worldQuest = wqTemplate;
 
@@ -2852,7 +2852,7 @@ void QuestDataStoreMgr::ResetWorldQuest()
         for (std::map<uint32 /*QuestID*/, WorldQuest>::iterator iter = itr->second.begin(); iter != itr->second.end();)
         {
             WorldQuest* worldQuest = &iter->second;
-            if (worldQuest->ResetTime <= (time(nullptr) + MINUTE * 5))
+            if (worldQuest->ResetTime <= (GameTime::GetGameTime() + MINUTE * 5))
             {
                 if (worldQuest->quest && (worldQuest->quest->IsEmissary() || worldQuest->quest->IsLegionInvasion()))
                 {
@@ -2868,7 +2868,7 @@ void QuestDataStoreMgr::ResetWorldQuest()
                     sWorldStateMgr.SetWorldState(itrState->first, 0, 0);
 
                 RemoveWorldQuestTask(worldQuest->quest);
-                TC_LOG_DEBUG("worldquest", "ResetWorldQuest() >> QuestID %u ResetTime %u time(nullptr) %ld", worldQuest->QuestID, worldQuest->ResetTime, time(nullptr));
+                TC_LOG_DEBUG("worldquest", "ResetWorldQuest() >> QuestID %u ResetTime %u GameTime::GetGameTime() %ld", worldQuest->QuestID, worldQuest->ResetTime, GameTime::GetGameTime());
                 itr->second.erase(iter++);
                 continue;
             }
@@ -2914,7 +2914,7 @@ void QuestDataStoreMgr::ClearWorldQuest()
                 sWorldStateMgr.SetWorldState(itrState->first, 0, 0);
 
             RemoveWorldQuestTask(worldQuest->quest);
-            TC_LOG_DEBUG("worldquest", "ClearWorldQuest() >> QuestID %u ResetTime %u time(nullptr) %ld", worldQuest->QuestID, worldQuest->ResetTime, time(nullptr));
+            TC_LOG_DEBUG("worldquest", "ClearWorldQuest() >> QuestID %u ResetTime %u GameTime::GetGameTime() %ld", worldQuest->QuestID, worldQuest->ResetTime, GameTime::GetGameTime());
             itr->second.erase(iter++);
         }
         CharacterDatabase.CommitTransaction(trans);
@@ -2958,8 +2958,8 @@ WorldQuest const* QuestDataStoreMgr::GenerateWorldQuest(WorldQuestUpdate const* 
     if (questUpdate->VariableID1)
         Wq.State.insert(std::make_pair(questUpdate->VariableID1, questUpdate->Value1));
     Wq.Timer = questUpdate->Timer;
-    Wq.StartTime = time(nullptr);
-    Wq.ResetTime = time(nullptr) + questUpdate->Timer;
+    Wq.StartTime = GameTime::GetGameTime();
+    Wq.ResetTime = GameTime::GetGameTime() + questUpdate->Timer;
     Wq.quest = questUpdate->quest;
     Wq.worldQuest = wqTemplate;
 
@@ -3018,7 +3018,7 @@ void QuestDataStoreMgr::ResetWorldQuest(uint32 QuestID)
                     sWorldStateMgr.SetWorldState(itrState->first, 0, 0);
 
                 RemoveWorldQuestTask(worldQuest->quest);
-                TC_LOG_DEBUG("worldquest", "ResetWorldQuest() >> QuestID %u ResetTime %u time(nullptr) %ld", worldQuest->QuestID, worldQuest->ResetTime, time(nullptr));
+                TC_LOG_DEBUG("worldquest", "ResetWorldQuest() >> QuestID %u ResetTime %u GameTime::GetGameTime() %ld", worldQuest->QuestID, worldQuest->ResetTime, GameTime::GetGameTime());
                 itr->second.erase(iter++);
                 continue;
             }
@@ -3123,9 +3123,9 @@ bool QuestDataStoreMgr::CanBeActivate(WorldQuestTemplate const* qTemplate, World
                     if (!worldQuest || !worldQuest->quest || !worldQuest->quest->IsEmissary())
                         continue;
 
-                    TC_LOG_DEBUG("worldquest", "CanBeActivate >> ResetTime %u QuestID %u if %u", worldQuest->ResetTime, worldQuest->QuestID, worldQuest->ResetTime >= (time(nullptr) + WORLD_QUEST_2_DAY));
+                    TC_LOG_DEBUG("worldquest", "CanBeActivate >> ResetTime %u QuestID %u if %u", worldQuest->ResetTime, worldQuest->QuestID, worldQuest->ResetTime >= (GameTime::GetGameTime() + WORLD_QUEST_2_DAY));
 
-                    if (worldQuest->ResetTime >= (time(nullptr) + WORLD_QUEST_2_DAY)) // Only one Emissary quest peer day
+                    if (worldQuest->ResetTime >= (GameTime::GetGameTime() + WORLD_QUEST_2_DAY)) // Only one Emissary quest peer day
                         return false;
                 }
             }

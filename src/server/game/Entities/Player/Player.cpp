@@ -16,6 +16,7 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "Player.h"
 #include "AccountMgr.h"
 #include "AchievementMgr.h"
 #include "Anticheat.h"
@@ -23,6 +24,9 @@
 #include "ArtifactPackets.h"
 #include "AuctionHouseMgr.h"
 #include "AuthenticationPackets.h"
+#include "BattlePayMgr.h"
+#include "BattlePayPackets.h"
+#include "BattlePetData.h"
 #include "Battlefield.h"
 #include "BattlefieldMgr.h"
 #include "BattlegroundAlteracValley.h"
@@ -48,14 +52,15 @@
 #include "Common.h"
 #include "ConditionMgr.h"
 #include "CreatureAI.h"
-#include "DatabaseEnv.h"
 #include "DB2Stores.h"
+#include "DatabaseEnv.h"
 #include "DisableMgr.h"
 #include "DuelPackets.h"
 #include "EquipmentSetPackets.h"
 #include "Formulas.h"
 #include "GameEventMgr.h"
 #include "GameObjectAI.h"
+#include "GameTime.h"
 #include "Garrison.h"
 #include "GlobalFunctional.h"
 #include "GossipData.h"
@@ -70,9 +75,9 @@
 #include "InstanceSaveMgr.h"
 #include "InstanceScript.h"
 #include "KillRewarder.h"
-#include "Language.h"
 #include "LFGListMgr.h"
 #include "LFGMgr.h"
+#include "Language.h"
 #include "Log.h"
 #include "LootPackets.h"
 #include "MailPackets.h"
@@ -90,7 +95,6 @@
 #include "PetBattle.h"
 #include "PetBattleSystem.h"
 #include "PetPackets.h"
-#include "Player.h"
 #include "PlayerDefines.h"
 #include "QueryHolder.h"
 #include "QuestData.h"
@@ -277,8 +281,8 @@ m_achievementMgr(sf::safe_ptr<AchievementMgr<Player>>(this))
         m_bgBattlegroundQueueID[j].joinTime = 0;
     }
 
-    m_createdtime = time(NULL);
-    m_logintime = time(NULL);
+    m_createdtime = GameTime::GetGameTime();
+    m_logintime = GameTime::GetGameTime();
     m_Last_tick = 0;
     m_WeaponProficiency = 0;
     m_ArmorProficiency = 0;
@@ -333,7 +337,7 @@ m_achievementMgr(sf::safe_ptr<AchievementMgr<Player>>(this))
     m_spellPenetrationItemMod = 0;
 
     // Honor System
-    m_lastHonorUpdateTime = time(NULL);
+    m_lastHonorUpdateTime = GameTime::GetGameTime();
 
     for (uint8 i = 0; i < WIN_TODAY_MAX; ++i)
         _hasWinToday[i] = false;
@@ -1474,7 +1478,7 @@ void Player::Update(uint32 p_time)
     m_isUpdate = true;
 
     // undelivered mail
-    if (m_nextMailDelivereTime && m_nextMailDelivereTime <= time(NULL))
+    if (m_nextMailDelivereTime && m_nextMailDelivereTime <= GameTime::GetGameTime())
     {
         SendNewMail();
         ++unReadMails;
@@ -1496,7 +1500,7 @@ void Player::Update(uint32 p_time)
     Unit::Update(p_time);
     SetCanDelayTeleport(false);
 
-    time_t now = time(NULL);
+    time_t now = GameTime::GetGameTime();
 
     if (_wargameRequest != nullptr && (_wargameRequest->CreationDate + 60) < now)
     {
@@ -1820,7 +1824,7 @@ void Player::Update(uint32 p_time)
 
     if (m_knockBackTimer)
     {
-        if (m_knockBackTimer + 1000 < getMSTime())
+        if (m_knockBackTimer + 1000 < GameTime::GetGameTimeMS())
         {
             m_knockBackTimer = 0;
             ClearUnitState(UNIT_STATE_JUMPING);
@@ -1885,7 +1889,7 @@ void Player::Update(uint32 p_time)
 
     if (m_spellInQueue.GCDEnd && !(m_operationsAfterDelayMask & OAD_RESET_SPELL_QUEUE))
     {
-        if (m_spellInQueue.GCDEnd < getMSTime())
+        if (m_spellInQueue.GCDEnd < GameTime::GetGameTimeMS())
         {
             SendOperationsAfterDelay(OAD_RESET_SPELL_QUEUE);
             CastSpellInQueue();
@@ -4764,7 +4768,7 @@ void Player::UpdateNextMailTimeAndUnreads()
 {
     // calculate next delivery time (min. from non-delivered mails
     // and recalculate unReadMail
-    time_t cTime = time(NULL);
+    time_t cTime = GameTime::GetGameTime();
     m_nextMailDelivereTime = 0;
     unReadMails = 0;
     for (PlayerMails::iterator itr = m_mail.begin(); itr != m_mail.end(); ++itr)
@@ -4781,7 +4785,7 @@ void Player::UpdateNextMailTimeAndUnreads()
 
 void Player::AddNewMailDeliverTime(time_t deliver_time)
 {
-    if (deliver_time <= time(NULL))                          // ready now
+    if (deliver_time <= GameTime::GetGameTime())                          // ready now
     {
         ++unReadMails;
         SendNewMail();
@@ -5693,7 +5697,7 @@ void Player::RemoveSpellCooldown(uint32 spell_id, bool update /* = false */)
     for (uint32 i = 0; i < CURRENT_MAX_SPELL; ++i)
         if (Spell* spell = GetCurrentSpell(CurrentSpellTypes(i)))
             if (spell->m_spellInfo->Id == spell_id && spell->GetCastTime() > 0)
-                delay = (spell->GetStartCastTime() + spell->GetCastTime()) - getMSTime();
+                delay = (spell->GetStartCastTime() + spell->GetCastTime()) - GameTime::GetGameTimeMS();
 
     if (delay > 0)
     {
@@ -5811,7 +5815,7 @@ void Player::_LoadSpellCooldowns(PreparedQueryResult result)
 
     if (result)
     {
-        time_t curTime = time(NULL);
+        time_t curTime = GameTime::GetGameTime();
 
         do
         {
@@ -5844,7 +5848,7 @@ void Player::_SaveSpellCooldowns(CharacterDatabaseTransaction& trans)
     stmt->setUInt64(0, GetGUIDLow());
     trans->Append(stmt);
 
-    time_t curTime = time(NULL);
+    time_t curTime = GameTime::GetGameTime();
     time_t infTime = curTime + infinityCooldownDelayCheck;
 
     bool first_round = true;
@@ -6993,7 +6997,7 @@ void Player::DeleteOldCharacters(uint32 keepDays)
     TC_LOG_INFO("entities.player", "Player::DeleteOldChars: Deleting all characters which have been deleted %u days before...", keepDays);
 
     CharacterDatabasePreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_SEL_CHAR_OLD_CHARS);
-    stmt->setUInt32(0, uint32(time(NULL) - time_t(keepDays * DAY)));
+    stmt->setUInt32(0, uint32(GameTime::GetGameTime() - time_t(keepDays * DAY)));
     PreparedQueryResult result = CharacterDatabase.Query(stmt);
 
     if (result)
@@ -9109,8 +9113,8 @@ void Player::UpdateHonorFields(bool loading /*= false*/)
         }
     }
 
-    time_t now = time_t(time(nullptr));
-    time_t today = time_t(time(nullptr) / DAY) * DAY;
+    time_t now = time_t(GameTime::GetGameTime());
+    time_t today = time_t(GameTime::GetGameTime() / DAY) * DAY;
     if (m_lastHonorUpdateTime < today)
     {
         SetUInt32Value(PLAYER_FIELD_YESTERDAY_HONORABLE_KILLS, m_lastHonorUpdateTime >= time_t(today - DAY) ? MAKE_PAIR32(0, PAIR32_LOPART(GetUInt32Value(PLAYER_FIELD_YESTERDAY_HONORABLE_KILLS))) : 0);
@@ -10300,7 +10304,7 @@ void Player::CheckDuelDistance()
         {
             if (!IsWithinDistInMap(arbiter, 50.0f))
             {
-                duel->outOfBoundTimer = getMSTime();
+                duel->outOfBoundTimer = GameTime::GetGameTimeMS();
                 SendDirectMessage(WorldPackets::Duel::DuelOutOfBounds().Write());
             }
         }
@@ -10311,7 +10315,7 @@ void Player::CheckDuelDistance()
                 duel->outOfBoundTimer = 0;
                 SendDirectMessage(WorldPackets::Duel::DuelInBounds().Write());
             }
-            else if (getMSTime() >= (duel->outOfBoundTimer + 10 * IN_MILLISECONDS))
+            else if (GameTime::GetGameTimeMS() >= (duel->outOfBoundTimer + 10 * IN_MILLISECONDS))
                 DuelComplete(DUEL_FLED);
         }
     }
@@ -17217,7 +17221,7 @@ void Player::AddItemToBuyBackSlot(Item* pItem)
         TC_LOG_DEBUG("entities.player.items", "STORAGE: AddItemToBuyBackSlot item = %u, slot = %u", pItem->GetEntry(), slot);
 
         m_items[slot] = pItem;
-        time_t base = time(NULL);
+        time_t base = GameTime::GetGameTime();
         uint32 etime = uint32(base - m_logintime + (30 * 3600));
         uint32 eslot = slot - BUYBACK_SLOT_START;
 
@@ -19134,7 +19138,7 @@ void Player::AddQuest(Quest const* quest, Object* questGiver)
 
         AddTimedQuest(quest_id);
         status_q.Timer = limittime * IN_MILLISECONDS;
-        qtime = static_cast<uint32>(time(nullptr)) + limittime;
+        qtime = static_cast<uint32>(GameTime::GetGameTime()) + limittime;
     }
     else
         status_q.Timer = 0;
@@ -22367,7 +22371,7 @@ bool Player::LoadFromDB(ObjectGuid guid, CharacterDatabaseQueryHolder const& hol
 
     SaveRecallPosition();
 
-    time_t now = time(NULL);
+    time_t now = GameTime::GetGameTime();
     time_t logoutTime = time_t(fields[f_logout_time].GetUInt32());
 
     // since last logout (in seconds)
@@ -23880,10 +23884,10 @@ void Player::_LoadQuestStatus(PreparedQueryResult result)
                 {
                     AddTimedQuest(quest_id);
 
-                    if (quest_time <= sWorld->GetGameTime())
+                    if (quest_time <= GameTime::GetGameTime())
                         q_status.Timer = 1;
                     else
-                        q_status.Timer = uint32((quest_time - sWorld->GetGameTime()) * IN_MILLISECONDS);
+                        q_status.Timer = uint32((quest_time - GameTime::GetGameTime()) * IN_MILLISECONDS);
                 }
                 //! WARN! time should send always. As it require for correct showing on tracking list. 
                 /*else
@@ -24344,7 +24348,7 @@ void Player::AddPlayerLootCooldown(uint32 entry, uint32 guid, uint8 type/* = 0*/
     uint32 respawnTime = respawn ? sWorld->getNextInstanceWeeklyReset() : 0;
     if (type == TYPE_GUID && diff == DIFFICULTY_NONE)
     {
-        respawnTime = time(NULL) + 600;
+        respawnTime = GameTime::GetGameTime() + 600;
         entry = guid;
     }
 
@@ -24361,7 +24365,7 @@ void Player::AddPlayerLootCooldown(uint32 entry, uint32 guid, uint8 type/* = 0*/
                 entry = guid;
             }
             else
-                respawnTime = time(NULL) + 2 * HOUR;
+                respawnTime = GameTime::GetGameTime() + 2 * HOUR;
             break;
         case DIFFICULTY_HEROIC:
         case DIFFICULTY_MYTHIC_DUNGEON:
@@ -24372,10 +24376,10 @@ void Player::AddPlayerLootCooldown(uint32 entry, uint32 guid, uint8 type/* = 0*/
     }
 
     if (entry == 542185 || entry == 542191)
-        respawnTime = time(NULL) + 7200;
+        respawnTime = GameTime::GetGameTime() + 7200;
 
     if (type == TYPE_ZONE)
-        respawnTime = time(NULL) + 21600;
+        respawnTime = GameTime::GetGameTime() + 21600;
 
     playerLootCooldown& lootCooldown = m_playerLootCooldown[type][entry][diff];
     lootCooldown.entry = entry;
@@ -24393,7 +24397,7 @@ bool Player::IsPlayerLootCooldown(uint32 entry, uint8 type/* = 0*/, uint8 diff/*
 
     std::map<uint8, playerLootCooldown>::const_iterator iter = itr->second.find(diff);
     if (iter != itr->second.end())
-        if (!iter->second.respawnTime || iter->second.respawnTime > time(NULL))
+        if (!iter->second.respawnTime || iter->second.respawnTime > GameTime::GetGameTime())
             return true;
 
     return false;
@@ -24497,7 +24501,7 @@ void Player::_LoadBoundInstances(PreparedQueryResult result)
                 TC_LOG_ERROR("entities.player", "_LoadBoundInstances: player %s(%d) has bind to not existed difficulty %d instance for map %u", GetName(), GetGUIDLow(), difficulty, mapId);
                 deleteInstance = true;
             }
-            else if ((resetTime + MONTH) <= time(NULL) && !Extended)
+            else if ((resetTime + MONTH) <= GameTime::GetGameTime() && !Extended)
                 deleteInstance = true;
             else
             {
@@ -24656,7 +24660,7 @@ void Player::BindToInstance()
 
 void Player::SendRaidInfo()
 {
-    time_t now = time(NULL);
+    time_t now = GameTime::GetGameTime();
     WorldPackets::Instance::InstanceInfo instanceInfo;
 
     for (uint8 i = 0; i < MAX_BOUND; ++i)
@@ -25019,7 +25023,7 @@ void Player::SaveToDB(bool create /*=false*/)
         stmt->setUInt32(index++, m_Played_time[PLAYED_TIME_TOTAL]);
         stmt->setUInt32(index++, m_Played_time[PLAYED_TIME_LEVEL]);
         stmt->setFloat(index++, finiteAlways(_restMgr->GetRestBonus(REST_TYPE_XP)));
-        stmt->setUInt32(index++, uint32(time(nullptr)));
+        stmt->setUInt32(index++, uint32(GameTime::GetGameTime()));
         stmt->setUInt8(index++,  (HasFlag(PLAYER_FIELD_PLAYER_FLAGS, PLAYER_FLAGS_RESTING) ? 1 : 0));
         stmt->setUInt16(index++, (uint16)m_ExtraFlags);
         stmt->setUInt32(index++, 0); // summonedPetNumber
@@ -25145,7 +25149,7 @@ void Player::SaveToDB(bool create /*=false*/)
         stmt->setUInt32(index++, m_Played_time[PLAYED_TIME_TOTAL]);
         stmt->setUInt32(index++, m_Played_time[PLAYED_TIME_LEVEL]);
         stmt->setFloat(index++, finiteAlways(_restMgr->GetRestBonus(REST_TYPE_XP)));
-        stmt->setUInt32(index++, uint32(time(nullptr)));
+        stmt->setUInt32(index++, uint32(GameTime::GetGameTime()));
         stmt->setUInt8(index++,  (HasFlag(PLAYER_FIELD_PLAYER_FLAGS, PLAYER_FLAGS_RESTING) ? 1 : 0));
 
         stmt->setUInt16(index++, (uint16)m_ExtraFlags);
@@ -25284,7 +25288,7 @@ void Player::SaveToDB(bool create /*=false*/)
     stmt2->setUInt32(3, realm.Id.Realm);
     stmt2->setString(4, GetName());
     stmt2->setUInt64(5, GetGUID().GetCounter());
-    stmt2->setUInt32(6, time(nullptr));
+    stmt2->setUInt32(6, GameTime::GetGameTime());
     trans2->Append(stmt2);
 
     LoginDatabase.CommitTransaction(trans2);
@@ -25890,7 +25894,7 @@ void Player::_SaveQuestStatus(CharacterDatabaseTransaction& trans)
                 stmt->setUInt64(index++, guid);
                 stmt->setUInt32(index++, saveItr->first);
                 stmt->setUInt8(index++, uint8(status->Status));
-                stmt->setUInt32(index++, uint32(status->Timer / IN_MILLISECONDS + sWorld->GetGameTime()));
+                stmt->setUInt32(index++, uint32(status->Timer / IN_MILLISECONDS + GameTime::GetGameTime()));
                 stmt->setUInt32(index, GetSession()->GetAccountId());
                 trans->Append(stmt);
 
@@ -26682,7 +26686,7 @@ Pet* Player::SummonPet(uint32 entry, Optional<PetSaveMode> slot, float x, float 
     pet->SetUInt32Value(UNIT_FIELD_PET_NEXT_LEVEL_EXPERIENCE, 1000);
     pet->SetFullHealth();
     pet->SetPower(getPowerType(), GetMaxPower(getPowerType()));
-    pet->SetUInt32Value(UNIT_FIELD_PET_NAME_TIMESTAMP, uint32(time(nullptr))); // cast can't be helped in this case
+    pet->SetUInt32Value(UNIT_FIELD_PET_NAME_TIMESTAMP, uint32(GameTime::GetGameTime())); // cast can't be helped in this case
 
     // after SetPetNumber
     SetMinion(pet, true);
@@ -27054,7 +27058,7 @@ void Player::PetSpellInitialize()
         }
     }
 
-    time_t curTime = time(nullptr);
+    time_t curTime = GameTime::GetGameTime();
 
     for (CreatureSpellCooldowns::iterator itr = pet->m_CreatureSpellCooldowns.begin(); itr != pet->m_CreatureSpellCooldowns.end(); ++itr)
     {
@@ -27151,7 +27155,7 @@ void Player::VehicleSpellInitialize()
         spellsMessage.Buttons[i] = MAKE_UNIT_ACTION_BUTTON(spellId, i + 8);
     }
 
-    time_t now = sWorld->GetGameTime();
+    time_t now = GameTime::GetGameTime();
     for (CreatureSpellCooldowns::iterator itr = vehicle->m_CreatureSpellCooldowns.begin(); itr != vehicle->m_CreatureSpellCooldowns.end(); ++itr)
     {
         SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(itr->first);
@@ -28800,7 +28804,7 @@ void Player::UpdatePvP(bool state, bool override)
     if (!state || override)
         pvpInfo.endTimer = 0;
     else
-        pvpInfo.endTimer = time(nullptr);
+        pvpInfo.endTimer = GameTime::GetGameTime();
 }
 
 bool Player::HasSpellCooldown(uint32 spell_id)
@@ -30041,12 +30045,13 @@ void Player::SendInitialPacketsBeforeAddToMap(bool login)
     if (login) // Don`t send when teleported
     {
         SendEquipmentSetList();
+        uint32 speedtime = ((GameTime::GetGameTime() - GameTime::GetUptime()) + (GameTime::GetUptime()));
         m_achievementMgr->SendAllAchievementData(this);
 
         WorldPackets::Misc::LoginSetTimeSpeed loginSetTimeSpeed;
         loginSetTimeSpeed.NewSpeed = 0.01666667f;
-        loginSetTimeSpeed.GameTime = sWorld->GetGameTime();
-        loginSetTimeSpeed.ServerTime = sWorld->GetGameTime();
+        loginSetTimeSpeed.GameTime = speedtime;
+        loginSetTimeSpeed.ServerTime = speedtime;
         SendDirectMessage(loginSetTimeSpeed.Write());
     }
 
@@ -30228,7 +30233,7 @@ void Player::SendInitialPacketsAfterAddToMap(bool login)
 
 void Player::SendSpellHistoryData()
 {
-    time_t curTime = time(NULL);
+    time_t curTime = GameTime::GetGameTime();
     time_t infTime = curTime + infinityCooldownDelayCheck;
 
     WorldPackets::Spells::SendSpellHistory history;
@@ -30729,14 +30734,14 @@ void Player::SetDailyQuestStatus(uint32 quest_id)
             if (m_dailyquests.find(quest_id) == m_dailyquests.end())
             {
                 m_dailyquests.insert(quest_id);
-                m_lastDailyQuestTime = time(NULL);              // last daily quest time
+                m_lastDailyQuestTime = GameTime::GetGameTime();              // last daily quest time
                 m_DailyQuestChanged = true;
             }
         }
         else
         {
             m_DFQuests.insert(quest_id);
-            m_lastDailyQuestTime = time(NULL);
+            m_lastDailyQuestTime = GameTime::GetGameTime();
             m_DailyQuestChanged = true;
         }
     }
@@ -30914,7 +30919,7 @@ uint32 Player::AddBattlegroundQueueId(uint8 bgTypeId)
         {
             m_bgBattlegroundQueueID[i].bgQueueTypeId = bgTypeId;
             m_bgBattlegroundQueueID[i].invitedToInstance = 0;
-            m_bgBattlegroundQueueID[i].joinTime = time(nullptr);
+            m_bgBattlegroundQueueID[i].joinTime = GameTime::GetGameTime();
             return i;
         }
     }
@@ -31225,7 +31230,7 @@ void Player::SummonIfPossible(bool agree)
     }
 
     // expire and auto declined
-    if (m_summon_expire < time(NULL))
+    if (m_summon_expire < GameTime::GetGameTime())
         return;
 
     // stop taxi flight at summon
@@ -31764,7 +31769,7 @@ void Player::UpdateAreaQuestTasks(uint32 newAreaId, uint32 oldAreaId)
             }
 
             WorldQuest const* wq = sQuestDataStore->GetWorldQuest(quest);
-            if (!wq || wq->ResetTime <= time(NULL) || WorldQuestCompleted(quest->GetQuestId())) // World quest activated only if World Quest active
+            if (!wq || wq->ResetTime <= GameTime::GetGameTime() || WorldQuestCompleted(quest->GetQuestId())) // World quest activated only if World Quest active
                 continue;
 
             if (GetGroup() && GetGroup()->isRaidGroup() && !quest->IsAllowedInRaid(GetMap()->GetDifficultyID()))
@@ -31874,7 +31879,7 @@ uint32 Player::GetCorpseReclaimDelay(bool pvp) const
     else if (!sWorld->getBoolConfig(CONFIG_DEATH_CORPSE_RECLAIM_DELAY_PVE))
         return 0;
 
-    time_t now = time(NULL);
+    time_t now = GameTime::GetGameTime();
     // 0..2 full period
     // should be ceil(x)-1 but not floor(x)
     uint64 count = (now < m_deathExpireTime - 1) ? (m_deathExpireTime - 1 - now)/DEATH_EXPIRE_STEP : 0;
@@ -31889,7 +31894,7 @@ void Player::UpdateCorpseReclaimDelay()
         (!pvp && !sWorld->getBoolConfig(CONFIG_DEATH_CORPSE_RECLAIM_DELAY_PVE)))
         return;
 
-    time_t now = time(NULL);
+    time_t now = GameTime::GetGameTime();
     if (now < m_deathExpireTime)
     {
         // full and partly periods 1..3
@@ -31934,7 +31939,7 @@ void Player::SendCorpseReclaimDelay(bool load)
 
         time_t expected_time = corpse->GetGhostTime()+copseReclaimDelay[count];
 
-        time_t now = time(NULL);
+        time_t now = GameTime::GetGameTime();
         if (now >= expected_time)
             return;
 
@@ -32238,7 +32243,7 @@ void PetInfoData::UpdateData(Pet* pet)
         ss << uint32(pet->GetCharmInfo()->GetActionBarEntry(i)->GetType()) << ' ' << uint32(pet->GetCharmInfo()->GetActionBarEntry(i)->GetAction()) << ' ';
 
     abdata = ss.str();
-    savetime = time(NULL);
+    savetime = GameTime::GetGameTime();
     CreatedBySpell = pet->GetUInt32Value(UNIT_FIELD_CREATED_BY_SPELL);
     pet_type = pet->getPetType();
     specialization = pet->GetSpecialization();
@@ -34462,7 +34467,7 @@ void Player::ResetTimeSync()
 {
     m_timeSyncTimer = 0;
     m_timeSyncClient = 0;
-    m_timeSyncServer = getMSTime();
+    m_timeSyncServer = GameTime::GetGameTimeMS();
 }
 
 void Player::SendTimeSync()
@@ -34475,7 +34480,7 @@ void Player::SendTimeSync()
 
     // Schedule next sync in 5 sec
     m_timeSyncTimer = 5000;
-    m_timeSyncServer = getMSTime();
+    m_timeSyncServer = GameTime::GetGameTimeMS();
 
     if (m_timeSyncQueue.size() > 3)
         TC_LOG_TRACE("network", "Not received CMSG_TIME_SYNC_RESP for over 30 seconds from 5s (%s), possible cheater", GetGUID().ToString().c_str());
@@ -36191,7 +36196,7 @@ bool Player::IsLoXpMap(uint32 map)
 
 void Player::SetSummonPoint(uint32 mapid, float x, float y, float z)
 {
-    m_summon_expire = time(NULL) + MAX_PLAYER_SUMMON_DELAY;
+    m_summon_expire = GameTime::GetGameTime() + MAX_PLAYER_SUMMON_DELAY;
     m_summon_mapid = mapid;
     m_summon_x = x;
     m_summon_y = y;
@@ -37391,7 +37396,7 @@ void Player::SendCalendarRaidLockout(InstanceSave const* save, bool add)
 {
     if (add)
     {
-        time_t currTime = time(nullptr);
+        time_t currTime = GameTime::GetGameTime();
         WorldPackets::Calendar::CalendarRaidLockoutAdded calendarRaidLockoutAdded;
         calendarRaidLockoutAdded.InstanceID = save->GetInstanceId();
         calendarRaidLockoutAdded.ServerTime = currTime;
@@ -37418,7 +37423,7 @@ void Player::SendCalendarRaidLockoutUpdated(InstanceSave const* save)
     WorldPackets::Calendar::CalendarRaidLockoutUpdated packet;
     packet.DifficultyID = save->GetDifficultyID();
     packet.MapID = save->GetMapId();
-    packet.OldTimeRemaining = save->GetResetTime() - time(nullptr);
+    packet.OldTimeRemaining = save->GetResetTime() - GameTime::GetGameTime();
     SendDirectMessage(packet.Write());
 }
 
@@ -38255,9 +38260,9 @@ bool Player::WorldQuestCompleted(uint32 QuestID) const
     if (iter == m_worldquests.end())
         return false;
 
-    // TC_LOG_DEBUG("worldquest", "WorldQuestCompleted QuestID %u complete %u", QuestID, iter->second > time(nullptr));
+    // TC_LOG_DEBUG("worldquest", "WorldQuestCompleted QuestID %u complete %u", QuestID, iter->second > GameTime::GetGameTime());
 
-    return iter->second.resetTime > time(nullptr);
+    return iter->second.resetTime > GameTime::GetGameTime();
 }
 
 std::tuple<uint32, uint32> Player::GetWorldQuestBonusTreeMod(WorldQuest const* wq)
@@ -38295,9 +38300,9 @@ void Player::ResetWorldQuest(uint32 QuestID)
     }
     for (WorldQuestStatusMap::const_iterator iter = m_worldquests.begin(); iter != m_worldquests.end();)
     {
-        if (iter->second.resetTime <= (time(NULL) + MINUTE * 5)) // resetTime
+        if (iter->second.resetTime <= (GameTime::GetGameTime() + MINUTE * 5)) // resetTime
         {
-            // TC_LOG_DEBUG("worldquest", "Player::ResetWorldQuest QuestID %u ResetTime %u time(NULL) %u", iter->first, iter->second, time(NULL));
+            // TC_LOG_DEBUG("worldquest", "Player::ResetWorldQuest QuestID %u ResetTime %u GameTime::GetGameTime() %u", iter->first, iter->second, GameTime::GetGameTime());
             m_worldquests.erase(iter++);
             continue;
         }
@@ -38382,7 +38387,7 @@ void Player::HandleSpellInQueue()
 {
     if (m_spellInQueue.GCDEnd && !(m_operationsAfterDelayMask & OAD_RESET_SPELL_QUEUE))
     {
-        if (m_spellInQueue.GCDEnd < getMSTime())
+        if (m_spellInQueue.GCDEnd < GameTime::GetGameTimeMS())
         {
             SendOperationsAfterDelay(OAD_RESET_SPELL_QUEUE);
             CastSpellInQueue();
@@ -38913,7 +38918,7 @@ void Player::CreateChallengeKey(Item* item)
 
     item->SetModifier(ITEM_MODIFIER_CHALLENGE_KEYSTONE_LEVEL, m_challengeKeyInfo.Level ? m_challengeKeyInfo.Level : 2);
 
-    item->SetUInt32Value(ITEM_FIELD_EXPIRATION, sWorld->getNextChallengeKeyReset() - time(nullptr));
+    item->SetUInt32Value(ITEM_FIELD_EXPIRATION, sWorld->getNextChallengeKeyReset() - GameTime::GetGameTime());
 
 	if(sWorld->getIntConfig(CONFIG_WEIGHTED_MYTHIC_KEYSTONE))
 		item->SetModifier(ITEM_MODIFIER_CHALLENGE_ID, *Trinity::Containers::SelectRandomWeightedContainerElement(sDB2Manager.GetChallngeMaps(), sDB2Manager.GetChallngesWeight()));

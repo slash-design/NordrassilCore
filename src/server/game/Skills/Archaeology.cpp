@@ -695,11 +695,11 @@ bool Player::SolveResearchProject(uint32 spellId, SpellCastTargets& targets)
 
 	UpdateAchievementCriteria(CRITERIA_TYPE_COMPLETE_ARCHAEOLOGY_PROJECTS, entry->ID, 1);
 
-	WorldPackets::Misc::ResearchComplete packet;
-	packet.Research.ProjectID = entry->ID;
-	packet.Research.FirstCompleted = time(nullptr);
-	packet.Research.CompletionCount = AddCompletedProject(entry);
-	SendDirectMessage(packet.Write());
+    WorldPackets::Misc::ResearchComplete packet;
+    packet.Research.ProjectID = entry->ID;
+    packet.Research.FirstCompleted = GameTime::GetGameTime();
+    packet.Research.CompletionCount = AddCompletedProject(entry);
+    SendDirectMessage(packet.Write());
 
 	if (gmCast)
 		return true;
