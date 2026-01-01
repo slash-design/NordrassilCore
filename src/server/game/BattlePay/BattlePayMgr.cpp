@@ -650,12 +650,12 @@ void BattlepayManager::SendProductList()
 		sEntry.VasServiceType = itr.Flags;
 		sEntry.StoreDeliveryType = itr.BannerType;
 
-		auto data = WriteDisplayInfo(itr.DisplayInfoID, localeIndex);
-		if (std::get<0>(data))
-		{
-			sEntry.DisplayInfo = boost::in_place();
-			sEntry.DisplayInfo = std::get<1>(data);
-		}
+        auto data = WriteDisplayInfo(itr.DisplayInfoID, localeIndex);
+        if (std::get<0>(data))
+        {
+            sEntry.DisplayInfo.emplace();
+            sEntry.DisplayInfo = std::get<1>(data);
+        }
 
 		response.ProductList.Shop.emplace_back(sEntry);
 	}
@@ -678,12 +678,12 @@ void BattlepayManager::SendProductList()
 		std::vector<uint32> UnkInts;
 		pInfo.UnkInt2 = 47; // 2 ?
 
-		auto dataPI = WriteDisplayInfo(product.DisplayInfoID, localeIndex);
-		if (std::get<0>(dataPI))
-		{
-			pInfo.DisplayInfo = boost::in_place();
-			pInfo.DisplayInfo = std::get<1>(dataPI);
-		}
+        auto dataPI = WriteDisplayInfo(product.DisplayInfoID, localeIndex);
+        if (std::get<0>(dataPI))
+        {
+            pInfo.DisplayInfo.emplace();
+            pInfo.DisplayInfo = std::get<1>(dataPI);
+        }
 
 		response.ProductList.ProductInfo.emplace_back(pInfo);
 
@@ -712,22 +712,22 @@ void BattlepayManager::SendProductList()
 			pItem.HasPet = AlreadyOwnProduct(item.ItemID);
 			pItem.PetResult = item.PetResult;
 
-			auto dataP = WriteDisplayInfo(item.DisplayInfoID, localeIndex);
-			if (std::get<0>(dataP))
-			{
-				pItem.DisplayInfo = boost::in_place();
-				pItem.DisplayInfo = std::get<1>(dataP);
-			}
+            auto dataP = WriteDisplayInfo(item.DisplayInfoID, localeIndex);
+            if (std::get<0>(dataP))
+            {
+                pItem.DisplayInfo.emplace();
+                pItem.DisplayInfo = std::get<1>(dataP);
+            }
 
 			pProduct.Items.emplace_back(pItem);
 		}
 
-		auto dataP = WriteDisplayInfo(product.DisplayInfoID, localeIndex);
-		if (std::get<0>(dataP))
-		{
-			pProduct.DisplayInfo = boost::in_place();
-			pProduct.DisplayInfo = std::get<1>(dataP);
-		}
+        auto dataP = WriteDisplayInfo(product.DisplayInfoID, localeIndex);
+        if (std::get<0>(dataP))
+        {
+            pProduct.DisplayInfo.emplace();
+            pProduct.DisplayInfo = std::get<1>(dataP);
+        }
 
 		response.ProductList.Product.emplace_back(pProduct);
 	}
@@ -908,12 +908,12 @@ void BattlepayManager::SendBattlePayDistribution(uint32 productId, uint8 status,
 	{
 		WorldPackets::BattlePay::ProductItem productItem;
 
-		auto dataP = WriteDisplayInfo(item.DisplayInfoID, localeIndex);
-		if (std::get<0>(dataP))
-		{
-			productItem.DisplayInfo = boost::in_place();
-			productItem.DisplayInfo = std::get<1>(dataP);
-		}
+        auto dataP = WriteDisplayInfo(item.DisplayInfoID, localeIndex);
+        if (std::get<0>(dataP))
+        {
+            productItem.DisplayInfo.emplace();
+            productItem.DisplayInfo = std::get<1>(dataP);
+        }
 
 		productItem.PetResult = item.PetResult;
 		productItem.ID = item.ID;
@@ -929,7 +929,7 @@ void BattlepayManager::SendBattlePayDistribution(uint32 productId, uint8 status,
 	auto dataP = WriteDisplayInfo(product.DisplayInfoID, localeIndex);
 	if (std::get<0>(dataP))
 	{
-		productData.DisplayInfo = boost::in_place();
+		productData.DisplayInfo.emplace();
 		productData.DisplayInfo = std::get<1>(dataP);
 	}
 

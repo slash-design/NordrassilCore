@@ -75,14 +75,14 @@ struct boss_temple_vonjin : public ScriptedAI
 		Skull();
 	}
 
-	void Skull()
-	{
-		if (auto skull = me->FindNearestGameObject(go_hazorn_skull_1, 50.f))
-			if (me->isAlive())
-				skull->SetFlag(GAMEOBJECT_FIELD_FLAGS, GO_FLAG_NOT_SELECTABLE);
-			else
-				skull->RemoveFlag(GAMEOBJECT_FIELD_FLAGS, GO_FLAG_NOT_SELECTABLE);
-	}
+    void Skull()
+    {
+        if (auto skull = me->FindNearestGameObject(go_hazorn_skull_1, 50.f))
+            if (me->IsAlive())
+                skull->SetFlag(GAMEOBJECT_FIELD_FLAGS, GO_FLAG_NOT_SELECTABLE);
+            else
+                skull->RemoveFlag(GAMEOBJECT_FIELD_FLAGS, GO_FLAG_NOT_SELECTABLE);
+    }
 
 	void JustSummoned(Creature* summon) override
 	{
@@ -251,14 +251,14 @@ struct boss_temple_lessar : public ScriptedAI
 
 	}
 
-	void Blood()
-	{
-		if (auto blood = me->FindNearestGameObject(go_ritual_blood_1, 50.f))
-			if (me->isAlive())
-				blood->SetFlag(GAMEOBJECT_FIELD_FLAGS, GO_FLAG_NOT_SELECTABLE);
-			else
-				blood->RemoveFlag(GAMEOBJECT_FIELD_FLAGS, GO_FLAG_NOT_SELECTABLE);
-	}
+    void Blood()
+    {
+        if (auto blood = me->FindNearestGameObject(go_ritual_blood_1, 50.f))
+            if (me->IsAlive())
+                blood->SetFlag(GAMEOBJECT_FIELD_FLAGS, GO_FLAG_NOT_SELECTABLE);
+            else
+                blood->RemoveFlag(GAMEOBJECT_FIELD_FLAGS, GO_FLAG_NOT_SELECTABLE);
+    }
 
 	void KilledUnit(Unit* who) override
 	{
@@ -428,18 +428,18 @@ struct boss_hex_lord_hadorn : public ScriptedAI
 		DoCast(SPELL_ENERG);
 	}
 
-	void RitualReset()
-	{
-		if (!ritual && me->isAlive())
-		{
-			me->SummonCreature(npc_circle_sum_eff, summonCircle);
-			me->SummonCreature(npc_skull_place, summonSkull);
-			me->SummonCreature(npc_blood_place, summonBlood);
-			for (uint8 i = 0; i < 4; ++i)
-				if (auto er = me->SummonCreature(npc_enter_ritual, ritualPoints[i]))
-					er->SetReactState(REACT_PASSIVE);
-		}
-	}
+    void RitualReset()
+    {
+        if (!ritual && me->IsAlive())
+        {
+            me->SummonCreature(npc_circle_sum_eff, summonCircle);
+            me->SummonCreature(npc_skull_place, summonSkull);
+            me->SummonCreature(npc_blood_place, summonBlood);
+            for (uint8 i = 0; i < 4; ++i)
+                if (auto er = me->SummonCreature(npc_enter_ritual, ritualPoints[i]))
+                    er->SetReactState(REACT_PASSIVE);
+        }
+    }
 
 	void JustSummoned(Creature* summon) override
 	{
@@ -2522,23 +2522,23 @@ public:
 		return true;
 	}*/
 
-	void HandleGameEventStart(uint32 eventId) override
-	{
-		if (eventId == 824)
-		{
-			if (auto evala = m_map->SummonCreature(npc_evala, bossPositions[1]))
-			{
-				m_boss.push_back(evala->GetGUID());
-				std::list<Creature*> creatures;
-				evala->GetCreatureListWithEntryInGrid(creatures, npc_evala_shard, 20.f);
-				for (auto cre : creatures)
-				{
-					if (!cre->isAlive())
-						cre->Respawn(true);
-				}
-			}
-		}
-	}
+    void HandleGameEventStart(uint32 eventId) override
+    {
+        if (eventId == 824)
+        {
+            if (auto evala = m_map->SummonCreature(npc_evala, bossPositions[1]))
+            {
+                m_boss.push_back(evala->GetGUID());
+                std::list<Creature*> creatures;
+                evala->GetCreatureListWithEntryInGrid(creatures, npc_evala_shard, 20.f);
+                for (auto cre : creatures)
+                {
+                    if (!cre->IsAlive())
+                        cre->Respawn(true);
+                }
+            }
+        }
+    }
 
 private:
 	uint32 timer = 1000;
@@ -3267,18 +3267,18 @@ struct boss_new_year_2019_evala : public ScriptedAI
 		}
 	}
 
-	void PhaseActions(uint8 portalsCount)
-	{
-		std::list<Creature*> creList;
-		GetCreatureListWithEntryInGrid(creList, me, npc_evala_shard, 60.0f);
-		if (!creList.empty())
-		{
-			for (auto const& sh : creList)
-			{
-				if (!sh->isAlive())
-					sh->Respawn(true);
-			}
-		}
+    void PhaseActions(uint8 portalsCount)
+    {
+        std::list<Creature*> creList;
+        GetCreatureListWithEntryInGrid(creList, me, npc_evala_shard, 60.0f);
+        if (!creList.empty())
+        {
+            for (auto const& sh : creList)
+            {
+                if (!sh->IsAlive())
+                    sh->Respawn(true);
+            }
+        }
 
 		std::list<Position> randPhase;
 		me->GenerateNonDuplicatePoints(randPhase, me->GetPosition(), portalsCount, 10.f, 35.f, 15.f);
@@ -5297,10 +5297,10 @@ public:
 	uint32 timer = 3500;
 	uint32 afktimer = 0;
 
-	void ResAndTeleDalaran(Player* player, uint32 castAtFirst)
-	{
-		if (!player->isAlive())
-			player->ResurrectPlayer(0.5f);
+    void ResAndTeleDalaran(Player* player, uint32 castAtFirst)
+    {
+        if (!player->IsAlive())
+            player->ResurrectPlayer(0.5f);
 
 		if (castAtFirst)
 			player->CastSpell(player, castAtFirst, true);

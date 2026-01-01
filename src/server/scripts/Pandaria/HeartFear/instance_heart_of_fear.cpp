@@ -290,12 +290,12 @@ public:
                         {
                             if (Creature* soldier = instance->GetCreature(*guid))
                             {
-                                if (!soldier->isAlive())
+                                if (!soldier->IsAlive())
                                 {
                                     soldier->Respawn();
                                     soldier->GetMotionMaster()->MoveTargetedHome();
                                 }
-                                else if (soldier->isAlive() && soldier->isInCombat())
+                                else if (soldier->IsAlive() && soldier->isInCombat())
                                     soldier->AI()->EnterEvadeMode();
                             }
                         }
@@ -308,7 +308,7 @@ public:
                         {
                             if (Creature* soldier = instance->GetCreature(*guid))
                             {
-                                if (soldier->isAlive() && !soldier->isInCombat())
+                                if (soldier->IsAlive() && !soldier->isInCombat())
                                     soldier->AI()->DoZoneInCombat(soldier, 100.0f);
                             }
                         }
@@ -422,7 +422,7 @@ public:
                 if (!player)
                     continue;
 
-                if (player->isAlive() && !player->isGameMaster() && !player->HasAura(115877)) // Aura 115877 = Totaly Petrified
+                if (player->IsAlive() && !player->isGameMaster() && !player->HasAura(115877)) // Aura 115877 = Totaly Petrified
                     return false;
             }
 

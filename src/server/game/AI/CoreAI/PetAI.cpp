@@ -103,7 +103,7 @@ bool PetAI::_needToStop()
 
 void PetAI::_stopAttack()
 {
-    if (!me->isAlive())
+    if (!me->IsAlive())
     {
         TC_LOG_DEBUG("misc", "Creature stoped attacking cuz his dead [guid=%s]", me->GetGUID().ToString().c_str());
         me->GetMotionMaster()->Clear();
@@ -120,7 +120,7 @@ void PetAI::_stopAttack()
 
 void PetAI::UpdateAI(uint32 diff)
 {
-    if (!me->isAlive())
+    if (!me->IsAlive())
         return;
 
     Unit* owner = me->GetCharmerOrOwner();
@@ -416,7 +416,7 @@ void PetAI::OwnerDamagedBy(Unit* attacker)
         return;
 
     // Prevent pet from disengaging from current target
-    if (me->getVictim() && me->getVictim()->isAlive())
+    if (me->getVictim() && me->getVictim()->IsAlive())
         return;
 
     // Continue to evaluate and attack if necessary
@@ -437,7 +437,7 @@ void PetAI::OwnerAttacked(Unit* target)
         return;
 
     // Prevent pet from disengaging from current target
-    if (me->getVictim() && me->getVictim()->isAlive())
+    if (me->getVictim() && me->getVictim()->IsAlive())
         return;
 
     // Continue to evaluate and attack if necessary

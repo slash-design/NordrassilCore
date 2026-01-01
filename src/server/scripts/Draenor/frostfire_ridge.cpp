@@ -76,7 +76,7 @@ public:
             Creature * tree = go->GetMap()->GetCreature(treeGUID);
 
             if (!tree 
-                || !tree->isAlive()
+                || !tree->IsAlive()
                 || tree->GetUInt32Value(UNIT_FIELD_STATE_SPELL_VISUAL_ID))
                 return true;
             player->KillCreditGO(go->GetEntry(), go->GetGUID());
@@ -110,7 +110,7 @@ public:
                     {
                         tree->SetUInt32Value(UNIT_FIELD_STATE_SPELL_VISUAL_ID, 0);
                         treeGUID = tree->GetGUID();
-                        if (!tree->isAlive())
+                        if (!tree->IsAlive())
                             tree->Respawn();
                     }
                     else

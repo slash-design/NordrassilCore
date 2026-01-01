@@ -183,7 +183,7 @@ struct boss_high_botanist_telarn : BossAI
 {
     explicit boss_high_botanist_telarn(Creature* creature) : BossAI(creature, DATA_TELARN)
     {
-        if (me->isAlive())
+        if (me->IsAlive())
         {
             if (IsMythicRaid())
             {
@@ -338,7 +338,7 @@ struct boss_high_botanist_telarn : BossAI
                     for (auto const& guid : botanistList)
                     {
                         if (auto botanist = Unit::GetCreature(*me, guid))
-                            if (botanist->isAlive() && !botanist->isInCombat())
+                            if (botanist->IsAlive() && !botanist->isInCombat())
                                 botanist->AI()->DoZoneInCombat(botanist, 100.0f);
                     }
                 }
@@ -1363,7 +1363,7 @@ struct npc_telarn_parasitic_lasher : public ScriptedAI
                 case EVENT_2:
                     if (auto target = ObjectAccessor::GetUnit(*me, targetGUID))
                     {
-                        if (!target->isAlive())
+                        if (!target->IsAlive())
                         {
                             events.RescheduleEvent(EVENT_1, 1000);
                             break;
@@ -1612,7 +1612,7 @@ class spell_telarn_parasitic_fixate : public AuraScript
 
     void OnTick(AuraEffect const* aurEff)
     {
-        if (!GetCaster() || !GetCaster()->isAlive())
+        if (!GetCaster() || !GetCaster()->IsAlive())
             aurEff->GetBase()->Remove();
     }
 

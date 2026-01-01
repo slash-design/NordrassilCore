@@ -60,7 +60,7 @@ struct boss_thrashbite_the_scornful : public BossAI
             bool canVisible = false;
             if (Creature* gazzerax = instance->instance->GetCreature(instance->GetGuidData(NPC_GAZERAX)))
             {
-                if (!gazzerax->isAlive())
+                if (!gazzerax->IsAlive())
                     canVisible = true;
             }
             else

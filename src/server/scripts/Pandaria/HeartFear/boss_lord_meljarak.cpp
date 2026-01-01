@@ -126,7 +126,7 @@ void SendDamageSoldiers(InstanceScript* instance, Creature* caller, uint32 calle
             {
                 if (Creature* soldier = caller->GetCreature(*caller, instance->GetGuidData(n)))
                 {
-                    if (soldier->GetGUID() != callerGuid && soldier->isAlive())
+                    if (soldier->GetGUID() != callerGuid && soldier->IsAlive())
                         soldier->SetHealth(soldier->GetHealth() - damage);
                 }
             }
@@ -136,7 +136,7 @@ void SendDamageSoldiers(InstanceScript* instance, Creature* caller, uint32 calle
             {
                 if (Creature* soldier = caller->GetCreature(*caller, instance->GetGuidData(n)))
                 {
-                    if (soldier->GetGUID() != callerGuid && soldier->isAlive())
+                    if (soldier->GetGUID() != callerGuid && soldier->IsAlive())
                         soldier->SetHealth(soldier->GetHealth() - damage);
                 }
             }
@@ -146,7 +146,7 @@ void SendDamageSoldiers(InstanceScript* instance, Creature* caller, uint32 calle
             {
                 if (Creature* soldier = caller->GetCreature(*caller, instance->GetGuidData(n)))
                 {
-                    if (soldier->GetGUID() != callerGuid && soldier->isAlive())
+                    if (soldier->GetGUID() != callerGuid && soldier->IsAlive())
                         soldier->SetHealth(soldier->GetHealth() - damage);
                 }
             }
@@ -166,7 +166,7 @@ void SendDiedSoldiers(InstanceScript* instance, Creature* caller, uint32 callerE
             {
                 if (Creature* soldier = caller->GetCreature(*caller, instance->GetGuidData(n)))
                 {
-                    if (soldier->GetGUID() != callerGuid && soldier->isAlive())
+                    if (soldier->GetGUID() != callerGuid && soldier->IsAlive())
                         soldier->Kill(soldier, true);
                 }
             }
@@ -176,7 +176,7 @@ void SendDiedSoldiers(InstanceScript* instance, Creature* caller, uint32 callerE
             {
                 if (Creature* soldier = caller->GetCreature(*caller, instance->GetGuidData(n)))
                 {
-                    if (soldier->GetGUID() != callerGuid && soldier->isAlive())
+                    if (soldier->GetGUID() != callerGuid && soldier->IsAlive())
                         soldier->Kill(soldier, true);
                 }
             }
@@ -186,7 +186,7 @@ void SendDiedSoldiers(InstanceScript* instance, Creature* caller, uint32 callerE
             {
                 if (Creature* soldier = caller->GetCreature(*caller, instance->GetGuidData(n)))
                 {
-                    if (soldier->GetGUID() != callerGuid && soldier->isAlive())
+                    if (soldier->GetGUID() != callerGuid && soldier->IsAlive())
                         soldier->Kill(soldier, true);
                 }
             }
@@ -195,7 +195,7 @@ void SendDiedSoldiers(InstanceScript* instance, Creature* caller, uint32 callerE
 
         if (Creature* meljarak = caller->GetCreature(*caller, instance->GetGuidData(NPC_MELJARAK)))
         {
-            if (meljarak->isAlive())
+            if (meljarak->IsAlive())
                 meljarak->AddAura(SPELL_RECKLESSNESS, meljarak);
         }
     }
@@ -212,7 +212,7 @@ void SendHealSoldiers(InstanceScript* instance, Creature* caller, uint32 callerE
             {
                 if (Creature* soldier = caller->GetCreature(*caller, instance->GetGuidData(n)))
                 {
-                    if (soldier->GetGUID() != callerGuid && soldier->isAlive())
+                    if (soldier->GetGUID() != callerGuid && soldier->IsAlive())
                         soldier->SetHealth(soldier->GetHealth() + modhealth);
                 }
             }
@@ -222,7 +222,7 @@ void SendHealSoldiers(InstanceScript* instance, Creature* caller, uint32 callerE
             {
                 if (Creature* soldier = caller->GetCreature(*caller, instance->GetGuidData(n)))
                 {
-                    if (soldier->GetGUID() != callerGuid && soldier->isAlive())
+                    if (soldier->GetGUID() != callerGuid && soldier->IsAlive())
                         soldier->SetHealth(soldier->GetHealth() + modhealth);
                 }
             }
@@ -232,7 +232,7 @@ void SendHealSoldiers(InstanceScript* instance, Creature* caller, uint32 callerE
             {
                 if (Creature* soldier = caller->GetCreature(*caller, instance->GetGuidData(n)))
                 {
-                    if (soldier->GetGUID() != callerGuid && soldier->isAlive())
+                    if (soldier->GetGUID() != callerGuid && soldier->IsAlive())
                         soldier->SetHealth(soldier->GetHealth() + modhealth);
                 }
             }
@@ -268,7 +268,7 @@ class npc_generic_soldier : public CreatureScript
                 {
                     if (Creature* meljarak = me->GetCreature(*me, instance->GetGuidData(NPC_MELJARAK)))
                     {
-                        if (meljarak->isAlive() && !meljarak->isInCombat())
+                        if (meljarak->IsAlive() && !meljarak->isInCombat())
                             meljarak->AI()->AttackStart(attacker);
                     }
                 }
@@ -323,7 +323,7 @@ class npc_generic_soldier : public CreatureScript
                         {
                             if (soldier->GetGUID() != me->GetGUID())
                             {
-                                if (soldier->isAlive() && soldier->HealthBelowPct(75))
+                                if (soldier->IsAlive() && soldier->HealthBelowPct(75))
                                 {
                                     DoCast(soldier, SPELL_HEAL);
                                     break;

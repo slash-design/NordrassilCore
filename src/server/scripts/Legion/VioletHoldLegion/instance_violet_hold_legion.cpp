@@ -574,7 +574,7 @@ public:
                 if (player->isGameMaster())
                     continue;
 
-                if (player->isAlive())
+                if (player->IsAlive())
                     return false;
             }
 
@@ -600,7 +600,7 @@ public:
             for (auto itr = tempMobs.begin(); itr != tempMobs.end(); ++itr)
             {
                 if (Creature* creature = instance->GetCreature(*itr))
-                    if (creature && creature->isAlive())
+                    if (creature && creature->IsAlive())
                         creature->DespawnOrUnsummon();
             }
 
@@ -677,7 +677,7 @@ public:
             for (auto itr = tempMobs.begin(); itr != tempMobs.end(); ++itr)
             {
                 Creature* creature = instance->GetCreature(*itr);
-                if (creature && creature->isAlive())
+                if (creature && creature->IsAlive())
                 {
                     if (creature->GetEntry() == NPC_LORD_MALGATH)
                         creature->SetHealth(creature->GetHealth() * 0.7f);

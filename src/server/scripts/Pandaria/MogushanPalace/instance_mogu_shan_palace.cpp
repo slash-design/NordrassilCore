@@ -196,7 +196,7 @@ public:
         {
             instance->ApplyOnEveryPlayer([&](Player* player)
             {
-                if (player->isAlive() && !player->isGameMaster())
+                if (player->IsAlive() && !player->isGameMaster())
                     return false;
             });
 

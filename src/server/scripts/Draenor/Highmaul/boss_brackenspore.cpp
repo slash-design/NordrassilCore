@@ -434,7 +434,7 @@ struct boss_brackenspore : public BossAI
             {
                 if (Creature* add = Creature::GetCreature(*me, guid))
                 {
-                    if (add->isAlive())
+                    if (add->IsAlive())
                     {
                         canSchedule = false;
                         break;

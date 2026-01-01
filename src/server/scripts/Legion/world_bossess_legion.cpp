@@ -1301,7 +1301,7 @@ public:
                 if (me->GetEntry() != _Bosses[n])
                     if (Creature* targ = me->FindNearestCreature(_Bosses[n], 100.0f))
                     {
-                        if (targ->isAlive())
+                        if (targ->IsAlive())
                             targ->AI()->AttackStart(unit);
                         else
                             targ->Respawn(false);
@@ -1318,7 +1318,7 @@ public:
                     {
                         if (target->ToCreature()->GetEntry() == 107569)
                         {
-                            if (target->isAlive())
+                            if (target->IsAlive())
                             {
                                 target->CastSpell(target, SPELL_SHATTER_CREWMEN_ADD);
                                 target->ToCreature()->DespawnOrUnsummon(500);
@@ -1563,7 +1563,7 @@ class spell_mothers_embrace : public SpellScriptLoader
             {
                 if (!GetCaster() || !GetTarget() || GetTargetApplication()->GetRemoveMode() == AURA_REMOVE_BY_ENEMY_SPELL)
                     return;
-                if (GetCaster()->isAlive() && GetTarget()->isAlive())
+                if (GetCaster()->IsAlive() && GetTarget()->IsAlive())
                     GetCaster()->CastSpell(GetTarget(), 219068, true);
             }
 
@@ -1625,7 +1625,7 @@ public:
                 if (!adds.empty())
                     for (std::list<Creature*>::iterator itr = adds.begin(); itr != adds.end(); ++itr)
                     {
-                        if ( (*itr)->isAlive())
+                        if ((*itr)->IsAlive())
                         {
                             (*itr)->DespawnOrUnsummon(1000);
                             DoCast(me, SPELL_LEY_INFUSION, true);

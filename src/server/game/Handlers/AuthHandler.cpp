@@ -46,7 +46,7 @@ void WorldSession::SendAuthResponse(uint8 code, bool CharacterTemplate, bool que
 
     if (code == ERROR_OK)
     {
-        response.SuccessInfo = boost::in_place();
+        response.SuccessInfo.emplace();
 
         response.SuccessInfo->AccountExpansionLevel = Expansion();
         response.SuccessInfo->ActiveExpansionLevel = Expansion();
@@ -101,7 +101,7 @@ void WorldSession::SendAuthResponse(uint8 code, bool CharacterTemplate, bool que
 
     if (queued)
     {
-        response.WaitInfo = boost::in_place();
+        response.WaitInfo.emplace();
         response.WaitInfo->WaitCount = queuePos;
     }
 

@@ -499,12 +499,12 @@ public:
 			Player* player = GetCaster()->ToPlayer();
 			PetType newPetType = (player->getClass() == CLASS_HUNTER) ? HUNTER_PET : SUMMON_PET;
 
-			Pet* newPet = new Pet(player, newPetType);
-			if (newPet->LoadPetFromDB(player, 0, player->GetLastPetNumber()))
-			{
-				// revive the pet if it is dead
-				if (newPet->getDeathState() == DEAD || newPet->getDeathState() == CORPSE)
-					newPet->setDeathState(ALIVE);
+                Pet* newPet = new Pet(player, newPetType);
+                if (newPet->LoadPetFromDB(player, 0, player->GetLastPetNumber(), true))
+                {
+                    // revive the pet if it is dead
+                    if (newPet->getDeathState() == DEAD || newPet->getDeathState() == CORPSE)
+                        newPet->setDeathState(ALIVE);
 
 				newPet->ClearUnitState(uint32(UNIT_STATE_ALL_STATE));
 				newPet->SetFullHealth();
@@ -2850,13 +2850,13 @@ public:
 					owner->CastSpell(owner, _spellId, true);
 		}
 
-		void AfterRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
-		{
-			if (GetCaster())
-				if (Unit* owner = GetCaster()->GetOwner())
-					if (owner->GetTypeId() == TYPEID_PLAYER) // todo: this check is maybe wrong
-						owner->ToPlayer()->RemovePet(NULL);
-		}
+            void AfterRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+            {
+                if (GetCaster())
+                    if (Unit* owner = GetCaster()->GetOwner())
+                        if (owner->GetTypeId() == TYPEID_PLAYER) // todo: this check is maybe wrong
+                            owner->ToPlayer()->RemovePet(nullptr, PET_SAVE_NOT_IN_SLOT, true);
+            }
 
 		void Register() override
 		{
@@ -6110,13 +6110,13 @@ class spell_failure_detection_pylon : public SpellScript
 {
 	PrepareSpellScript(spell_failure_detection_pylon);
 
-	void FilterTargets(std::list<WorldObject*>& targets)
-	{
-		targets.remove_if([](WorldObject* target)
-		{
-			return target->ToPlayer()->isAlive();
-		});
-	}
+    void FilterTargets(std::list<WorldObject*>& targets)
+    {
+        targets.remove_if([](WorldObject* target)
+        {
+            return target->ToPlayer()->IsAlive();
+        });
+    }
 
 	void Register() override
 	{
@@ -6431,18 +6431,18 @@ class spell_mothers_skinning_knife : public SpellScript
 		if (!caster || !player)
 			return SPELL_FAILED_BAD_TARGETS;
 
-		if (auto selected = player->GetSelection())
-		{
-			if (auto cre = Unit::GetCreature(*caster, selected))
-			{
-				if (cre->isAlive())
-					return SPELL_FAILED_BAD_TARGETS;
-				else if (cre->GetCreatureType() != CREATURE_TYPE_BEAST)
-					return SPELL_FAILED_BAD_TARGETS;
-				else if (cre->lootForBody)
-					return SPELL_CAST_OK;
-			}
-		}
+        if (auto selected = player->GetSelection())
+        {
+            if (auto cre = Unit::GetCreature(*caster, selected))
+            {
+                if (cre->IsAlive())
+                    return SPELL_FAILED_BAD_TARGETS;
+                else if (cre->GetCreatureType() != CREATURE_TYPE_BEAST)
+                    return SPELL_FAILED_BAD_TARGETS;
+                else if (cre->lootForBody)
+                    return SPELL_CAST_OK;
+            }
+        }
 
 		return SPELL_FAILED_BAD_TARGETS;
 	}
@@ -8454,7 +8454,7 @@ public:
 			{
 				if ((*itr) != nullptr)
 					if ((*itr)->ToUnit())
-						if ((*itr)->ToUnit()->isAlive())
+						if ((*itr)->ToUnit()->IsAlive())
 							if ((*itr)->ToUnit()->HasAura(206310))
 								targets.remove((*itr));
 			}

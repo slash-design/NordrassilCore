@@ -44,7 +44,7 @@ public:
         {
             if (spell->Id != 229468)
                 return;
-            if (!me->isAlive())
+            if (!me->IsAlive())
                 return;
             switch(me->GetEntry())
             {

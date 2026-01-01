@@ -390,7 +390,7 @@ public:
             {
                 if (Creature* l_Kaathar = m_Instance->instance->GetCreature(m_Instance->GetGuidData(DataBossKathaar)))
                 {
-                    if (l_Kaathar->isAlive() && l_Kaathar->IsAIEnabled)
+                    if (l_Kaathar->IsAlive() && l_Kaathar->IsAIEnabled)
                         l_Kaathar->AI()->DoAction(ActionCountPre1StBossKill);
                 }
             }
@@ -475,7 +475,7 @@ public:
             {
                 if (Creature* l_Kaathar = m_Instance->instance->GetCreature(m_Instance->GetGuidData(DataBossKathaar)))
                 {
-                    if (l_Kaathar->isAlive() && l_Kaathar->IsAIEnabled)
+                    if (l_Kaathar->IsAlive() && l_Kaathar->IsAIEnabled)
                         l_Kaathar->AI()->DoAction(ActionCountPre1StBossKill);
                 }
             }
@@ -563,7 +563,7 @@ public:
             {
                 if (Creature* l_Kaathar = m_Instance->instance->GetCreature(m_Instance->GetGuidData(DataBossKathaar)))
                 {
-                    if (l_Kaathar->isAlive() && l_Kaathar->IsAIEnabled)
+                    if (l_Kaathar->IsAlive() && l_Kaathar->IsAIEnabled)
                         l_Kaathar->AI()->DoAction(ActionCountPre1StBossKill);
                 }
             }
@@ -642,7 +642,7 @@ public:
             {
                 if (Creature* Kaathar = m_Instance->instance->GetCreature(m_Instance->GetGuidData(DataBossKathaar)))
                 {
-                    if (Kaathar->isAlive() && Kaathar->IsAIEnabled)
+                    if (Kaathar->IsAlive() && Kaathar->IsAIEnabled)
                         Kaathar->AI()->DoAction(ActionCountPre1StBossKill);
                 }
             }
@@ -727,7 +727,7 @@ public:
             {
                 if (Creature* l_Kaathar = m_Instance->instance->GetCreature(m_Instance->GetGuidData(DataBossKathaar)))
                 {
-                    if (l_Kaathar->isAlive() && l_Kaathar->IsAIEnabled)
+                    if (l_Kaathar->IsAlive() && l_Kaathar->IsAIEnabled)
                         l_Kaathar->AI()->DoAction(ActionCountPre1StBossKill);
                 }
             }
@@ -816,7 +816,7 @@ public:
             {
                 if (Creature* l_Kaathar = m_Instance->instance->GetCreature(m_Instance->GetGuidData(DataBossKathaar)))
                 {
-                    if (l_Kaathar->isAlive() && l_Kaathar->IsAIEnabled)
+                    if (l_Kaathar->IsAlive() && l_Kaathar->IsAIEnabled)
                         l_Kaathar->AI()->DoAction(ActionCountPre1StBossKill);
                 }
             }
@@ -1389,7 +1389,7 @@ public:
             if (m_Instance)
             {
                 if (Creature* l_Azzakel = m_Instance->instance->GetCreature(m_Instance->GetGuidData(DataBossAzzakael)))
-                    if (l_Azzakel->isInCombat() && l_Azzakel->isAlive() && l_Azzakel->IsAIEnabled)
+                    if (l_Azzakel->isInCombat() && l_Azzakel->IsAlive() && l_Azzakel->IsAIEnabled)
                         l_Azzakel->GetAI()->DoAction(ActionDemonSoulsAchievement);
 
                 if (Creature* l_Trigger = m_Instance->instance->GetCreature(m_Instance->GetGuidData(DataTriggerAzzakelController)))
@@ -1470,7 +1470,7 @@ public:
             if (m_Instance)
             {
                 if (Creature* l_Azzakel = m_Instance->instance->GetCreature(m_Instance->GetGuidData(DataBossAzzakael)))
-                    if (l_Azzakel->isInCombat() && l_Azzakel->isAlive() && l_Azzakel->IsAIEnabled)
+                    if (l_Azzakel->isInCombat() && l_Azzakel->IsAlive() && l_Azzakel->IsAIEnabled)
                         l_Azzakel->GetAI()->DoAction(ActionDemonSoulsAchievement);
             }
         }
@@ -1549,7 +1549,7 @@ public:
             if (m_Instance)
             {
                 if (Creature* l_Azzakel = m_Instance->instance->GetCreature(m_Instance->GetGuidData(DataBossAzzakael)))
-                    if (l_Azzakel->isInCombat() && l_Azzakel->isAlive() && l_Azzakel->IsAIEnabled)
+                    if (l_Azzakel->isInCombat() && l_Azzakel->IsAlive() && l_Azzakel->IsAIEnabled)
                         l_Azzakel->GetAI()->DoAction(ActionDemonSoulsAchievement);
 
                 if (Creature* l_Trigger = m_Instance->instance->GetCreature(m_Instance->GetGuidData(DataTriggerAzzakelController)))

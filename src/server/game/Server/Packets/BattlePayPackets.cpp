@@ -19,19 +19,19 @@
 
 ByteBuffer& operator<<(ByteBuffer& data, WorldPackets::BattlePay::ProductDisplayInfo const& displayInfo)
 {
-	data.WriteBit(displayInfo.CreatureDisplayInfoID.is_initialized());
-	data.WriteBit(displayInfo.VisualsId.is_initialized());
+    data.WriteBit(displayInfo.CreatureDisplayInfoID.has_value());
+    data.WriteBit(displayInfo.VisualsId.has_value());
 
 	data.WriteBits(displayInfo.Name1.length(), 10);
 	data.WriteBits(displayInfo.Name2.length(), 10);
 	data.WriteBits(displayInfo.Name3.length(), 13);
 	data.WriteBits(displayInfo.Name4.length(), 13);
 
-	data.WriteBit(displayInfo.Flags.is_initialized());
-	data.WriteBit(displayInfo.UnkInt1.is_initialized());
-	data.WriteBit(displayInfo.UnkInt2.is_initialized());
-	data.WriteBit(displayInfo.UnkInt3.is_initialized());
-	data.FlushBits();
+    data.WriteBit(displayInfo.Flags.has_value());
+    data.WriteBit(displayInfo.UnkInt1.has_value());
+    data.WriteBit(displayInfo.UnkInt2.has_value());
+    data.WriteBit(displayInfo.UnkInt3.has_value());
+    data.FlushBits();
 
 	data << static_cast<uint32>(displayInfo.Visuals.size());
 
@@ -82,11 +82,11 @@ ByteBuffer& operator<<(ByteBuffer& data, WorldPackets::BattlePay::BattlePayProdu
 	data << product.UnkInt4;
 	data << product.UnkInt5;
 
-	data.WriteBits(product.UnkString.size(), 8);
-	data.WriteBit(product.UnkBit);
-	data.WriteBit(product.UnkBits.is_initialized());
-	data.WriteBits(product.Items.size(), 7);
-	data.WriteBit(product.DisplayInfo.is_initialized());
+    data.WriteBits(product.UnkString.size(), 8);
+    data.WriteBit(product.UnkBit);
+    data.WriteBit(product.UnkBits.has_value());
+    data.WriteBits(product.Items.size(), 7);
+    data.WriteBit(product.DisplayInfo.has_value());
 
 	if (product.UnkBits)
 		data.WriteBits(*product.UnkBits, 4);
@@ -102,9 +102,9 @@ ByteBuffer& operator<<(ByteBuffer& data, WorldPackets::BattlePay::BattlePayProdu
 		data << productItem.UnkInt1;
 		data << productItem.UnkInt2;
 
-		data.WriteBit(productItem.HasPet);
-		data.WriteBit(productItem.PetResult.is_initialized());
-		data.WriteBit(productItem.DisplayInfo.is_initialized());
+        data.WriteBit(productItem.HasPet);
+        data.WriteBit(productItem.PetResult.has_value());
+        data.WriteBit(productItem.DisplayInfo.has_value());
 
 		if (productItem.PetResult)
 			data.WriteBits(*productItem.PetResult, 4);
@@ -132,10 +132,10 @@ ByteBuffer& operator<<(ByteBuffer& data, WorldPackets::BattlePay::BattlePayDistr
 	data << object.TargetVirtualRealm;
 	data << object.TargetNativeRealm;
 
-	data << object.PurchaseID;
-	data.WriteBit(object.Product.is_initialized());
-	data.WriteBit(object.Revoked);
-	data.FlushBits();
+    data << object.PurchaseID;
+    data.WriteBit(object.Product.has_value());
+    data.WriteBit(object.Revoked);
+    data.FlushBits();
 
 	if (object.Product)
 		data << *object.Product;
@@ -201,10 +201,10 @@ ByteBuffer& operator<<(ByteBuffer& data, WorldPackets::BattlePay::ProductInfoStr
 	for (auto z : info.UnkInts)
 		data << z;
 
-	data.WriteBits(info.ChoiceType, 7);
-	data.WriteBit(info.DisplayInfo.is_initialized());
-	if (info.DisplayInfo)
-		data << *info.DisplayInfo;
+    data.WriteBits(info.ChoiceType, 7);
+    data.WriteBit(info.DisplayInfo.has_value());
+    if (info.DisplayInfo)
+        data << *info.DisplayInfo;
 
 	return data;
 }
@@ -249,8 +249,8 @@ WorldPacket const* WorldPackets::BattlePay::ProductListResponse::Write()
 		_worldPacket << shopData.VasServiceType;
 		_worldPacket << shopData.StoreDeliveryType;
 
-		if (_worldPacket.WriteBit(shopData.DisplayInfo.is_initialized()))
-			_worldPacket << *shopData.DisplayInfo;
+        if (_worldPacket.WriteBit(shopData.DisplayInfo.has_value()))
+            _worldPacket << *shopData.DisplayInfo;
 
 		_worldPacket.FlushBits();
 	}

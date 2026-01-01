@@ -2255,7 +2255,7 @@ struct npc_highmaul_warden_thultok : public ScriptedAI
 
     npc_highmaul_warden_thultok(Creature* creature) : ScriptedAI(creature)
     {
-        if (!creature->isAlive())
+        if (!creature->IsAlive())
             me->SummonGameObject(Teleporter, teleporterSpawnPos, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0);
     }
 

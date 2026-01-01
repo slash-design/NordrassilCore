@@ -169,8 +169,8 @@ struct instance_antorus : InstanceScript
                 break;
         }
 
-        if (!creature->isAlive())
-            return;
+            if (!creature->IsAlive())
+                return;
 
         if (creature->getFaction() == 35 || creature->getFaction() == 2921 || creature->getFaction() == 2916)
         {
@@ -595,12 +595,12 @@ struct instance_antorus : InstanceScript
             timerIntroEvent -= diff;
 
 
-        if (timerIntroEvent2 <= diff)
-        {
-            introGuids.remove_if([this](const ObjectGuid& guid) {
-                Creature* cre = instance->GetCreature(guid);
-                return !cre || !cre->isAlive();
-            });
+            if (timerIntroEvent2 <= diff)
+            {
+                introGuids.remove_if([this](const ObjectGuid& guid) {
+                    Creature* cre = instance->GetCreature(guid);
+                    return !cre || !cre->IsAlive();
+                });
 
             if (!wireframesGuids.empty())
                 if (Creature* protect = instance->GetCreature(wireframesGuids[urand(0, wireframesGuids.size())]))
@@ -640,42 +640,42 @@ struct instance_antorus : InstanceScript
         {
             checkSurgeLifeTimer = 1500;
 
-            instance->ApplyOnEveryPlayer([&](Player* plr)
-            {
-                if ((plr->GetCurrentAreaID() == 8681 || plr->GetCurrentAreaID() == 9333) && plr->isAlive())
+                instance->ApplyOnEveryPlayer([&](Player* plr)
                 {
-                    if (plr->GetPositionX() > MIN_X && plr->GetPositionX() < MAX_X && plr->GetPositionY() > MIN_Y && plr->GetPositionY() < MAX_Y)
+                    if ((plr->GetCurrentAreaID() == 8681 || plr->GetCurrentAreaID() == 9333) && plr->IsAlive())
                     {
-                        if (!plr->HasAura(SPELL_SURGE_OF_LIFE_OVERRIDE) && !plr->HasAura(SPELL_SURGE_OF_LIFE_OVERRIDE_2))
-                            plr->CastSpell(plr, SPELL_SURGE_OF_LIFE_OVERRIDE, true);
+                        if (plr->GetPositionX() > MIN_X && plr->GetPositionX() < MAX_X && plr->GetPositionY() > MIN_Y && plr->GetPositionY() < MAX_Y)
+                        {
+                            if (!plr->HasAura(SPELL_SURGE_OF_LIFE_OVERRIDE) && !plr->HasAura(SPELL_SURGE_OF_LIFE_OVERRIDE_2))
+                                plr->CastSpell(plr, SPELL_SURGE_OF_LIFE_OVERRIDE, true);
+                        }
+                        else
+                            plr->RemoveAurasDueToSpell(SPELL_SURGE_OF_LIFE_OVERRIDE);
                     }
-                    else
-                        plr->RemoveAurasDueToSpell(SPELL_SURGE_OF_LIFE_OVERRIDE);
-                }
-            });
-        }
-        else
-            checkSurgeLifeTimer -= diff;
+                });
+            }
+            else
+                checkSurgeLifeTimer -= diff;
 
         if (playerFallCheckTimer <= diff)
         {
             playerFallCheckTimer = 1000;
 
-            instance->ApplyOnEveryPlayer([&](Player* player)
-            {
-                if (player->IsFalling())
+                instance->ApplyOnEveryPlayer([&](Player* player)
                 {
-                    if (player->GetDistance(-10574.53f, 8629.80f, 1871.52f) < 300.0f && player->GetPositionZ() < 1820.0f)
+                    if (player->IsFalling())
                     {
-                        if (player->isAlive())
-                            player->Kill(player);
+                        if (player->GetDistance(-10574.53f, 8629.80f, 1871.52f) < 300.0f && player->GetPositionZ() < 1820.0f)
+                        {
+                            if (player->IsAlive())
+                                player->Kill(player);
 
-                        player->NearTeleportTo(-10574.89f, 8771.44f, 1871.46f, player->GetOrientation());
-                    }
-                    else if (player->GetDistance(-10574.7f, 8098.39f, 1873.72f) < 250.0f && player->GetPositionZ() < 1835.0f)
-                    {
-                        if (player->isAlive())
-                            player->Kill(player);
+                            player->NearTeleportTo(-10574.89f, 8771.44f, 1871.46f, player->GetOrientation());
+                        }
+                        else if (player->GetDistance(-10574.7f, 8098.39f, 1873.72f) < 250.0f && player->GetPositionZ() < 1835.0f)
+                        {
+                            if (player->IsAlive())
+                                player->Kill(player);
 
                         player->NearTeleportTo(-10575.16f, 8199.96f, 1871.29f, player->GetOrientation());
                     }

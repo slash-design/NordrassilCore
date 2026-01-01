@@ -67,7 +67,7 @@ public:
             return false;
         }
 
-        if (!player->isAlive())
+        if (!player->IsAlive())
         {
             handler->SendSysMessage("You are dead.");
             handler->SetSentErrorMessage(true);
@@ -241,7 +241,7 @@ public:
                     msg.SetPet(0);
                     msg.SetPetHP(0);
                 }
-                msg.SetStatus(tmpPlayer->isAlive());
+                msg.SetStatus(tmpPlayer->IsAlive());
                 msg.SetClass(tmpPlayer->getClass());
                 msg.SetCurrentHP(tmpPlayer->GetHealth());
                 msg.SetMaxHP(tmpPlayer->GetMaxHealth());

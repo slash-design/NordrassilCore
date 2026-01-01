@@ -196,7 +196,7 @@ public:
                                     GetCreatureListWithEntryInGrid(casters, go, 126044, 70.0f);
 
                                     for (auto cre : casters)
-                                        if (cre->isAlive())
+                                        if (cre->IsAlive())
                                             cre->CastSpell(cre, 252832);
                                 }
                             }
@@ -345,7 +345,7 @@ class spell_paraxis_artillery : public SpellScript
             Player* player = obj->ToPlayer();
 
 
-            return player->GetCurrentAreaID() == AREA_WINDIKAR || player->GetCurrentZoneID() != 8899 || !player->isAlive() || player->HasAura(SPELL_HOLY_SHIELD);
+            return player->GetCurrentAreaID() == AREA_WINDIKAR || player->GetCurrentZoneID() != 8899 || !player->IsAlive() || player->HasAura(SPELL_HOLY_SHIELD);
         });
     }
 

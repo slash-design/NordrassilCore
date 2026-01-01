@@ -84,7 +84,7 @@ public:
 
         void Reset() override
         {
-            if (me->isAlive())
+            if (me->IsAlive())
                 _Reset();
 
             me->RemoveAurasDueToSpell(SPELL_DEBUFF_OVERRIDE);
@@ -96,7 +96,7 @@ public:
             me->KillAllDelayedEvents();
             me->RemoveAllAreaObjects();
 
-            if (me->isAlive())
+            if (me->IsAlive())
                 instance->DoRemoveAurasDueToSpellOnPlayers(SPELL_DEBUFF_UNBEAR_TOR);
         }
 
@@ -503,7 +503,7 @@ public:
                 return;
 
             if (target->GetDistance2d(6403.13f, -935.55f) <= 30.0f)
-                if (target->isAlive())
+                if (target->IsAlive())
                     target->ToPlayer()->TeleportTo(target->GetMapId(), 6401.96f, -795.64f, 3020.17f, 0.01f, TELE_TO_SEAMLESS);
                 else
                     target->NearTeleportTo(6401.96f, -795.64f, 3020.17f, 0.01f);
@@ -612,7 +612,7 @@ public:
 
     bool OnCheck(Player* source, Unit* /*target*/) override
     {
-        if (source->isAlive() && source->HasAura(233430))
+        if (source->IsAlive() && source->HasAura(233430))
             return true;
 
         return false;

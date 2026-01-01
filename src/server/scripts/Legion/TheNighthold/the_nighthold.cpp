@@ -296,7 +296,7 @@ struct npc_night_hold_chaos_mage_beleron : ScriptedAI
             return !me->HasUnitState(UNIT_STATE_CASTING);
         });
 
-        if(me->isAlive() && me->IsVisible())
+        if(me->IsAlive() && me->IsVisible())
         {
             me->AddDelayedEvent(1500, [this]() -> void
             {
@@ -404,7 +404,7 @@ struct npc_night_hold_summoner_xiv : ScriptedAI
             return !me->HasUnitState(UNIT_STATE_CASTING);
         });
 
-        if(me->isAlive() && me->IsVisible())
+        if(me->IsAlive() && me->IsVisible())
         {
             me->AddDelayedEvent(1500, [this]() -> void
             {
@@ -511,7 +511,7 @@ struct npc_night_hold_felweaver_pharamere : ScriptedAI
             return !me->HasUnitState(UNIT_STATE_CASTING);
         });
 
-        if(me->isAlive() && me->IsVisible())
+        if(me->IsAlive() && me->IsVisible())
         {
             me->AddDelayedEvent(1500, [this]() -> void
             {
@@ -595,7 +595,7 @@ struct npc_night_hold_felweaver_pharamere : ScriptedAI
 
     void SpellHitTarget(Unit* target, const SpellInfo* spell) override
     {
-        if (spell->Id == SpellEmpowering && me->isAlive() && me->IsVisible())
+        if (spell->Id == SpellEmpowering && me->IsAlive() && me->IsVisible())
         {
             Creature* nearest = nullptr;
 

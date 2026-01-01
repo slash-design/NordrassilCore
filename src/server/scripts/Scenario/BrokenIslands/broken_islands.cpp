@@ -828,7 +828,7 @@ public:
             events.Reset();
             summons.DespawnAll();
 
-            if (!me->isAlive() || onFinish)
+            if (!me->IsAlive() || onFinish)
                 return;
 
             me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_IMMUNE_TO_NPC | UNIT_FLAG_IMMUNE_TO_PC);
@@ -876,7 +876,7 @@ public:
             if (onFinish || firstcheck)
                 return;
 
-            if (!me->isAlive())
+            if (!me->IsAlive())
                 return;
 
             firstcheck = true;
@@ -1017,7 +1017,7 @@ public:
         void Reset() override
         {
             checkconv = false;
-            if (!me->isAlive())
+            if (!me->IsAlive())
                 return;
 
             events.Reset();
@@ -1454,7 +1454,7 @@ public:
                                     return false;
 
 
-                                return !target || !target->isAlive() || target->isTrigger() || !target->IsVisible() || me->IsFriendlyTo(target) || target->getFaction() == 1819 || target->GetEntry() == 90705;
+                                return !target || !target->IsAlive() || target->isTrigger() || !target->IsVisible() || me->IsFriendlyTo(target) || target->getFaction() == 1819 || target->GetEntry() == 90705;
                             });
 
                         GetNPCAroundAndDoAction([this, targets](Creature* creature) -> void
@@ -1651,7 +1651,7 @@ public:
                     if (target && target->GetEntry() == 110618)
                         return false;
 
-                    return !target || !target->isAlive() || target->isTrigger() || !target->IsVisible();
+                    return !target || !target->IsAlive() || target->isTrigger() || !target->IsVisible();
                 });
 
             me->AddDelayedEvent(100, [this]() -> void
@@ -2138,7 +2138,7 @@ public:
             if (!guards.empty())
                 for (std::list<Creature*>::iterator itr = guards.begin(); itr != guards.end(); ++itr)
                 {
-                    if (!*itr || !(*itr)->isAlive())
+                    if (!*itr || !(*itr)->IsAlive())
                         continue;
 
                     int8 isAlliance = -1; // -1 unknown, 0 - horde, 1 - alliance
@@ -2169,7 +2169,7 @@ public:
                                 {
                                     if (auto script = creature->GetInstanceScript())
                                         if (Creature* kross = script->instance->GetCreature(script->GetGuidData(NPC_KROSS)))
-                                            if (kross->isAlive())
+                                            if (kross->IsAlive())
                                                 creature->AI()->AttackStart(kross);
                                 }
                             });
@@ -3037,7 +3037,7 @@ public:
                             if (target && target->GetEntry() == 110618)
                                 return false;
 
-                            return !target || !target->isAlive() || target->isTrigger() || !target->IsVisible();
+                            return !target || !target->IsAlive() || target->isTrigger() || !target->IsVisible();
                         });
 
                     if (targetsGuids.empty())
@@ -3142,7 +3142,7 @@ public:
                                     return false;
 
 
-                                return !target || !target->isAlive() || target->isTrigger() || !target->IsVisible() || me->IsFriendlyTo(target) || target->getFaction() == 2876 || target->GetEntry() == 93719;
+                                return !target || !target->IsAlive() || target->isTrigger() || !target->IsVisible() || me->IsFriendlyTo(target) || target->getFaction() == 2876 || target->GetEntry() == 93719;
                             });
 
                         GetNPCAroundAndDoAction([this, targets](Creature* creature) -> void

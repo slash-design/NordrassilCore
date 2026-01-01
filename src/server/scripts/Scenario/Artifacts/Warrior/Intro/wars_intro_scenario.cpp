@@ -66,7 +66,7 @@ public:
                     if (!adds.empty())
                         for (std::list<Creature*>::iterator itr = adds.begin(); itr != adds.end(); ++itr)
                         {
-                            if (!(*itr)->isAlive() || (*itr)->HasAura(105419))
+                            if (!(*itr)->IsAlive() || (*itr)->HasAura(105419))
                                 continue;
                             if (Creature* targ = (*itr)->FindNearestCreature(97176, 120.0f, true))
                                 (*itr)->AI()->AttackStart(targ);
@@ -111,7 +111,7 @@ public:
                 if (!adds.empty())
                     for (std::list<Creature*>::iterator itr = adds.begin(); itr != adds.end(); ++itr)
                     {
-                        if (!(*itr)->isAlive() || (*itr)->HasAura(105419))
+                        if (!(*itr)->IsAlive() || (*itr)->HasAura(105419))
                             continue;
                         (*itr)->AI()->AttackStart(targ);
                     }
@@ -214,7 +214,7 @@ public:
             if (!adds.empty())
                 for (std::list<Creature*>::iterator itr = adds.begin(); itr != adds.end(); ++itr)
                 {
-                    if (!(*itr)->isAlive() || (*itr)->HasAura(105419))
+                    if (!(*itr)->IsAlive() || (*itr)->HasAura(105419))
                         continue;
                     (*itr)->GetMotionMaster()->MovePoint(0, -1965.64f + irand(-6, 6), -1246.74f + irand(-6, 6), 2.71f);
                     // (*itr)->SetByteFlag(UNIT_FIELD_BYTES_1, 3, 8);
@@ -318,7 +318,7 @@ public:
                 if (!adds.empty())
                     for (std::list<Creature*>::iterator itr = adds.begin(); itr != adds.end(); ++itr)
                     {
-                        if (!(*itr)->isAlive() || (*itr)->HasAura(105419))
+                        if (!(*itr)->IsAlive() || (*itr)->HasAura(105419))
                             continue;
                         (*itr)->AI()->AttackStart(targ);
                     }

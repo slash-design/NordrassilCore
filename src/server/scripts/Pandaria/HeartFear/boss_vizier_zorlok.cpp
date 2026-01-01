@@ -310,12 +310,12 @@ class npc_gas_controller : public CreatureScript
                         {
                             if (Player* pl = i->getSource())
                             {
-                                if (pl->isAlive() && pl->GetPositionZ() < curplpos)
+                                if (pl->IsAlive() && pl->GetPositionZ() < curplpos)
                                 {
                                     if (!pl->HasAura(SPELL_PHEROMONES_OF_ZEAL))
                                         pl->AddAura(SPELL_PHEROMONES_OF_ZEAL, pl);
                                 }
-                                else if (pl->isAlive() && pl->GetPositionZ() >= curplpos)
+                                else if (pl->IsAlive() && pl->GetPositionZ() >= curplpos)
                                     pl->RemoveAurasDueToSpell(SPELL_PHEROMONES_OF_ZEAL);
                             }
                         }

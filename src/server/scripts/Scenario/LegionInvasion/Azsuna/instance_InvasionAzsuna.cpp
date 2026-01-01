@@ -124,7 +124,7 @@ public:
                     {
                         if (Player* player = itr->getSource())
                         {
-                            if (player->isAlive() && !player->isGameMaster())
+                            if (player->IsAlive() && !player->isGameMaster())
                                 bomber->CastSpell(player, 235084);
                         }
                     }

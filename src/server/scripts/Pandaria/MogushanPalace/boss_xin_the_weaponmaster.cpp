@@ -193,7 +193,7 @@ struct mob_animated_staff : public ScriptedAI
                 std::list<Unit*> units;
                 instance->instance->ApplyOnEveryPlayer([&](Player* player)
                 {
-                    if (player->isAlive() && !player->isGameMaster())
+                    if (player->IsAlive() && !player->isGameMaster())
                         units.push_back(player);
                 });
 

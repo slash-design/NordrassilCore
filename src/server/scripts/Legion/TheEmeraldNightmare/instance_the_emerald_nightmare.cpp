@@ -194,7 +194,7 @@ public:
                         case IN_PROGRESS:
                             for (auto itr : eggGUIDconteiner)
                                 if (auto egg = instance->GetCreature(itr.second))
-                                    if (!egg->isAlive())
+                                    if (!egg->IsAlive())
                                         egg->Respawn();
                             break;
                     }
