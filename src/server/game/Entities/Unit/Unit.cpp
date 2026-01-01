@@ -11235,6 +11235,18 @@ void Unit::setPowerType(Powers fieldPower)
     UpdateMaxPower(new_powertype);
 }
 
+void Unit::SetInitialPowerValue(Powers powerType)
+{
+    PowerTypeEntry const* powerTypeEntry = sPowerTypeStore.LookupEntry(powerType);
+    if (!powerTypeEntry)
+        return;
+
+    if ((powerTypeEntry->Flags & PowerTypeFlags::UnitsUseDefaultPowerOnInit) != 0)
+        SetPower(powerType, powerTypeEntry->DefaultPower);
+    else
+        SetPower(powerType, GetMaxPower(powerType));
+}
+
 FactionTemplateEntry const* Unit::getFactionTemplateEntry() const
 {
     FactionTemplateEntry const* entry = sFactionTemplateStore.LookupEntry(getFaction());
@@ -15928,7 +15940,7 @@ void Unit::SetSpeed(UnitMoveType mtype, float rate, bool forced)
 
     m_speed_rate[mtype] = rate;
 
-    propagateSpeedChange();
+    PropagateSpeedChange();
 
     // Spline packets are for creatures and move_update are for players
     static OpcodeServer const moveTypeToOpcode[MAX_MOVE_TYPE][3] =
@@ -25304,6 +25316,26 @@ void Unit::FocusTarget(Spell const* focusSpell, ObjectGuid target)
     if (focusSpell->GetSpellInfo()->HasAttribute(SPELL_ATTR5_DONT_TURN_DURING_CAST))
         AddUnitState(UNIT_STATE_ROTATING);
 }
+
+bool Unit::IsFocusing(Spell const* focusSpell)
+{
+    if (!IsAlive()) // dead creatures cannot focus
+    {
+        ReleaseFocus(nullptr);
+        return false;
+    }
+
+    if (focusSpell && (focusSpell != _focusSpell))
+        return false;
+
+    if (!_focusSpell)
+    {
+        return false;
+    }
+
+    return true;
+}
+
 void Unit::ReleaseFocus(Spell const* focusSpell)
 {
     // focused to something else

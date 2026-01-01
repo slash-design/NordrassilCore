@@ -1284,6 +1284,7 @@ class Unit : public WorldObject
         Powers getPowerType() const { return Powers(GetUInt32Value(UNIT_FIELD_DISPLAY_POWER)); }
         void SetFieldPowerType(uint32 powerType) { SetUInt32Value(UNIT_FIELD_DISPLAY_POWER, powerType); }
         void setPowerType(Powers power);
+        void SetInitialPowerValue(Powers powerType);
         int32 GetPower(Powers power) const;
         int32 GetMaxPower(Powers power) const;
         void SetPower(Powers power, int32 val, bool send = true);
@@ -2233,7 +2234,7 @@ class Unit : public WorldObject
         void SendPetAIReaction(ObjectGuid guid);
         ///----------End of Pet responses methods----------
 
-        void propagateSpeedChange() { GetMotionMaster()->propagateSpeedChange(); }
+        void PropagateSpeedChange() { GetMotionMaster()->PropagateSpeedChange(); }
 
         // reactive attacks
         void ClearAllReactives();
@@ -2388,6 +2389,7 @@ class Unit : public WorldObject
 
         // Handling caster facing during spell cast
         void FocusTarget(Spell const* focusSpell, ObjectGuid target);
+        bool IsFocusing(Spell const* focusSpell);
         void ReleaseFocus(Spell const* focusSpell);
 
         uint32 GetNpcDamageTakenInPastSecs(uint32 secs) const;

@@ -226,37 +226,37 @@ class spell_coen_scornful_gaze : public AuraScript
         if (!caster || caster->isDead() || !caster->isInCombat())
             return;
 
-        Unit* target = GetTarget();
-        if (!target || target->isDead())
-            return;
-     
-        std::list<GameObject*> gobs;
-        GetGameObjectListWithEntryInGrid(gobs, caster, GO_THRASHBITE_BOOKCASE_1, caster->GetDistance2d(target));
-        GetGameObjectListWithEntryInGrid(gobs, caster, GO_THRASHBITE_BOOKCASE_2, caster->GetDistance2d(target));
-        GetGameObjectListWithEntryInGrid(gobs, caster, GO_THRASHBITE_BOOKCASE_3, caster->GetDistance2d(target));
-        GetGameObjectListWithEntryInGrid(gobs, caster, GO_THRASHBITE_BOOKCASE_4, caster->GetDistance2d(target));
-        
-        WorldObject* select = target;
-        
-        if (!gobs.empty())
-            for (std::list<GameObject*>::iterator itr = gobs.begin(); itr != gobs.end(); ++itr)
-                if ((!select || caster->GetDistance2d(*itr) < caster->GetDistance2d(select)) && (*itr)->IsInBetween(caster, target->GetPositionX(), target->GetPositionY(), 9.0f)  && (*itr)->GetGoState() != GO_STATE_ACTIVE)
-                    select = (*itr);
+                Unit* target = GetTarget();
+                if (!target || target->isDead())
+                    return;
+             
+                std::list<GameObject*> gobs;
+                GetGameObjectListWithEntryInGrid(gobs, caster, GO_THRASHBITE_BOOKCASE_1, caster->GetDistance2d(target));
+                GetGameObjectListWithEntryInGrid(gobs, caster, GO_THRASHBITE_BOOKCASE_2, caster->GetDistance2d(target));
+                GetGameObjectListWithEntryInGrid(gobs, caster, GO_THRASHBITE_BOOKCASE_3, caster->GetDistance2d(target));
+                GetGameObjectListWithEntryInGrid(gobs, caster, GO_THRASHBITE_BOOKCASE_4, caster->GetDistance2d(target));
                 
-        std::list<Player*> players;
-        GetPlayerListInGrid(players, caster, caster->GetDistance2d(target));
-       
-        
-        if (!players.empty())
-            for (std::list<Player*>::iterator itr = players.begin(); itr != players.end(); ++itr)
-                if ((!select || caster->GetDistance2d(*itr) < caster->GetDistance2d(select)) && (*itr)->IsInBetween(caster, target->GetPositionX(), target->GetPositionY(), 9.0f))
-                    select = (*itr);
+                WorldObject* select = target;
                 
-        if (!select)
-            return;
-        
-        caster->GetMotionMaster()->MoveCharge(select->GetPosition(), SPEED_CHARGE, select->IsPlayer() ? 1 : 2);
-    }
+                if (!gobs.empty())
+                    for (std::list<GameObject*>::iterator itr = gobs.begin(); itr != gobs.end(); ++itr)
+                        if ((!select || caster->GetDistance2d(*itr) < caster->GetDistance2d(select)) && (*itr)->IsInBetween(caster, target->GetPositionX(), target->GetPositionY(), 9.0f)  && (*itr)->GetGoState() != GO_STATE_ACTIVE)
+                            select = (*itr);
+                        
+                std::list<Player*> players;
+                GetPlayerListInGrid(players, caster, caster->GetDistance2d(target));
+               
+                
+                if (!players.empty())
+                    for (std::list<Player*>::iterator itr = players.begin(); itr != players.end(); ++itr)
+                        if ((!select || caster->GetDistance2d(*itr) < caster->GetDistance2d(select)) && (*itr)->IsInBetween(caster, target->GetPositionX(), target->GetPositionY(), 9.0f))
+                            select = (*itr);
+                        
+                if (!select)
+                    return;
+                
+                caster->GetMotionMaster()->MoveCharge(select->GetPositionX(), select->GetPositionY(), select->GetPositionZ(), SPEED_CHARGE, select->IsPlayer() ? 1 : 2);
+            }
 
 
     void Register() override
