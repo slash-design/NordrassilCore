@@ -1036,8 +1036,6 @@ struct CharEnumInfoData
     int32 MapId = 0;
 }; 
 
-typedef std::map<ObjectGuid, CharEnumInfoData> CharEnumMap;
-
 struct CharacterTemplateData
 {
     CharacterTemplate const* charTemplate = nullptr;
@@ -2143,12 +2141,6 @@ class WorldSession
         AuthFlags atAuthFlag = AT_AUTH_FLAG_NONE;
 
         ConnectToKey _instanceConnectKey;
-        uint8 m_DHCount = 0;
-        uint8 m_DKCount = 0;
-        bool m_canDK = false;
-        bool m_canDH = false;
-        uint32 m_raceMask = 0;
-        CharEnumMap charEnumInfo;
         CharacterTemplateDataMap charTemplateData;
 
         bool canLogout;

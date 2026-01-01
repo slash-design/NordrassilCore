@@ -37129,7 +37129,7 @@ bool Player::InFFAPvPArea()
 
 void Player::UpdatePlayerNameData()
 {
-    sWorld->UpdateCharacterNameDataZoneGuild(GetGUID().GetCounter(), m_zoneId, GetGuildId(), GetRank());
+    sWorld->UpdateCharacterNameDataZoneGuild(GetGUID(), m_zoneId, GetGuildId(), GetRank());
 }
 
 uint16 Player::getAdventureQuestID()
