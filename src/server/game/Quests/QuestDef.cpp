@@ -397,6 +397,18 @@ void Quest::BuildQuestRewards(WorldPackets::Quest::QuestRewards& rewards, Player
     }
 }
 
+uint32 Quest::RoundXPValue(uint32 xp)
+{
+    if (xp <= 100)
+        return 5 * ((xp + 2) / 5);
+    else if (xp <= 500)
+        return 10 * ((xp + 5) / 10);
+    else if (xp <= 1000)
+        return 25 * ((xp + 12) / 25);
+    else
+        return 50 * ((xp + 25) / 50);
+}
+
 uint32 Quest::GetRewMoneyMaxLevel() const
 {
     // If Quest has flag to not give money on max level, it's 0

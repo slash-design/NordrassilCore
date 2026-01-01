@@ -29,6 +29,9 @@
 #include <thread>
 
 #if TRINITY_COMPILER == TRINITY_COMPILER_GNU
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 #endif
 #include <boost/algorithm/string/case_conv.hpp>
 

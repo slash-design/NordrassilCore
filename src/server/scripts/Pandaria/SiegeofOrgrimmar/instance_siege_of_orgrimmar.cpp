@@ -2072,7 +2072,7 @@ public:
             for (std::vector<ObjectGuid>::const_iterator itr = efearGuids.begin(); itr != efearGuids.end(); itr++)
                 if (Creature* add = instance->GetCreature(*itr))
                     add->RemoveAurasDueToSpell(SPELL_CONSUMED_COURAGE);
-            Trinity::Containers::RandomShuffle(edoubtGuids);
+            Trinity::Containers::RandomShuffle(efearGuids);
             uint8 count = instance->Is25ManRaid() ? 25 : 10;
             for (uint8 n = 0; n < count; n++)
                 if (Creature* add = instance->GetCreature(efearGuids[n]))
