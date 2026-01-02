@@ -158,6 +158,7 @@ public:
             { "group",              SEC_ADMINISTRATOR,      false, NULL,                                "", groupCommandTable },
             { "possess",            SEC_ADMINISTRATOR,      false, &HandlePossessCommand,                ""},
             { "unpossess",          SEC_ADMINISTRATOR,      false, &HandleUnPossessCommand,              ""},
+            { "unstuck",            SEC_MODERATOR,          true,  &HandleUnstuckCommand,                "" },
             { "bindsight",          SEC_ADMINISTRATOR,      false, &HandleBindSightCommand,              ""},
             { "unbindsight",        SEC_ADMINISTRATOR,      false, &HandleUnbindSightCommand,            ""},
             { "playall",            SEC_GAMEMASTER,         false, &HandlePlayAllCommand,                ""},
@@ -3256,6 +3257,93 @@ public:
         unit->RemoveCharmAuras();
 
         return true;
+    }
+
+    static bool HandleUnstuckCommand(ChatHandler* handler, char const* args)
+    {
+#define SPELL_UNSTUCK_ID 7355
+#define SPELL_UNSTUCK_VISUAL 2683
+
+        // No args required for players
+        if (handler->GetSession() && AccountMgr::IsPlayerAccount(handler->GetSession()->GetSecurity()))
+        {
+            // 7355: "Stuck"
+            if (Player* player = handler->GetSession()->GetPlayer())
+                player->CastSpell(player, SPELL_UNSTUCK_ID, false);
+            return true;
+        }
+
+        if (!*args)
+            return false;
+
+        char* player_str = strtok((char*)args, " ");
+        if (!player_str)
+            return false;
+
+        std::string location_str = "inn";
+        if (char const* loc = strtok(nullptr, " "))
+            location_str = loc;
+
+        Player* player = nullptr;
+        ObjectGuid targetGUID;
+        if (!handler->extractPlayerTarget(player_str, &player, &targetGUID))
+            return false;
+
+        if (!player)
+        {
+            CharacterDatabasePreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_SEL_CHAR_HOMEBIND);
+            stmt->setUInt64(0, targetGUID.GetCounter());
+            PreparedQueryResult result = CharacterDatabase.Query(stmt);
+            if (result)
+            {
+                Field* fields = result->Fetch();
+
+                uint32 mapId = fields[0].GetUInt32();
+                uint32 zoneId = fields[1].GetUInt32();
+                float x = fields[2].GetFloat();
+                float y = fields[3].GetFloat();
+                float z = fields[4].GetFloat();
+                float o = 0.0f;
+
+                Player::SavePositionInDB(mapId, x, y, z, o, zoneId, targetGUID);
+                return true;
+            }
+
+            return false;
+        }
+
+        if (player->isInFlight() || player->isInCombat())
+        {
+            SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(SPELL_UNSTUCK_ID);
+            if (!spellInfo)
+                return false;
+
+            if (Player* caster = handler->GetSession()->GetPlayer())
+            {
+                TriggerCastData triggerData;
+                Spell spell(caster, spellInfo, triggerData);
+
+                spell.SendCastResult(caster, spellInfo, SPELL_FAILED_CANT_DO_THAT_RIGHT_NOW);
+            }
+
+            return false;
+        }
+
+        if (location_str == "inn")
+        {
+            player->TeleportTo(player->m_homebindMapId, player->m_homebindX, player->m_homebindY, player->m_homebindZ, player->GetOrientation());
+            return true;
+        }
+
+        if (location_str == "graveyard")
+        {
+            player->RepopAtGraveyard();
+            return true;
+        }
+
+        //Not a supported argument
+        return false;
+
     }
 
     static bool HandleBindSightCommand(ChatHandler* handler, char const* /*args*/)
