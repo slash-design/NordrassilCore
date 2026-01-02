@@ -868,7 +868,7 @@ CREATE TABLE `realmlist` (
 LOCK TABLES `realmlist` WRITE;
 
 insert  into `realmlist`(`id`,`name`,`address`,`port`,`gamePort`,`portCount`,`icon`,`flag`,`timezone`,`allowedSecurityLevel`,`population`,`gamebuild`,`Region`,`Battlegroup`,`localAddress`,`localSubnetMask`) values 
-(1,'Nordrassil Work Server','192.168.178.25',8085,8086,1,0,0,1,0,0,26972,2,1,'127.0.0.1','255.255.255.0');
+(1,'Nordrassil Work Server','127.0.0.1',8085,8086,1,0,0,1,0,0,26972,2,1,'127.0.0.1','255.255.255.0');
 
 UNLOCK TABLES;
 
