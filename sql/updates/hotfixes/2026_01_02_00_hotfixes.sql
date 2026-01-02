@@ -1,0 +1,31 @@
+UPDATE spell_misc SET
+  Attributes1  = IF(Attributes1  > 2147483647, Attributes1  - 4294967296, Attributes1),
+  Attributes2  = IF(Attributes2  > 2147483647, Attributes2  - 4294967296, Attributes2),
+  Attributes3  = IF(Attributes3  > 2147483647, Attributes3  - 4294967296, Attributes3),
+  Attributes4  = IF(Attributes4  > 2147483647, Attributes4  - 4294967296, Attributes4),
+  Attributes5  = IF(Attributes5  > 2147483647, Attributes5  - 4294967296, Attributes5),
+  Attributes6  = IF(Attributes6  > 2147483647, Attributes6  - 4294967296, Attributes6),
+  Attributes7  = IF(Attributes7  > 2147483647, Attributes7  - 4294967296, Attributes7),
+  Attributes8  = IF(Attributes8  > 2147483647, Attributes8  - 4294967296, Attributes8),
+  Attributes9  = IF(Attributes9  > 2147483647, Attributes9  - 4294967296, Attributes9),
+  Attributes10 = IF(Attributes10 > 2147483647, Attributes10 - 4294967296, Attributes10),
+  Attributes11 = IF(Attributes11 > 2147483647, Attributes11 - 4294967296, Attributes11),
+  Attributes12 = IF(Attributes12 > 2147483647, Attributes12 - 4294967296, Attributes12),
+  Attributes13 = IF(Attributes13 > 2147483647, Attributes13 - 4294967296, Attributes13),
+  Attributes14 = IF(Attributes14 > 2147483647, Attributes14 - 4294967296, Attributes14);
+  
+  ALTER TABLE spell_misc
+  MODIFY Attributes1 INT NOT NULL DEFAULT 0,
+  MODIFY Attributes2 INT NOT NULL DEFAULT 0,
+  MODIFY Attributes3 INT NOT NULL DEFAULT 0,
+  MODIFY Attributes4 INT NOT NULL DEFAULT 0,
+  MODIFY Attributes5 INT NOT NULL DEFAULT 0,
+  MODIFY Attributes6 INT NOT NULL DEFAULT 0,
+  MODIFY Attributes7 INT NOT NULL DEFAULT 0,
+  MODIFY Attributes8 INT NOT NULL DEFAULT 0,
+  MODIFY Attributes9 INT NOT NULL DEFAULT 0,
+  MODIFY Attributes10 INT NOT NULL DEFAULT 0,
+  MODIFY Attributes11 INT NOT NULL DEFAULT 0,
+  MODIFY Attributes12 INT NOT NULL DEFAULT 0,
+  MODIFY Attributes13 INT NOT NULL DEFAULT 0,
+  MODIFY Attributes14 INT NOT NULL DEFAULT 0;

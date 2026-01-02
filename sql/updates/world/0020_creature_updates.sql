@@ -16,8 +16,8 @@ UPDATE creature_loot_template SET `groupid`=1 WHERE `item` IN (82878, 82884, 828
 -- Lava Guard Gordoth
 UPDATE creature_loot_template SET `groupid`=1 WHERE `item` IN (82883, 82886, 82888) AND `entry`=61528;
 DELETE FROM creature_loot_template WHERE `item` IN (151424, 151425) AND `entry`=61528;
-INSERT INTO world.creature_loot_template (entry, item, ChanceOrQuestChance, lootmode, groupid, mincountOrRef, maxcount, shared) VALUES (61528, 151424, 0, 1, 1, 1, 1, 0);
-INSERT INTO world.creature_loot_template (entry, item, ChanceOrQuestChance, lootmode, groupid, mincountOrRef, maxcount, shared) VALUES (61528, 151425, 0, 1, 1, 1, 1, 0);
+INSERT INTO creature_loot_template (entry, item, ChanceOrQuestChance, lootmode, groupid, mincountOrRef, maxcount, shared) VALUES (61528, 151424, 0, 1, 1, 1, 1, 0);
+INSERT INTO creature_loot_template (entry, item, ChanceOrQuestChance, lootmode, groupid, mincountOrRef, maxcount, shared) VALUES (61528, 151425, 0, 1, 1, 1, 1, 0);
 
 ALTER TABLE `smart_scripts` ADD COLUMN `Difficulties` VARCHAR(100) NOT NULL DEFAULT '' COLLATE 'utf8mb4_unicode_ci' AFTER `link`;
 
