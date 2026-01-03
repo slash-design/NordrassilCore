@@ -1396,6 +1396,11 @@ void ScriptMgr::OnPetBattleFinish(Player* player)
     FOREACH_SCRIPT(PlayerScript)->OnPetBattleFinish(player);
 }
 
+void ScriptMgr::OnQuestAccept(Player* player, const Quest* quest)
+{
+    FOREACH_SCRIPT(PlayerScript)->OnQuestAccept(player, quest);
+}
+
 void ScriptMgr::OnPlayerWhoListCall(Player* player, const std::set<ObjectGuid> & playersGuids)
 {
     FOREACH_SCRIPT(PlayerScript)->OnWhoListCall(player, playersGuids);

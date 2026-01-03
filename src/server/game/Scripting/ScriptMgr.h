@@ -734,6 +734,9 @@ class PlayerScript : public ScriptObject
 
         // Called when a player learn spell
         virtual void OnSpellLearned(Player* /*player*/, uint32 /*spellID*/) { }
+
+        // Called when player accepts some quest
+        virtual void OnQuestAccept(Player* /*player*/, Quest const* /*quest*/) {}
         
         // Called when a player call who list
         virtual void OnWhoListCall(Player* /*player*/, const std::set<ObjectGuid>& /*players*/ ) { }
@@ -1069,6 +1072,7 @@ class ScriptMgr
 		void OnPlayerUpdateArea(Player* player, uint32 newArea);
         void OnPetBattleFinish(Player* player);
         void OnMovementInform(Player* player, uint32 moveType, uint32 ID);
+        void OnQuestAccept(Player* player, const Quest* quest);
         void OnUpdate(Player* player, uint32 diff);
         void OnPlayerSpellLearned(Player* player, uint32 spellID);
         void OnPlayerWhoListCall(Player* player, const std::set<ObjectGuid> & playersGuids);
