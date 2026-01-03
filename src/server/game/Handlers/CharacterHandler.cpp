@@ -841,36 +841,38 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder const& holder)
         SendPacket(artifactKnowledgeFishingPole.Write());
 
         //Show cinematic at the first time that player login
-        if (!player->getCinematic())
+        if (!pCurrChar->getCinematic())
         {
-            player->setCinematic(1);
+            pCurrChar->setCinematic(1);
 
-            if (!sWorld->getBoolConfig(CONFIG_FUN_OPTION_ENABLED))
+            if (ChrClassesEntry const* cEntry = sChrClassesStore.LookupEntry(pCurrChar->getClass()))
             {
-                if (ChrClassesEntry const* cEntry = sChrClassesStore.LookupEntry(player->getClass()))
+                if (pCurrChar->getClass() == CLASS_DEMON_HUNTER)
+                    pCurrChar->SendMovieStart(469);
+                else if (cEntry->CinematicSequenceID)
+                    pCurrChar->SendCinematicStart(cEntry->CinematicSequenceID);
+                else if (ChrRacesEntry const* rEntry = sChrRacesStore.LookupEntry(pCurrChar->getRace()))
                 {
                     Position pos;
                     player->GetPosition(&pos);
-                    if (player->getRace() == RACE_NIGHTBORNE)
-                        player->SendSpellScene(1900, nullptr, true, &pos);
-                    else if (player->getRace() == RACE_HIGHMOUNTAIN_TAUREN)
-                        player->SendSpellScene(1901, nullptr, true, &pos);
-                    else if (player->getRace() == RACE_VOID_ELF)
-                        player->SendSpellScene(1903, nullptr, true, &pos);
-                    else if (player->getRace() == RACE_LIGHTFORGED_DRAENEI)
-                        player->SendSpellScene(1902, nullptr, true, &pos);
-                    else if (player->getClass() == CLASS_DEMON_HUNTER) /// @todo: find a more generic solution
-                        player->SendMovieStart(469);
-                    else if (cEntry->CinematicSequenceID)
-                        player->SendCinematicStart(cEntry->CinematicSequenceID);
-                    else if (ChrRacesEntry const* rEntry = sChrRacesStore.LookupEntry(player->getRace()))
-                        player->SendCinematicStart(rEntry->CinematicSequenceID);
 
-                    // send new char string if not empty
-                    if (!sWorld->GetNewCharString().empty())
-                        chatHandler.PSendSysMessage("%s", sWorld->GetNewCharString().c_str());
+                    if (pCurrChar->getRace() == RACE_NIGHTBORNE)
+                        pCurrChar->SendSpellScene(1900, nullptr, true, &pos);
+                    else if (pCurrChar->getRace() == RACE_HIGHMOUNTAIN_TAUREN)
+                        pCurrChar->SendSpellScene(1901, nullptr, true, &pos);
+                    else if (pCurrChar->getRace() == RACE_VOID_ELF)
+                        pCurrChar->SendSpellScene(1902, nullptr, true, &pos);
+                    else if (pCurrChar->getRace() == RACE_LIGHTFORGED_DRAENEI)
+                        pCurrChar->SendSpellScene(1903, nullptr, true, &pos);
+                    else if (rEntry->CinematicSequenceID)
+                        pCurrChar->SendCinematicStart(rEntry->CinematicSequenceID);
                 }
+
+                // send new char string if not empty
+                if (!sWorld->GetNewCharString().empty())
+                    chatHandler.PSendSysMessage("%s", sWorld->GetNewCharString().c_str());
             }
+
         }
 
         if (!player->GetMap()->AddPlayerToMap(player) || !player->GetMap()->IsGarrison() && !player->CheckInstanceLoginValid())
