@@ -411,6 +411,10 @@ class Quest
 
         // table data accessors:
         uint32 GetQuestId() const { return Id; }
+        uint32 GetSrcItemId() const { return SourceItemId; }
+        uint32 GetSrcItemCount() const { return SourceItemIdCount; }
+        uint32 GetSrcSpell() const { return SourceSpellID; }
+        std::string const& GetLogTitle() const { return LogTitle; }
         QuestObjectives const& GetObjectives() const { return Objectives; };
         uint32 MoneyValue(uint8 playerLevel) const;
         uint32 GetScaledQuestLevel(uint8 playerLevel) const;

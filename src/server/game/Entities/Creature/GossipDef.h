@@ -220,17 +220,36 @@ public:
     QuestMenuItem const& GetItem(uint16 index) const;
 };
 
+class InteractionData
+{
+public:
+    InteractionData() { Reset(); }
+
+    void Reset()
+    {
+        SourceGuid.Clear();
+        TrainerId = 0;
+        PlayerChoiceId = 0;
+    }
+
+    ObjectGuid SourceGuid;
+    uint32 TrainerId;
+    uint32 PlayerChoiceId;
+};
+
 class PlayerMenu
 {
     GossipMenu _gossipMenu;
     QuestMenu  _questMenu;
     WorldSession* _session;
+    InteractionData _interactionData;
 public:
     explicit PlayerMenu(WorldSession* session);
     ~PlayerMenu();
 
     GossipMenu& GetGossipMenu();
     QuestMenu& GetQuestMenu();
+    InteractionData& GetInteractionData() { return _interactionData; }
 
     bool Empty() const;
 

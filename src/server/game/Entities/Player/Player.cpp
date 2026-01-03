@@ -18667,6 +18667,11 @@ void Player::SendPreparedQuest(ObjectGuid guid)
     PlayerTalkClass->SendQuestGiverQuestList(BroadcastTextID, guid);
 }
 
+bool Player::IsActiveQuest(uint32 quest_id) const
+{
+    return m_QuestStatus.find(quest_id) != m_QuestStatus.end();
+}
+
 Quest const* Player::GetNextQuest(ObjectGuid guid, Quest const* quest)
 {
     QuestRelationBounds objectQR;
@@ -20258,13 +20263,7 @@ QuestStatus Player::GetDailyQuestStatus(uint32 quest_id) const
 bool Player::CanShareQuest(uint32 quest_id) const
 {
     Quest const* qInfo = sQuestDataStore->GetQuestTemplate(quest_id);
-    if (qInfo && qInfo->HasFlag(QUEST_FLAGS_SHARABLE))
-    {
-        QuestStatusData const* q_status = const_cast<Player*>(this)->getQuestStatus(quest_id);
-        if (q_status)
-            return q_status->Status == QUEST_STATUS_INCOMPLETE;
-    }
-    return false;
+    return qInfo && qInfo->HasFlag(QUEST_FLAGS_SHARABLE) && IsActiveQuest(quest_id);
 }
 
 void Player::QuestObjectiveSatisfy(uint32 objectId, uint32 amount, QuestObjectiveType type /*= QUEST_OBJECTIVE_MONSTER*/, ObjectGuid guid /*= ObjectGuid::Empty*/)
@@ -21401,18 +21400,23 @@ void Player::SendCanTakeQuestResponse(uint32 msg, Quest const* qInfo, std::strin
 
 void Player::SendQuestConfirmAccept(Quest const* quest, Player* receiver)
 {
-    if (receiver)
-    {
-        std::string questTitle = quest->LogTitle;
-        if (QuestTemplateLocale const* pLocale = sQuestDataStore->GetQuestLocale(quest->GetQuestId()))
-            ObjectMgr::GetLocaleString(pLocale->LogTitle, receiver->GetSession()->GetSessionDbLocaleIndex(), questTitle);
+    if (!receiver)
+        return;
 
-        WorldPackets::Quest::QuestConfirmAcceptResponse packet;
-        packet.QuestID = quest->GetQuestId();
-        packet.InitiatedBy = GetGUID();
-        packet.QuestTitle = questTitle;
-        receiver->SendDirectMessage(packet.Write());
-    }
+    WorldPackets::Quest::QuestConfirmAcceptResponse packet;
+
+    packet.QuestTitle = quest->GetLogTitle();
+    uint32 questID = quest->GetQuestId();
+
+    LocaleConstant localeConstant = receiver->GetSession()->GetSessionDbLocaleIndex();
+    if (localeConstant != LOCALE_enUS)
+        if (QuestTemplateLocale const* questTemplateLocale = sQuestDataStore->GetQuestLocale(questID))
+            ObjectMgr::GetLocaleString(questTemplateLocale->LogTitle, localeConstant, packet.QuestTitle);
+
+    packet.QuestID = questID;
+    packet.InitiatedBy = GetGUID();
+
+    receiver->SendDirectMessage(packet.Write());
 }
 
 void Player::SendPushToPartyResponse(Player* player, uint8 reason)
@@ -30222,6 +30226,14 @@ void Player::SendInitialPacketsAfterAddToMap(bool login)
     SendLfgUpdatePlayer();
 
     sLFGListMgr->OnPlayerLogin(this);
+
+    if (!GetPlayerSharingQuest().IsEmpty())
+    {
+        if (Quest const* quest = sQuestDataStore->GetQuestTemplate(GetSharedQuestID()))
+            PlayerTalkClass->SendQuestGiverQuestDetails(quest, GetGUID(), true, false);
+        else
+            ClearQuestSharingInfo();
+    }
 }
 
 void Player::SendSpellHistoryData()

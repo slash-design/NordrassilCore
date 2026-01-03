@@ -397,6 +397,8 @@ void PlayerMenu::SendQuestGiverQuestDetails(Quest const* quest, ObjectGuid npcGU
     if (!player)
         return;
 
+    WorldPackets::Quest::QuestGiverQuestDetails packet;
+
     std::string questLogTitle = quest->LogTitle;
     std::string questDescription = quest->QuestDescription;
     std::string questLogDescription = quest->LogDescription;
@@ -406,22 +408,28 @@ void PlayerMenu::SendQuestGiverQuestDetails(Quest const* quest, ObjectGuid npcGU
     std::string portraitTurnInText = quest->PortraitTurnInText;
     std::string portraitTurnInName = quest->PortraitTurnInName;
 
-    if (QuestTemplateLocale const* localeData = sQuestDataStore->GetQuestLocale(quest->GetQuestId()))
+    LocaleConstant localeConstant = _session->GetSessionDbLocaleIndex();
+    if (localeConstant != LOCALE_enUS)
     {
-        LocaleConstant localeConstant = _session->GetSessionDbLocaleIndex();
-        ObjectMgr::GetLocaleString(localeData->LogTitle, localeConstant, questLogTitle);
-        ObjectMgr::GetLocaleString(localeData->QuestDescription, localeConstant, questDescription);
-        ObjectMgr::GetLocaleString(localeData->LogDescription, localeConstant, questLogDescription);
-        ObjectMgr::GetLocaleString(localeData->AreaDescription, localeConstant, questEndText);
-        ObjectMgr::GetLocaleString(localeData->PortraitGiverText, localeConstant, portraitGiverText);
-        ObjectMgr::GetLocaleString(localeData->PortraitGiverName, localeConstant, portraitGiverName);
-        ObjectMgr::GetLocaleString(localeData->PortraitTurnInText, localeConstant, portraitTurnInText);
-        ObjectMgr::GetLocaleString(localeData->PortraitTurnInName, localeConstant, portraitTurnInName);
+        if (QuestTemplateLocale const* questTemplateLocale = sQuestDataStore->GetQuestLocale(quest->GetQuestId()))
+        {
+            LocaleConstant localeConstant = _session->GetSessionDbLocaleIndex();
+            ObjectMgr::GetLocaleString(questTemplateLocale->LogTitle, localeConstant, questLogTitle);
+            ObjectMgr::GetLocaleString(questTemplateLocale->QuestDescription, localeConstant, questDescription);
+            ObjectMgr::GetLocaleString(questTemplateLocale->LogDescription, localeConstant, questLogDescription);
+            ObjectMgr::GetLocaleString(questTemplateLocale->AreaDescription, localeConstant, questEndText);
+            ObjectMgr::GetLocaleString(questTemplateLocale->PortraitGiverText, localeConstant, portraitGiverText);
+            ObjectMgr::GetLocaleString(questTemplateLocale->PortraitGiverName, localeConstant, portraitGiverName);
+            ObjectMgr::GetLocaleString(questTemplateLocale->PortraitTurnInText, localeConstant, portraitTurnInText);
+            ObjectMgr::GetLocaleString(questTemplateLocale->PortraitTurnInName, localeConstant, portraitTurnInName);
+        }
     }
 
-    WorldPackets::Quest::QuestGiverQuestDetails packet;
+    //if (sWorld->getBoolConfig(CONFIG_UI_QUESTLEVELS_IN_DIALOGS))
+    //    AddQuestLevelToTitle(packet.QuestTitle, quest->GetQuestLevel()); @ToDO
+
     packet.QuestGiverGUID = npcGUID;
-    packet.InformUnit = player->GetPlayerSharingQuest();
+    packet.InformUnit = _session->GetPlayer()->GetPlayerSharingQuest();
     packet.QuestID = quest->GetQuestId();
     packet.QuestTitle = questLogTitle;
     packet.LogDescription = questLogDescription;
@@ -438,12 +446,12 @@ void PlayerMenu::SendQuestGiverQuestDetails(Quest const* quest, ObjectGuid npcGU
     packet.QuestFlags[1] = quest->FlagsEx;
     packet.SuggestedPartyMembers = quest->SuggestedPlayers;
 
-    if (quest->SourceSpellID)
-        packet.LearnSpells.push_back(quest->SourceSpellID);
+    if (quest->GetSrcSpell())
+        packet.LearnSpells.push_back(quest->GetSrcSpell());
 
     packet.QuestStartItemID = 0;
 
-    quest->BuildQuestRewards(packet.Rewards, player);
+    quest->BuildQuestRewards(packet.Rewards, _session->GetPlayer());
 
     packet.DescEmotes.resize(QUEST_EMOTE_COUNT);
     for (uint32 i = 0; i < QUEST_EMOTE_COUNT; ++i)
@@ -454,7 +462,7 @@ void PlayerMenu::SendQuestGiverQuestDetails(Quest const* quest, ObjectGuid npcGU
 
     QuestObjectives const& objs = quest->GetObjectives();
     packet.Objectives.resize(objs.size());
-    for (auto i = 0; i < objs.size(); ++i)
+    for (uint32 i = 0; i < objs.size(); ++i)
     {
         packet.Objectives[i].ID = objs[i].ID;
         packet.Objectives[i].ObjectID = objs[i].ObjectID;
@@ -462,9 +470,11 @@ void PlayerMenu::SendQuestGiverQuestDetails(Quest const* quest, ObjectGuid npcGU
         packet.Objectives[i].Type = objs[i].Type;
     }
 
+    player->PlayerTalkClass->GetInteractionData().Reset();
     _session->SendPacket(packet.Write());
 
-    player->SendDirectMessage(packet.Write());
+    TC_LOG_DEBUG("network", "WORLD: Sent SMSG_QUEST_GIVER_QUEST_DETAILS NPC=%s, questid=%u", npcGUID.ToString().c_str(), quest->GetQuestId());
+
 }
 
 void PlayerMenu::SendQuestQueryResponse(uint32 questId) const
