@@ -123,15 +123,20 @@ void WorldSession::HandleQuestGiverAcceptQuest(WorldPackets::Quest::QuestGiverAc
 
     if (Player* playerQuestObject = object->ToPlayer())
     {
-        if ((_player->GetPlayerSharingQuest().IsEmpty() && _player->GetPlayerSharingQuest() != packet.QuestGiverGUID) ||  !playerQuestObject->CanShareQuest(packet.QuestID))
+        if (playerQuestObject != _player)
         {
-            CLOSE_GOSSIP_CLEAR_SHARING_INFO();
-            return;
-        }
-        if (!_player->IsInSameRaidWith(playerQuestObject))
-        {
-            CLOSE_GOSSIP_CLEAR_SHARING_INFO();
-            return;
+            if ((_player->GetPlayerSharingQuest().IsEmpty() && _player->GetPlayerSharingQuest() != packet.QuestGiverGUID) ||
+                !playerQuestObject->CanShareQuest(packet.QuestID))
+            {
+                CLOSE_GOSSIP_CLEAR_SHARING_INFO();
+                return;
+            }
+
+            if (!_player->IsInSameRaidWith(playerQuestObject))
+            {
+                CLOSE_GOSSIP_CLEAR_SHARING_INFO();
+                return;
+            }
         }
     }
     else
@@ -760,9 +765,6 @@ void WorldSession::HandleAdventureJournalOpenQuest(WorldPackets::Quest::Adventur
 {
     auto const entry = sAdventureJournalStore.LookupEntry(packet.AdventureJournalID);
     if (!entry)
-        return;
-
-    if (entry->Type != 3/*typeQuest*/)
         return;
 
     auto quest = sQuestDataStore->GetQuestTemplate(entry->QuestID);
