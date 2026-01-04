@@ -44,6 +44,7 @@
 #include "Opcodes.h"
 #include "OutdoorPvPMgr.h"
 #include "Player.h"
+#include "QuestData.h"
 #include "SharedDefines.h"
 #include "SpellPackets.h"
 #include "TargetedMovementGenerator.h"
@@ -4012,6 +4013,46 @@ C_PTR WorldObject::get_ptr()
     ptr.InitParent(this);
     ASSERT(ptr.numerator);  // It's very bad. If it hit nothing work.
     return ptr.shared_from_this();
+}
+
+bool WorldObject::HasQuestForPlayer(Player* player)
+{
+    if (!player)
+        return false;
+
+    if (ToCreature())
+    {
+        QuestRelationBounds qr = sQuestDataStore->GetCreatureQuestRelationBounds(GetEntry());
+        for (QuestRelations::const_iterator itr = qr.first; itr != qr.second; ++itr)
+        {
+            uint32 questId = itr->second;
+
+            Quest const* quest = sQuestDataStore->GetQuestTemplate(questId);
+            if (!quest)
+                return false;
+
+            if (player->CanTakeQuest(quest, false))
+                return true;
+        }
+    }
+
+    if (ToGameObject())
+    {
+        QuestRelationBounds qr = sQuestDataStore->GetGOQuestRelationBounds(GetEntry());
+        for (QuestRelations::const_iterator itr = qr.first; itr != qr.second; ++itr)
+        {
+            uint32 questId = itr->second;
+
+            Quest const* quest = sQuestDataStore->GetQuestTemplate(questId);
+            if (!quest)
+                return false;
+
+            if (player->CanTakeQuest(quest, false))
+                return true;
+        }
+    }
+
+    return false;
 }
 
 void WorldObject::RebuildTerrainSwaps()

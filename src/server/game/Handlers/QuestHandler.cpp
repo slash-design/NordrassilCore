@@ -204,6 +204,17 @@ void WorldSession::HandleQuestGiverAcceptQuest(WorldPackets::Quest::QuestGiverAc
 
             _player->PlayerTalkClass->SendCloseGossip();
 
+
+            if (WorldObject* source = ObjectAccessor::GetWorldObject(*_player, packet.QuestGiverGUID))
+            {
+                if (source->HasQuestForPlayer(_player))
+                {
+                    _player->PlayerTalkClass->ClearMenus();
+                    _player->PrepareGossipMenu(source, _player->GetDefaultGossipMenuForSource(source), true);
+                    _player->SendPreparedGossip(source);
+                }
+            }
+
             return;
         }
     }

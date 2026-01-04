@@ -324,6 +324,25 @@ void QuestMenu::AddMenuItem(uint32 QuestId, uint8 Icon)
     _questMenuItems.push_back(questMenuItem);
 }
 
+void QuestMenu::RemoveMenuItem(uint32 QuestId)
+{
+    if (!sQuestDataStore->GetQuestTemplate(QuestId))
+        return;
+
+    ASSERT(_questMenuItems.size() <= GOSSIP_MAX_MENU_ITEMS);
+
+    for (QuestMenuItemList::iterator i = _questMenuItems.begin(); i != _questMenuItems.end(); )
+    {
+        if (i->QuestId == QuestId)
+        {
+            i = _questMenuItems.erase(i);
+            break;
+        }
+        else
+            ++i;
+    }
+}
+
 bool QuestMenu::HasItem(uint32 questId) const
 {
     for (auto _questMenuItem : _questMenuItems)

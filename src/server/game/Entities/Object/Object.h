@@ -743,6 +743,8 @@ class WorldObject : public Object, public WorldLocation
         // transports
         Transport* m_transport;
 
+        bool HasQuestForPlayer(Player* player);
+
     protected:
         std::string m_name;
         bool m_isActive;
