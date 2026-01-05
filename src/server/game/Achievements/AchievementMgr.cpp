@@ -2038,9 +2038,8 @@ bool AchievementMgr<Player>::CanCompleteCriteria(AchievementEntry const* achieve
             return false;
 
         if (GetOwner())
-            if (GetOwner()->GetSession())
-                if (GetOwner()->GetSession()->GetSecurity())
-                    return false;
+            if (GetOwner()->isGameMaster())
+                return false;
     }
 
     return true;
