@@ -16,12 +16,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/// \addtogroup u2w
-/// @{
-/// \file
-
-#ifndef __WORLDSESSION_H
-#define __WORLDSESSION_H
+#ifndef WORLDSESSION_H
+#define WORLDSESSION_H
 
 #include "AddonMgr.h"
 #include "AsyncCallbackProcessor.h"
@@ -379,6 +375,7 @@ namespace WorldPackets
         class ResetChallengeModeCheat;
         class ConversationLineStarted;
         class CheckRAFEmailEnabled;
+        class QueuedMessagesEnd;
     }
 
     namespace Movement
@@ -2007,6 +2004,7 @@ class WorldSession
         void HandleTwitterConnect(WorldPackets::Misc::TwitterConnect& packet);
         void HandleTwitterDisconnect(WorldPackets::Misc::TwitterDisconnect& packet);
         void HandleResetChallengeModeCheat(WorldPackets::Misc::ResetChallengeModeCheat& packet);
+        void HandleQueuedMessagesEnd(WorldPackets::Misc::QueuedMessagesEnd& packet);
 
         void HandleBattlenetRequest(WorldPackets::Battlenet::Request& request);
         void HandleBattlenetRequestRealmListTicket(WorldPackets::Battlenet::RequestRealmListTicket& requestRealmListTicket);

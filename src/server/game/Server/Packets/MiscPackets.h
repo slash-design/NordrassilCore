@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2015 TrinityCore <http://www.trinitycore.org/>
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -15,8 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef MiscPackets_h__
-#define MiscPackets_h__
+#ifndef MISCPACKETS_H
+#define MISCPACKETS_H
 
 #include "Packet.h"
 #include "ObjectGuid.h"
@@ -1201,6 +1201,16 @@ namespace WorldPackets
             CheckRAFEmailEnabled(WorldPacket&& packet) : ClientPacket(CMSG_CHECK_RAF_EMAIL_ENABLED, std::move(packet)) { }
 
             void Read() override { }
+        };
+
+        class QueuedMessagesEnd final : public ClientPacket
+        {
+        public:
+            QueuedMessagesEnd(WorldPacket&& packet) : ClientPacket(CMSG_QUEUED_MESSAGES_END, std::move(packet)) {}
+
+            void Read() override;
+
+            int32 Timestamp = 0;
         };
     }
 }

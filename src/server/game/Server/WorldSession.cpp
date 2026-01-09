@@ -343,9 +343,8 @@ bool WorldSession::Update(uint32 diff, Map* map)
                         {
                             requeuePackets.push_back(packet);
                             deletePacket = false;
-                            #ifdef WIN32
-                            TC_LOG_ERROR("network", "Re-enqueueing packet with opcode %s with with status STATUS_LOGGEDIN. Player is currently not in world yet.", GetOpcodeNameForLogging(opcode).c_str());
-                            #endif
+                            TC_LOG_DEBUG("network", "Re-enqueueing packet with opcode {} with with status STATUS_LOGGEDIN. "
+                                "Player is currently not in world yet.", GetOpcodeNameForLogging(static_cast<OpcodeClient>(packet->GetOpcode())));
                         }
                     }
                     else if (_player->IsInWorld())

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2015 TrinityCore <http://www.trinitycore.org/>
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -873,4 +873,9 @@ void WorldPackets::Misc::ConversationLineStarted::Read()
 {
     _worldPacket >> unkObjectGuid;
     _worldPacket >> unkint32;
+}
+
+void WorldPackets::Misc::QueuedMessagesEnd::Read()
+{
+    _worldPacket >> Timestamp;
 }

@@ -740,3 +740,10 @@ void WorldSession::HandleConversationLineStarted(WorldPackets::Misc::Conversatio
 
 void WorldSession::HandleCheckRAFEmailEnabled(WorldPackets::Misc::CheckRAFEmailEnabled& /*packet*/)
 { }
+
+void WorldSession::HandleQueuedMessagesEnd(WorldPackets::Misc::QueuedMessagesEnd& packet)
+{
+    // Timestamp is client-side time base; do not compare to server time.
+    TC_LOG_DEBUG("network", "Received CMSG_QUEUED_MESSAGES_END from player %s (clientTimestamp=%i)",
+        _player ? _player->GetName() : "<null>", packet.Timestamp);
+}
