@@ -3473,8 +3473,6 @@ void SpellMgr::LoadSpellAreas()
 
 void SpellMgr::LoadSpellInfoStore()
 {
-    TC_LOG_INFO("server.loading", "Loading SpellInfo store...");
-
     uint32 oldMSTime = getMSTime();
 
     std::unordered_map<uint32, SpellVisualMap> visualsBySpell;
