@@ -1034,14 +1034,18 @@ InstantLogout = 1
 
 #
 #    DisableWaterBreath
-#        Description: Required security level for water breathing.
-#        Default:     4  - (Disabled)
-#                     0  - (Enabled, Everyone)
-#                     1  - (Enabled, Mods/GMs/Admins)
-#                     2  - (Enabled, GMs/Admins)
-#                     3  - (Enabled, Admins)
+#        Description: Security level at/above which breath timer is disabled (infinite breath).
+#        Default:     8 = Disabled (nobody gets infinite breath via security)
+#     				  7 = Console
+#					  6 = Administrator+
+#					  5 = GM Leader+
+#					  4 = Realm Leader+
+#					  3 = Confirmed GM+
+#					  2 = Gamemaster+
+#					  1 = Moderator+
+#					  0 = Everyone
 
-DisableWaterBreath = 4
+DisableWaterBreath = 8
 
 #
 #    AllFlightPaths
