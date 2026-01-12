@@ -579,6 +579,7 @@ void Unit::Update(uint32 p_time)
 
     UpdateSplineMovement(p_time);
     i_motionMaster.UpdateMotion(p_time);
+    UpdateUnderwaterState(GetMap(), GetPositionX(), GetPositionY(), GetPositionZ());
 }
 
 void Unit::SetAttackTimerFraction(WeaponAttackType type, uint32 time)
@@ -4342,27 +4343,28 @@ bool Unit::isInAccessiblePlaceFor(Creature const* c) const
 
 bool Unit::IsInWater() const
 {
-    return Zliquid_status & (LIQUID_MAP_UNDER_WATER | LIQUID_MAP_IN_WATER);
+    return GetMap()->IsInWater(GetPositionX(), GetPositionY(), GetPositionZ());
 }
 
 bool Unit::IsUnderWater() const
 {
-    return Zliquid_status & LIQUID_MAP_UNDER_WATER;
+   return GetMap()->IsUnderWater(GetPositionX(), GetPositionY(), GetPositionZ());
 }
 
 void Unit::UpdateUnderwaterState(Map* m, float x, float y, float z)
 {
-    if (!isPet() && !IsVehicle())
+    if (IsFlying() || (!isPet() && !IsVehicle()))
         return;
 
-    Zliquid_status = m->getLiquidStatus(x, y, z, MAP_ALL_LIQUIDS, &liquid_status);
-    if (!Zliquid_status)
+    LiquidData liquid_status;
+    ZLiquidStatus res = m->getLiquidStatus(x, y, z, MAP_ALL_LIQUIDS, &liquid_status);
+    if (!res)
     {
         if (_lastLiquid && _lastLiquid->SpellID)
             RemoveAurasDueToSpell(_lastLiquid->SpellID);
 
         RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_NOT_UNDERWATER);
-        _lastLiquid = nullptr;
+        _lastLiquid = NULL;
         return;
     }
 
@@ -4374,7 +4376,7 @@ void Unit::UpdateUnderwaterState(Map* m, float x, float y, float z)
 
         if (liquid && liquid->SpellID)
         {
-            if (Zliquid_status & (LIQUID_MAP_UNDER_WATER | LIQUID_MAP_IN_WATER))
+            if (res & (LIQUID_MAP_UNDER_WATER | LIQUID_MAP_IN_WATER))
             {
                 if (!HasAura(liquid->SpellID))
                     CastSpell(this, liquid->SpellID, true);
@@ -4390,7 +4392,7 @@ void Unit::UpdateUnderwaterState(Map* m, float x, float y, float z)
     {
         RemoveAurasDueToSpell(_lastLiquid->SpellID);
         RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_NOT_UNDERWATER);
-        _lastLiquid = nullptr;
+        _lastLiquid = NULL;
     }
 }
 

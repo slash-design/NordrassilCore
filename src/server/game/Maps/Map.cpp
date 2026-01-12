@@ -2719,7 +2719,8 @@ float Map::GetWaterLevel(float x, float y) const
 {
     if (GridMap* gmap = const_cast<Map*>(this)->GetGrid(x, y))
         return gmap->getLiquidLevel(x, y);
-    return 0;
+    else
+        return 0;
 }
 
 bool Map::isInLineOfSight(float x1, float y1, float z1, float x2, float y2, float z2, std::set<uint32> const& phases, DynamicTreeCallback* dCallback /*= nullptr*/) const
@@ -2761,26 +2762,15 @@ float Map::GetHeight(std::set<uint32> const& phases, float x, float y, float z, 
 
 bool Map::IsInWater(float x, float y, float pZ, LiquidData* data) const
 {
-    // Check surface in x, y point for liquid
-    if (const_cast<Map*>(this)->GetGrid(x, y))
-    {
-        LiquidData liquid_status;
-        LiquidData* liquid_ptr = data ? data : &liquid_status;
-        if (getLiquidStatus(x, y, pZ, MAP_ALL_LIQUIDS, liquid_ptr))
-            return true;
-    }
-    return false;
+    LiquidData liquid_status;
+    LiquidData* liquid_ptr = data ? data : &liquid_status;
+    return (getLiquidStatus(x, y, pZ, MAP_ALL_LIQUIDS, liquid_ptr) & (LIQUID_MAP_IN_WATER | LIQUID_MAP_UNDER_WATER)) != 0;
 }
 
-bool Map::IsUnderWater(G3D::Vector3 pos) const
+bool Map::IsUnderWater(float x, float y, float z) const
 {
-    if (const_cast<Map*>(this)->GetGrid(pos.x, pos.y))
-        if (getLiquidStatus(pos.x, pos.y, pos.z, MAP_LIQUID_TYPE_WATER | MAP_LIQUID_TYPE_OCEAN) & LIQUID_MAP_UNDER_WATER)
-            return true;
-
-    return false;
+    return (getLiquidStatus(x, y, z, MAP_LIQUID_TYPE_WATER | MAP_LIQUID_TYPE_OCEAN) & LIQUID_MAP_UNDER_WATER) != 0;
 }
-
 char const* Map::GetMapName() const
 {
     return i_mapEntry ? i_mapEntry->MapName->Str[sObjectMgr->GetDBCLocaleIndex()] : "UNNAMEDMAP\x0";

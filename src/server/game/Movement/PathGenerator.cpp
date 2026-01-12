@@ -281,7 +281,7 @@ void PathGenerator::BuildPolyPath(G3D::Vector3 const& startPos, G3D::Vector3 con
         bool buildShortcut = false;
 
         G3D::Vector3 const& p = (distToStartPoly > 7.0f) ? startPos : endPos;
-        if (_source->GetMap()->IsUnderWater(p)) // TODO: support phasing
+        if (_source->GetBaseMap()->IsUnderWater(p.x, p.y, p.z)) // TODO: support phasing
         {
             TC_LOG_DEBUG("maps.mmaps", "++ BuildPolyPath :: underWater case");
             if (const Unit* _sourceUnit = _source->ToUnit())
