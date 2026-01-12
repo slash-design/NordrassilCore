@@ -228,6 +228,59 @@ std::vector<std::string> const& World::GetMotd() const
     return _motd;
 }
 
+void World::LoadMotdFromDB()
+{
+    for (auto& v : _motdByLocale)
+        v.clear();
+
+    _motd.clear();
+    _motdRealmId = sConfigMgr->GetIntDefault("RealmID", 1);
+
+    LoginDatabasePreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_SEL_MOTD);
+    stmt->setInt32(0, _motdRealmId);
+
+    PreparedQueryResult result = LoginDatabase.Query(stmt);
+    if (!result)
+    {
+        TC_LOG_ERROR("server.loading", "MOTD: no rows in Login DB table `motd` for realmid=%i (and no global realmid=-1). Please insert at least enUS (locale=%u).", _motdRealmId, uint32(LOCALE_enUS));
+        return;
+    }
+
+    do
+    {
+        Field* fields = result->Fetch();
+        int32 realmid = fields[0].GetInt32();
+        uint8 locale = fields[1].GetUInt8();
+        std::string text = fields[2].GetString();
+
+        if (locale >= MAX_LOCALES)
+            continue;
+
+        // Query is ordered so that realm-specific rows (realmid = X) come before global (-1).
+        // Only fill if not already set.
+        if (!_motdByLocale[locale].empty())
+            continue;
+
+        boost::split(_motdByLocale[locale], text, boost::is_any_of("@"));
+    } while (result->NextRow());
+
+    // Keep legacy GetMotd() working: expose enUS as "default" MOTD
+    if (!_motdByLocale[LOCALE_enUS].empty())
+        _motd = _motdByLocale[LOCALE_enUS];
+}
+
+std::vector<std::string> const& World::GetMotdForLocale(uint8 locale) const
+{
+    if (locale < MAX_LOCALES && !_motdByLocale[locale].empty())
+        return _motdByLocale[locale];
+
+    if (!_motdByLocale[LOCALE_enUS].empty())
+        return _motdByLocale[LOCALE_enUS];
+
+    static std::vector<std::string> empty;
+    return empty;
+}
+
 World* World::instance()
 {
     static World instance;
@@ -483,9 +536,9 @@ void World::LoadConfigSettings(bool reload)
 
     sWorldUpdateTime.LoadFromConfig();
 
-    ///- Read the player limit and the Message of the day from the config file
+    ///- Read the player limit from the config file (MOTD loaded from DB)
     SetPlayerAmountLimit(sConfigMgr->GetIntDefault("PlayerLimit", 100));
-    SetMotd(sConfigMgr->GetStringDefault("Motd", "Welcome to a Trinity Core Server."));
+    LoadMotdFromDB();
 
     ///- Read ticket system setting from the config file
     m_bool_configs[CONFIG_ALLOW_TICKETS] = sConfigMgr->GetBoolDefault("AllowTickets", true);

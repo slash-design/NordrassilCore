@@ -24,6 +24,8 @@ EndScriptData */
 
 #include "Anticheat.h"
 #include "Chat.h"
+#include "Common.h"
+#include "DatabaseEnv.h"
 #include "Config.h"
 #include "GameTime.h"
 #include "GitRevision.h"
@@ -31,6 +33,7 @@ EndScriptData */
 #include "ObjectAccessor.h"
 #include "ScriptMgr.h"
 #include "UpdateTime.h"
+#include <unordered_set>
 
 class server_commandscript : public CommandScript
 {
@@ -151,8 +154,9 @@ public:
     // Display the 'Message of the day' for the realm
     static bool HandleServerMotdCommand(ChatHandler* handler, char const* /*args*/)
     {
+        uint8 locale = handler->GetSession() ? handler->GetSession()->GetSessionDbcLocale() : LOCALE_enUS;
         std::string motd;
-        for (std::string const& line : sWorld->GetMotd())
+        for (std::string const& line : sWorld->GetMotdForLocale(locale))
             motd += line;
         handler->PSendSysMessage(LANG_MOTD_CURRENT, motd.c_str());
         return true;
@@ -377,8 +381,101 @@ public:
     // Define the 'Message of the day' for the realm
     static bool HandleServerSetMotdCommand(ChatHandler* handler, char const* args)
     {
-        sWorld->SetMotd(args);
-        handler->PSendSysMessage(LANG_MOTD_NEW, args);
+        if (!args || !*args)
+            return false;
+
+        // Syntax:
+        //   .server set motd <text>
+        //   .server set motd <locale> <text>               (locale like deDE/enUS or numeric)
+        //   .server set motd <realmid> <locale> <text>     (realmid can be -1 for global)
+        int32 realmid = sConfigMgr->GetIntDefault("RealmID", 1);
+        uint8 locale = handler->GetSession() ? handler->GetSession()->GetSessionDbcLocale() : LOCALE_enUS;
+
+        std::string input(args);
+        // trim left
+        size_t pos = input.find_first_not_of(" \t");
+        if (pos != std::string::npos)
+            input.erase(0, pos);
+
+        auto takeToken = [&](std::string& s) -> std::string
+            {
+                size_t p = s.find_first_not_of(" \t");
+                if (p == std::string::npos)
+                    return "";
+                s.erase(0, p);
+                size_t e = s.find_first_of(" \t");
+                std::string tok = (e == std::string::npos) ? s : s.substr(0, e);
+                s.erase(0, (e == std::string::npos) ? s.size() : e);
+                return tok;
+            };
+
+        std::string work = input;
+        std::string t1 = takeToken(work);
+        std::string t2;
+
+        auto isInt = [](std::string const& s) -> bool
+            {
+                if (s.empty())
+                    return false;
+                size_t i = 0;
+                if (s[0] == '-')
+                    i = 1;
+                if (i >= s.size())
+                    return false;
+                for (; i < s.size(); ++i)
+                    if (s[i] < '0' || s[i] > '9')
+                        return false;
+                return true;
+            };
+
+        auto isLocaleToken = [](std::string const& s) -> bool
+            {
+                static std::unordered_set<std::string> const known = {
+                    "enUS","koKR","frFR","deDE","zhCN","zhTW","esES","esMX","ruRU","none","ptBR","itIT"
+                };
+                return known.count(s) != 0;
+            };
+
+        // Parse optional realmid
+        if (isInt(t1))
+        {
+            realmid = int32(std::stoi(t1));
+            t2 = takeToken(work);
+        }
+        else
+            t2 = t1;
+
+        // Parse optional locale
+        if (!t2.empty())
+        {
+            if (isInt(t2))
+                locale = uint8(std::stoi(t2));
+            else if (isLocaleToken(t2))
+                locale = uint8(GetLocaleByName(t2));
+            else
+            {
+                // t2 is part of text
+                work.insert(0, " " + t2);
+            }
+        }
+
+        // remaining text
+        size_t p2 = work.find_first_not_of(" \t");
+        if (p2 != std::string::npos)
+            work.erase(0, p2);
+
+        if (work.empty())
+            return false;
+
+        // Write to Login DB (prepared statement)
+        LoginDatabasePreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_REP_MOTD);
+        stmt->setInt32(0, realmid);
+        stmt->setUInt8(1, locale);
+        stmt->setString(2, work);
+        LoginDatabase.Execute(stmt);
+
+        sWorld->LoadMotdFromDB();
+        handler->PSendSysMessage(LANG_MOTD_NEW, work.c_str());
         return true;
     }
 

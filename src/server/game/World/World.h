@@ -37,6 +37,7 @@
 #include <safe_ptr.h>
 #include <atomic>
 #include <queue>
+#include <array>
 #include "Util.h"
 
 class Object;
@@ -770,6 +771,10 @@ class World
         void SetMotd(std::string motd);
         /// Get the current Message of the Day
         std::vector<std::string> const& GetMotd() const;
+        /// Load MOTD from LoginDatabase (per realmid + locale). No config fallback.
+        void LoadMotdFromDB();
+        /// Get MOTD for client locale; fallback to enUS DB row; returns empty if not present.
+        std::vector<std::string> const& GetMotdForLocale(uint8 locale) const;
 
         /// Set the string for new characters (first login)
         void SetNewCharString(std::string const& str) { m_newCharString = str; }
@@ -1011,6 +1016,8 @@ class World
         LocaleConstant m_defaultDbcLocale;                     // from config for one from loaded DBC locales
         bool m_allowMovement;
         std::vector<std::string> _motd;
+        std::array<std::vector<std::string>, MAX_LOCALES> _motdByLocale;
+        int32 _motdRealmId = 0;
         std::string m_dataPath;
 
         // for max speed access

@@ -779,7 +779,7 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder const& holder)
     // Send MOTD
     {
         WorldPackets::System::MOTD motd;
-        motd.Text = &sWorld->GetMotd();
+        motd.Text = &sWorld->GetMotdForLocale(GetSessionDbcLocale());
         SendPacket(motd.Write());
 
         // send server info
