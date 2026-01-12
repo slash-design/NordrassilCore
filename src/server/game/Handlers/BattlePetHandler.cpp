@@ -1,20 +1,19 @@
 /*
-* Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
-* Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
-*
-* This program is free software; you can redistribute it and/or modify it
-* under the terms of the GNU General Public License as published by the
-* Free Software Foundation; either version 2 of the License, or (at your
-* option) any later version.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT
-* ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-* FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
-* more details.
-*
-* You should have received a copy of the GNU General Public License along
-* with this program. If not, see <http://www.gnu.org/licenses/>.
-*/
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include "BattlePetPackets.h"
 #include "WildBattlePet.h"
@@ -32,9 +31,19 @@ void WorldSession::HandleBattlePetSummon(WorldPackets::BattlePet::BattlePetGuidR
     if (_player->IsOnVehicle() || _player->IsSitState())
         return;
 
-    _player->UnsummonCurrentBattlePetIfAny(false);
-    if (!_player->GetSummonedBattlePet() || _player->GetSummonedBattlePet()->GetGuidValue(UNIT_FIELD_BATTLE_PET_COMPANION_GUID) != packet.BattlePetGUID)
-        _player->SummonBattlePet(packet.BattlePetGUID);
+    Creature* summonedPet = _player->GetSummonedBattlePet();
+    if (summonedPet)
+    {
+        if (summonedPet->GetGuidValue(UNIT_FIELD_BATTLE_PET_COMPANION_GUID) == packet.BattlePetGUID)
+        {
+            _player->UnsummonCurrentBattlePetIfAny(false);
+            return;
+        }
+
+        _player->UnsummonCurrentBattlePetIfAny(false);
+    }
+
+    _player->SummonBattlePet(packet.BattlePetGUID);
 }
 
 void WorldSession::HandleBattlePetNameQuery(WorldPackets::BattlePet::Query& packet)
