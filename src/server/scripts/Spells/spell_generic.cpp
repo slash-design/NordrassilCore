@@ -2942,18 +2942,20 @@ public:
 
 		bool Validate(SpellInfo const* /*spell*/) override
 		{
+			// If a mount variant is missing in this DBC set, disable that tier instead of failing the whole script.
 			if (_mount0 && !sSpellMgr->GetSpellInfo(_mount0))
-				return false;
+				_mount0 = 0;
 			if (_mount60 && !sSpellMgr->GetSpellInfo(_mount60))
-				return false;
+				_mount60 = 0;
 			if (_mount100 && !sSpellMgr->GetSpellInfo(_mount100))
-				return false;
+				_mount100 = 0;
 			if (_mount150 && !sSpellMgr->GetSpellInfo(_mount150))
-				return false;
+				_mount150 = 0;
 			if (_mount280 && !sSpellMgr->GetSpellInfo(_mount280))
-				return false;
+				_mount280 = 0;
 			if (_mount310 && !sSpellMgr->GetSpellInfo(_mount310))
-				return false;
+				_mount310 = 0;
+
 			return true;
 		}
 
@@ -2967,17 +2969,10 @@ public:
 				target->RemoveAurasByType(SPELL_AURA_MOUNTED, ObjectGuid::Empty, GetHitAura());
 
 				// Triggered spell id dependent on riding skill and zone
-				bool canFly = false;
-				uint32 map = sDB2Manager.GetVirtualMapForMapAndZone(target->GetMapId(), target->GetCurrentZoneID());
-				if (map == 530 || map == 571)
-					canFly = true;
-
-				float x, y, z;
-				target->GetPosition(x, y, z);
-				uint32 areaFlag = 0; //target->GetBaseMap()->GetAreaFlag(x, y, z);
-				AreaTableEntry const* area = sAreaTableStore.LookupEntry(areaFlag);
-				if (!area || (canFly && (area->Flags[0] & AREA_FLAG_NO_FLY_ZONE)))
-					canFly = false;
+				SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(_mount150);
+				uint32 zoneid, areaid;
+				target->GetZoneAndAreaId(zoneid, areaid);
+				bool const canFly = spellInfo && (spellInfo->CheckLocation(target->GetMapId(), zoneid, areaid, target) == SPELL_CAST_OK);
 
 				uint32 mount = 0;
 				switch (target->GetBaseSkillValue(SKILL_RIDING))
