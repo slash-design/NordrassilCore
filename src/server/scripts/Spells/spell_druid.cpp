@@ -56,77 +56,71 @@ class AuraDurationCompareOrderPred
 // Incarnation: Chosen of Elune (Shapeshift) - 102560
 class spell_dru_incarnation : public SpellScriptLoader
 {
-    public:
-        spell_dru_incarnation() : SpellScriptLoader("spell_dru_incarnation") { }
+public:
+    spell_dru_incarnation() : SpellScriptLoader("spell_dru_incarnation") {}
 
-        class spell_dru_incarnation_AuraScript : public AuraScript
+    class spell_dru_incarnation_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_dru_incarnation_AuraScript);
+
+        void UpdateModel()
         {
-            PrepareAuraScript(spell_dru_incarnation_AuraScript);
+            Unit* target = GetTarget();
+            if (!target)
+                return;
 
-            void UpdateModel()
-            {
-                Unit* target = GetTarget();
-                if (!target)
-                    return;
-
-                ShapeshiftForm form = target->GetShapeshiftForm();
-                if (form == FORM_CAT || form == FORM_BEAR || form == FORM_MOONKIN)
-                    if (uint32 model = target->GetModelForForm(form))
-                        target->SetDisplayId(model);
-            }
-
-            void OnApply(AuraEffect const* aurEff, AuraEffectHandleModes mode)
-            {
-                UpdateModel();
-
-                Unit* target = GetTarget();
-                if (!target)
-                    return;
-
-                switch (GetId())
-                {
-                    case 33891:     // Incarnation: Tree of Life (Shapeshift)
-                        if (!target->HasAura(117679))
-                            target->CastSpell(target, 117679, true);
-                        break;
-                    case 102543:    // Incarnation: King of the Jungle
-                        if (!target->HasAura(768))
-                            target->CastSpell(target, 768, true);       // activate Cat Form
-                        break;
-                    case 102558:    // Incarnation: Son of Ursoc
-                        if (!target->HasAura(5487))
-                            target->CastSpell(target, 5487, true);      // activate Bear Form
-                        break;
-                    case 102560:    // Incarnation: Chosen of Elune (Shapeshift)
-                        if (!target->HasAura(24858))
-                            target->CastSpell(target, 24858, true);     // activate Moonkin Form
-                        break;
-                }
-            }
-
-            void OnRemove(AuraEffect const* aurEff, AuraEffectHandleModes mode)
-            {
-                UpdateModel();
-            }
-
-            void Register() override
-            {
-                AfterEffectApply += AuraEffectApplyFn(spell_dru_incarnation_AuraScript::OnApply, EFFECT_0, SPELL_AURA_OVERRIDE_ACTIONBAR_SPELLS, AURA_EFFECT_HANDLE_REAL);
-                AfterEffectApply += AuraEffectApplyFn(spell_dru_incarnation_AuraScript::OnApply, EFFECT_0, SPELL_AURA_ADD_PCT_MODIFIER, AURA_EFFECT_HANDLE_REAL);
-                AfterEffectApply += AuraEffectApplyFn(spell_dru_incarnation_AuraScript::OnApply, EFFECT_0, SPELL_AURA_MOD_DAMAGE_PERCENT_DONE, AURA_EFFECT_HANDLE_REAL);
-                AfterEffectApply += AuraEffectApplyFn(spell_dru_incarnation_AuraScript::OnApply, EFFECT_0, SPELL_AURA_MOD_SHAPESHIFT, AURA_EFFECT_HANDLE_REAL);
-
-                AfterEffectRemove += AuraEffectRemoveFn(spell_dru_incarnation_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_OVERRIDE_ACTIONBAR_SPELLS, AURA_EFFECT_HANDLE_REAL);
-                AfterEffectRemove += AuraEffectRemoveFn(spell_dru_incarnation_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_ADD_PCT_MODIFIER, AURA_EFFECT_HANDLE_REAL);
-                AfterEffectRemove += AuraEffectRemoveFn(spell_dru_incarnation_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_MOD_DAMAGE_PERCENT_DONE, AURA_EFFECT_HANDLE_REAL);
-                AfterEffectRemove += AuraEffectRemoveFn(spell_dru_incarnation_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_MOD_SHAPESHIFT, AURA_EFFECT_HANDLE_REAL);
-            }
-        };
-
-        AuraScript* GetAuraScript() const override
-        {
-            return new spell_dru_incarnation_AuraScript();
+            ShapeshiftForm form = target->GetShapeshiftForm();
+            if (form == FORM_CAT || form == FORM_BEAR || form == FORM_MOONKIN)
+                if (uint32 model = target->GetModelForForm(form))
+                    target->SetDisplayId(model);
         }
+
+        void OnApply(AuraEffect const* aurEff, AuraEffectHandleModes mode)
+        {
+            UpdateModel();
+
+            Unit* target = GetTarget();
+            if (!target)
+                return;
+
+            switch (GetId())
+            {
+            case 33891:     // Incarnation: Tree of Life (Shapeshift)
+                if (!target->HasAura(117679))
+                    target->CastSpell(target, 117679, true);
+                break;
+            case 102543:    // Incarnation: King of the Jungle
+                if (!target->HasAura(768))
+                    target->CastSpell(target, 768, true);       // activate Cat Form
+                break;
+            case 102558:    // Incarnation: Son of Ursoc
+                if (!target->HasAura(5487))
+                    target->CastSpell(target, 5487, true);      // activate Bear Form
+                break;
+            case 102560:    // Incarnation: Chosen of Elune (Shapeshift)
+                if (!target->HasAura(24858))
+                    target->CastSpell(target, 24858, true);     // activate Moonkin Form
+                break;
+            }
+        }
+
+        void OnRemove(AuraEffect const* aurEff, AuraEffectHandleModes mode)
+        {
+            UpdateModel();
+        }
+
+        void Register() override
+        {
+            AfterEffectApply += AuraEffectApplyFn(spell_dru_incarnation_AuraScript::OnApply, EFFECT_0, SPELL_AURA_ANY, AURA_EFFECT_HANDLE_REAL);
+
+            AfterEffectRemove += AuraEffectRemoveFn(spell_dru_incarnation_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_ANY, AURA_EFFECT_HANDLE_REAL);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_dru_incarnation_AuraScript();
+    }
 };
 
 // Incarnation (Passive) - 117679
