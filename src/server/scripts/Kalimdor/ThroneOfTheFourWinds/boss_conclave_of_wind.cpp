@@ -1101,20 +1101,20 @@ public:
 class spell_hurricane : public SpellScriptLoader //86492
 {
 public:
-    spell_hurricane() : SpellScriptLoader("spell_hurricane") { }
+    spell_hurricane() : SpellScriptLoader("spell_hurricane") {}
 
     class spell_hurricane_AuraScript : public AuraScript
     {
         PrepareAuraScript(spell_hurricane_AuraScript);
 
-        void HandleEffectApply(AuraEffect const * /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        void HandleEffectApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
         {
             if (Unit* target = GetTarget())
                 if (Unit* caster = GetCaster())
                     target->EnterVehicle(caster, 0);
         }
 
-        void HandleEffectRemove(AuraEffect const * /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        void HandleEffectRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
         {
             if (Unit* caster = GetCaster())
                 if (Vehicle* vehicle = caster->GetVehicleKit())
@@ -1123,8 +1123,8 @@ public:
 
         void Register()
         {
-            OnEffectApply += AuraEffectApplyFn(spell_hurricane_AuraScript::HandleEffectApply, EFFECT_0, SPELL_AURA_MOD_STUN, AURA_EFFECT_HANDLE_REAL);
-            OnEffectRemove += AuraEffectRemoveFn(spell_hurricane_AuraScript::HandleEffectRemove, EFFECT_0, SPELL_AURA_MOD_STUN, AURA_EFFECT_HANDLE_REAL);
+            OnEffectApply += AuraEffectApplyFn(spell_hurricane_AuraScript::HandleEffectApply, EFFECT_0, SPELL_AURA_CONTROL_VEHICLE, AURA_EFFECT_HANDLE_REAL);
+            OnEffectRemove += AuraEffectRemoveFn(spell_hurricane_AuraScript::HandleEffectRemove, EFFECT_0, SPELL_AURA_CONTROL_VEHICLE, AURA_EFFECT_HANDLE_REAL);
         }
     };
 
