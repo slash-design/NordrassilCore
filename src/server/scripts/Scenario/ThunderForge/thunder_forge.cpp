@@ -3378,7 +3378,7 @@ public:
 class spell_small_sha_fixate : public SpellScriptLoader
 {
 public:
-    spell_small_sha_fixate() : SpellScriptLoader("spell_small_sha_fixate") { }
+    spell_small_sha_fixate() : SpellScriptLoader("spell_small_sha_fixate") {}
 
     class spell_small_sha_fixate_AuraScript : public AuraScript
     {
@@ -3396,7 +3396,7 @@ public:
 
         void Register() override
         {
-            OnEffectApply += AuraEffectApplyFn(spell_small_sha_fixate_AuraScript::OnApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+            OnEffectApply += AuraEffectApplyFn(spell_small_sha_fixate_AuraScript::OnApply, EFFECT_1, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
         }
     };
 
