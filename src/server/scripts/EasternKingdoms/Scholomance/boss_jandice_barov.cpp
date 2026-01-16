@@ -113,32 +113,32 @@ public:
 
 class spell_gravity_flux : public SpellScriptLoader
 {
-    public:
-        spell_gravity_flux() :  SpellScriptLoader("spell_gravity_flux") { }
+public:
+    spell_gravity_flux() : SpellScriptLoader("spell_gravity_flux") {}
 
-        class spell_gravity_flux_AuraScript : public AuraScript
+    class spell_gravity_flux_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_gravity_flux_AuraScript);
+
+        void OnApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
         {
-            PrepareAuraScript(spell_gravity_flux_AuraScript);
+            if (!GetTarget())
+                return;
 
-            void OnApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
-            {
-                if (!GetTarget())
-                    return;
-               
-                if (GetTarget()->GetTypeId() == TYPEID_PLAYER)
-                    GetTarget()->CastSpell(GetTarget(), 114038, true);
-            }
-
-            void Register()
-            {
-                OnEffectApply += AuraEffectApplyFn(spell_gravity_flux_AuraScript::OnApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
-            }
-        };
-
-        AuraScript* GetAuraScript() const
-        {
-            return new spell_gravity_flux_AuraScript();
+            if (GetTarget()->GetTypeId() == TYPEID_PLAYER)
+                GetTarget()->CastSpell(GetTarget(), 114038, true);
         }
+
+        void Register()
+        {
+            OnEffectApply += AuraEffectApplyFn(spell_gravity_flux_AuraScript::OnApply, EFFECT_1, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+        }
+    };
+
+    AuraScript* GetAuraScript() const
+    {
+        return new spell_gravity_flux_AuraScript();
+    }
 };
 
 void AddSC_boss_jandice_barov()
