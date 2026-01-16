@@ -476,27 +476,38 @@ class spell_echo_of_sylvanas_death_grip_aoe : public SpellScript
     }
 };
 
-class spell_echo_of_sylvanas_seeping_shadows : public AuraScript
+class spell_echo_of_sylvanas_seeping_shadows : public SpellScriptLoader
 {
-    PrepareAuraScript(spell_echo_of_sylvanas_seeping_shadows);
+public:
+    spell_echo_of_sylvanas_seeping_shadows() : SpellScriptLoader("spell_echo_of_sylvanas_seeping_shadows") {}
 
-    void HandlePeriodicTick(AuraEffect const* /*aurEff*/)
+    class spell_echo_of_sylvanas_seeping_shadows_AuraScript : public AuraScript
     {
-        Unit* caster = GetCaster();
-        if (!caster)
-            return;
+        PrepareAuraScript(spell_echo_of_sylvanas_seeping_shadows_AuraScript);
 
-        int32 amount = int32(0.2f * (100.0f - caster->GetHealthPct()));
+        void HandlePeriodicTick(AuraEffect const* /*aurEff*/)
+        {
+            if (!GetCaster())
+                return;
 
-        if (Aura* aur = caster->GetAura(103182))
-            aur->ModStackAmount(amount - aur->GetStackAmount());
-        else
-            caster->CastCustomSpell(103182, SPELLVALUE_AURA_STACK, amount, caster, true);
-    }
+            int32 amount = int32(0.2f * (100.0f - GetCaster()->GetHealthPct()));
 
-    void Register()
+            if (Aura* aur = GetCaster()->GetAura(103182))
+                aur->ModStackAmount(amount - aur->GetStackAmount());
+            else
+                GetCaster()->CastCustomSpell(103182, SPELLVALUE_AURA_STACK, amount, GetCaster(), true);
+
+        }
+
+        void Register() override
+        {
+            OnEffectPeriodic += AuraEffectPeriodicFn(spell_echo_of_sylvanas_seeping_shadows_AuraScript::HandlePeriodicTick, EFFECT_0, SPELL_AURA_PERIODIC_DUMMY);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
     {
-        OnEffectPeriodic += AuraEffectPeriodicFn(spell_echo_of_sylvanas_seeping_shadows::HandlePeriodicTick, EFFECT_0, SPELL_AURA_PERIODIC_DUMMY);
+        return new spell_echo_of_sylvanas_seeping_shadows_AuraScript();
     }
 };
 
@@ -523,7 +534,7 @@ void AddSC_boss_echo_of_sylvanas()
     RegisterCreatureAI(npc_echo_of_sylvanas_ghoul);
     RegisterCreatureAI(npc_echo_of_sylvanas_risen_ghoul);
     RegisterSpellScript(spell_echo_of_sylvanas_death_grip_aoe);
-    RegisterAuraScript(spell_echo_of_sylvanas_seeping_shadows);
+    new spell_echo_of_sylvanas_seeping_shadows();
     new spell_echo_of_sylvanas_wracking_pain_dmg();
     //new achievement_several_ties();
 }
