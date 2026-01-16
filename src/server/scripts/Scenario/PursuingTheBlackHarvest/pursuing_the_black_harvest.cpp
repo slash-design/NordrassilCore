@@ -1536,7 +1536,7 @@ public:
 class spell_fel_enery : public SpellScriptLoader
 {
 public:
-    spell_fel_enery() : SpellScriptLoader("spell_fel_enery") { }
+    spell_fel_enery() : SpellScriptLoader("spell_fel_enery") {}
 
     class spell_fel_enery_AuraScript : public AuraScript
     {
@@ -1548,7 +1548,7 @@ public:
                 player->CastSpell(player, SPELL_FEL_ENERGY_DUMMY_2);
         }
 
-        void HandleEffectRemove(AuraEffect const * /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        void HandleEffectRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
         {
             if (Player* player = GetTarget()->ToPlayer())
                 player->SendOnCancelExpectedVehicleRideAura();
@@ -1556,8 +1556,8 @@ public:
 
         void Register() override
         {
-            OnEffectApply += AuraEffectApplyFn(spell_fel_enery_AuraScript::OnApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
-            OnEffectRemove += AuraEffectRemoveFn(spell_fel_enery_AuraScript::HandleEffectRemove, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+            OnEffectApply += AuraEffectApplyFn(spell_fel_enery_AuraScript::OnApply, EFFECT_0, SPELL_AURA_ANY, AURA_EFFECT_HANDLE_REAL);
+            OnEffectRemove += AuraEffectRemoveFn(spell_fel_enery_AuraScript::HandleEffectRemove, EFFECT_0, SPELL_AURA_ANY, AURA_EFFECT_HANDLE_REAL);
         }
     };
 
