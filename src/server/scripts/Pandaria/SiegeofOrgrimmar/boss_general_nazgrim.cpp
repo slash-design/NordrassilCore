@@ -1230,7 +1230,7 @@ public:
 class spell_generic_stance : public SpellScriptLoader
 {
 public:
-    spell_generic_stance() : SpellScriptLoader("spell_generic_stance") { }
+    spell_generic_stance() : SpellScriptLoader("spell_generic_stance") {}
 
     class spell_generic_stance_AuraScript : public AuraScript
     {
@@ -1247,9 +1247,7 @@ public:
 
         void Register()
         {
-            OnEffectRemove += AuraEffectRemoveFn(spell_generic_stance_AuraScript::HandleRemove, EFFECT_0, SPELL_AURA_PERIODIC_ENERGIZE, AURA_EFFECT_HANDLE_REAL);        //143589
-            OnEffectRemove += AuraEffectRemoveFn(spell_generic_stance_AuraScript::HandleRemove, EFFECT_0, SPELL_AURA_MOD_DAMAGE_PERCENT_DONE, AURA_EFFECT_HANDLE_REAL);  //143594
-            OnEffectRemove += AuraEffectRemoveFn(spell_generic_stance_AuraScript::HandleRemove, EFFECT_0, SPELL_AURA_MOD_DAMAGE_PERCENT_TAKEN, AURA_EFFECT_HANDLE_REAL); //143593
+            OnEffectRemove += AuraEffectRemoveFn(spell_generic_stance_AuraScript::HandleRemove, EFFECT_0, SPELL_AURA_ANY, AURA_EFFECT_HANDLE_REAL);
         }
     };
 
