@@ -2405,7 +2405,7 @@ public:
 class spell_fiery_edge_dummy : public SpellScriptLoader
 {
 public:
-    spell_fiery_edge_dummy() : SpellScriptLoader("spell_fiery_edge_dummy") { }
+    spell_fiery_edge_dummy() : SpellScriptLoader("spell_fiery_edge_dummy") {}
 
     class spell_fiery_edge_dummy_AuraScript : public AuraScript
     {
@@ -2422,7 +2422,7 @@ public:
 
         void Register()
         {
-            OnEffectPeriodic += AuraEffectPeriodicFn(spell_fiery_edge_dummy_AuraScript::OnTick, EFFECT_0, SPELL_AURA_PERIODIC_DAMAGE);
+            OnEffectPeriodic += AuraEffectPeriodicFn(spell_fiery_edge_dummy_AuraScript::OnTick, EFFECT_0, SPELL_AURA_PERIODIC_DUMMY);
         }
     };
 
