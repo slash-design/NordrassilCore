@@ -1499,44 +1499,44 @@ class spell_monk_purified_healing : public SpellScriptLoader
 // Hurricane Strike - 152175
 class spell_monk_hurricane_strike : public SpellScriptLoader
 {
-    public:
-        spell_monk_hurricane_strike() : SpellScriptLoader("spell_monk_hurricane_strike") { }
+public:
+    spell_monk_hurricane_strike() : SpellScriptLoader("spell_monk_hurricane_strike") {}
 
-        class spell_monk_hurricane_strike_AuraScript : public AuraScript
+    class spell_monk_hurricane_strike_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_monk_hurricane_strike_AuraScript);
+
+        uint32 update = 0;
+
+        void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes mode)
         {
-            PrepareAuraScript(spell_monk_hurricane_strike_AuraScript);
+            if (Unit* caster = GetCaster())
+                caster->CastSpell(caster->GetPositionX(), caster->GetPositionY(), caster->GetPositionZ(), 158221, true);
+        }
 
-            uint32 update = 0;
+        void OnUpdate(uint32 diff, AuraEffect* aurEff)
+        {
+            update += diff;
 
-            void HandleApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes mode)
+            if (update >= 140)
             {
                 if (Unit* caster = GetCaster())
                     caster->CastSpell(caster->GetPositionX(), caster->GetPositionY(), caster->GetPositionZ(), 158221, true);
+                update = 0;
             }
-
-            void OnUpdate(uint32 diff, AuraEffect* aurEff)
-            {
-                update += diff;
-
-                if (update >= 140)
-                {
-                    if (Unit* caster = GetCaster())
-                        caster->CastSpell(caster->GetPositionX(), caster->GetPositionY(), caster->GetPositionZ(), 158221, true);
-                    update = 0;
-                }
-            }
-
-            void Register() override
-            {
-                OnEffectApply += AuraEffectApplyFn(spell_monk_hurricane_strike_AuraScript::HandleApply, EFFECT_0, SPELL_AURA_ALLOW_ONLY_ABILITY, AURA_EFFECT_HANDLE_REAL);
-                OnEffectUpdate += AuraEffectUpdateFn(spell_monk_hurricane_strike_AuraScript::OnUpdate, EFFECT_0, SPELL_AURA_ALLOW_ONLY_ABILITY);
-            }
-        };
-
-        AuraScript* GetAuraScript() const override
-        {
-            return new spell_monk_hurricane_strike_AuraScript();
         }
+
+        void Register() override
+        {
+            OnEffectApply += AuraEffectApplyFn(spell_monk_hurricane_strike_AuraScript::HandleApply, EFFECT_0, SPELL_AURA_PERIODIC_DUMMY, AURA_EFFECT_HANDLE_REAL);
+            OnEffectUpdate += AuraEffectUpdateFn(spell_monk_hurricane_strike_AuraScript::OnUpdate, EFFECT_0, SPELL_AURA_ALLOW_ONLY_ABILITY);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_monk_hurricane_strike_AuraScript();
+    }
 };
 
 // Whirling Dragon Punch - 152175, active by 107428, 113656
