@@ -1699,30 +1699,27 @@ public:
 };
 
 //145573
-class spell_blind_hatred_periodic : public SpellScriptLoader
+class spell_blind_hatred_periodic : public AuraScript
 {
-public:
-    spell_blind_hatred_periodic() : SpellScriptLoader("spell_blind_hatred_periodic") { }
+    PrepareAuraScript(spell_blind_hatred_periodic);
 
-    class spell_blind_hatred_periodic_AuraScript : public AuraScript
+    void OnTrigger(AuraEffect const* /*aurEff*/)
     {
-        PrepareAuraScript(spell_blind_hatred_periodic_AuraScript);
+        if (Unit* owner = GetOwner()->ToUnit())
+            if (owner->GetEntry() == NPC_AMALGAM_OF_CORRUPTION)
+                owner->CastSpell(owner, SPELL_BLIND_HATRED_D, true);
+    }
 
-        void OnPeriodic(AuraEffect const*aurEff)
-        {
-            if (GetCaster())
-                GetCaster()->CastSpell(GetCaster(), SPELL_BLIND_HATRED_D, true);
-        }
-
-        void Register()
-        {
-            OnEffectPeriodic += AuraEffectPeriodicFn(spell_blind_hatred_periodic_AuraScript::OnPeriodic, EFFECT_0, SPELL_AURA_PERIODIC_DUMMY);
-        }
-    };
-
-    AuraScript* GetAuraScript() const
+    void HandleOnApply(AuraEffect const* /*aureff*/, AuraEffectHandleModes /*mode*/)
     {
-        return new spell_blind_hatred_periodic_AuraScript();
+        if (Unit* owner = GetOwner()->ToUnit())
+            owner->ClearUnitState(UNIT_STATE_CASTING);
+    }
+
+    void Register() override
+    {
+        OnEffectPeriodic += AuraEffectPeriodicFn(spell_blind_hatred_periodic::OnTrigger, EFFECT_0, SPELL_AURA_PERIODIC_DUMMY);
+        OnEffectApply += AuraEffectApplyFn(spell_blind_hatred_periodic::HandleOnApply, EFFECT_0, SPELL_AURA_PERIODIC_DUMMY, AURA_EFFECT_HANDLE_REAL);
     }
 };
 
