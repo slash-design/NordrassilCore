@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
- * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -1166,23 +1165,16 @@ void Player::ApplyOnItems(uint8 type, std::function<bool(Player*, Item*, uint8, 
     }
 }
 
-void Player::SendMirrorTimer(MirrorTimerType type, uint32 maxValue, uint32 currentValue, int32 regen)
+void Player::SendMirrorTimer(MirrorTimerType Type, uint32 MaxValue, uint32 CurrentValue, int32 Regen)
 {
-    if (int(maxValue) == DISABLED_MIRROR_TIMER)
+    if (int(MaxValue) == DISABLED_MIRROR_TIMER)
     {
-        if (int(currentValue) != DISABLED_MIRROR_TIMER)
-            StopMirrorTimer(type);
+        if (int(CurrentValue) != DISABLED_MIRROR_TIMER)
+            StopMirrorTimer(Type);
         return;
     }
 
-    WorldPackets::Misc::StartMirrorTimer timer;
-    timer.Scale = regen;
-    timer.MaxValue = maxValue;
-    timer.Timer = type;
-    timer.SpellID = 0;
-    timer.Value = currentValue;
-    timer.Paused = false;
-    SendDirectMessage(timer.Write());
+    GetSession()->SendPacket(WorldPackets::Misc::StartMirrorTimer(Type, CurrentValue, MaxValue, Regen, 0, 0).Write());
 }
 
 void Player::StopMirrorTimer(MirrorTimerType timer)
@@ -1244,27 +1236,29 @@ uint32 Player::EnvironmentalDamage(EnviromentalDamage type, uint32 damage)
     return final_damage;
 }
 
-int32 Player::getMaxTimer(MirrorTimerType timer)
+int32 Player::getMaxTimer(MirrorTimerType timer) const
 {
     switch (timer)
     {
-        case FATIGUE_TIMER:
-            return MINUTE * IN_MILLISECONDS;
-        case BREATH_TIMER:
-        {
-            if (!IsAlive() || HasAuraType(SPELL_AURA_WATER_BREATHING) || GetSession()->GetSecurity() >= AccountTypes(sWorld->getIntConfig(CONFIG_DISABLE_BREATHING)))
-                return DISABLED_MIRROR_TIMER;
+    case FATIGUE_TIMER:
+        return MINUTE * IN_MILLISECONDS;
+    case BREATH_TIMER:
+    {
+        if (!IsAlive() || HasAuraType(SPELL_AURA_WATER_BREATHING) || GetSession()->GetSecurity() >= AccountTypes(sWorld->getIntConfig(CONFIG_DISABLE_BREATHING)))
+            return DISABLED_MIRROR_TIMER;
 
-            return (3 * MINUTE * IN_MILLISECONDS) * GetTotalAuraMultiplier(SPELL_AURA_MOD_WATER_BREATHING);
-        }
-        case FIRE_TIMER:
-        {
-            if (!IsAlive())
-                return DISABLED_MIRROR_TIMER;
-            return 1 * IN_MILLISECONDS;
-        }
-        default:
-            return 0;
+        int32 UnderWaterTime = 3 * MINUTE * IN_MILLISECONDS;
+        UnderWaterTime *= GetTotalAuraMultiplier(SPELL_AURA_MOD_WATER_BREATHING);
+        return UnderWaterTime;
+    }
+    case FIRE_TIMER:
+    {
+        if (!IsAlive())
+            return DISABLED_MIRROR_TIMER;
+        return 1 * IN_MILLISECONDS;
+    }
+    default:
+        return 0;
     }
 }
 
@@ -1282,16 +1276,15 @@ void Player::StopMirrorTimers()
     StopMirrorTimer(FIRE_TIMER);
 }
 
-bool Player::IsMirrorTimerActive(MirrorTimerType type)
+bool Player::IsMirrorTimerActive(MirrorTimerType type) const
 {
     return m_MirrorTimer[type] == getMaxTimer(type);
 }
 
 void Player::HandleDrowning(uint32 time_diff)
 {
-    //! Why? We need remove state when where is no flag.
-    //if (!m_MirrorTimerFlags)
-    //    return;
+    if (!m_MirrorTimerFlags)
+        return;
 
     // In water
     if (m_MirrorTimerFlags & UNDERWATER_INWATER)

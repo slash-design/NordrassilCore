@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
- * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -16,8 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _PLAYER_H
-#define _PLAYER_H
+#ifndef PLAYER_H
+#define PLAYER_H
 
 #include "../../Vignette/VignetteMgr.h"
 #include "AchievementMgr.h"
@@ -591,15 +590,15 @@ enum PlayerAvgItemLevelOffsets
     MaxAvgItemLevel
 };
 
-enum MirrorTimerType : int32
+enum MirrorTimerType
 {
-    DISABLED_MIRROR_TIMER   = -1,
-    FATIGUE_TIMER           = 0,
-    BREATH_TIMER            = 1,
-    FIRE_TIMER              = 2, // feign death
-
-    MAX_TIMERS
+    FATIGUE_TIMER = 0,
+    BREATH_TIMER = 1,
+    FIRE_TIMER = 2 // feign death
 };
+
+#define MAX_TIMERS      3
+#define DISABLED_MIRROR_TIMER   -1
 
 #define PLAYER_CUSTOM_DISPLAY_SIZE 3
 
@@ -2612,7 +2611,7 @@ class Player : public Unit, public GridObject<Player>
 
         void UpdateMirrorTimers();
         void StopMirrorTimers();
-        bool IsMirrorTimerActive(MirrorTimerType type);
+        bool IsMirrorTimerActive(MirrorTimerType type) const;
 
         bool CanJoinConstantChannelInZone(ChatChannelsEntry const* channel, AreaTableEntry const* zone);
 
@@ -3438,10 +3437,10 @@ class Player : public Unit, public GridObject<Player>
         /***              ENVIRONMENTAL SYSTEM                 ***/
         /*********************************************************/
         void HandleSobering();
-        void SendMirrorTimer(MirrorTimerType type, uint32 maxValue, uint32 currentValue, int32 regen);
+        void SendMirrorTimer(MirrorTimerType Type, uint32 MaxValue, uint32 CurrentValue, int32 Regen);
         void StopMirrorTimer(MirrorTimerType Type);
         void HandleDrowning(uint32 time_diff);
-        int32 getMaxTimer(MirrorTimerType timer);
+        int32 getMaxTimer(MirrorTimerType timer) const;
 
         /*********************************************************/
         /***                  HONOR SYSTEM                     ***/

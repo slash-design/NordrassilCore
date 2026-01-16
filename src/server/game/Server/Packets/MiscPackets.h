@@ -409,6 +409,9 @@ namespace WorldPackets
         {
         public:
             StartMirrorTimer() : ServerPacket(SMSG_START_MIRROR_TIMER, 21) { }
+            StartMirrorTimer(int32 timer, int32 value, int32 maxValue, int32 scale, int32 spellID, bool paused) :
+                ServerPacket(SMSG_START_MIRROR_TIMER, 21), Scale(scale), MaxValue(maxValue), Timer(timer), SpellID(spellID), Value(value), Paused(paused) {
+            }
 
             WorldPacket const* Write() override;
 
@@ -423,6 +426,7 @@ namespace WorldPackets
         class PauseMirrorTimer final : public ServerPacket
         {
         public:
+            PauseMirrorTimer() : ServerPacket(SMSG_PAUSE_MIRROR_TIMER, 5) {}
             PauseMirrorTimer(int32 timer, bool paused) : ServerPacket(SMSG_PAUSE_MIRROR_TIMER, 5), Paused(paused), Timer(timer) { }
 
             WorldPacket const* Write() override;
@@ -434,6 +438,7 @@ namespace WorldPackets
         class StopMirrorTimer final : public ServerPacket
         {
         public:
+            StopMirrorTimer() : ServerPacket(SMSG_STOP_MIRROR_TIMER, 4) {}
             StopMirrorTimer(int32 timer) : ServerPacket(SMSG_STOP_MIRROR_TIMER, 4), Timer(timer) { }
 
             WorldPacket const* Write() override;
