@@ -842,7 +842,7 @@ class spell_copy_melee_weapon : public AuraScript
 {
     PrepareAuraScript(spell_copy_melee_weapon)
 
-    uint32 uiTargetDefaultWeapon;
+        uint32 uiTargetDefaultWeapon;
 
     bool Load()
     {
@@ -882,8 +882,8 @@ class spell_copy_melee_weapon : public AuraScript
 
     void Register() override
     {
-        OnEffectApply += AuraEffectApplyFn(spell_copy_melee_weapon::ApplyEffect, EFFECT_0, SPELL_AURA_PERIODIC_DUMMY, AURA_EFFECT_HANDLE_REAL);
-        OnEffectRemove += AuraEffectRemoveFn(spell_copy_melee_weapon::RemoveEffect, EFFECT_0, SPELL_AURA_PERIODIC_DUMMY, AURA_EFFECT_HANDLE_REAL);
+        OnEffectApply += AuraEffectApplyFn(spell_copy_melee_weapon::ApplyEffect, EFFECT_0, SPELL_AURA_MOD_DISARM, AURA_EFFECT_HANDLE_REAL);
+        OnEffectRemove += AuraEffectRemoveFn(spell_copy_melee_weapon::RemoveEffect, EFFECT_0, SPELL_AURA_MOD_DISARM, AURA_EFFECT_HANDLE_REAL);
     }
 };
 
