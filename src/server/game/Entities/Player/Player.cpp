@@ -32145,10 +32145,20 @@ void Player::UpdateUnderwaterState(Map* m, float x, float y, float z)
     }
 
 
-    // All liquids type - check under water position
+    // All liquids type - check "head under water" for breathing
     if (liquid_status.type_flags & (MAP_LIQUID_TYPE_WATER | MAP_LIQUID_TYPE_OCEAN | MAP_LIQUID_TYPE_MAGMA | MAP_LIQUID_TYPE_SLIME))
     {
-        if (res & LIQUID_MAP_UNDER_WATER)
+        bool headUnder = false;
+
+        // only meaningful if we're in/under water at the unit position
+        if (res & (LIQUID_MAP_IN_WATER | LIQUID_MAP_UNDER_WATER))
+        {
+            // Tune factor (0.7f–0.9f).
+            float headZ = z + (GetCollisionHeight() * 0.9f);
+            headUnder = liquid_status.level > headZ;
+        }
+
+        if (headUnder)
             m_MirrorTimerFlags |= UNDERWATER_INWATER;
         else
             m_MirrorTimerFlags &= ~UNDERWATER_INWATER;
