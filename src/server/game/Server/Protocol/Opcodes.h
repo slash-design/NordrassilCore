@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
- * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -12,16 +11,12 @@
  * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
  * more details.
  *
- * You should have received a copy of the GNU General Public License alonge
+ * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/// \addtogroup u2w
-/// @{
-/// \file
-
-#ifndef _OPCODES_H
-#define _OPCODES_H
+#ifndef OPCODES_H
+#define OPCODES_H
 
 #include "Define.h"
 #include <string>
@@ -576,6 +571,7 @@ enum OpcodeClient : uint16
     CMSG_QUEST_CONFIRM_ACCEPT                               = 0x34A1,
     CMSG_QUEST_GIVER_ACCEPT_QUEST                           = 0x349B,
     CMSG_QUEST_GIVER_CHOOSE_REWARD                          = 0x349D,
+    CMSG_QUEST_GIVER_CLOSE_QUEST                            = 0x354D,
     CMSG_QUEST_GIVER_COMPLETE_QUEST                         = 0x349C,
     CMSG_QUEST_GIVER_HELLO                                  = 0x3499,
     CMSG_QUEST_GIVER_QUERY_QUEST                            = 0x349A,

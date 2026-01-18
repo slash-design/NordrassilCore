@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2008-2017 TrinityCore <http://www.trinitycore.org/>
- * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -16,8 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SC_SCRIPTMGR_H
-#define SC_SCRIPTMGR_H
+#ifndef SCRIPTMGR_H
+#define SCRIPTMGR_H
 
 #include <atomic>
 #include "Common.h"
@@ -874,6 +873,9 @@ public:
     // Called when a quest status change
     virtual void OnQuestStatusChange(Player* /*player*/, Quest const* /*quest*/, QuestStatus /*oldStatus*/, QuestStatus /*newStatus*/) { }
 
+    // Called for auto accept quests when player closes quest UI after seeing initial quest details
+    virtual void OnAcknowledgeAutoAccept(Player* /*player*/, Quest const* /*quest*/) {}
+
     // Called when a quest objective data change
     virtual void OnQuestObjectiveChange(Player* /*player*/, Quest const* /*quest*/, QuestObjective const* /*objective*/, int32 /*oldAmount*/, int32 /*newAmount*/) { }
 };
@@ -1124,6 +1126,7 @@ class ScriptMgr
     
         /* QuestScript */
         void OnQuestStatusChange(Player* player, Quest const* quest, QuestStatus oldStatus, QuestStatus newStatus);
+        void OnQuestAcknowledgeAutoAccept(Player* player, Quest const* quest);
         void OnQuestObjectiveChange(Player* player, Quest const* quest, QuestObjective const* objective, int32 oldAmount, int32 newAmount);
 
     private:
