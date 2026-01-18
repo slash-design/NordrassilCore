@@ -142,6 +142,9 @@ void LoginDatabaseConnection::DoPrepareStatements()
 
     PrepareStatement(LOGIN_SEL_MOTD, "SELECT realmid, locale, text FROM motd WHERE realmid IN (?, -1) ORDER BY realmid DESC", CONNECTION_SYNCH);
     PrepareStatement(LOGIN_REP_MOTD, "REPLACE INTO motd (realmid, locale, text) VALUES (?, ?, ?)", CONNECTION_SYNCH);
+
+    // Autobroadcasts: realmId = -1 (global) + realm override, per-locale text
+    PrepareStatement(LOGIN_SEL_AUTOBROADCASTS, "SELECT realmId, locale, text FROM autobroadcast WHERE active = 1 AND realmId IN (-1, ?) ORDER BY realmId DESC", CONNECTION_SYNCH);
 }
 
 LoginDatabaseConnection::LoginDatabaseConnection(MySQLConnectionInfo& connInfo, ConnectionFlags connectionFlags) : MySQLConnection(connInfo, connectionFlags)

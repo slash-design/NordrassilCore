@@ -1059,7 +1059,9 @@ class World
         // used versions
         std::string m_DBVersion;
 
-        std::list<std::string> m_Autobroadcasts;
+        // realmId -> locale -> list of texts
+        // realmId = -1 means "all realms", but realm-specific entries override global.
+        std::unordered_map<int32, std::unordered_map<uint8, std::vector<std::string>>> m_Autobroadcasts;
 
         typedef std::map<ObjectGuid, CharacterInfo> CharacterInfoContainer;
         CharacterInfoContainer _characterInfoStore;

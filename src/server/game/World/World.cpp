@@ -2427,12 +2427,13 @@ void World::LoadAutobroadcasts()
 
     m_Autobroadcasts.clear();
 
-    QueryResult result = WorldDatabase.Query("SELECT text FROM autobroadcast");
+    LoginDatabasePreparedStatement * stmt = LoginDatabase.GetPreparedStatement(LOGIN_SEL_AUTOBROADCASTS);
+    stmt->setUInt32(0, GetRealmId());
+    PreparedQueryResult result = LoginDatabase.Query(stmt);
 
     if (!result)
     {
         TC_LOG_INFO("server.loading", ">> Loaded 0 autobroadcasts definitions. DB table `autobroadcast` is empty!");
-
         return;
     }
 
@@ -2440,17 +2441,21 @@ void World::LoadAutobroadcasts()
 
     do
     {
-
         Field* fields = result->Fetch();
-        std::string message = fields[0].GetString();
+        int32 realmId = fields[0].GetInt32();
+        uint8 locale = fields[1].GetUInt8();
+        std::string message = fields[2].GetString();
+        
+        // Normalize invalid locale -> enUS
+        if (locale == LOCALE_none || locale >= MAX_LOCALES)
+        locale = LOCALE_enUS;
 
-        m_Autobroadcasts.push_back(message);
+        m_Autobroadcasts[realmId][locale].push_back(std::move(message));
 
         ++count;
     } while (result->NextRow());
 
     TC_LOG_INFO("server.loading", ">> Loaded %u autobroadcasts definitions in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
-
 }
 
 /// Update the World !
@@ -3417,25 +3422,82 @@ void World::ProcessCliCommands()
 
 void World::SendAutoBroadcast()
 {
-    if (m_Autobroadcasts.empty())
-        return;
-
-    auto const& msg = Trinity::Containers::SelectRandomContainerElement(m_Autobroadcasts);
-
     uint32 abcenter = sWorld->getIntConfig(CONFIG_AUTOBROADCAST_CENTER);
 
-    if (abcenter == 0)
-        sWorld->SendWorldText(LANG_AUTO_BROADCAST, msg.c_str());
+    if (m_Autobroadcasts.empty() || m_sessions.empty())
+        return;
 
-    else if (abcenter == 1)
-        sWorld->SendGlobalMessage(WorldPackets::Chat::PrintNotification(msg).Write());
-    else if (abcenter == 2)
+    int32 realmId = int32(GetRealmId());
+
+    auto GetVectorFor = [&](int32 rId, uint8 loc) -> std::vector<std::string> const*
     {
-        sWorld->SendWorldText(LANG_AUTO_BROADCAST, msg.c_str());
-        sWorld->SendGlobalMessage(WorldPackets::Chat::PrintNotification(msg).Write());
-    }
+        auto itRealm = m_Autobroadcasts.find(rId);
+        if (itRealm == m_Autobroadcasts.end())
+            return nullptr;
 
-    TC_LOG_DEBUG("misc", "AutoBroadcast: '%s'", msg.c_str());
+        auto itLoc = itRealm->second.find(loc);
+        if (itLoc == itRealm->second.end() || itLoc->second.empty())
+            return nullptr;
+
+        return &itLoc->second;
+    };
+
+    auto SelectMessageForLocale = [&](uint8 loc) -> std::string const*
+    {
+        if (auto v = GetVectorFor(realmId, loc))
+            return &Trinity::Containers::SelectRandomContainerElement(*v);
+
+        if (auto v = GetVectorFor(-1, loc))
+            return &Trinity::Containers::SelectRandomContainerElement(*v);
+
+        if (auto v = GetVectorFor(realmId, LOCALE_enUS))
+            return &Trinity::Containers::SelectRandomContainerElement(*v);
+
+        if (auto v = GetVectorFor(-1, LOCALE_enUS))
+            return &Trinity::Containers::SelectRandomContainerElement(*v);
+
+        return nullptr;
+    };
+
+    std::unordered_map<uint8, std::string const*> msgPerLocale;
+
+    for (SessionMap::const_iterator itr = m_sessions.begin(); itr != m_sessions.end(); ++itr)
+    {
+        WorldSession* session = itr->second.get();
+        if (!session)
+            continue;
+
+        Player* player = session->GetPlayer();
+        if (!player || !player->IsInWorld())
+            continue;
+
+        LocaleConstant locale = session->GetSessionDbLocaleIndex();
+        if (locale == LOCALE_none || locale >= MAX_LOCALES)
+            locale = LOCALE_enUS;
+
+        uint8 loc = uint8(locale);
+
+        auto itMsg = msgPerLocale.find(loc);
+        if (itMsg == msgPerLocale.end())
+        {
+            std::string const* picked = SelectMessageForLocale(loc);
+            msgPerLocale.emplace(loc, picked);
+            itMsg = msgPerLocale.find(loc);
+        }
+
+        std::string const* msg = itMsg->second;
+        if (!msg)
+            continue;
+
+        // 0 = system text, 1 = notification, 2 = both
+        if (abcenter == 0 || abcenter == 2)
+            ChatHandler(player->GetSession()).PSendSysMessage("%s", msg->c_str());
+
+        if (abcenter == 1 || abcenter == 2)
+            player->SendDirectMessage(WorldPackets::Chat::PrintNotification(*msg).Write());
+
+        TC_LOG_DEBUG("misc", "AutoBroadcast: realm=%i locale=%u '%s'", realmId, uint32(loc), msg->c_str());
+    }
 }
 
 void World::UpdateRealmCharCount(uint32 accountId)

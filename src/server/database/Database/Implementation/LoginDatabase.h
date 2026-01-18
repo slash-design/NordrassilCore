@@ -133,6 +133,8 @@ enum LoginDatabaseStatements : uint32
     LOGIN_SEL_MOTD,
     LOGIN_REP_MOTD,
 
+    LOGIN_SEL_AUTOBROADCASTS,
+
     MAX_LOGINDATABASE_STATEMENTS,
 };
 
