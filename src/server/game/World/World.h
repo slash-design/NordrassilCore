@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
- * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -16,12 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/// \addtogroup world The World
-/// @{
-/// \file
-
-#ifndef __WORLD_H
-#define __WORLD_H
+#ifndef WORLD_H
+#define WORLD_H
 
 #include "AsyncCallbackProcessor.h"
 #include "Common.h"
@@ -740,7 +735,6 @@ class World
         void SetClosed(bool val);
 
         void ProcessMailboxQueue();
-        void Transfer();
 
         uint32 GetPvPMysticCount() const { return m_pvpMysticCount; }
         void AddPvPMysticCount() { m_pvpMysticCount++; }

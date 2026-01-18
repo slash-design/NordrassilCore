@@ -1639,18 +1639,18 @@ public:
                         return false;
                     }
 
-                    LoginDatabasePreparedStatement * stmt = LoginDatabase.GetPreparedStatement(LOGIN_SET_DUMP);
-                    if(stmt)
-                    {
-                        stmt->setUInt32(0, account_id);
-                        stmt->setUInt64(1, guid);
-                        stmt->setUInt32(2, realm.Id.Realm);
-                        stmt->setUInt32(3, player->GetTransferId());
-                        stmt->setUInt32(4, 1);
-                        stmt->setString(5, dump);
-                        LoginDatabase.Execute(stmt);
-                    }
-                    CharacterDatabase.PQuery("UPDATE characters SET deleteInfos_Name = name, deleteInfos_Account = account, deleteDate = UNIX_TIMESTAMP(), name = '', account = 0, `transfer` = '%u' WHERE guid = %u", player->GetTransferId(), guid);
+                    //LoginDatabasePreparedStatement * stmt = LoginDatabase.GetPreparedStatement(LOGIN_SET_DUMP);
+                    //if(stmt)
+                    //{
+                    //    stmt->setUInt32(0, account_id);
+                    //    stmt->setUInt64(1, guid);
+                    //    stmt->setUInt32(2, realm.Id.Realm);
+                    //    stmt->setUInt32(3, player->GetTransferId());
+                    //    stmt->setUInt32(4, 1);
+                    //    stmt->setString(5, dump);
+                    //    LoginDatabase.Execute(stmt);
+                    //}
+                    //CharacterDatabase.PQuery("UPDATE characters SET deleteInfos_Name = name, deleteInfos_Account = account, deleteDate = UNIX_TIMESTAMP(), name = '', account = 0, `transfer` = '%u' WHERE guid = %u", player->GetTransferId(), guid);
 
                     if(player->GetGUID().GetCounter() == guid)
                         player->GetSession()->KickPlayer();

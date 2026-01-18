@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2018 TrinityCore <https://www.trinitycore.org/>
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -15,8 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _LOGINDATABASE_H
-#define _LOGINDATABASE_H
+#ifndef LOGINDATABASE_H
+#define LOGINDATABASE_H
 
 #include "MySQLConnection.h"
 
@@ -84,10 +84,6 @@ enum LoginDatabaseStatements : uint32
     LOGIN_SEL_REALMLIST_SECURITY_LEVEL,
     LOGIN_DEL_ACCOUNT,
 
-    LOGIN_SET_DUMP,
-    LOGIN_UPD_DUMP,
-    LOGIN_ADD_TRANSFERTS_LOGS,
-
     LOGIN_SEL_BNET_ACCOUNT_INFO,
     LOGIN_SEL_BNET_ACCOUNT_INFO_BY_ACC,
     LOGIN_UPD_BNET_LAST_LOGIN_INFO,
@@ -133,7 +129,6 @@ enum LoginDatabaseStatements : uint32
 
     LOGIN_SEL_ACCOUNT_CHARACTER_TEMPLATE,
     LOGIN_UPD_ACCOUNT_CHARACTER_TEMPLATE,
-    LOGIN_UPD_TRANSFER_REQUESTS,
 
     LOGIN_SEL_MOTD,
     LOGIN_REP_MOTD,

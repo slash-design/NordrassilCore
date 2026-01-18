@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
- * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -15,10 +14,6 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
-/** \file
-    \ingroup u2w
-*/
 
 #include <zlib.h>
 #include <utility>
@@ -952,7 +947,6 @@ void WorldSession::LoadCharacterTemplates(PreparedQueryResult const& result)
         templateData.iLevel = fields[2].GetUInt32();
         templateData.money = fields[3].GetUInt32();
         templateData.artifact = fields[4].GetBool();
-        templateData.transferId = fields[5].GetUInt32();
         templateData.templateId = fields[6].GetUInt32();
         templateData.charTemplate = sCharacterDataStore->GetCharacterTemplate(templateData.templateId);
     }
