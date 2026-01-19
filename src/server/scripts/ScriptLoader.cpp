@@ -34,7 +34,6 @@ void AddSC_midsummer_fire_festival();
 void AddSC_bracket_commandscript();
 void AddSC_multi_vendor();
 void AddSC_traffic_commandscript();
-void AddSC_custum_trainer();
 void AddSC_command_donate();
 void AddSC_command_arena();
 void AddSC_npc_profession();
@@ -1920,7 +1919,6 @@ void AddCustomScripts()
     AddSC_bracket_commandscript();
     AddSC_multi_vendor();
     AddSC_traffic_commandscript();
-    AddSC_custum_trainer();
     AddSC_command_donate();
     AddSC_command_arena();
     AddSC_npc_profession();
