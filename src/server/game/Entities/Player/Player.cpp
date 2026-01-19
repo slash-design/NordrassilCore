@@ -3458,11 +3458,14 @@ void Player::SetGameMaster(bool on)
         m_serverSideVisibilityDetect.SetValue(SERVERSIDE_VISIBILITY_GM, SEC_PLAYER);
 
         AddDelayedEvent(100, [this]() -> void
-        {
-            GetPhaseMgr().AddUpdateFlag(PHASE_UPDATE_FLAG_SERVERSIDE_CHANGED);
-            GetPhaseMgr().RemoveUpdateFlag(PHASE_UPDATE_FLAG_ZONE_UPDATE);
-            GetPhaseMgr().Update();
-        });
+            {
+                // After leaving GM mode, rebuild the phase state and send it to the client
+                NeedPhaseRecalculate = true;
+                NeedPhaseUpdate = true;
+
+                GetPhaseMgr().AddUpdateFlag(PHASE_UPDATE_FLAG_SERVERSIDE_CHANGED);
+                GetPhaseMgr().AddUpdateFlag(PHASE_UPDATE_FLAG_CLIENTSIDE_CHANGED);
+            });
     }
 
     UpdateObjectVisibility();
