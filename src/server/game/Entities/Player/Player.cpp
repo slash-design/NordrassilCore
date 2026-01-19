@@ -8787,16 +8787,7 @@ void Player::CheckAreaExploreAndOutdoor()
                 else
                     XP = uint32(sObjectMgr->GetBaseXP(areaEntry->ExplorationLevel) * ExploreXpRate);
 
-				//XP custom Nordrassil
-				int8 bonus = 1;
-				/////////////////////////////////////////////////////
-				if (getLevel() < 60)
-					bonus = 5;
-				if (getLevel() < 100 && getLevel() >= 60)
-					bonus = 3;
-
-
-                GiveXP((XP * bonus), NULL);
+                GiveXP(XP, NULL);
                 SendExplorationExperience(areaId, XP);
             }
             TC_LOG_DEBUG("entities.player", "Player %u discovered a new area: %u", GetGUIDLow(), areaId);
@@ -19420,23 +19411,13 @@ void Player::RewardQuest(Quest const* quest, uint32 reward, Object* questGiver, 
 
     int32 moneyRew = 0;
 
-	//XP custom Nordrassil
-	int8 bonus = 1;
-	/////////////////////////////////////////////////////
-	if (getLevel() < 60)
-		bonus = 5;
-	if (getLevel() < 80 && getLevel() >= 60)
-		bonus = 3;
-	if (getLevel() < 90 && getLevel() >= 80)
-		bonus = 2;
-	////////////////////////////////////////////////
     if (quest->GetRewMoneyMaxLevel() < 0)
         quest->GetRewMoneyMaxLevel();
     else if (getLevel() < sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL))
-        GiveXP((XP * bonus), nullptr);
+        GiveXP(XP, nullptr);
     else
         moneyRew = int32(quest->GetRewMoneyMaxLevel() * (GetMap()->IsDungeon() && sWorld->getBoolConfig(CONFIG_DROP_DUNGEON_ONLY_X1) ? 1.0f: sWorld->getRate(RATE_DROP_MONEY)));
-	//////////////////////////////////////////////////////////////
+
     // Give player extra money if GetRewMoney > 0 and get ReqMoney if negative
     if (GetQuestMoneyReward(quest))
         moneyRew += GetQuestMoneyReward(quest);
