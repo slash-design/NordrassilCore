@@ -976,19 +976,34 @@ void Loot::FillNotNormalLootFor(Player* player, bool presentAtLooting)
     // Process currency items
     std::list<CurrencyLoot> temp = sObjectMgr->GetCurrencyLoot(objEntry, objType, _DifficultyID);
     for (std::list<CurrencyLoot>::iterator i = temp.begin(); i != temp.end(); ++i)
-        if(CurrencyTypesEntry const* proto = sCurrencyTypesStore.LookupEntry(i->CurrencyId))
-        {
-            auto Roll = static_cast<float>(rand_chance());
-            if (i->chance < 100.0f && i->chance < Roll)
-                continue;
+    {
+        CurrencyTypesEntry const* proto = sCurrencyTypesStore.LookupEntry(i->CurrencyId);
+        if (!proto)
+            continue;
 
-            uint32 amount = 0.5f + urand(i->CurrencyAmount, i->currencyMaxAmount) * sDB2Manager.GetCurrencyPrecision(proto->ID);
+        float Roll = static_cast<float>(rand_chance());
+        if (i->chance < 100.0f && i->chance < Roll)
+            continue;
+
+        uint32 amount = 0.5f + urand(i->CurrencyAmount, i->currencyMaxAmount) * sDB2Manager.GetCurrencyPrecision(proto->ID);
+
+        // Archaeology fragments should be visible in loot window (currency loot), not auto-awarded
+        if (proto->CategoryID == CURRENCY_CATEGORY_ARCHAEOLOGY /* && objType == 3 */)
+        {
+            // adds currency to loot list -> client will show it in loot window
+            AddOrReplaceItem(i->CurrencyId, amount, true, true);
+        }
+        else
+        {
+            // default behavior: auto-award currency
             player->ModifyCurrency(i->CurrencyId, amount, true);
 
             // log Veiled Argunite and Wakening Essence currency
             if (i->CurrencyId == 1508 || i->CurrencyId == 1533)
-                sLog->outWarden("Player %s (GUID: %u) adds a currency value %u (%u) from not normal loot %u and type %u", player->GetName(), player->GetGUIDLow(), amount, i->CurrencyId, objEntry, objType);
+                sLog->outWarden("Player %s (GUID: %u) adds a currency value %u (%u) from not normal loot %u and type %u",
+                    player->GetName(), player->GetGUIDLow(), amount, i->CurrencyId, objEntry, objType);
         }
+    }
 }
 
 void Loot::clear()
