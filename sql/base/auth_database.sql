@@ -18,28 +18,28 @@ DROP TABLE IF EXISTS `account`;
 
 CREATE TABLE `account` (
   `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Identifier',
-  `username` varchar(32) NOT NULL DEFAULT '',
-  `sha_pass_hash` varchar(40) NOT NULL DEFAULT '',
-  `sessionkey` varchar(512) NOT NULL DEFAULT '',
-  `v` varchar(64) NOT NULL DEFAULT '',
-  `s` varchar(64) NOT NULL DEFAULT '',
-  `email` varchar(254) NOT NULL DEFAULT '',
+  `username` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `sha_pass_hash` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `sessionkey` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `v` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `s` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `email` varchar(254) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `joindate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `last_ip` varchar(15) NOT NULL DEFAULT '127.0.0.1',
+  `last_ip` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '127.0.0.1',
   `failed_logins` int unsigned NOT NULL DEFAULT '0',
   `locked` tinyint unsigned NOT NULL DEFAULT '0',
-  `lock_country` varchar(2) NOT NULL DEFAULT '00',
+  `lock_country` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '00',
   `last_login` timestamp NULL DEFAULT NULL,
   `online` tinyint unsigned NOT NULL DEFAULT '0',
   `expansion` tinyint unsigned NOT NULL DEFAULT '5',
   `mutetime` bigint NOT NULL DEFAULT '0',
   `locale` tinyint unsigned NOT NULL DEFAULT '0',
-  `os` varchar(10) NOT NULL DEFAULT '',
+  `os` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `recruiter` int unsigned NOT NULL DEFAULT '0',
   `battlenet_account` int unsigned DEFAULT NULL,
   `battlenet_index` tinyint unsigned DEFAULT NULL,
-  `mutereason` varchar(255) NOT NULL DEFAULT '',
-  `muteby` varchar(50) NOT NULL DEFAULT '',
+  `mutereason` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `muteby` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `AtAuthFlag` smallint unsigned NOT NULL DEFAULT '0',
   `coins` int NOT NULL DEFAULT '0',
   `hwid` bigint unsigned NOT NULL DEFAULT '0',
@@ -53,7 +53,7 @@ CREATE TABLE `account` (
   KEY `battlenet_index` (`battlenet_index`) USING BTREE,
   KEY `username_idx` (`username`) USING BTREE,
   KEY `hwid` (`hwid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Account System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Account System';
 
 /*Data for the table `account` */
 
@@ -69,11 +69,11 @@ CREATE TABLE `account_access` (
   `id` int unsigned NOT NULL,
   `gmlevel` tinyint unsigned NOT NULL,
   `RealmID` int NOT NULL DEFAULT '-1',
-  `comments` varchar(50) NOT NULL DEFAULT '',
+  `comments` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`,`RealmID`) USING BTREE,
   KEY `id` (`id`) USING BTREE,
   KEY `RealmID` (`RealmID`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `account_access` */
 
@@ -89,15 +89,15 @@ CREATE TABLE `account_banned` (
   `id` int unsigned NOT NULL DEFAULT '0' COMMENT 'Account id',
   `bandate` int unsigned NOT NULL DEFAULT '0',
   `unbandate` int unsigned NOT NULL DEFAULT '0',
-  `bannedby` varchar(50) NOT NULL,
-  `banreason` varchar(255) NOT NULL,
+  `bannedby` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `banreason` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `active` tinyint unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`,`bandate`) USING BTREE,
   KEY `id` (`id`) USING BTREE,
   KEY `bandate` (`bandate`) USING BTREE,
   KEY `unbandate` (`unbandate`) USING BTREE,
   KEY `active` (`active`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Ban List';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Ban List';
 
 /*Data for the table `account_banned` */
 
@@ -117,7 +117,6 @@ CREATE TABLE `account_character_template` (
   `iLevel` mediumint NOT NULL DEFAULT '810',
   `money` int unsigned NOT NULL DEFAULT '100',
   `artifact` tinyint(1) NOT NULL DEFAULT '0',
-  `transferId` int NOT NULL DEFAULT '0',
   `charGuid` int NOT NULL DEFAULT '0',
   `realm` int NOT NULL DEFAULT '0',
   `templateId` int NOT NULL DEFAULT '0',
@@ -125,10 +124,9 @@ CREATE TABLE `account_character_template` (
   KEY `id` (`id`) USING BTREE,
   KEY `account` (`account`) USING BTREE,
   KEY `bnet_account` (`bnet_account`) USING BTREE,
-  KEY `transferId` (`transferId`) USING BTREE,
   KEY `charGuid` (`charGuid`) USING BTREE,
   KEY `realm` (`realm`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `account_character_template` */
 
@@ -143,10 +141,10 @@ DROP TABLE IF EXISTS `account_flagged`;
 CREATE TABLE `account_flagged` (
   `id` int unsigned NOT NULL DEFAULT '0' COMMENT 'Account Id',
   `banduration` int unsigned NOT NULL DEFAULT '0',
-  `bannedby` varchar(50) NOT NULL,
-  `banreason` varchar(255) NOT NULL,
+  `bannedby` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `banreason` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `account_flagged` */
 
@@ -161,13 +159,13 @@ DROP TABLE IF EXISTS `account_ip_access`;
 CREATE TABLE `account_ip_access` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `pid` int unsigned DEFAULT NULL,
-  `ip` varchar(18) DEFAULT NULL,
-  `min` varchar(15) NOT NULL DEFAULT '',
-  `max` varchar(15) NOT NULL DEFAULT '',
+  `ip` varchar(18) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `min` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `max` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `enable` tinyint unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `pid_ip` (`pid`,`ip`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `account_ip_access` */
 
@@ -184,7 +182,7 @@ CREATE TABLE `account_last_played_character` (
   `region` tinyint unsigned NOT NULL,
   `battlegroup` tinyint unsigned NOT NULL,
   `realmId` int unsigned DEFAULT NULL,
-  `characterName` varchar(12) DEFAULT NULL,
+  `characterName` varchar(12) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `characterGUID` bigint unsigned DEFAULT NULL,
   `lastPlayedTime` int unsigned DEFAULT NULL,
   PRIMARY KEY (`accountId`,`region`,`battlegroup`) USING BTREE,
@@ -192,7 +190,7 @@ CREATE TABLE `account_last_played_character` (
   KEY `region` (`region`) USING BTREE,
   KEY `battlegroup` (`battlegroup`) USING BTREE,
   KEY `realmId` (`realmId`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `account_last_played_character` */
 
@@ -209,10 +207,10 @@ DROP TABLE IF EXISTS `account_log_ip`;
 
 CREATE TABLE `account_log_ip` (
   `accountid` int unsigned NOT NULL,
-  `ip` varchar(30) NOT NULL DEFAULT '0.0.0.0',
+  `ip` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0.0.0.0',
   `date` datetime DEFAULT NULL,
   PRIMARY KEY (`accountid`,`ip`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `account_log_ip` */
 
@@ -228,10 +226,10 @@ CREATE TABLE `account_mute` (
   `guid` int unsigned NOT NULL DEFAULT '0' COMMENT 'Global Unique Identifier',
   `mutedate` int unsigned NOT NULL DEFAULT '0',
   `mutetime` int unsigned NOT NULL DEFAULT '0',
-  `mutedby` varchar(50) NOT NULL,
-  `mutereason` varchar(255) NOT NULL,
+  `mutedby` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mutereason` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`guid`,`mutedate`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='mute List';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='mute List';
 
 /*Data for the table `account_mute` */
 
@@ -247,14 +245,14 @@ CREATE TABLE `account_muted` (
   `id` int NOT NULL DEFAULT '0' COMMENT 'Account id',
   `bandate` bigint NOT NULL DEFAULT '0',
   `unbandate` bigint NOT NULL DEFAULT '0',
-  `bannedby` varchar(50) NOT NULL,
-  `banreason` varchar(255) NOT NULL,
+  `bannedby` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `banreason` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `active` tinyint NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`,`bandate`) USING BTREE,
   KEY `bandate` (`bandate`) USING BTREE,
   KEY `unbandate` (`unbandate`) USING BTREE,
   KEY `active` (`active`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Ban List';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Ban List';
 
 /*Data for the table `account_muted` */
 
@@ -272,7 +270,7 @@ CREATE TABLE `account_rates` (
   `realm` int unsigned NOT NULL DEFAULT '0',
   `rate` int unsigned NOT NULL DEFAULT '0',
   UNIQUE KEY `unique` (`account`,`bnet_account`,`realm`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `account_rates` */
 
@@ -286,12 +284,12 @@ DROP TABLE IF EXISTS `account_reputation`;
 
 CREATE TABLE `account_reputation` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `username` varchar(32) NOT NULL DEFAULT '',
-  `reputation` varchar(5) NOT NULL DEFAULT '0',
-  `reason` varchar(255) NOT NULL DEFAULT '',
-  `date` varchar(32) NOT NULL,
+  `username` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `reputation` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
+  `reason` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `date` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `account_reputation` */
 
@@ -306,20 +304,20 @@ DROP TABLE IF EXISTS `account_spec`;
 CREATE TABLE `account_spec` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `oldid` int unsigned NOT NULL COMMENT 'Identifier',
-  `username` varchar(32) NOT NULL,
-  `sha_pass_hash` varchar(40) NOT NULL DEFAULT '',
+  `username` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sha_pass_hash` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `gmlevel` tinyint unsigned NOT NULL DEFAULT '0',
-  `sessionkey` longtext,
-  `v` longtext,
-  `s` longtext,
-  `email` text,
-  `email_new` varchar(50) DEFAULT NULL,
+  `sessionkey` longtext COLLATE utf8mb4_unicode_ci,
+  `v` longtext COLLATE utf8mb4_unicode_ci,
+  `s` longtext COLLATE utf8mb4_unicode_ci,
+  `email` mediumtext COLLATE utf8mb4_unicode_ci,
+  `email_new` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `joindate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `last_ip` varchar(30) NOT NULL DEFAULT '0.0.0.0',
+  `last_ip` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0.0.0.0',
   `failed_logins` int unsigned NOT NULL DEFAULT '0',
   `locked` tinyint unsigned NOT NULL DEFAULT '0',
   `last_login` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `last_module` char(32) DEFAULT '',
+  `last_module` char(32) COLLATE utf8mb4_unicode_ci DEFAULT '',
   `module_day` mediumint unsigned NOT NULL DEFAULT '0',
   `active_realm_id` int unsigned NOT NULL DEFAULT '0',
   `expansion` tinyint unsigned NOT NULL DEFAULT '3',
@@ -332,13 +330,13 @@ CREATE TABLE `account_spec` (
   `access_mask` tinyint(1) NOT NULL DEFAULT '0',
   `realmgm` tinyint unsigned NOT NULL DEFAULT '0',
   `online` tinyint unsigned NOT NULL DEFAULT '0',
-  `sha_new_pass` varchar(40) NOT NULL DEFAULT '',
-  `newpassword` varchar(50) DEFAULT NULL,
-  `protectedkey` varchar(40) DEFAULT NULL,
+  `sha_new_pass` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `newpassword` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `protectedkey` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `found` tinyint unsigned NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `idx_username` (`username`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=1152679 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=1152679 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `account_spec` */
 
@@ -358,7 +356,7 @@ CREATE TABLE `account_spell` (
   PRIMARY KEY (`accountId`,`spell`) USING BTREE,
   KEY `account` (`accountId`) USING BTREE,
   KEY `account_spell` (`accountId`,`spell`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `account_spell` */
 
@@ -371,16 +369,53 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `autobroadcast`;
 
 CREATE TABLE `autobroadcast` (
-  `realmid` int NOT NULL DEFAULT '-1',
-  `id` tinyint unsigned NOT NULL AUTO_INCREMENT,
-  `weight` tinyint unsigned DEFAULT '1',
-  `text` longtext NOT NULL,
-  PRIMARY KEY (`id`,`realmid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `realmId` int NOT NULL DEFAULT '-1',
+  `locale` tinyint unsigned NOT NULL DEFAULT '0',
+  `text` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `active` tinyint unsigned NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `idx_realm_locale_active` (`realmId`,`locale`,`active`)
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `autobroadcast` */
 
 LOCK TABLES `autobroadcast` WRITE;
+
+insert  into `autobroadcast`(`id`,`realmId`,`locale`,`text`,`active`) values 
+(1,-1,0,'Tip: Use /help to see available commands.',1),
+(2,-1,0,'Reminder: Be respectful in chat and have fun!',1),
+(3,-1,0,'Join our community: use /discord to get the link.',1),
+(4,-1,1,'팁: /help 로 사용 가능한 명령어를 확인하세요.',1),
+(5,-1,1,'알림: 채팅 매너를 지켜주세요. 즐거운 게임 되세요!',1),
+(6,-1,1,'커뮤니티 참여: /discord 로 링크를 확인하세요.',1),
+(7,-1,2,'Astuce : utilisez /help pour voir les commandes disponibles.',1),
+(8,-1,2,'Rappel : restez respectueux sur le chat et amusez-vous !',1),
+(9,-1,2,'Rejoignez la communauté : utilisez /discord pour le lien.',1),
+(10,-1,3,'Tipp: Mit /help siehst du alle verfügbaren Befehle.',1),
+(11,-1,3,'Hinweis: Bitte bleibt respektvoll im Chat – viel Spaß!',1),
+(12,-1,3,'Community: Nutze /discord um den Link zu erhalten.',1),
+(13,-1,4,'提示：使用 /help 查看可用命令。',1),
+(14,-1,4,'提醒：请文明聊天，祝你游戏愉快！',1),
+(15,-1,4,'加入社区：输入 /discord 获取链接。',1),
+(16,-1,5,'提示：使用 /help 查看可用指令。',1),
+(17,-1,5,'提醒：請保持友善聊天，祝你玩得愉快！',1),
+(18,-1,5,'加入社群：輸入 /discord 取得連結。',1),
+(19,-1,6,'Consejo: usa /help para ver los comandos disponibles.',1),
+(20,-1,6,'Recordatorio: sé respetuoso en el chat y ¡diviértete!',1),
+(21,-1,6,'Únete a la comunidad: usa /discord para obtener el enlace.',1),
+(22,-1,7,'Consejo: usa /help para ver los comandos disponibles.',1),
+(23,-1,7,'Recordatorio: sé respetuoso en el chat y ¡pásala bien!',1),
+(24,-1,7,'Únete a la comunidad: usa /discord para obtener el enlace.',1),
+(25,-1,8,'Совет: используйте /help, чтобы увидеть доступные команды.',1),
+(26,-1,8,'Напоминание: уважайте других в чате и приятной игры!',1),
+(27,-1,8,'Присоединяйтесь к сообществу: используйте /discord для ссылки.',1),
+(28,-1,10,'Dica: use /help para ver os comandos disponíveis.',1),
+(29,-1,10,'Lembrete: seja respeitoso no chat e divirta-se!',1),
+(30,-1,10,'Entre na comunidade: use /discord para pegar o link.',1),
+(31,-1,11,'Suggerimento: usa /help per vedere i comandi disponibili.',1),
+(32,-1,11,'Promemoria: sii rispettoso in chat e buon divertimento!',1),
+(33,-1,11,'Unisciti alla community: usa /discord per ottenere il link.',1);
 
 UNLOCK TABLES;
 
@@ -392,15 +427,15 @@ CREATE TABLE `battlenet_account_bans` (
   `id` int unsigned NOT NULL DEFAULT '0' COMMENT 'Account id',
   `bandate` int unsigned NOT NULL DEFAULT '0',
   `unbandate` int unsigned NOT NULL DEFAULT '0',
-  `bannedby` varchar(50) NOT NULL,
-  `banreason` varchar(255) NOT NULL,
+  `bannedby` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `banreason` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `active` tinyint unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`,`bandate`) USING BTREE,
   KEY `id` (`id`) USING BTREE,
   KEY `bandate` (`bandate`) USING BTREE,
   KEY `unbandate` (`unbandate`) USING BTREE,
   KEY `active` (`active`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Ban List';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Ban List';
 
 /*Data for the table `battlenet_account_bans` */
 
@@ -417,7 +452,7 @@ CREATE TABLE `battlenet_account_toys` (
   `itemId` int NOT NULL DEFAULT '0',
   `isFavourite` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`accountId`,`itemId`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 ROW_FORMAT=FIXED;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `battlenet_account_toys` */
 
@@ -431,38 +466,38 @@ DROP TABLE IF EXISTS `battlenet_accounts`;
 
 CREATE TABLE `battlenet_accounts` (
   `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Identifier',
-  `email` varchar(255) NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_blocked` int unsigned NOT NULL DEFAULT '0',
-  `sha_pass_hash` varchar(512) NOT NULL DEFAULT '',
+  `sha_pass_hash` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `balans` int unsigned NOT NULL DEFAULT '30',
   `karma` int unsigned NOT NULL DEFAULT '0',
   `activate` tinyint unsigned NOT NULL DEFAULT '1',
   `verify` tinyint unsigned NOT NULL DEFAULT '0',
   `tested` tinyint unsigned NOT NULL DEFAULT '0',
   `donate` int unsigned NOT NULL DEFAULT '0',
-  `phone` varchar(255) NOT NULL DEFAULT '',
-  `phone_hash` varchar(32) NOT NULL DEFAULT '',
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `phone_hash` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `telegram_lock` tinyint unsigned NOT NULL DEFAULT '0',
   `telegram_id` int unsigned NOT NULL DEFAULT '0',
-  `v` varchar(512) NOT NULL DEFAULT '',
-  `s` varchar(512) NOT NULL DEFAULT '',
-  `sessionKey` varchar(512) NOT NULL DEFAULT '',
+  `v` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `s` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `sessionKey` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `joindate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `last_ip` varchar(15) NOT NULL DEFAULT '127.0.0.1',
+  `last_ip` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '127.0.0.1',
   `access_ip` int unsigned NOT NULL DEFAULT '0',
   `failed_logins` int unsigned NOT NULL DEFAULT '0',
   `locked` tinyint unsigned NOT NULL DEFAULT '0',
-  `lock_country` varchar(2) NOT NULL DEFAULT '00',
+  `lock_country` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '00',
   `last_login` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `last_email` timestamp NULL DEFAULT NULL,
   `online` tinyint unsigned NOT NULL DEFAULT '0',
   `locale` tinyint unsigned NOT NULL DEFAULT '0',
-  `os` varchar(10) NOT NULL DEFAULT '',
+  `os` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `recruiter` int NOT NULL DEFAULT '0',
-  `invite` varchar(32) NOT NULL DEFAULT '',
-  `lang` enum('tw','cn','en','ua','ru') NOT NULL DEFAULT 'ru',
-  `referer` varchar(255) NOT NULL DEFAULT '',
-  `unsubscribe` varchar(32) NOT NULL DEFAULT '0',
+  `invite` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `lang` enum('tw','cn','en','ua','ru') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'ru',
+  `referer` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `unsubscribe` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
   `dt_vote` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `email` (`email`) USING BTREE,
@@ -470,7 +505,7 @@ CREATE TABLE `battlenet_accounts` (
   KEY `recruiter` (`recruiter`) USING BTREE,
   KEY `email_idx` (`email`) USING BTREE,
   KEY `sha_pass_hash` (`sha_pass_hash`(255)) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Account System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Account System';
 
 /*Data for the table `battlenet_accounts` */
 
@@ -483,11 +518,11 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `battlenet_components`;
 
 CREATE TABLE `battlenet_components` (
-  `Program` varchar(4) NOT NULL,
-  `Platform` varchar(4) NOT NULL,
+  `Program` varchar(4) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `Platform` varchar(4) COLLATE utf8mb4_unicode_ci NOT NULL,
   `Build` int unsigned NOT NULL,
   PRIMARY KEY (`Program`,`Platform`,`Build`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `battlenet_components` */
 
@@ -500,14 +535,14 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `battlenet_modules`;
 
 CREATE TABLE `battlenet_modules` (
-  `Hash` varchar(64) NOT NULL,
-  `Name` varchar(64) NOT NULL DEFAULT '',
-  `Type` varchar(8) NOT NULL,
-  `System` varchar(8) NOT NULL,
-  `Data` text,
+  `Hash` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `Name` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `Type` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `System` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `Data` mediumtext COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`Name`,`System`) USING BTREE,
   UNIQUE KEY `uk_name_type_system` (`Name`,`Type`,`System`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `battlenet_modules` */
 
@@ -524,14 +559,14 @@ CREATE TABLE `build_info` (
   `majorVersion` int DEFAULT NULL,
   `minorVersion` int DEFAULT NULL,
   `bugfixVersion` int DEFAULT NULL,
-  `hotfixVersion` char(3) DEFAULT NULL,
-  `winAuthSeed` varchar(32) DEFAULT NULL,
-  `win64AuthSeed` varchar(32) DEFAULT NULL,
-  `mac64AuthSeed` varchar(32) DEFAULT NULL,
-  `winChecksumSeed` varchar(40) DEFAULT NULL,
-  `macChecksumSeed` varchar(40) DEFAULT NULL,
+  `hotfixVersion` char(3) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `winAuthSeed` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `win64AuthSeed` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mac64AuthSeed` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `winChecksumSeed` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `macChecksumSeed` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`build`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `build_info` */
 
@@ -634,15 +669,15 @@ DROP TABLE IF EXISTS `character_history`;
 CREATE TABLE `character_history` (
   `id` int NOT NULL AUTO_INCREMENT,
   `account` int NOT NULL,
-  `action` text NOT NULL,
-  `ip` varchar(15) NOT NULL,
-  `characterName` text NOT NULL,
+  `action` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ip` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `characterName` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `characterGuid` int NOT NULL,
   `characterLevel` tinyint NOT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `lastPlayedTime` bigint DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_history` */
 
@@ -657,9 +692,9 @@ DROP TABLE IF EXISTS `hwid_penalties`;
 CREATE TABLE `hwid_penalties` (
   `hwid` bigint unsigned NOT NULL,
   `penalties` int NOT NULL DEFAULT '0',
-  `last_reason` varchar(255) NOT NULL,
+  `last_reason` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`hwid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `hwid_penalties` */
 
@@ -673,9 +708,9 @@ DROP TABLE IF EXISTS `ip2nation`;
 
 CREATE TABLE `ip2nation` (
   `ip` int unsigned NOT NULL DEFAULT '0',
-  `country` char(2) NOT NULL DEFAULT '',
+  `country` char(2) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   KEY `ip` (`ip`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 ROW_FORMAT=FIXED;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `ip2nation` */
 
@@ -688,16 +723,16 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `ip2nationcountries`;
 
 CREATE TABLE `ip2nationcountries` (
-  `code` varchar(4) NOT NULL DEFAULT '',
-  `iso_code_2` varchar(2) NOT NULL DEFAULT '',
-  `iso_code_3` varchar(3) DEFAULT '',
-  `iso_country` varchar(255) NOT NULL DEFAULT '',
-  `country` varchar(255) NOT NULL DEFAULT '',
+  `code` varchar(4) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `iso_code_2` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `iso_code_3` varchar(3) COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `iso_country` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `country` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `lat` float NOT NULL DEFAULT '0',
   `lon` float NOT NULL DEFAULT '0',
   PRIMARY KEY (`code`) USING BTREE,
   KEY `code` (`code`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `ip2nationcountries` */
 
@@ -710,16 +745,16 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `ip_banned`;
 
 CREATE TABLE `ip_banned` (
-  `ip` varchar(32) NOT NULL DEFAULT '127.0.0.1',
+  `ip` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '127.0.0.1',
   `bandate` bigint NOT NULL,
   `unbandate` bigint NOT NULL,
-  `bannedby` varchar(50) NOT NULL DEFAULT '[Console]',
-  `banreason` varchar(255) NOT NULL DEFAULT 'no reason',
+  `bannedby` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '[Console]',
+  `banreason` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'no reason',
   PRIMARY KEY (`ip`,`bandate`) USING BTREE,
   KEY `ip` (`ip`) USING BTREE,
   KEY `bandate` (`bandate`) USING BTREE,
   KEY `unbandate` (`unbandate`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Banned IPs';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Banned IPs';
 
 /*Data for the table `ip_banned` */
 
@@ -732,9 +767,9 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `ip_ddos`;
 
 CREATE TABLE `ip_ddos` (
-  `ip` varchar(32) NOT NULL,
+  `ip` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`ip`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `ip_ddos` */
 
@@ -748,9 +783,9 @@ DROP TABLE IF EXISTS `license`;
 
 CREATE TABLE `license` (
   `id` int NOT NULL,
-  `license_key` varchar(255) DEFAULT NULL,
+  `license_key` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `license` */
 
@@ -770,13 +805,44 @@ CREATE TABLE `logs` (
   `realm` int NOT NULL,
   `type` int NOT NULL,
   `level` int NOT NULL DEFAULT '0',
-  `string` text,
+  `string` mediumtext COLLATE utf8mb4_unicode_ci,
   KEY `time` (`time`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `logs` */
 
 LOCK TABLES `logs` WRITE;
+
+UNLOCK TABLES;
+
+/*Table structure for table `motd` */
+
+DROP TABLE IF EXISTS `motd`;
+
+CREATE TABLE `motd` (
+  `realmid` int NOT NULL,
+  `locale` tinyint unsigned NOT NULL,
+  `text` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`realmid`,`locale`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+/*Data for the table `motd` */
+
+LOCK TABLES `motd` WRITE;
+
+insert  into `motd`(`realmid`,`locale`,`text`) values 
+(-1,0,'Welcome to Minerva'),
+(-1,1,'미네르바에 오신 것을 환영합니다'),
+(-1,2,'Bienvenue sur Minerva'),
+(-1,3,'Willkommen auf Minerva'),
+(-1,4,'欢迎来到米涅瓦'),
+(-1,5,'歡迎來到米涅瓦'),
+(-1,6,'Bienvenido a Minerva'),
+(-1,7,'Bienvenido a Minerva'),
+(-1,8,'Добро пожаловать на Минерву'),
+(-1,9,'Welcome to Minerva'),
+(-1,10,'Bem-vindo à Minerva'),
+(-1,11,'Benvenuto su Minerva');
 
 UNLOCK TABLES;
 
@@ -790,7 +856,7 @@ CREATE TABLE `online` (
   `diff` int unsigned NOT NULL DEFAULT '0',
   `uptime` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`realmID`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `online` */
 
@@ -805,9 +871,9 @@ DROP TABLE IF EXISTS `realm_transfer`;
 CREATE TABLE `realm_transfer` (
   `from_realm` tinyint unsigned NOT NULL DEFAULT '0',
   `to_realm` tinyint unsigned NOT NULL DEFAULT '0',
-  `name` varchar(50) NOT NULL DEFAULT '',
+  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`from_realm`,`to_realm`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `realm_transfer` */
 
@@ -826,7 +892,7 @@ CREATE TABLE `realmcharacters` (
   PRIMARY KEY (`realmid`,`acctid`) USING BTREE,
   KEY `acctid` (`acctid`) USING BTREE,
   KEY `realmid` (`realmid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Realm Character Tracker';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Realm Character Tracker';
 
 /*Data for the table `realmcharacters` */
 
@@ -843,8 +909,8 @@ DROP TABLE IF EXISTS `realmlist`;
 
 CREATE TABLE `realmlist` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) NOT NULL DEFAULT '',
-  `address` varchar(255) NOT NULL DEFAULT '127.0.0.1',
+  `name` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '127.0.0.1',
   `port` smallint unsigned NOT NULL DEFAULT '8085',
   `gamePort` int NOT NULL DEFAULT '8086',
   `portCount` mediumint unsigned NOT NULL DEFAULT '1',
@@ -856,19 +922,19 @@ CREATE TABLE `realmlist` (
   `gamebuild` int unsigned NOT NULL DEFAULT '12340',
   `Region` tinyint unsigned NOT NULL DEFAULT '2',
   `Battlegroup` tinyint unsigned NOT NULL DEFAULT '1',
-  `localAddress` varchar(255) NOT NULL DEFAULT '127.0.0.1',
-  `localSubnetMask` varchar(255) NOT NULL DEFAULT '255.255.255.0',
+  `localAddress` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '127.0.0.1',
+  `localSubnetMask` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '255.255.255.0',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `idx_name` (`name`) USING BTREE,
   KEY `id` (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Realm System';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Realm System';
 
 /*Data for the table `realmlist` */
 
 LOCK TABLES `realmlist` WRITE;
 
 insert  into `realmlist`(`id`,`name`,`address`,`port`,`gamePort`,`portCount`,`icon`,`flag`,`timezone`,`allowedSecurityLevel`,`population`,`gamebuild`,`Region`,`Battlegroup`,`localAddress`,`localSubnetMask`) values 
-(1,'Nordrassil Work Server','127.0.0.1',8085,8086,1,0,0,1,0,0,26972,2,1,'127.0.0.1','255.255.255.0');
+(1,'Nordrassil Work Server','192.168.178.25',8085,8086,1,0,0,1,0,0,26972,2,1,'127.0.0.1','255.255.255.0');
 
 UNLOCK TABLES;
 
@@ -888,7 +954,7 @@ CREATE TABLE `store_categories` (
   KEY `enable` (`enable`) USING BTREE,
   KEY `id` (`id`) USING BTREE,
   KEY `sort` (`sort`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `store_categories` */
 
@@ -902,36 +968,36 @@ DROP TABLE IF EXISTS `store_category_locales`;
 
 CREATE TABLE `store_category_locales` (
   `category` int NOT NULL DEFAULT '0',
-  `name_us` varchar(32) NOT NULL DEFAULT '',
-  `name_gb` varchar(32) NOT NULL DEFAULT '',
-  `name_kr` varchar(32) NOT NULL DEFAULT '',
-  `name_fr` varchar(32) NOT NULL DEFAULT '',
-  `name_de` varchar(32) NOT NULL DEFAULT '',
-  `name_cn` varchar(32) NOT NULL DEFAULT '',
-  `name_tw` varchar(32) NOT NULL DEFAULT '',
-  `name_es` varchar(32) NOT NULL DEFAULT '',
-  `name_mx` varchar(32) NOT NULL DEFAULT '',
-  `name_ru` varchar(32) NOT NULL DEFAULT '',
-  `name_pt` varchar(32) NOT NULL DEFAULT '',
-  `name_br` varchar(32) NOT NULL DEFAULT '',
-  `name_it` varchar(32) NOT NULL DEFAULT '',
-  `name_ua` varchar(32) NOT NULL DEFAULT '',
-  `description_us` varchar(128) NOT NULL DEFAULT '',
-  `description_gb` varchar(128) NOT NULL DEFAULT '',
-  `description_kr` varchar(128) NOT NULL DEFAULT '',
-  `description_fr` varchar(128) NOT NULL DEFAULT '',
-  `description_de` varchar(128) NOT NULL DEFAULT '',
-  `description_cn` varchar(128) NOT NULL DEFAULT '',
-  `description_tw` varchar(128) NOT NULL DEFAULT '',
-  `description_es` varchar(128) NOT NULL DEFAULT '',
-  `description_mx` varchar(128) NOT NULL DEFAULT '',
-  `description_ru` varchar(128) NOT NULL DEFAULT '',
-  `description_pt` varchar(128) NOT NULL DEFAULT '',
-  `description_br` varchar(128) NOT NULL DEFAULT '',
-  `description_it` varchar(128) NOT NULL DEFAULT '',
-  `description_ua` varchar(128) NOT NULL DEFAULT '',
+  `name_us` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `name_gb` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `name_kr` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `name_fr` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `name_de` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `name_cn` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `name_tw` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `name_es` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `name_mx` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `name_ru` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `name_pt` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `name_br` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `name_it` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `name_ua` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `description_us` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `description_gb` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `description_kr` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `description_fr` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `description_de` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `description_cn` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `description_tw` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `description_es` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `description_mx` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `description_ru` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `description_pt` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `description_br` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `description_it` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `description_ua` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`category`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `store_category_locales` */
 
@@ -952,7 +1018,7 @@ CREATE TABLE `store_category_realms` (
   KEY `category` (`category`) USING BTREE,
   KEY `realm` (`realm`) USING BTREE,
   KEY `enable` (`enable`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `store_category_realms` */
 
@@ -974,7 +1040,7 @@ CREATE TABLE `store_discounts` (
   `rate` float(5,2) unsigned NOT NULL DEFAULT '0.00',
   `enable` tinyint unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `store_discounts` */
 
@@ -994,7 +1060,7 @@ CREATE TABLE `store_favorites` (
   `bacid` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `unique` (`realm`,`product`,`acid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `store_favorites` */
 
@@ -1013,18 +1079,18 @@ CREATE TABLE `store_history` (
   `bnet_account` int unsigned NOT NULL DEFAULT '0',
   `char_guid` int unsigned NOT NULL DEFAULT '0',
   `char_level` int unsigned NOT NULL DEFAULT '0',
-  `art_level` varchar(255) NOT NULL DEFAULT '',
-  `guild_name` varchar(255) NOT NULL DEFAULT '',
+  `art_level` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `guild_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `item_guid` int unsigned DEFAULT NULL,
   `item` int NOT NULL DEFAULT '0',
-  `bonus` varchar(11) DEFAULT NULL,
+  `bonus` varchar(11) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `product` int NOT NULL DEFAULT '0',
   `count` int unsigned NOT NULL DEFAULT '1',
   `token` int unsigned NOT NULL,
   `karma` int unsigned NOT NULL DEFAULT '0',
   `status` tinyint unsigned NOT NULL DEFAULT '0',
-  `type` enum('cp','game') NOT NULL DEFAULT 'game',
-  `trans_project` varchar(255) NOT NULL DEFAULT '',
+  `type` enum('cp','game') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'game',
+  `trans_project` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `trans_realm` int unsigned NOT NULL DEFAULT '0',
   `dt_buy` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `dt_return` timestamp NULL DEFAULT NULL,
@@ -1036,7 +1102,7 @@ CREATE TABLE `store_history` (
   KEY `bnet_account` (`bnet_account`) USING BTREE,
   KEY `status` (`status`) USING BTREE,
   KEY `char_guid` (`char_guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `store_history` */
 
@@ -1057,7 +1123,7 @@ CREATE TABLE `store_level_prices` (
   UNIQUE KEY `unique` (`type`,`realm`,`level`,`token`) USING BTREE,
   KEY `type` (`type`) USING BTREE,
   KEY `realm` (`realm`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `store_level_prices` */
 
@@ -1072,23 +1138,23 @@ DROP TABLE IF EXISTS `store_product_locales`;
 CREATE TABLE `store_product_locales` (
   `product` int NOT NULL DEFAULT '0',
   `type` smallint NOT NULL DEFAULT '0',
-  `us` varchar(128) NOT NULL DEFAULT '',
-  `gb` varchar(128) NOT NULL DEFAULT '',
-  `kr` varchar(128) NOT NULL DEFAULT '',
-  `fr` varchar(128) NOT NULL DEFAULT '',
-  `de` varchar(128) NOT NULL DEFAULT '',
-  `cn` varchar(128) NOT NULL DEFAULT '',
-  `tw` varchar(128) NOT NULL DEFAULT '',
-  `es` varchar(128) NOT NULL DEFAULT '',
-  `mx` varchar(128) NOT NULL DEFAULT '',
-  `ru` varchar(128) NOT NULL DEFAULT '',
-  `pt` varchar(128) NOT NULL DEFAULT '',
-  `br` varchar(128) NOT NULL DEFAULT '',
-  `it` varchar(128) NOT NULL DEFAULT '',
-  `ua` varchar(128) NOT NULL DEFAULT '',
+  `us` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `gb` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `kr` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `fr` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `de` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `cn` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `tw` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `es` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `mx` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `ru` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `pt` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `br` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `it` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `ua` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`product`,`type`) USING BTREE,
   UNIQUE KEY `unique` (`product`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `store_product_locales` */
 
@@ -1112,7 +1178,7 @@ CREATE TABLE `store_product_realms` (
   KEY `product` (`product`) USING BTREE,
   KEY `realm` (`realm`) USING BTREE,
   KEY `enable` (`enable`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `store_product_realms` */
 
@@ -1128,8 +1194,8 @@ CREATE TABLE `store_products` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `category` int NOT NULL DEFAULT '0',
   `item` int NOT NULL DEFAULT '0',
-  `bonus` varchar(255) NOT NULL DEFAULT '',
-  `icon` varchar(255) NOT NULL DEFAULT '',
+  `bonus` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `icon` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `quality` tinyint unsigned NOT NULL DEFAULT '0',
   `display` int unsigned NOT NULL DEFAULT '0',
   `slot` int unsigned NOT NULL DEFAULT '0',
@@ -1144,7 +1210,7 @@ CREATE TABLE `store_products` (
   KEY `id` (`id`) USING BTREE,
   KEY `category` (`category`) USING BTREE,
   KEY `enable` (`enable`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `store_products` */
 
@@ -1165,15 +1231,15 @@ CREATE TABLE `store_purchase_history` (
   `productId` int NOT NULL DEFAULT '0',
   `balanceInitial` int unsigned NOT NULL,
   `balanceEnd` int unsigned NOT NULL DEFAULT '0',
-  `charRace` varchar(255) NOT NULL,
-  `charFaction` varchar(255) NOT NULL,
+  `charRace` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `charFaction` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `DatePurchase` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE,
   KEY `id` (`id`) USING BTREE,
   KEY `account` (`account`) USING BTREE,
   KEY `bnet_account` (`bnetaccountId`) USING BTREE,
   KEY `char_guid` (`charGuid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `store_purchase_history` */
 
@@ -1194,7 +1260,7 @@ CREATE TABLE `store_rating` (
   `bacid` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `unique` (`realm`,`product`,`acid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `store_rating` */
 
@@ -1215,109 +1281,11 @@ CREATE TABLE `store_statistics` (
   `buy` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `unique` (`realm`,`product`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `store_statistics` */
 
 LOCK TABLES `store_statistics` WRITE;
-
-UNLOCK TABLES;
-
-/*Table structure for table `transfer_requests` */
-
-DROP TABLE IF EXISTS `transfer_requests`;
-
-CREATE TABLE `transfer_requests` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `acid` int unsigned NOT NULL,
-  `bacid` int unsigned NOT NULL DEFAULT '0',
-  `user_name` varchar(32) NOT NULL DEFAULT '',
-  `email` varchar(64) NOT NULL DEFAULT '',
-  `guid` int unsigned DEFAULT NULL,
-  `char_faction` tinyint unsigned DEFAULT NULL,
-  `char_class` tinyint unsigned DEFAULT NULL,
-  `char_set` int unsigned DEFAULT NULL,
-  `realm` tinyint unsigned NOT NULL,
-  `dump` mediumtext,
-  `promo_code` varchar(32) DEFAULT '',
-  `client_expansion` tinyint unsigned DEFAULT NULL,
-  `client_build` smallint unsigned DEFAULT NULL,
-  `client_locale` varchar(4) DEFAULT '',
-  `site` varchar(32) NOT NULL DEFAULT '',
-  `realmlist` varchar(32) NOT NULL DEFAULT '',
-  `transfer_user_name` varchar(32) NOT NULL DEFAULT '',
-  `password` varchar(255) NOT NULL DEFAULT '',
-  `transfer_realm` varchar(32) NOT NULL DEFAULT '',
-  `char_name` varchar(12) NOT NULL DEFAULT '',
-  `dump_version` varchar(255) DEFAULT '',
-  `dt_create` timestamp NULL DEFAULT NULL,
-  `dt_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `moderator` int unsigned DEFAULT NULL,
-  `comment` varchar(255) DEFAULT '',
-  `cost` int unsigned NOT NULL DEFAULT '0',
-  `type` enum('fee','free') NOT NULL DEFAULT 'free',
-  `test` tinyint unsigned NOT NULL DEFAULT '0',
-  `status` enum('check','test','paid','cancel','4','2','0','reject','payment','verify','new') NOT NULL DEFAULT 'new',
-  `parser` tinyint unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
-
-/*Data for the table `transfer_requests` */
-
-LOCK TABLES `transfer_requests` WRITE;
-
-UNLOCK TABLES;
-
-/*Table structure for table `transferts` */
-
-DROP TABLE IF EXISTS `transferts`;
-
-CREATE TABLE `transferts` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `account` int NOT NULL DEFAULT '0',
-  `perso_guid` int NOT NULL DEFAULT '0',
-  `from` int NOT NULL DEFAULT '0',
-  `to` int NOT NULL DEFAULT '0',
-  `toacc` int NOT NULL DEFAULT '0',
-  `dump` longtext NOT NULL,
-  `nb_attempt` int NOT NULL DEFAULT '0',
-  `state` int DEFAULT '0',
-  `error` int DEFAULT '0',
-  `revision` int DEFAULT '0',
-  `transferId` int NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`) USING BTREE,
-  KEY `account` (`account`) USING BTREE,
-  KEY `perso_guid` (`perso_guid`) USING BTREE,
-  KEY `from` (`from`) USING BTREE,
-  KEY `to` (`to`) USING BTREE,
-  KEY `state` (`state`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
-
-/*Data for the table `transferts` */
-
-LOCK TABLES `transferts` WRITE;
-
-UNLOCK TABLES;
-
-/*Table structure for table `transferts_logs` */
-
-DROP TABLE IF EXISTS `transferts_logs`;
-
-CREATE TABLE `transferts_logs` (
-  `id` int DEFAULT NULL,
-  `account` int DEFAULT '0',
-  `perso_guid` int DEFAULT '0',
-  `from` int DEFAULT '0',
-  `to` int DEFAULT '0',
-  `dump` longtext,
-  `toacc` int NOT NULL DEFAULT '0',
-  `newguid` int NOT NULL DEFAULT '0',
-  `transferId` int NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
-
-/*Data for the table `transferts_logs` */
-
-LOCK TABLES `transferts_logs` WRITE;
 
 UNLOCK TABLES;
 
@@ -1326,17 +1294,22 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `updates`;
 
 CREATE TABLE `updates` (
-  `name` varchar(200) NOT NULL COMMENT 'filename with extension of the update.',
-  `hash` char(40) DEFAULT '' COMMENT 'sha1 hash of the sql file.',
-  `state` enum('RELEASED','ARCHIVED') NOT NULL DEFAULT 'RELEASED' COMMENT 'defines if an update is released or archived.',
+  `name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'filename with extension of the update.',
+  `hash` char(40) COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT 'sha1 hash of the sql file.',
+  `state` enum('RELEASED','ARCHIVED') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'RELEASED' COMMENT 'defines if an update is released or archived.',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'timestamp when the query was applied.',
   `speed` int unsigned NOT NULL DEFAULT '0' COMMENT 'time the query takes to apply in ms.',
   PRIMARY KEY (`name`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='List of all applied updates in this database.';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='List of all applied updates in this database.';
 
 /*Data for the table `updates` */
 
 LOCK TABLES `updates` WRITE;
+
+insert  into `updates`(`name`,`hash`,`state`,`timestamp`,`speed`) values 
+('2026_01_12_00_auth.sql','6A8AB7DC6AE194D37233C63506CAF7D51E4ED519','RELEASED','2026-01-19 07:43:49',284),
+('2026_01_18_00_auth.sql','A6D52F899C3E643074D9E1534DCFFABA360FB4A0','RELEASED','2026-01-19 07:43:49',365),
+('2026_01_18_01_auth.sql','B6244ED65B0626B19A5DEABA128E7D250157581F','RELEASED','2026-01-19 07:43:50',124);
 
 UNLOCK TABLES;
 
@@ -1345,10 +1318,10 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `updates_include`;
 
 CREATE TABLE `updates_include` (
-  `path` varchar(200) NOT NULL COMMENT 'directory to include. $ means relative to the source directory.',
-  `state` enum('RELEASED','ARCHIVED') NOT NULL DEFAULT 'RELEASED' COMMENT 'defines if the directory contains released or archived updates.',
+  `path` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'directory to include. $ means relative to the source directory.',
+  `state` enum('RELEASED','ARCHIVED') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'RELEASED' COMMENT 'defines if the directory contains released or archived updates.',
   PRIMARY KEY (`path`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='List of directories where we want to include sql updates.';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='List of directories where we want to include sql updates.';
 
 /*Data for the table `updates_include` */
 
@@ -1366,12 +1339,12 @@ DROP TABLE IF EXISTS `uptime`;
 CREATE TABLE `uptime` (
   `realmid` int unsigned NOT NULL,
   `starttime` bigint unsigned NOT NULL DEFAULT '0',
-  `startstring` varchar(255) DEFAULT NULL,
+  `startstring` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `uptime` bigint unsigned NOT NULL DEFAULT '0',
   `maxplayers` smallint unsigned NOT NULL DEFAULT '0',
-  `revision` varchar(255) NOT NULL DEFAULT 'Trinitycore',
+  `revision` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Trinitycore',
   PRIMARY KEY (`realmid`,`starttime`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Uptime system';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Uptime system';
 
 /*Data for the table `uptime` */
 
@@ -1382,7 +1355,9 @@ insert  into `uptime`(`realmid`,`starttime`,`startstring`,`uptime`,`maxplayers`,
 (1,1606540384,NULL,0,0,'TrinityCore rev. Archived 0000-00-00 00:00:00 +0000 ( branch) (Win64, RelWithDebInfo)'),
 (1,1606540451,NULL,0,0,'TrinityCore rev. Archived 0000-00-00 00:00:00 +0000 ( branch) (Win64, RelWithDebInfo)'),
 (1,1606540845,NULL,0,0,'TrinityCore rev. Archived 0000-00-00 00:00:00 +0000 ( branch) (Win64, RelWithDebInfo)'),
-(1,1767383315,NULL,0,0,'TrinityCore rev. DestinyCore (Win64, RelWithDebInfo)');
+(1,1767383315,NULL,0,0,'TrinityCore rev. DestinyCore (Win64, RelWithDebInfo)'),
+(1,1768805034,NULL,0,0,'TrinityCore rev. DestinyCore (Win64, RelWithDebInfo)'),
+(1,1768805435,NULL,0,0,'TrinityCore rev. DestinyCore (Win64, RelWithDebInfo)');
 
 UNLOCK TABLES;
 

@@ -11,6 +11,8 @@
 #    PERFORMANCE SETTINGS
 #    SERVER LOGGING
 #    SERVER SETTINGS
+#	 HOTFIX LOADING
+#	 UPDATE SETTINGS
 #    WARDEN SETTINGS
 #    PLAYER INTERACTION
 #    CREATURE SETTINGS
@@ -1323,6 +1325,46 @@ DBC.EnforceItemAttributes = 1
 AccountInstancesPerHour = 10
 
 #
+###################################################################################################
+
+###################################################################################################
+#    HOTFIX LOADING
+#
+#    The server loads DB2 files from DataDir/dbc/<locale>/ at startup.
+#    Additionally it can apply "hotfix" overrides from the HotfixDatabase.
+#
+#    NOTE:
+#      Loading localized hotfix strings for ALL locales is very expensive because it runs a DB query
+#      per DB2 store and per locale. If your realm only needs one locale (e.g. deDE), keep
+#      DB2.Hotfix.LoadAllLocales disabled to drastically reduce startup time.
+#
+#    DB2.Hotfix.LoadData
+#        Enables loading hotfix (non-string) overrides from HotfixDatabase.
+#        Default: 1 (preserves current behavior)
+#
+#    DB2.Hotfix.LoadStrings
+#        Enables loading localized hotfix strings from HotfixDatabase.
+#        Default: 1 (preserves current behavior)
+#
+#    DB2.Hotfix.LoadAllLocales
+#        If enabled, loads localized hotfix strings for all locales supported by the server.
+#        If disabled, loads localized hotfix strings ONLY for the server's default locale.
+#        Default: 0 (recommended for faster startup)
+#
+#    DB2.Files.LoadAllLocales
+#        If enabled, loads localized strings from client DB2 files for all locales.
+#        If disabled, loads only the default locale from files.
+#        Default: 1 (preserves current behavior)
+#
+
+DB2.Hotfix.LoadData = 1
+DB2.Hotfix.LoadStrings = 1
+DB2.Hotfix.LoadAllLocales = 0
+DB2.Files.LoadAllLocales = 1
+
+#
+###################################################################################################
+
 ###################################################################################################
 # UPDATE SETTINGS
 #

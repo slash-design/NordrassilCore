@@ -19,6 +19,7 @@
 #include "DB2HotfixGenerator.h"
 #include "DB2Stores.h"
 #include "Common.h"
+#include "Config.h"
 #include "DB2LoadInfo.h"
 #include "DatabaseEnv.h"
 #include "ObjectMgr.h"
@@ -873,25 +874,55 @@ void LoadDB2(uint32& availableDb2Locales, DB2StoreProblemList& errlist, StorageM
         }
     }
 
+    // Hotfix DB loading (data + localized strings) is extremely expensive when executed for every locale.
+    // By default we only apply localized hotfix strings for the server's default locale.
+    bool loadHotfixData = sConfigMgr->GetBoolDefault("DB2.Hotfix.LoadData", true);
+    bool loadHotfixStrings = sConfigMgr->GetBoolDefault("DB2.Hotfix.LoadStrings", true);
+    bool loadHotfixAllLocales = sConfigMgr->GetBoolDefault("DB2.Hotfix.LoadAllLocales", false);
+    bool loadFileAllLocales = sConfigMgr->GetBoolDefault("DB2.Files.LoadAllLocales", true);
+    
     if (storage->Load(db2Path + localeNames[defaultLocale] + '/', defaultLocale))
     {
-        storage->LoadFromDB();
+        if (loadHotfixData)
+            storage->LoadFromDB();
 
-        if (defaultLocale != LOCALE_enUS)
+        if (loadHotfixStrings && defaultLocale != LOCALE_enUS)
             storage->LoadStringsFromDB(defaultLocale);
 
-        for (uint8 i = LOCALE_enUS; i < MAX_LOCALES; ++i)
+        // Load localized strings from other locale files (client DB2s).
+        // This is useful if you want the server to support clients in multiple locales.
+        // It is independent from hotfix strings stored in DB.
+        if (loadFileAllLocales)
         {
-            if (LOCALE_enUS == i || i == LOCALE_none)
-                continue;
+            for (uint8 i = LOCALE_enUS; i < MAX_LOCALES; ++i)
+            {
+                if (LOCALE_enUS == i || i == LOCALE_none)
+                    continue;
 
-            loadMutex.lock();
-            if (availableDb2Locales & (1 << i))
-                if (!storage->LoadStringsFrom((db2Path + localeNames[i] + '/'), i))
-                    availableDb2Locales &= ~(1 << i);             // mark as not available for speedup next checks
-            loadMutex.unlock();
+                loadMutex.lock();
+                if (availableDb2Locales & (1 << i))
+                    if (!storage->LoadStringsFrom((db2Path + localeNames[i] + '/'), i))
+                        availableDb2Locales &= ~(1 << i);             // mark as not available for speedup next checks
+                loadMutex.unlock();
 
-            storage->LoadStringsFromDB(i);
+                // Hotfix localized strings: load ONLY default locale by default.
+                if (loadHotfixStrings && loadHotfixAllLocales)
+                    storage->LoadStringsFromDB(i);
+            }
+        }
+        else
+        {
+            // If multi-locale file loading is disabled but you explicitly want hotfix strings for all locales,
+            // still apply them.
+            if (loadHotfixStrings && loadHotfixAllLocales)
+            {
+                for (uint8 i = LOCALE_enUS; i < MAX_LOCALES; ++i)
+                {
+                    if (LOCALE_enUS == i || i == LOCALE_none)
+                        continue;
+                    storage->LoadStringsFromDB(i);
+                }
+            }
         }
     }
     else

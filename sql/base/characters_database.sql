@@ -22,7 +22,7 @@ CREATE TABLE `account_achievement` (
   `achievement` int unsigned NOT NULL,
   `date` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`account`,`achievement`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `account_achievement` */
 
@@ -45,7 +45,7 @@ CREATE TABLE `account_achievement_progress` (
   KEY `account` (`account`) USING BTREE,
   KEY `criteria` (`criteria`) USING BTREE,
   KEY `achievID` (`achievID`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `account_achievement_progress` */
 
@@ -61,7 +61,7 @@ CREATE TABLE `account_ban_attempts` (
   `accountId` int unsigned NOT NULL DEFAULT '0',
   `banAttempts` smallint unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`accountId`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `account_ban_attempts` */
 
@@ -77,7 +77,7 @@ CREATE TABLE `account_battlepet` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `account` int unsigned NOT NULL DEFAULT '0',
   `slot` int NOT NULL DEFAULT '-1',
-  `name` varchar(50) NOT NULL,
+  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nameTimeStamp` int unsigned NOT NULL DEFAULT '0',
   `species` int unsigned NOT NULL DEFAULT '0',
   `quality` int unsigned NOT NULL DEFAULT '0',
@@ -91,14 +91,14 @@ CREATE TABLE `account_battlepet` (
   `infoMaxHealth` int NOT NULL DEFAULT '0',
   `infoSpeed` int NOT NULL DEFAULT '0',
   `infoGender` int NOT NULL DEFAULT '0',
-  `declinedGenitive` varchar(50) NOT NULL,
-  `declinedNative` varchar(50) NOT NULL,
-  `declinedAccusative` varchar(50) NOT NULL,
-  `declinedInstrumental` varchar(50) NOT NULL,
-  `declinedPrepositional` varchar(50) NOT NULL,
+  `declinedGenitive` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `declinedNative` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `declinedAccusative` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `declinedInstrumental` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `declinedPrepositional` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   KEY `account` (`account`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `account_battlepet` */
 
@@ -112,10 +112,10 @@ DROP TABLE IF EXISTS `account_bot_detected`;
 
 CREATE TABLE `account_bot_detected` (
   `accountId` int unsigned NOT NULL,
-  `playerName` varchar(12) NOT NULL DEFAULT '',
-  `botName` varchar(12) NOT NULL DEFAULT '',
+  `playerName` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `botName` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`accountId`,`playerName`,`botName`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `account_bot_detected` */
 
@@ -133,7 +133,7 @@ CREATE TABLE `account_data` (
   `time` int unsigned NOT NULL DEFAULT '0',
   `data` blob NOT NULL,
   PRIMARY KEY (`accountId`,`type`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `account_data` */
 
@@ -148,10 +148,10 @@ DROP TABLE IF EXISTS `account_flagged`;
 CREATE TABLE `account_flagged` (
   `id` int unsigned NOT NULL DEFAULT '0' COMMENT 'Account Id',
   `banduration` int unsigned NOT NULL DEFAULT '0',
-  `bannedby` varchar(50) NOT NULL,
-  `banreason` varchar(255) NOT NULL,
+  `bannedby` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `banreason` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `account_flagged` */
 
@@ -168,7 +168,7 @@ CREATE TABLE `account_heirlooms` (
   `itemId` int unsigned NOT NULL DEFAULT '0',
   `flags` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`accountId`,`itemId`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 ROW_FORMAT=FIXED;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `account_heirlooms` */
 
@@ -187,7 +187,7 @@ CREATE TABLE `account_instance_times` (
   PRIMARY KEY (`accountId`,`instanceId`) USING BTREE,
   KEY `accountId` (`accountId`) USING BTREE,
   KEY `instanceId` (`instanceId`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `account_instance_times` */
 
@@ -203,7 +203,7 @@ CREATE TABLE `account_item_favorite_appearances` (
   `battlenetAccountId` int unsigned NOT NULL,
   `itemModifiedAppearanceId` int unsigned NOT NULL,
   PRIMARY KEY (`battlenetAccountId`,`itemModifiedAppearanceId`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `account_item_favorite_appearances` */
 
@@ -222,7 +222,7 @@ CREATE TABLE `account_mounts` (
   PRIMARY KEY (`account`,`spell`) USING BTREE,
   KEY `account` (`account`) USING BTREE,
   KEY `spell` (`spell`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `account_mounts` */
 
@@ -240,7 +240,7 @@ CREATE TABLE `account_progress` (
   `leveltime` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`account`) USING BTREE,
   KEY `account` (`account`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `account_progress` */
 
@@ -261,7 +261,7 @@ CREATE TABLE `account_reward` (
   PRIMARY KEY (`guid`) USING BTREE,
   KEY `account` (`account`) USING BTREE,
   KEY `account_2` (`account`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `account_reward` */
 
@@ -287,7 +287,7 @@ CREATE TABLE `account_share` (
   `bonus10` tinyint(1) NOT NULL DEFAULT '0',
   `bonus11` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`account`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `account_share` */
 
@@ -306,7 +306,7 @@ CREATE TABLE `account_toys` (
   PRIMARY KEY (`accountId`,`itemId`) USING BTREE,
   KEY `accountId` (`accountId`) USING BTREE,
   KEY `itemId` (`itemId`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 ROW_FORMAT=FIXED;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `account_toys` */
 
@@ -324,7 +324,7 @@ CREATE TABLE `account_transmogs` (
   `ModelID` int unsigned NOT NULL DEFAULT '0',
   `Condition` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`account`,`ModelID`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `account_transmogs` */
 
@@ -355,7 +355,7 @@ CREATE TABLE `account_tutorial` (
   `tut6` int unsigned NOT NULL DEFAULT '0',
   `tut7` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`accountId`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `account_tutorial` */
 
@@ -368,10 +368,10 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `addons`;
 
 CREATE TABLE `addons` (
-  `name` varchar(120) NOT NULL DEFAULT '',
+  `name` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `crc` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`name`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Addons';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Addons';
 
 /*Data for the table `addons` */
 
@@ -387,7 +387,7 @@ CREATE TABLE `ahbot_market_data` (
   `Id` int unsigned NOT NULL DEFAULT '0',
   `MinBuyout` bigint unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `ahbot_market_data` */
 
@@ -21113,10 +21113,10 @@ DROP TABLE IF EXISTS `armory_character_stats`;
 
 CREATE TABLE `armory_character_stats` (
   `guid` int NOT NULL,
-  `data` longtext NOT NULL,
+  `data` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `save_date` int DEFAULT NULL,
   PRIMARY KEY (`guid`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='World of Warcraft Armory table';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='World of Warcraft Armory table';
 
 /*Data for the table `armory_character_stats` */
 
@@ -21145,7 +21145,7 @@ CREATE TABLE `armory_game_chart` (
   `start` int NOT NULL,
   `end` int NOT NULL,
   PRIMARY KEY (`gameid`,`teamid`,`guid`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=FIXED COMMENT='WoWArmory Game Chart';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='WoWArmory Game Chart';
 
 /*Data for the table `armory_game_chart` */
 
@@ -21170,7 +21170,7 @@ CREATE TABLE `auctionhouse` (
   `deposit` bigint unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `item_guid` (`itemguid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `auctionhouse` */
 
@@ -36186,9 +36186,9 @@ DROP TABLE IF EXISTS `autobroadcast`;
 
 CREATE TABLE `autobroadcast` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `text` longtext NOT NULL,
+  `text` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `autobroadcast` */
 
@@ -36202,14 +36202,14 @@ DROP TABLE IF EXISTS `bad_sentences`;
 
 CREATE TABLE `bad_sentences` (
   `id` int unsigned NOT NULL,
-  `sentence` varchar(255) NOT NULL,
+  `sentence` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `hash` bigint unsigned NOT NULL,
   `penalty` int NOT NULL DEFAULT '10',
   `sourceMask` int unsigned NOT NULL DEFAULT '1',
-  `output` varchar(255) NOT NULL DEFAULT '',
+  `output` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`hash`) USING BTREE,
   KEY `hash` (`hash`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `bad_sentences` */
 
@@ -36223,12 +36223,12 @@ DROP TABLE IF EXISTS `banned_addons`;
 
 CREATE TABLE `banned_addons` (
   `Id` int unsigned NOT NULL AUTO_INCREMENT,
-  `Name` varchar(255) NOT NULL,
-  `Version` varchar(255) NOT NULL DEFAULT '',
+  `Name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `Version` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `Timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`) USING BTREE,
   UNIQUE KEY `idx_name_ver` (`Name`,`Version`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `banned_addons` */
 
@@ -36247,7 +36247,7 @@ CREATE TABLE `blackmarket_auctions` (
   `numBids` int NOT NULL DEFAULT '0',
   `bidder` bigint unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`marketId`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `blackmarket_auctions` */
 
@@ -36275,10 +36275,10 @@ DROP TABLE IF EXISTS `bugreport`;
 
 CREATE TABLE `bugreport` (
   `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Identifier',
-  `type` longtext NOT NULL,
-  `content` longtext NOT NULL,
+  `type` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Debug System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Debug System';
 
 /*Data for the table `bugreport` */
 
@@ -36293,15 +36293,15 @@ DROP TABLE IF EXISTS `calendar_events`;
 CREATE TABLE `calendar_events` (
   `EventID` bigint unsigned NOT NULL DEFAULT '0',
   `Owner` bigint unsigned NOT NULL DEFAULT '0',
-  `Title` varchar(255) NOT NULL DEFAULT '',
-  `Description` varchar(255) NOT NULL DEFAULT '',
+  `Title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `Description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `EventType` tinyint unsigned NOT NULL DEFAULT '4',
   `TextureID` int NOT NULL DEFAULT '-1',
   `Date` int unsigned NOT NULL DEFAULT '0',
   `Flags` int unsigned NOT NULL DEFAULT '0',
   `LockDate` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`EventID`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `calendar_events` */
 
@@ -36321,9 +36321,9 @@ CREATE TABLE `calendar_invites` (
   `Status` tinyint unsigned NOT NULL DEFAULT '0',
   `ResponseTime` int unsigned NOT NULL DEFAULT '0',
   `ModerationRank` tinyint unsigned NOT NULL DEFAULT '0',
-  `Note` varchar(255) NOT NULL DEFAULT '',
+  `Note` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`InviteID`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `calendar_invites` */
 
@@ -36344,11 +36344,11 @@ CREATE TABLE `challenge` (
   `Date` int NOT NULL DEFAULT '0',
   `ChallengeLevel` smallint NOT NULL DEFAULT '0',
   `TimerLevel` smallint NOT NULL DEFAULT '0',
-  `Affixes` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `Affixes` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `ChestID` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`) USING BTREE,
   KEY `mapID` (`MapID`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `challenge` */
 
@@ -36373,7 +36373,7 @@ CREATE TABLE `challenge_key` (
   PRIMARY KEY (`guid`) USING BTREE,
   KEY `guid` (`guid`) USING BTREE,
   KEY `timeReset` (`timeReset`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `challenge_key` */
 
@@ -36397,7 +36397,7 @@ CREATE TABLE `challenge_member` (
   KEY `Date` (`Date`) USING BTREE,
   KEY `ChallengeLevel` (`ChallengeLevel`) USING BTREE,
   KEY `ChestID` (`ChestID`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `challenge_member` */
 
@@ -36411,11 +36411,11 @@ DROP TABLE IF EXISTS `challenge_oplote_loot`;
 
 CREATE TABLE `challenge_oplote_loot` (
   `guid` int NOT NULL DEFAULT '0',
-  `chestListID` varchar(150) NOT NULL DEFAULT '',
+  `chestListID` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `date` int NOT NULL DEFAULT '0',
   `ChallengeLevel` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `challenge_oplote_loot` */
 
@@ -36428,17 +36428,17 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `channels`;
 
 CREATE TABLE `channels` (
-  `name` varchar(128) NOT NULL,
+  `name` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
   `team` int unsigned NOT NULL,
   `announce` tinyint unsigned NOT NULL DEFAULT '1',
   `ownership` tinyint unsigned NOT NULL DEFAULT '1',
-  `password` varchar(32) DEFAULT NULL,
-  `bannedList` text,
+  `password` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bannedList` mediumtext COLLATE utf8mb4_unicode_ci,
   `lastUsed` int unsigned NOT NULL,
   PRIMARY KEY (`name`,`team`) USING BTREE,
   KEY `name` (`name`) USING BTREE,
   KEY `team` (`team`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Channel System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Channel System';
 
 /*Data for the table `channels` */
 
@@ -36456,7 +36456,7 @@ CREATE TABLE `character_account_data` (
   `time` int unsigned NOT NULL DEFAULT '0',
   `data` blob NOT NULL,
   PRIMARY KEY (`guid`,`type`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_account_data` */
 
@@ -36474,7 +36474,7 @@ CREATE TABLE `character_achievement` (
   `date` int unsigned NOT NULL,
   PRIMARY KEY (`guid`,`achievement`) USING BTREE,
   KEY `achievement` (`achievement`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_achievement` */
 
@@ -36497,7 +36497,7 @@ CREATE TABLE `character_achievement_progress` (
   KEY `criteria` (`criteria`) USING BTREE,
   KEY `guid` (`guid`) USING BTREE,
   KEY `achievID` (`achievID`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_achievement_progress` */
 
@@ -36516,7 +36516,7 @@ CREATE TABLE `character_action` (
   `action` bigint unsigned NOT NULL DEFAULT '0',
   `type` tinyint unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`,`spec`,`button`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_action` */
 
@@ -36539,7 +36539,7 @@ CREATE TABLE `character_adventure_quest` (
   PRIMARY KEY (`guid`) USING BTREE,
   KEY `guid` (`guid`) USING BTREE,
   KEY `questID` (`questID`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_adventure_quest` */
 
@@ -36553,11 +36553,11 @@ DROP TABLE IF EXISTS `character_archaeology`;
 
 CREATE TABLE `character_archaeology` (
   `guid` bigint NOT NULL,
-  `sites` text NOT NULL,
-  `counts` text NOT NULL,
-  `projects` text NOT NULL,
+  `sites` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `counts` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `projects` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Archaeology System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Archaeology System';
 
 /*Data for the table `character_archaeology` */
 
@@ -36575,7 +36575,7 @@ CREATE TABLE `character_archaeology_finds` (
   `count` int NOT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`guid`,`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_archaeology_finds` */
 
@@ -36596,9 +36596,9 @@ CREATE TABLE `character_army_training_info` (
   `opened_dmg` tinyint(1) NOT NULL DEFAULT '0',
   `opened_fixate` tinyint(1) NOT NULL DEFAULT '0',
   `opened_brave` tinyint(1) NOT NULL DEFAULT '0',
-  `opened_chests` varchar(255) NOT NULL,
+  `opened_chests` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_army_training_info` */
 
@@ -36615,11 +36615,11 @@ CREATE TABLE `character_artifact` (
   `owner` int unsigned NOT NULL DEFAULT '0',
   `Power` int unsigned NOT NULL DEFAULT '0',
   `AppearanceID` mediumint unsigned NOT NULL DEFAULT '0',
-  `Powers` text NOT NULL,
+  `Powers` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`guid`) USING BTREE,
   KEY `guid` (`guid`) USING BTREE,
   KEY `owner` (`owner`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_artifact` */
 
@@ -36649,7 +36649,7 @@ CREATE TABLE `character_aura` (
   KEY `item_guid` (`item_guid`) USING BTREE,
   KEY `spell` (`spell`) USING BTREE,
   KEY `effect_mask` (`effect_mask`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Player System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Player System';
 
 /*Data for the table `character_aura` */
 
@@ -36671,7 +36671,7 @@ CREATE TABLE `character_aura_effect` (
   KEY `guid` (`guid`) USING BTREE,
   KEY `slot` (`slot`) USING BTREE,
   KEY `effect` (`effect`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_aura_effect` */
 
@@ -36687,15 +36687,15 @@ CREATE TABLE `character_banned` (
   `guid` bigint unsigned NOT NULL DEFAULT '0',
   `bandate` int unsigned NOT NULL DEFAULT '0',
   `unbandate` int unsigned NOT NULL DEFAULT '0',
-  `bannedby` varchar(50) NOT NULL,
-  `banreason` varchar(255) NOT NULL,
+  `bannedby` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `banreason` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `active` tinyint unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`guid`,`bandate`) USING BTREE,
   KEY `guid` (`guid`) USING BTREE,
   KEY `bandate` (`bandate`) USING BTREE,
   KEY `unbandate` (`unbandate`) USING BTREE,
   KEY `active` (`active`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Ban List';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Ban List';
 
 /*Data for the table `character_banned` */
 
@@ -36713,7 +36713,7 @@ CREATE TABLE `character_battle_pet` (
   `slot_1` bigint unsigned NOT NULL DEFAULT '0',
   `slot_2` bigint unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ownerAccID`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_battle_pet` */
 
@@ -36728,7 +36728,7 @@ DROP TABLE IF EXISTS `character_battle_pet_journal`;
 CREATE TABLE `character_battle_pet_journal` (
   `guid` bigint unsigned NOT NULL,
   `ownerAccID` int unsigned NOT NULL DEFAULT '0',
-  `customName` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT '""',
+  `customName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '""',
   `creatureEntry` int unsigned DEFAULT '0',
   `speciesID` int unsigned DEFAULT '0',
   `spell` int unsigned DEFAULT '0',
@@ -36743,7 +36743,7 @@ CREATE TABLE `character_battle_pet_journal` (
   `flags` smallint unsigned DEFAULT '0',
   `breedID` smallint DEFAULT '-1',
   PRIMARY KEY (`guid`,`ownerAccID`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_battle_pet_journal` */
 
@@ -36770,7 +36770,7 @@ CREATE TABLE `character_battleground_data` (
   `lastActiveSpec` smallint DEFAULT NULL,
   PRIMARY KEY (`guid`) USING BTREE,
   KEY `guid` (`guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Player System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Player System';
 
 /*Data for the table `character_battleground_data` */
 
@@ -36796,7 +36796,7 @@ CREATE TABLE `character_battleground_random` (
   `brawl` tinyint unsigned NOT NULL DEFAULT '0',
   `brawlArena` tinyint unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_battleground_random` */
 
@@ -36828,7 +36828,7 @@ CREATE TABLE `character_brackets_info` (
   `checkPenalty` tinyint NOT NULL DEFAULT '3',
   PRIMARY KEY (`guid`,`bracket`) USING BTREE,
   KEY `BracketID` (`bracket`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_brackets_info` */
 
@@ -36842,11 +36842,11 @@ DROP TABLE IF EXISTS `character_chat_logos`;
 
 CREATE TABLE `character_chat_logos` (
   `guid` bigint NOT NULL DEFAULT '0',
-  `buyed_logo` varchar(255) NOT NULL,
+  `buyed_logo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`,`buyed_logo`) USING BTREE,
   KEY `guid` (`guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_chat_logos` */
 
@@ -36864,7 +36864,7 @@ CREATE TABLE `character_cheat_common` (
   `transmCooldownEnd` int unsigned NOT NULL DEFAULT '0',
   `cheatLootCount` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_cheat_common` */
 
@@ -36879,7 +36879,7 @@ DROP TABLE IF EXISTS `character_cuf_profiles`;
 CREATE TABLE `character_cuf_profiles` (
   `guid` bigint unsigned NOT NULL DEFAULT '0',
   `profileId` tinyint unsigned NOT NULL,
-  `profileName` varchar(12) NOT NULL,
+  `profileName` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL,
   `frameHeight` smallint unsigned NOT NULL DEFAULT '0',
   `frameWidth` smallint unsigned NOT NULL DEFAULT '0',
   `sortBy` tinyint unsigned NOT NULL DEFAULT '0',
@@ -36894,7 +36894,7 @@ CREATE TABLE `character_cuf_profiles` (
   PRIMARY KEY (`guid`,`profileId`) USING BTREE,
   KEY `profileId` (`profileId`) USING BTREE,
   KEY `guid` (`guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_cuf_profiles` */
 
@@ -36915,7 +36915,7 @@ CREATE TABLE `character_currency` (
   `flags` int DEFAULT '0',
   `curentcap` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`,`currency`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_currency` */
 
@@ -36936,7 +36936,7 @@ CREATE TABLE `character_custom_event_reapeter` (
   `repeat_id` int unsigned NOT NULL,
   PRIMARY KEY (`guid`,`event`,`repeat_id`) USING BTREE,
   KEY `select` (`guid`,`event`,`repeat_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_custom_event_reapeter` */
 
@@ -36950,9 +36950,9 @@ DROP TABLE IF EXISTS `character_custom_reward`;
 
 CREATE TABLE `character_custom_reward` (
   `guid` int NOT NULL,
-  `reward_data` varchar(255) NOT NULL,
+  `reward_data` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_custom_reward` */
 
@@ -36973,7 +36973,7 @@ CREATE TABLE `character_deathmatch` (
   `matches` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`) USING BTREE,
   KEY `guid` (`guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_deathmatch` */
 
@@ -36986,12 +36986,12 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `character_deathmatch_products`;
 
 CREATE TABLE `character_deathmatch_products` (
-  `name` varchar(255) NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `type` int NOT NULL DEFAULT '0',
-  `product` varchar(255) NOT NULL,
+  `product` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `cost` int NOT NULL,
   PRIMARY KEY (`product`,`type`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_deathmatch_products` */
 
@@ -37007,10 +37007,10 @@ CREATE TABLE `character_deathmatch_store` (
   `guid` bigint NOT NULL DEFAULT '0',
   `total_kills` int NOT NULL DEFAULT '0',
   `selected_morph` int NOT NULL DEFAULT '0',
-  `buyed_morphs` varchar(255) NOT NULL,
+  `buyed_morphs` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`guid`) USING BTREE,
   KEY `guid` (`guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_deathmatch_store` */
 
@@ -37024,13 +37024,13 @@ DROP TABLE IF EXISTS `character_declinedname`;
 
 CREATE TABLE `character_declinedname` (
   `guid` bigint unsigned NOT NULL DEFAULT '0',
-  `genitive` varchar(15) NOT NULL DEFAULT '',
-  `dative` varchar(15) NOT NULL DEFAULT '',
-  `accusative` varchar(15) NOT NULL DEFAULT '',
-  `instrumental` varchar(15) NOT NULL DEFAULT '',
-  `prepositional` varchar(15) NOT NULL DEFAULT '',
+  `genitive` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `dative` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `accusative` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `instrumental` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `prepositional` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_declinedname` */
 
@@ -37058,7 +37058,7 @@ CREATE TABLE `character_donate` (
   KEY `itemguid` (`itemguid`) USING BTREE,
   KEY `itemEntry` (`itemEntry`) USING BTREE,
   KEY `state` (`state`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_donate` */
 
@@ -37073,10 +37073,10 @@ DROP TABLE IF EXISTS `character_donate_service`;
 CREATE TABLE `character_donate_service` (
   `account` int NOT NULL DEFAULT '0',
   `guid` bigint NOT NULL DEFAULT '0',
-  `service` varchar(50) NOT NULL DEFAULT '',
+  `service` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `cost` int NOT NULL DEFAULT '0',
   `targetguid` int NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_donate_service` */
 
@@ -37093,7 +37093,7 @@ CREATE TABLE `character_dungeon_affixes` (
   `Affix1` tinyint unsigned NOT NULL DEFAULT '0',
   `Affix2` tinyint unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`Affix`,`Affix1`,`Affix2`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='mythic+ affixes';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='mythic+ affixes';
 
 /*Data for the table `character_dungeon_affixes` */
 
@@ -37109,8 +37109,8 @@ CREATE TABLE `character_equipmentsets` (
   `guid` bigint NOT NULL DEFAULT '0',
   `setguid` bigint NOT NULL AUTO_INCREMENT,
   `setindex` tinyint unsigned NOT NULL DEFAULT '0',
-  `name` varchar(31) NOT NULL,
-  `iconname` varchar(100) NOT NULL,
+  `name` varchar(31) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `iconname` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `ignore_mask` int unsigned NOT NULL DEFAULT '0',
   `AssignedSpecIndex` int NOT NULL DEFAULT '-1',
   `item0` bigint unsigned NOT NULL DEFAULT '0',
@@ -37135,7 +37135,7 @@ CREATE TABLE `character_equipmentsets` (
   PRIMARY KEY (`setguid`) USING BTREE,
   UNIQUE KEY `idx_set` (`guid`,`setguid`,`setindex`) USING BTREE,
   KEY `Idx_setindex` (`setindex`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_equipmentsets` */
 
@@ -37157,7 +37157,7 @@ CREATE TABLE `character_feed_log` (
   `item_guid` int DEFAULT '-1',
   `item_quality` smallint NOT NULL DEFAULT '-1',
   PRIMARY KEY (`guid`,`type`,`data`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 ROW_FORMAT=FIXED;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_feed_log` */
 
@@ -37179,7 +37179,7 @@ CREATE TABLE `character_garrison` (
   `_MissionGen` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`CharacterGuid`,`SiteLevelId`,`GarrTypeId`) USING BTREE,
   KEY `guid` (`CharacterGuid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_garrison` */
 
@@ -37198,7 +37198,7 @@ CREATE TABLE `character_garrison_blueprints` (
   PRIMARY KEY (`guid`,`buildingId`,`GarrTypeId`) USING BTREE,
   KEY `guid` (`guid`) USING BTREE,
   KEY `buildingId` (`buildingId`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_garrison_blueprints` */
 
@@ -37216,12 +37216,12 @@ CREATE TABLE `character_garrison_buildings` (
   `plotInstanceId` int unsigned NOT NULL DEFAULT '0',
   `buildingId` int unsigned NOT NULL DEFAULT '0',
   `timeBuilt` bigint unsigned NOT NULL,
-  `data` varchar(64) DEFAULT NULL,
+  `data` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `active` tinyint unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`,`GarrTypeId`,`plotInstanceId`) USING BTREE,
   KEY `guid` (`guid`) USING BTREE,
   KEY `plotInstanceId` (`plotInstanceId`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_garrison_buildings` */
 
@@ -37243,7 +37243,7 @@ CREATE TABLE `character_garrison_follower_abilities` (
   KEY `dbId` (`dbId`) USING BTREE,
   KEY `abilityId` (`abilityId`) USING BTREE,
   KEY `slot` (`slot`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_garrison_follower_abilities` */
 
@@ -37271,7 +37271,7 @@ CREATE TABLE `character_garrison_followers` (
   `status` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`dbId`) USING BTREE,
   KEY `idx_guid_id` (`guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_garrison_followers` */
 
@@ -37300,7 +37300,7 @@ CREATE TABLE `character_garrison_missions` (
   KEY `dbId` (`dbId`) USING BTREE,
   KEY `guid` (`guid`) USING BTREE,
   KEY `missionRecID` (`missionRecID`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_garrison_missions` */
 
@@ -37322,7 +37322,7 @@ CREATE TABLE `character_garrison_shipment` (
   PRIMARY KEY (`dbId`) USING BTREE,
   KEY `dbId` (`dbId`) USING BTREE,
   KEY `guid` (`guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_garrison_shipment` */
 
@@ -37341,7 +37341,7 @@ CREATE TABLE `character_garrison_talents` (
   `orderTime` int NOT NULL,
   `flags` int NOT NULL,
   PRIMARY KEY (`guid`,`GarrTypeId`,`talentID`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_garrison_talents` */
 
@@ -37357,7 +37357,7 @@ CREATE TABLE `character_garrison_trophys` (
   `guid` bigint NOT NULL,
   `TrophyID` int NOT NULL,
   `InstanceTrophys` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_garrison_trophys` */
 
@@ -37376,7 +37376,7 @@ CREATE TABLE `character_gifts` (
   `flags` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`item_guid`) USING BTREE,
   KEY `idx_guid` (`guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_gifts` */
 
@@ -37395,7 +37395,7 @@ CREATE TABLE `character_glyphs` (
   PRIMARY KEY (`guid`,`talentGroup`,`glyphId`) USING BTREE,
   KEY `guid` (`guid`) USING BTREE,
   KEY `talentGroup` (`talentGroup`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_glyphs` */
 
@@ -37416,7 +37416,7 @@ CREATE TABLE `character_homebind` (
   `posZ` float NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`) USING BTREE,
   KEY `guid` (`guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Player System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Player System';
 
 /*Data for the table `character_homebind` */
 
@@ -37434,7 +37434,7 @@ CREATE TABLE `character_honor` (
   `HonorLevel` smallint NOT NULL DEFAULT '0',
   `PrestigeLevel` smallint NOT NULL DEFAULT '0',
   PRIMARY KEY (`Guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Honor info system';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Honor info system';
 
 /*Data for the table `character_honor` */
 
@@ -37453,13 +37453,13 @@ CREATE TABLE `character_instance` (
   `map` smallint unsigned NOT NULL DEFAULT '0',
   `difficulty` tinyint unsigned NOT NULL DEFAULT '0',
   `completedEncounters` int unsigned NOT NULL DEFAULT '0',
-  `data` tinytext NOT NULL,
+  `data` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `Extended` tinyint unsigned NOT NULL DEFAULT '0',
   `resetTime` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`,`instance`) USING BTREE,
   KEY `instance` (`instance`) USING BTREE,
   KEY `guid` (`guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_instance` */
 
@@ -37482,7 +37482,7 @@ CREATE TABLE `character_inventory` (
   KEY `bag` (`bag`) USING BTREE,
   KEY `slot` (`slot`) USING BTREE,
   KEY `item` (`item`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Player System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Player System';
 
 /*Data for the table `character_inventory` */
 
@@ -37539,7 +37539,7 @@ CREATE TABLE `character_kill` (
   KEY `guid` (`guid`) USING BTREE,
   KEY `victim_guid` (`victim_guid`) USING BTREE,
   KEY `count` (`count`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Kills Yesterday';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Kills Yesterday';
 
 /*Data for the table `character_kill` */
 
@@ -37556,7 +37556,7 @@ CREATE TABLE `character_lfg_cooldown` (
   `dungeonId` int NOT NULL DEFAULT '0',
   `respawnTime` int DEFAULT '0',
   PRIMARY KEY (`guid`,`dungeonId`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_lfg_cooldown` */
 
@@ -37578,7 +37578,7 @@ CREATE TABLE `character_loot_cooldown` (
   KEY `entry` (`entry`) USING BTREE,
   KEY `respawnTime` (`respawnTime`) USING BTREE,
   KEY `guid` (`guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_loot_cooldown` */
 
@@ -37600,12 +37600,12 @@ CREATE TABLE `character_pet` (
   `level` smallint unsigned NOT NULL DEFAULT '1',
   `exp` int unsigned NOT NULL DEFAULT '0',
   `Reactstate` tinyint unsigned NOT NULL DEFAULT '0',
-  `name` varchar(21) NOT NULL DEFAULT 'Pet',
+  `name` varchar(21) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Pet',
   `renamed` tinyint unsigned NOT NULL DEFAULT '0',
   `curhealth` int unsigned NOT NULL DEFAULT '1',
   `curmana` int unsigned NOT NULL DEFAULT '0',
   `savetime` int unsigned NOT NULL DEFAULT '0',
-  `abdata` text,
+  `abdata` mediumtext COLLATE utf8mb4_unicode_ci,
   `specialization` int unsigned NOT NULL DEFAULT '0',
   `slot` smallint NOT NULL DEFAULT '-1',
   PRIMARY KEY (`id`) USING BTREE,
@@ -37613,7 +37613,7 @@ CREATE TABLE `character_pet` (
   KEY `id` (`id`) USING BTREE,
   KEY `entry` (`entry`) USING BTREE,
   KEY `idx_slot` (`slot`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Pet System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Pet System';
 
 /*Data for the table `character_pet` */
 
@@ -37628,14 +37628,14 @@ DROP TABLE IF EXISTS `character_pet_declinedname`;
 CREATE TABLE `character_pet_declinedname` (
   `id` int unsigned NOT NULL DEFAULT '0',
   `owner` bigint unsigned NOT NULL DEFAULT '0',
-  `genitive` varchar(12) NOT NULL DEFAULT '',
-  `dative` varchar(12) NOT NULL DEFAULT '',
-  `accusative` varchar(12) NOT NULL DEFAULT '',
-  `instrumental` varchar(12) NOT NULL DEFAULT '',
-  `prepositional` varchar(12) NOT NULL DEFAULT '',
+  `genitive` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `dative` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `accusative` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `instrumental` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `prepositional` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `owner_key` (`owner`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_pet_declinedname` */
 
@@ -37658,7 +37658,7 @@ CREATE TABLE `character_pool_guid` (
   KEY `end` (`end`) USING BTREE,
   KEY `id` (`id`) USING BTREE,
   KEY `type` (`type`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_pool_guid` */
 
@@ -37678,7 +37678,7 @@ CREATE TABLE `character_pvp_talent` (
   KEY `guid` (`guid`) USING BTREE,
   KEY `talent` (`talent`) USING BTREE,
   KEY `spec` (`spec`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_pvp_talent` */
 
@@ -37694,7 +37694,7 @@ CREATE TABLE `character_quests_ignored` (
   `guid` bigint unsigned NOT NULL DEFAULT '0',
   `questID` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`,`questID`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Player System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Player System';
 
 /*Data for the table `character_quests_ignored` */
 
@@ -37713,7 +37713,7 @@ CREATE TABLE `character_queststatus` (
   `status` tinyint unsigned NOT NULL DEFAULT '0',
   `timer` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`,`quest`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Player System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Player System';
 
 /*Data for the table `character_queststatus` */
 
@@ -37733,7 +37733,7 @@ CREATE TABLE `character_queststatus_daily` (
   PRIMARY KEY (`guid`,`quest`) USING BTREE,
   KEY `idx_guid` (`guid`) USING BTREE,
   KEY `account` (`account`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Player System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Player System';
 
 /*Data for the table `character_queststatus_daily` */
 
@@ -37755,7 +37755,7 @@ CREATE TABLE `character_queststatus_objectives` (
   KEY `guid` (`guid`) USING BTREE,
   KEY `account` (`account`) USING BTREE,
   KEY `quest` (`quest`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Player System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Player System';
 
 /*Data for the table `character_queststatus_objectives` */
 
@@ -37773,7 +37773,7 @@ CREATE TABLE `character_queststatus_rewarded` (
   `quest` int unsigned NOT NULL DEFAULT '0' COMMENT 'Quest Identifier',
   PRIMARY KEY (`guid`,`quest`) USING BTREE,
   KEY `account` (`account`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Player System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Player System';
 
 /*Data for the table `character_queststatus_rewarded` */
 
@@ -37796,7 +37796,7 @@ CREATE TABLE `character_queststatus_seasonal` (
   PRIMARY KEY (`guid`,`quest`) USING BTREE,
   KEY `idx_guid` (`guid`) USING BTREE,
   KEY `account` (`account`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Player System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Player System';
 
 /*Data for the table `character_queststatus_seasonal` */
 
@@ -37815,7 +37815,7 @@ CREATE TABLE `character_queststatus_weekly` (
   PRIMARY KEY (`guid`,`quest`) USING BTREE,
   KEY `idx_guid` (`guid`) USING BTREE,
   KEY `account` (`account`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Player System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Player System';
 
 /*Data for the table `character_queststatus_weekly` */
 
@@ -37834,7 +37834,7 @@ CREATE TABLE `character_queststatus_world` (
   `resetTime` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`,`quest`) USING BTREE,
   KEY `resetTime` (`resetTime`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_queststatus_world` */
 
@@ -37850,7 +37850,7 @@ CREATE TABLE `character_rates` (
   `guid` bigint NOT NULL DEFAULT '0',
   `rate` tinyint DEFAULT '0',
   PRIMARY KEY (`guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_rates` */
 
@@ -37865,14 +37865,14 @@ DROP TABLE IF EXISTS `character_rename`;
 CREATE TABLE `character_rename` (
   `guid` int unsigned NOT NULL,
   `account` int unsigned NOT NULL,
-  `newname` varchar(12) NOT NULL DEFAULT '',
-  `oldname` varchar(12) NOT NULL DEFAULT '',
+  `newname` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `oldname` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   KEY `guid` (`guid`) USING BTREE,
   KEY `account` (`account`) USING BTREE,
   KEY `newname` (`newname`) USING BTREE,
   KEY `oldname` (`oldname`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_rename` */
 
@@ -37893,7 +37893,7 @@ CREATE TABLE `character_reputation` (
   KEY `guid` (`guid`) USING BTREE,
   KEY `faction` (`faction`) USING BTREE,
   KEY `standing` (`standing`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Player System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Player System';
 
 /*Data for the table `character_reputation` */
 
@@ -37913,7 +37913,7 @@ CREATE TABLE `character_reward` (
   `count` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`) USING BTREE,
   KEY `owner_guid` (`owner_guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_reward` */
 
@@ -37939,7 +37939,7 @@ CREATE TABLE `character_share` (
   `bonus10` tinyint(1) NOT NULL DEFAULT '0',
   `bonus11` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_share` */
 
@@ -37959,7 +37959,7 @@ CREATE TABLE `character_skills` (
   PRIMARY KEY (`guid`,`skill`) USING BTREE,
   KEY `guid` (`guid`) USING BTREE,
   KEY `skill` (`skill`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Player System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Player System';
 
 /*Data for the table `character_skills` */
 
@@ -37994,10 +37994,10 @@ CREATE TABLE `character_social` (
   `guid` bigint unsigned NOT NULL DEFAULT '0',
   `friend` bigint unsigned NOT NULL DEFAULT '0',
   `flags` tinyint unsigned NOT NULL DEFAULT '0' COMMENT 'Friend Flags',
-  `note` varchar(48) NOT NULL DEFAULT '' COMMENT 'Friend Note',
+  `note` varchar(48) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'Friend Note',
   PRIMARY KEY (`guid`,`friend`,`flags`) USING BTREE,
   KEY `friend` (`friend`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Player System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Player System';
 
 /*Data for the table `character_social` */
 
@@ -38017,7 +38017,7 @@ CREATE TABLE `character_spell` (
   PRIMARY KEY (`guid`,`spell`) USING BTREE,
   KEY `guid` (`guid`) USING BTREE,
   KEY `spell` (`spell`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Player System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Player System';
 
 /*Data for the table `character_spell` */
 
@@ -38035,7 +38035,7 @@ CREATE TABLE `character_spell_cooldown` (
   `item` int unsigned NOT NULL DEFAULT '0' COMMENT 'Item Identifier',
   `time` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`,`spell`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_spell_cooldown` */
 
@@ -38055,7 +38055,7 @@ CREATE TABLE `character_stat_kill_creature` (
   PRIMARY KEY (`guid`,`entry`) USING BTREE,
   KEY `guid` (`guid`) USING BTREE,
   KEY `entry` (`entry`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_stat_kill_creature` */
 
@@ -38099,7 +38099,7 @@ CREATE TABLE `character_stats` (
   `spellPower` int unsigned NOT NULL DEFAULT '0',
   `resilience` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_stats` */
 
@@ -38119,7 +38119,7 @@ CREATE TABLE `character_talent` (
   KEY `guid` (`guid`) USING BTREE,
   KEY `spec` (`spec`) USING BTREE,
   KEY `talent` (`talent`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_talent` */
 
@@ -38135,8 +38135,8 @@ CREATE TABLE `character_transmog_outfits` (
   `guid` bigint NOT NULL DEFAULT '0',
   `setguid` bigint NOT NULL AUTO_INCREMENT,
   `setindex` tinyint unsigned NOT NULL DEFAULT '0',
-  `name` varchar(128) NOT NULL,
-  `iconname` varchar(256) NOT NULL,
+  `name` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `iconname` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
   `ignore_mask` int NOT NULL DEFAULT '0',
   `appearance0` int NOT NULL DEFAULT '0',
   `appearance1` int NOT NULL DEFAULT '0',
@@ -38162,7 +38162,7 @@ CREATE TABLE `character_transmog_outfits` (
   PRIMARY KEY (`setguid`) USING BTREE,
   UNIQUE KEY `idx_set` (`guid`,`setguid`,`setindex`) USING BTREE,
   KEY `Idx_setindex` (`setindex`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_transmog_outfits` */
 
@@ -38179,7 +38179,7 @@ CREATE TABLE `character_transmogs` (
   `ModelID` int unsigned NOT NULL DEFAULT '0',
   `Condition` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`,`ModelID`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_transmogs` */
 
@@ -38197,7 +38197,7 @@ CREATE TABLE `character_visual_enchant` (
   `enchantId` int unsigned NOT NULL DEFAULT '0' COMMENT 'id diplay',
   `slot` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`,`item_guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='custom table for visual_enchant';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='custom table for visual_enchant';
 
 /*Data for the table `character_visual_enchant` */
 
@@ -38226,7 +38226,7 @@ CREATE TABLE `character_visuals` (
   `tabard` int unsigned NOT NULL DEFAULT '0',
   `shirt` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_visuals` */
 
@@ -38252,7 +38252,7 @@ CREATE TABLE `character_void_storage` (
   UNIQUE KEY `idx_player_slot` (`playerGuid`,`slot`) USING BTREE,
   KEY `idx_player` (`playerGuid`) USING BTREE,
   KEY `randomProperty` (`randomProperty`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `character_void_storage` */
 
@@ -38267,7 +38267,7 @@ DROP TABLE IF EXISTS `characters`;
 CREATE TABLE `characters` (
   `guid` bigint unsigned NOT NULL DEFAULT '0',
   `account` int unsigned NOT NULL DEFAULT '0' COMMENT 'Account Identifier',
-  `name` varchar(12) NOT NULL,
+  `name` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL,
   `slot` tinyint unsigned NOT NULL DEFAULT '0',
   `race` tinyint unsigned NOT NULL DEFAULT '0',
   `class` tinyint unsigned NOT NULL DEFAULT '0',
@@ -38297,7 +38297,7 @@ CREATE TABLE `characters` (
   `raidDifficulty` tinyint unsigned NOT NULL DEFAULT '14',
   `legacyRaidDifficulty` tinyint unsigned NOT NULL DEFAULT '3',
   `orientation` float NOT NULL DEFAULT '0',
-  `taximask` text NOT NULL,
+  `taximask` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `online` tinyint unsigned NOT NULL DEFAULT '0',
   `cinematic` tinyint unsigned NOT NULL DEFAULT '0',
   `totaltime` int unsigned NOT NULL DEFAULT '0',
@@ -38316,7 +38316,7 @@ CREATE TABLE `characters` (
   `at_login` smallint unsigned NOT NULL DEFAULT '0',
   `zone` smallint unsigned NOT NULL DEFAULT '0',
   `death_expire_time` int unsigned NOT NULL DEFAULT '0',
-  `taxi_path` text,
+  `taxi_path` mediumtext COLLATE utf8mb4_unicode_ci,
   `totalKills` int unsigned NOT NULL DEFAULT '0',
   `todayKills` smallint unsigned NOT NULL DEFAULT '0',
   `yesterdayKills` smallint unsigned NOT NULL DEFAULT '0',
@@ -38330,31 +38330,28 @@ CREATE TABLE `characters` (
   `activespec` tinyint unsigned NOT NULL DEFAULT '0',
   `specialization` int NOT NULL,
   `lootspecialization` int NOT NULL DEFAULT '0',
-  `exploredZones` longtext,
-  `equipmentCache` longtext,
-  `knownTitles` longtext,
+  `exploredZones` longtext COLLATE utf8mb4_unicode_ci,
+  `equipmentCache` longtext COLLATE utf8mb4_unicode_ci,
+  `knownTitles` longtext COLLATE utf8mb4_unicode_ci,
   `actionBars` tinyint unsigned NOT NULL DEFAULT '0',
   `grantableLevels` tinyint unsigned NOT NULL DEFAULT '0',
   `deleteInfos_Account` int unsigned DEFAULT NULL,
-  `deleteInfos_Name` varchar(12) DEFAULT NULL,
+  `deleteInfos_Name` varchar(12) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `deleteDate` int unsigned DEFAULT NULL,
   `LastCharacterUndelete` int unsigned DEFAULT NULL,
-  `transfer` tinyint NOT NULL DEFAULT '0',
-  `transfer_request` int unsigned NOT NULL DEFAULT '0',
-  `transfer_history` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`) USING BTREE,
   KEY `account` (`account`) USING BTREE,
   KEY `online` (`online`) USING BTREE,
   KEY `name` (`name`) USING BTREE,
   KEY `guid` (`guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Player System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Player System';
 
 /*Data for the table `characters` */
 
 LOCK TABLES `characters` WRITE;
 
-insert  into `characters`(`guid`,`account`,`name`,`slot`,`race`,`class`,`gender`,`level`,`xp`,`money`,`skin`,`face`,`hairStyle`,`hairColor`,`tattoo`,`horn`,`inventorySlots`,`blindfold`,`facialStyle`,`bankSlots`,`drunk`,`playerFlags`,`playerFlagsEx`,`position_x`,`position_y`,`position_z`,`map`,`instance_id`,`dungeonDifficulty`,`raidDifficulty`,`legacyRaidDifficulty`,`orientation`,`taximask`,`online`,`cinematic`,`totaltime`,`leveltime`,`created_time`,`logout_time`,`is_logout_resting`,`rest_bonus`,`trans_x`,`trans_y`,`trans_z`,`trans_o`,`transguid`,`extra_flags`,`summonedPetNumber`,`at_login`,`zone`,`death_expire_time`,`taxi_path`,`totalKills`,`todayKills`,`yesterdayKills`,`killPoints`,`chosenTitle`,`watchedFaction`,`lfgBonusFaction`,`health`,`mana`,`latency`,`activespec`,`specialization`,`lootspecialization`,`exploredZones`,`equipmentCache`,`knownTitles`,`actionBars`,`grantableLevels`,`deleteInfos_Account`,`deleteInfos_Name`,`deleteDate`,`LastCharacterUndelete`,`transfer`,`transfer_request`,`transfer_history`) values 
-(1,1,'Test',0,1,10,0,100,0,100000000,3,1,1,9,0,0,20,0,4,0,0,0,0,-880.264,4414.83,737.33,1220,0,1,14,3,4.31822,'34 0 0 6 0 0 1 0 0 0 0 32 8 0 0 0 0 0 0 0 0 0 0 0 0 0 16 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 128 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 32 16 0 0 0 140 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ',0,1,0,0,1606541002,1606541006,0,0,0,0,0,0,0,4,0,32,0,0,'',0,0,0,0,0,-1,0,53400,0,6,0,0,0,'0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ','1 140619 0 2 0 0 3 0 0 0 0 0 5 105155 0 6 105167 0 7 105154 0 8 137982 0 9 105153 0 10 140534 0 11 0 0 11 0 0 12 0 0 12 0 0 16 110895 0 13 111989 0 0 0 0 0 0 0 0 0 0 18 0 0 18 0 0 18 0 0 18 0 0 ','0 0 0 0 0 0 0 0 0 0 0 0 ',0,0,NULL,NULL,NULL,NULL,0,0,0);
+insert  into `characters`(`guid`,`account`,`name`,`slot`,`race`,`class`,`gender`,`level`,`xp`,`money`,`skin`,`face`,`hairStyle`,`hairColor`,`tattoo`,`horn`,`inventorySlots`,`blindfold`,`facialStyle`,`bankSlots`,`drunk`,`playerFlags`,`playerFlagsEx`,`position_x`,`position_y`,`position_z`,`map`,`instance_id`,`dungeonDifficulty`,`raidDifficulty`,`legacyRaidDifficulty`,`orientation`,`taximask`,`online`,`cinematic`,`totaltime`,`leveltime`,`created_time`,`logout_time`,`is_logout_resting`,`rest_bonus`,`trans_x`,`trans_y`,`trans_z`,`trans_o`,`transguid`,`extra_flags`,`summonedPetNumber`,`at_login`,`zone`,`death_expire_time`,`taxi_path`,`totalKills`,`todayKills`,`yesterdayKills`,`killPoints`,`chosenTitle`,`watchedFaction`,`lfgBonusFaction`,`health`,`mana`,`latency`,`activespec`,`specialization`,`lootspecialization`,`exploredZones`,`equipmentCache`,`knownTitles`,`actionBars`,`grantableLevels`,`deleteInfos_Account`,`deleteInfos_Name`,`deleteDate`,`LastCharacterUndelete`) values 
+(1,1,'Test',0,1,10,0,100,0,100000000,3,1,1,9,0,0,20,0,4,0,0,0,0,-880.264,4414.83,737.33,1220,0,1,14,3,4.31822,'34 0 0 6 0 0 1 0 0 0 0 32 8 0 0 0 0 0 0 0 0 0 0 0 0 0 16 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 128 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 32 16 0 0 0 140 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ',0,1,0,0,1606541002,1606541006,0,0,0,0,0,0,0,4,0,32,0,0,'',0,0,0,0,0,-1,0,53400,0,6,0,0,0,'0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ','1 140619 0 2 0 0 3 0 0 0 0 0 5 105155 0 6 105167 0 7 105154 0 8 137982 0 9 105153 0 10 140534 0 11 0 0 11 0 0 12 0 0 12 0 0 16 110895 0 13 111989 0 0 0 0 0 0 0 0 0 0 18 0 0 18 0 0 18 0 0 18 0 0 ','0 0 0 0 0 0 0 0 0 0 0 0 ',0,0,NULL,NULL,NULL,NULL);
 
 UNLOCK TABLES;
 
@@ -38372,7 +38369,7 @@ CREATE TABLE `corpse` (
   `mapId` smallint unsigned NOT NULL DEFAULT '0' COMMENT 'Map Identifier',
   `phaseMask` smallint unsigned NOT NULL DEFAULT '1',
   `displayId` int unsigned NOT NULL DEFAULT '0',
-  `itemCache` text NOT NULL,
+  `itemCache` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `bytes1` int unsigned NOT NULL DEFAULT '0',
   `bytes2` int unsigned NOT NULL DEFAULT '0',
   `flags` tinyint unsigned NOT NULL DEFAULT '0',
@@ -38385,7 +38382,7 @@ CREATE TABLE `corpse` (
   KEY `idx_instance` (`instanceId`) USING BTREE,
   KEY `idx_player` (`guid`) USING BTREE,
   KEY `idx_time` (`time`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Death System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Death System';
 
 /*Data for the table `corpse` */
 
@@ -38408,7 +38405,7 @@ CREATE TABLE `creature_respawn` (
   KEY `guid` (`guid`) USING BTREE,
   KEY `mapId` (`mapId`) USING BTREE,
   KEY `all` (`guid`,`respawnTime`,`mapId`,`instanceId`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Grid Loading System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Grid Loading System';
 
 /*Data for the table `creature_respawn` */
 
@@ -38425,7 +38422,7 @@ CREATE TABLE `game_event_condition_save` (
   `condition_id` int unsigned NOT NULL DEFAULT '0',
   `done` float DEFAULT '0',
   PRIMARY KEY (`eventEntry`,`condition_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `game_event_condition_save` */
 
@@ -38442,7 +38439,7 @@ CREATE TABLE `game_event_save` (
   `state` tinyint unsigned NOT NULL DEFAULT '1',
   `next_start` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`eventEntry`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `game_event_save` */
 
@@ -38481,7 +38478,7 @@ CREATE TABLE `gameobject_respawn` (
   KEY `guid` (`guid`) USING BTREE,
   KEY `mapId` (`mapId`) USING BTREE,
   KEY `respawnTime` (`respawnTime`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Grid Loading System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Grid Loading System';
 
 /*Data for the table `gameobject_respawn` */
 
@@ -38497,9 +38494,9 @@ CREATE TABLE `gm_subsurveys` (
   `surveyId` int unsigned NOT NULL AUTO_INCREMENT,
   `subsurveyId` int unsigned NOT NULL DEFAULT '0',
   `rank` int unsigned NOT NULL DEFAULT '0',
-  `comment` text NOT NULL,
+  `comment` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`surveyId`,`subsurveyId`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Player System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Player System';
 
 /*Data for the table `gm_subsurveys` */
 
@@ -38515,10 +38512,10 @@ CREATE TABLE `gm_surveys` (
   `surveyId` int unsigned NOT NULL AUTO_INCREMENT,
   `guid` bigint unsigned NOT NULL DEFAULT '0',
   `mainSurvey` int unsigned NOT NULL DEFAULT '0',
-  `overallComment` longtext NOT NULL,
+  `overallComment` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `createTime` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`surveyId`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Player System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Player System';
 
 /*Data for the table `gm_surveys` */
 
@@ -38533,8 +38530,8 @@ DROP TABLE IF EXISTS `gm_tickets`;
 CREATE TABLE `gm_tickets` (
   `ticketId` int unsigned NOT NULL AUTO_INCREMENT,
   `guid` bigint unsigned NOT NULL DEFAULT '0',
-  `name` varchar(12) NOT NULL COMMENT 'Name of ticket creator',
-  `message` text NOT NULL,
+  `name` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Name of ticket creator',
+  `message` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `createTime` int unsigned NOT NULL DEFAULT '0',
   `mapId` smallint unsigned NOT NULL DEFAULT '0',
   `posX` float NOT NULL DEFAULT '0',
@@ -38543,12 +38540,12 @@ CREATE TABLE `gm_tickets` (
   `lastModifiedTime` int unsigned NOT NULL DEFAULT '0',
   `closedBy` bigint NOT NULL DEFAULT '0',
   `assignedTo` bigint unsigned NOT NULL DEFAULT '0',
-  `comment` text NOT NULL,
+  `comment` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `completed` tinyint unsigned NOT NULL DEFAULT '0',
   `escalated` tinyint unsigned NOT NULL DEFAULT '0',
   `viewed` tinyint unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ticketId`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Player System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Player System';
 
 /*Data for the table `gm_tickets` */
 
@@ -38568,11 +38565,11 @@ CREATE TABLE `group_instance` (
   `difficulty` tinyint unsigned NOT NULL DEFAULT '0',
   `completedEncounters` int unsigned NOT NULL DEFAULT '0',
   `resetTime` int unsigned NOT NULL DEFAULT '0',
-  `data` tinytext NOT NULL,
+  `data` text COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`guid`,`instance`) USING BTREE,
   KEY `instance` (`instance`) USING BTREE,
   KEY `guid` (`guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `group_instance` */
 
@@ -38593,7 +38590,7 @@ CREATE TABLE `group_member` (
   PRIMARY KEY (`memberGuid`) USING BTREE,
   KEY `guid` (`guid`) USING BTREE,
   KEY `memberGuid` (`memberGuid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Groups';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Groups';
 
 /*Data for the table `group_member` */
 
@@ -38626,7 +38623,7 @@ CREATE TABLE `groups` (
   PRIMARY KEY (`guid`) USING BTREE,
   KEY `leaderGuid` (`leaderGuid`) USING BTREE,
   KEY `guid` (`guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Groups';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Groups';
 
 /*Data for the table `groups` */
 
@@ -38640,7 +38637,7 @@ DROP TABLE IF EXISTS `guild`;
 
 CREATE TABLE `guild` (
   `guildid` bigint unsigned NOT NULL DEFAULT '0',
-  `name` varchar(24) NOT NULL DEFAULT '',
+  `name` varchar(24) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `leaderguid` bigint unsigned NOT NULL DEFAULT '0',
   `flags` int unsigned NOT NULL DEFAULT '0',
   `EmblemStyle` int NOT NULL DEFAULT '-1',
@@ -38648,14 +38645,14 @@ CREATE TABLE `guild` (
   `BorderStyle` int NOT NULL DEFAULT '-1',
   `BorderColor` int NOT NULL DEFAULT '-1',
   `BackgroundColor` int NOT NULL DEFAULT '-1',
-  `info` text NOT NULL,
-  `motd` varchar(128) NOT NULL DEFAULT '',
+  `info` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `motd` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `createdate` int unsigned NOT NULL DEFAULT '0',
   `BankMoney` bigint unsigned NOT NULL DEFAULT '0',
   `level` int unsigned DEFAULT '1',
   PRIMARY KEY (`guildid`) USING BTREE,
   KEY `guildid` (`guildid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Guild System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Guild System';
 
 /*Data for the table `guild` */
 
@@ -38671,9 +38668,9 @@ CREATE TABLE `guild_achievement` (
   `guildId` bigint unsigned NOT NULL DEFAULT '0',
   `achievement` int unsigned NOT NULL,
   `date` int unsigned NOT NULL DEFAULT '0',
-  `guids` text NOT NULL,
+  `guids` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`guildId`,`achievement`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `guild_achievement` */
 
@@ -38694,7 +38691,7 @@ CREATE TABLE `guild_achievement_progress` (
   `achievID` int unsigned NOT NULL,
   `completed` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`guildId`,`criteria`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `guild_achievement_progress` */
 
@@ -38720,7 +38717,7 @@ CREATE TABLE `guild_bank_eventlog` (
   KEY `guildid_key` (`guildId`) USING BTREE,
   KEY `Idx_PlayerGuid` (`PlayerGuid`) USING BTREE,
   KEY `Idx_LogGuid` (`LogGuid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `guild_bank_eventlog` */
 
@@ -38740,7 +38737,7 @@ CREATE TABLE `guild_bank_item` (
   PRIMARY KEY (`guildId`,`TabId`,`SlotId`) USING BTREE,
   KEY `guildid_key` (`guildId`) USING BTREE,
   KEY `Idx_item_guid` (`item_guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `guild_bank_item` */
 
@@ -38760,7 +38757,7 @@ CREATE TABLE `guild_bank_right` (
   `SlotPerDay` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`guildId`,`TabId`,`rid`) USING BTREE,
   KEY `guildid_key` (`guildId`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `guild_bank_right` */
 
@@ -38775,12 +38772,12 @@ DROP TABLE IF EXISTS `guild_bank_tab`;
 CREATE TABLE `guild_bank_tab` (
   `guildId` bigint unsigned NOT NULL DEFAULT '0',
   `TabId` tinyint unsigned NOT NULL DEFAULT '0',
-  `TabName` varchar(16) NOT NULL DEFAULT '',
-  `TabIcon` varchar(100) NOT NULL DEFAULT '',
-  `TabText` varchar(500) DEFAULT NULL,
+  `TabName` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `TabIcon` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `TabText` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`guildId`,`TabId`) USING BTREE,
   KEY `guildid_key` (`guildId`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `guild_bank_tab` */
 
@@ -38797,7 +38794,7 @@ CREATE TABLE `guild_challenges` (
   `ChallengeType` int NOT NULL DEFAULT '0',
   `ChallengeCount` int DEFAULT NULL,
   PRIMARY KEY (`GuildId`,`ChallengeType`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `guild_challenges` */
 
@@ -38821,7 +38818,7 @@ CREATE TABLE `guild_eventlog` (
   KEY `Idx_PlayerGuid1` (`PlayerGuid1`) USING BTREE,
   KEY `Idx_PlayerGuid2` (`PlayerGuid2`) USING BTREE,
   KEY `Idx_LogGuid` (`LogGuid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Guild Eventlog';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Guild Eventlog';
 
 /*Data for the table `guild_eventlog` */
 
@@ -38839,10 +38836,10 @@ CREATE TABLE `guild_finder_applicant` (
   `availability` tinyint unsigned DEFAULT '0',
   `classRole` tinyint unsigned DEFAULT '0',
   `interests` tinyint unsigned DEFAULT '0',
-  `comment` varchar(255) DEFAULT NULL,
+  `comment` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `submitTime` int unsigned DEFAULT NULL,
   UNIQUE KEY `guildId` (`guildId`,`playerGuid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `guild_finder_applicant` */
 
@@ -38861,9 +38858,9 @@ CREATE TABLE `guild_finder_guild_settings` (
   `interests` tinyint unsigned NOT NULL DEFAULT '0',
   `level` tinyint unsigned NOT NULL DEFAULT '1',
   `listed` tinyint unsigned NOT NULL DEFAULT '0',
-  `comment` varchar(255) DEFAULT NULL,
+  `comment` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`guildId`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `guild_finder_guild_settings` */
 
@@ -38879,8 +38876,8 @@ CREATE TABLE `guild_member` (
   `guildId` bigint unsigned NOT NULL DEFAULT '0',
   `guid` bigint unsigned NOT NULL DEFAULT '0',
   `rank` tinyint unsigned NOT NULL,
-  `pnote` varchar(31) NOT NULL DEFAULT '',
-  `offnote` varchar(31) NOT NULL DEFAULT '',
+  `pnote` varchar(31) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `offnote` varchar(31) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `BankResetTimeMoney` int unsigned NOT NULL DEFAULT '0',
   `BankRemMoney` int unsigned NOT NULL DEFAULT '0',
   `BankResetTimeTab0` int unsigned NOT NULL DEFAULT '0',
@@ -38905,17 +38902,17 @@ CREATE TABLE `guild_member` (
   `profId1` smallint unsigned NOT NULL DEFAULT '0',
   `profValue1` smallint unsigned NOT NULL DEFAULT '0',
   `profRank1` smallint unsigned NOT NULL DEFAULT '0',
-  `recipesMask1` varchar(1300) NOT NULL DEFAULT '',
+  `recipesMask1` varchar(1300) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `profId2` smallint unsigned NOT NULL DEFAULT '0',
   `profValue2` smallint unsigned NOT NULL DEFAULT '0',
   `profRank2` smallint unsigned NOT NULL DEFAULT '0',
-  `recipesMask2` varchar(1300) NOT NULL DEFAULT '',
+  `recipesMask2` varchar(1300) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `RepWeek` smallint unsigned NOT NULL DEFAULT '0' COMMENT 'Guild rep earned this week.',
   PRIMARY KEY (`guid`) USING BTREE,
   KEY `guildid_rank_key` (`guildId`,`rank`) USING BTREE,
   KEY `guildId` (`guildId`) USING BTREE,
   KEY `guid` (`guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Guild System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Guild System';
 
 /*Data for the table `guild_member` */
 
@@ -38935,13 +38932,13 @@ CREATE TABLE `guild_newslog` (
   `Flags` int unsigned NOT NULL DEFAULT '0',
   `Value` int unsigned NOT NULL DEFAULT '0',
   `TimeStamp` int unsigned NOT NULL DEFAULT '0',
-  `Data` text NOT NULL,
+  `Data` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`guildid`,`LogGuid`) USING BTREE,
   KEY `guildid_key` (`guildid`) USING BTREE,
   KEY `Idx_PlayerGuid` (`PlayerGuid`) USING BTREE,
   KEY `Idx_LogGuid` (`LogGuid`) USING BTREE,
   KEY `TimeStamp` (`TimeStamp`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `guild_newslog` */
 
@@ -38956,12 +38953,12 @@ DROP TABLE IF EXISTS `guild_rank`;
 CREATE TABLE `guild_rank` (
   `guildId` bigint unsigned NOT NULL DEFAULT '0',
   `rid` tinyint unsigned NOT NULL,
-  `rname` varchar(20) NOT NULL DEFAULT '',
+  `rname` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `rights` mediumint unsigned NOT NULL DEFAULT '0',
   `BankMoneyPerDay` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`guildId`,`rid`) USING BTREE,
   KEY `Idx_rid` (`rid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Guild System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Guild System';
 
 /*Data for the table `guild_rank` */
 
@@ -38981,20 +38978,20 @@ CREATE TABLE `item_instance` (
   `giftCreatorGuid` bigint unsigned NOT NULL DEFAULT '0',
   `count` int unsigned NOT NULL DEFAULT '1',
   `duration` int NOT NULL DEFAULT '0',
-  `charges` tinytext,
+  `charges` text COLLATE utf8mb4_unicode_ci,
   `flags` mediumint unsigned NOT NULL DEFAULT '0',
-  `enchantments` text NOT NULL,
+  `enchantments` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `randomPropertyType` tinyint unsigned NOT NULL DEFAULT '0',
   `randomPropertyId` int unsigned NOT NULL DEFAULT '0',
   `durability` smallint unsigned NOT NULL DEFAULT '0',
   `playedTime` int unsigned NOT NULL DEFAULT '0',
-  `text` text,
+  `text` mediumtext COLLATE utf8mb4_unicode_ci,
   `upgradeId` int unsigned NOT NULL DEFAULT '0',
   `battlePetSpeciesId` int unsigned NOT NULL DEFAULT '0',
   `battlePetBreedData` int unsigned NOT NULL DEFAULT '0',
   `battlePetLevel` int unsigned NOT NULL DEFAULT '0',
   `battlePetDisplayId` int unsigned NOT NULL DEFAULT '0',
-  `bonusListIDs` text,
+  `bonusListIDs` mediumtext COLLATE utf8mb4_unicode_ci,
   `itemLevel` mediumint NOT NULL DEFAULT '0',
   `dungeonEncounterID` mediumint NOT NULL DEFAULT '0',
   `contextID` tinyint unsigned NOT NULL DEFAULT '0',
@@ -39014,7 +39011,7 @@ CREATE TABLE `item_instance` (
   KEY `contextID` (`contextID`) USING BTREE,
   KEY `dungeonEncounterID` (`dungeonEncounterID`) USING BTREE,
   KEY `createdTime` (`createdTime`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Item System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Item System';
 
 /*Data for the table `item_instance` */
 
@@ -54076,7 +54073,7 @@ CREATE TABLE `item_instance_artifact` (
   KEY `itemEntry` (`itemEntry`) USING BTREE,
   KEY `tier` (`tier`) USING BTREE,
   KEY `char_guid` (`char_guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `item_instance_artifact` */
 
@@ -54100,7 +54097,7 @@ CREATE TABLE `item_instance_artifact_powers` (
   KEY `itemEntry` (`itemEntry`) USING BTREE,
   KEY `char_guid` (`char_guid`) USING BTREE,
   KEY `artifactPowerId` (`artifactPowerId`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `item_instance_artifact_powers` */
 
@@ -54115,20 +54112,20 @@ DROP TABLE IF EXISTS `item_instance_gems`;
 CREATE TABLE `item_instance_gems` (
   `itemGuid` bigint unsigned NOT NULL,
   `gemItemId1` int unsigned NOT NULL DEFAULT '0',
-  `gemBonuses1` text,
+  `gemBonuses1` mediumtext COLLATE utf8mb4_unicode_ci,
   `gemContext1` tinyint unsigned NOT NULL DEFAULT '0',
   `gemScalingLevel1` int unsigned NOT NULL DEFAULT '0',
   `gemItemId2` int unsigned NOT NULL DEFAULT '0',
-  `gemBonuses2` text,
+  `gemBonuses2` mediumtext COLLATE utf8mb4_unicode_ci,
   `gemScalingLevel2` int unsigned NOT NULL DEFAULT '0',
   `gemContext2` tinyint unsigned NOT NULL DEFAULT '0',
   `gemItemId3` int unsigned NOT NULL DEFAULT '0',
-  `gemBonuses3` text,
+  `gemBonuses3` mediumtext COLLATE utf8mb4_unicode_ci,
   `gemContext3` tinyint unsigned NOT NULL DEFAULT '0',
   `gemScalingLevel3` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`itemGuid`) USING BTREE,
   KEY `itemGuid` (`itemGuid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `item_instance_gems` */
 
@@ -54146,7 +54143,7 @@ CREATE TABLE `item_instance_modifiers` (
   `artifactKnowledgeLevel` int unsigned DEFAULT '0',
   PRIMARY KEY (`itemGuid`) USING BTREE,
   KEY `itemGuid` (`itemGuid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `item_instance_modifiers` */
 
@@ -54161,11 +54158,11 @@ DROP TABLE IF EXISTS `item_instance_relics`;
 CREATE TABLE `item_instance_relics` (
   `itemGuid` bigint unsigned NOT NULL,
   `char_guid` bigint NOT NULL,
-  `first_relic` text NOT NULL,
-  `second_relic` text NOT NULL,
-  `third_relic` text NOT NULL,
+  `first_relic` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `second_relic` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `third_relic` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`itemGuid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `item_instance_relics` */
 
@@ -54191,7 +54188,7 @@ CREATE TABLE `item_instance_transmog` (
   `spellItemEnchantmentSpec4` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`itemGuid`) USING BTREE,
   KEY `itemGuid` (`itemGuid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `item_instance_transmog` */
 
@@ -54211,7 +54208,7 @@ CREATE TABLE `item_refund_instance` (
   PRIMARY KEY (`item_guid`,`player_guid`) USING BTREE,
   KEY `item_guid` (`item_guid`) USING BTREE,
   KEY `player_guid` (`player_guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Item Refund System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Item Refund System';
 
 /*Data for the table `item_refund_instance` */
 
@@ -54225,10 +54222,10 @@ DROP TABLE IF EXISTS `item_soulbound_trade_data`;
 
 CREATE TABLE `item_soulbound_trade_data` (
   `itemGuid` bigint unsigned NOT NULL DEFAULT '0',
-  `allowedPlayers` text NOT NULL COMMENT 'Space separated GUID list of players who can receive this item in trade',
+  `allowedPlayers` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Space separated GUID list of players who can receive this item in trade',
   PRIMARY KEY (`itemGuid`) USING BTREE,
   KEY `itemGuid` (`itemGuid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Item Refund System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Item Refund System';
 
 /*Data for the table `item_soulbound_trade_data` */
 
@@ -54251,7 +54248,7 @@ CREATE TABLE `lag_reports` (
   `latency` int unsigned NOT NULL DEFAULT '0',
   `createTime` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`reportId`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Player System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Player System';
 
 /*Data for the table `lag_reports` */
 
@@ -54269,7 +54266,7 @@ CREATE TABLE `lfg_data` (
   `state` tinyint unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`) USING BTREE,
   KEY `guid` (`guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='LFG Data';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='LFG Data';
 
 /*Data for the table `lfg_data` */
 
@@ -54317,7 +54314,7 @@ CREATE TABLE `lock` (
   `Action8` tinyint unsigned NOT NULL DEFAULT '0',
   `VerifiedBuild` smallint NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 ROW_FORMAT=FIXED;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `lock` */
 
@@ -54337,7 +54334,7 @@ CREATE TABLE `log_faction_change` (
   `NewRace` int NOT NULL,
   `date` datetime NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=3901 DEFAULT CHARSET=latin1 ROW_FORMAT=FIXED;
+) ENGINE=InnoDB AUTO_INCREMENT=3901 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `log_faction_change` */
 
@@ -54353,18 +54350,18 @@ CREATE TABLE `log_gm` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL,
   `gm_account_id` bigint DEFAULT NULL,
-  `gm_account_name` text,
+  `gm_account_name` mediumtext COLLATE utf8mb4_unicode_ci,
   `gm_character_id` bigint DEFAULT NULL,
-  `gm_character_name` text,
-  `gm_ip` text,
+  `gm_character_name` mediumtext COLLATE utf8mb4_unicode_ci,
+  `gm_ip` mediumtext COLLATE utf8mb4_unicode_ci,
   `target_account_id` bigint DEFAULT NULL,
-  `target_account_name` text,
+  `target_account_name` mediumtext COLLATE utf8mb4_unicode_ci,
   `target_character_id` bigint DEFAULT NULL,
-  `target_character_name` text,
-  `target_ip` text,
-  `command` text,
+  `target_character_name` mediumtext COLLATE utf8mb4_unicode_ci,
+  `target_ip` mediumtext COLLATE utf8mb4_unicode_ci,
+  `command` mediumtext COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `log_gm` */
 
@@ -54379,12 +54376,12 @@ DROP TABLE IF EXISTS `log_rename`;
 CREATE TABLE `log_rename` (
   `guid` bigint unsigned NOT NULL,
   `date` datetime NOT NULL,
-  `oldName` tinytext CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `newName` tinytext CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `oldName` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `newName` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   KEY `guid` (`guid`) USING BTREE,
   KEY `oldName` (`oldName`(50)) USING BTREE,
   KEY `newName` (`newName`(50)) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `log_rename` */
 
@@ -54402,7 +54399,7 @@ CREATE TABLE `log_store_gold` (
   `guid` bigint NOT NULL DEFAULT '0',
   `gold` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `log_store_gold` */
 
@@ -54421,7 +54418,7 @@ CREATE TABLE `log_store_item` (
   `itemid` int DEFAULT '0',
   `count` int DEFAULT '1',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `log_store_item` */
 
@@ -54437,8 +54434,8 @@ CREATE TABLE `magazine` (
   `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Identifier',
   `guid` int unsigned NOT NULL DEFAULT '0' COMMENT 'Identifier',
   `itemid` mediumint unsigned NOT NULL DEFAULT '0',
-  `subject` longtext,
-  `itemText` longtext,
+  `subject` longtext COLLATE utf8mb4_unicode_ci,
+  `itemText` longtext COLLATE utf8mb4_unicode_ci,
   `money` int unsigned NOT NULL DEFAULT '0',
   `count` int unsigned NOT NULL DEFAULT '1',
   `title` int unsigned NOT NULL DEFAULT '0',
@@ -54446,7 +54443,7 @@ CREATE TABLE `magazine` (
   `active` tinyint unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `idx_receiver` (`guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Mail System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Mail System';
 
 /*Data for the table `magazine` */
 
@@ -54465,8 +54462,8 @@ CREATE TABLE `mail` (
   `mailTemplateId` smallint unsigned NOT NULL DEFAULT '0',
   `sender` bigint unsigned NOT NULL DEFAULT '0',
   `receiver` bigint unsigned NOT NULL DEFAULT '0',
-  `subject` longtext,
-  `body` longtext,
+  `subject` longtext COLLATE utf8mb4_unicode_ci,
+  `body` longtext COLLATE utf8mb4_unicode_ci,
   `has_items` tinyint unsigned NOT NULL DEFAULT '0',
   `expire_time` int unsigned NOT NULL DEFAULT '0',
   `deliver_time` int unsigned NOT NULL DEFAULT '0',
@@ -54478,7 +54475,7 @@ CREATE TABLE `mail` (
   KEY `checked` (`checked`) USING BTREE,
   KEY `deliver_time` (`deliver_time`) USING BTREE,
   KEY `expire_time` (`expire_time`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Mail System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Mail System';
 
 /*Data for the table `mail` */
 
@@ -54497,7 +54494,7 @@ CREATE TABLE `mail_items` (
   PRIMARY KEY (`item_guid`) USING BTREE,
   KEY `idx_receiver` (`receiver`) USING BTREE,
   KEY `idx_mail_id` (`mail_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `mail_items` */
 
@@ -54515,14 +54512,14 @@ CREATE TABLE `mailbox_queue` (
   `stationery` int unsigned NOT NULL DEFAULT '0',
   `sender_guid` bigint unsigned NOT NULL DEFAULT '0',
   `receiver_guid` bigint unsigned NOT NULL DEFAULT '0',
-  `subject` varchar(200) DEFAULT 'Support Message',
-  `message` varchar(500) DEFAULT 'Support Message',
+  `subject` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT 'Support Message',
+  `message` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT 'Support Message',
   `money` int unsigned NOT NULL DEFAULT '0',
   `item` int unsigned NOT NULL DEFAULT '0',
   `item_count` int unsigned NOT NULL DEFAULT '0',
   `store_history` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `mailbox_queue` */
 
@@ -54547,7 +54544,7 @@ CREATE TABLE `pet_aura` (
   `remaincharges` tinyint unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`,`spell`,`effect_mask`) USING BTREE,
   KEY `guid` (`guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Pet System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Pet System';
 
 /*Data for the table `pet_aura` */
 
@@ -54567,7 +54564,7 @@ CREATE TABLE `pet_aura_effect` (
   `baseamount` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`,`slot`,`effect`) USING BTREE,
   KEY `guid` (`guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `pet_aura_effect` */
 
@@ -54586,7 +54583,7 @@ CREATE TABLE `pet_spell` (
   PRIMARY KEY (`guid`,`spell`) USING BTREE,
   KEY `guid` (`guid`) USING BTREE,
   KEY `spell` (`spell`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Pet System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Pet System';
 
 /*Data for the table `pet_spell` */
 
@@ -54603,7 +54600,7 @@ CREATE TABLE `pet_spell_cooldown` (
   `spell` mediumint unsigned NOT NULL DEFAULT '0' COMMENT 'Spell Identifier',
   `time` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`,`spell`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `pet_spell_cooldown` */
 
@@ -54618,11 +54615,11 @@ DROP TABLE IF EXISTS `petition`;
 CREATE TABLE `petition` (
   `ownerguid` bigint unsigned NOT NULL DEFAULT '0',
   `petitionguid` bigint unsigned NOT NULL DEFAULT '0',
-  `name` varchar(24) NOT NULL,
+  `name` varchar(24) COLLATE utf8mb4_unicode_ci NOT NULL,
   `type` tinyint unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ownerguid`,`type`) USING BTREE,
   UNIQUE KEY `index_ownerguid_petitionguid` (`ownerguid`,`petitionguid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Guild System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Guild System';
 
 /*Data for the table `petition` */
 
@@ -54643,7 +54640,7 @@ CREATE TABLE `petition_sign` (
   PRIMARY KEY (`petitionguid`,`playerguid`) USING BTREE,
   KEY `Idx_playerguid` (`playerguid`) USING BTREE,
   KEY `Idx_ownerguid` (`ownerguid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Guild System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Guild System';
 
 /*Data for the table `petition_sign` */
 
@@ -54659,7 +54656,7 @@ CREATE TABLE `pool_quest_save` (
   `pool_id` int unsigned NOT NULL DEFAULT '0',
   `quest_id` int unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`pool_id`,`quest_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `pool_quest_save` */
 
@@ -54713,13 +54710,13 @@ DROP TABLE IF EXISTS `report_bugreport`;
 CREATE TABLE `report_bugreport` (
   `ID` bigint unsigned NOT NULL COMMENT 'Identifier',
   `PlayerGuid` bigint unsigned NOT NULL,
-  `Note` longtext NOT NULL,
+  `Note` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `MapID` smallint NOT NULL,
   `PosX` float NOT NULL,
   `PosY` float NOT NULL,
   `PosZ` float NOT NULL,
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Bug report system';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Bug report system';
 
 /*Data for the table `report_bugreport` */
 
@@ -54740,9 +54737,9 @@ CREATE TABLE `report_complaints` (
   `ComplaintType` smallint unsigned NOT NULL DEFAULT '0',
   `MailID` int unsigned NOT NULL DEFAULT '0',
   `TimeSinceOffence` int unsigned NOT NULL DEFAULT '0',
-  `MessageLog` longtext NOT NULL,
+  `MessageLog` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `JustBanned` int NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Spam report system';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Spam report system';
 
 /*Data for the table `report_complaints` */
 
@@ -54755,9 +54752,9 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `reserved_name`;
 
 CREATE TABLE `reserved_name` (
-  `name` varchar(12) NOT NULL DEFAULT '',
+  `name` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`name`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Player Reserved Names';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Player Reserved Names';
 
 /*Data for the table `reserved_name` */
 
@@ -54772,12 +54769,12 @@ DROP TABLE IF EXISTS `skillline`;
 CREATE TABLE `skillline` (
   `id` bigint NOT NULL,
   `ref_category` bigint NOT NULL,
-  `name` text NOT NULL,
-  `description` text NOT NULL,
+  `name` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `ref_icon` bigint NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   KEY `ref_category` (`ref_category`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `skillline` */
 
@@ -54796,7 +54793,7 @@ CREATE TABLE `store_gold` (
   PRIMARY KEY (`transaction`) USING BTREE,
   UNIQUE KEY `transaction` (`transaction`) USING BTREE,
   KEY `guid` (`guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `store_gold` */
 
@@ -54815,20 +54812,20 @@ CREATE TABLE `store_history` (
   `bnet_account` int unsigned NOT NULL DEFAULT '0',
   `char_guid` int unsigned NOT NULL DEFAULT '0',
   `char_level` int unsigned NOT NULL DEFAULT '0',
-  `art_level` varchar(255) NOT NULL DEFAULT '',
+  `art_level` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `item_guid` int unsigned DEFAULT NULL,
   `item` int NOT NULL DEFAULT '0',
-  `bonus` varchar(11) DEFAULT NULL,
+  `bonus` varchar(11) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `product` int NOT NULL DEFAULT '0',
   `count` int unsigned NOT NULL DEFAULT '1',
   `token` int unsigned NOT NULL,
   `karma` int unsigned NOT NULL DEFAULT '0',
   `status` tinyint unsigned NOT NULL DEFAULT '0',
-  `type` enum('cp','game') NOT NULL DEFAULT 'game',
+  `type` enum('cp','game') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'game',
   `dt_buy` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `dt_return` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `store_history` */
 
@@ -54848,7 +54845,7 @@ CREATE TABLE `store_item` (
   PRIMARY KEY (`transaction`) USING BTREE,
   UNIQUE KEY `transaction` (`transaction`) USING BTREE,
   KEY `guid` (`guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `store_item` */
 
@@ -54867,7 +54864,7 @@ CREATE TABLE `store_level` (
   PRIMARY KEY (`transaction`) USING BTREE,
   UNIQUE KEY `transaction` (`transaction`) USING BTREE,
   KEY `guid` (`guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `store_level` */
 
@@ -54886,7 +54883,7 @@ CREATE TABLE `store_metier` (
   `transaction` int unsigned NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`transaction`) USING BTREE,
   UNIQUE KEY `NewIndex1` (`skill`,`guid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `store_metier` */
 
@@ -54911,7 +54908,7 @@ CREATE TABLE `talent` (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `idx_id` (`id`) USING BTREE,
   KEY `idx_tab` (`ref_tab`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 ROW_FORMAT=FIXED;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `talent` */
 
@@ -54925,12 +54922,12 @@ DROP TABLE IF EXISTS `talenttab`;
 
 CREATE TABLE `talenttab` (
   `id` bigint NOT NULL,
-  `name` text,
+  `name` mediumtext COLLATE utf8mb4_unicode_ci,
   `refmask_chrclasses` bigint NOT NULL,
   `tab_number` bigint NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   KEY `refmask_chrclasses` (`refmask_chrclasses`,`tab_number`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `talenttab` */
 
@@ -54943,13 +54940,13 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `updates`;
 
 CREATE TABLE `updates` (
-  `name` varchar(200) NOT NULL COMMENT 'filename with extension of the update.',
-  `hash` char(40) DEFAULT '' COMMENT 'sha1 hash of the sql file.',
-  `state` enum('RELEASED','ARCHIVED') NOT NULL DEFAULT 'RELEASED' COMMENT 'defines if an update is released or archived.',
+  `name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'filename with extension of the update.',
+  `hash` char(40) COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT 'sha1 hash of the sql file.',
+  `state` enum('RELEASED','ARCHIVED') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'RELEASED' COMMENT 'defines if an update is released or archived.',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'timestamp when the query was applied.',
   `speed` int unsigned NOT NULL DEFAULT '0' COMMENT 'time the query takes to apply in ms.',
   PRIMARY KEY (`name`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='List of all applied updates in this database.';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='List of all applied updates in this database.';
 
 /*Data for the table `updates` */
 
@@ -54962,7 +54959,8 @@ insert  into `updates`(`name`,`hash`,`state`,`timestamp`,`speed`) values
 ('0004_fix_auctionhouse_house_id.sql','7FC06FF0A47B468628CAFC2CA764556B4D52A23E','RELEASED','2026-01-02 01:13:45',1121),
 ('0005_character_action_expansion.sql','7B040C9ABE03CFD8D351DAC82B2F5F558698D163','RELEASED','2026-01-02 01:13:45',104),
 ('0006_character_pet_slot.sql','5FFAEF34AAC93B8C0AA2AD1D311B5D8006247566','RELEASED','2026-01-02 01:13:46',176),
-('0007_character_pet_slot.sql','E2867C8AB20FB67E26710A85D73A3CBDB833379C','RELEASED','2026-01-02 01:13:46',428);
+('0007_character_pet_slot.sql','E2867C8AB20FB67E26710A85D73A3CBDB833379C','RELEASED','2026-01-02 01:13:46',428),
+('2026_01_18_00_characters.sql','9F36DAB4966158BD16929E7862E4C8FAE9034EEF','RELEASED','2026-01-19 07:43:54',194);
 
 UNLOCK TABLES;
 
@@ -54971,10 +54969,10 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `updates_include`;
 
 CREATE TABLE `updates_include` (
-  `path` varchar(200) NOT NULL COMMENT 'directory to include. $ means relative to the source directory.',
-  `state` enum('RELEASED','ARCHIVED') NOT NULL DEFAULT 'RELEASED' COMMENT 'defines if the directory contains released or archived updates.',
+  `path` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'directory to include. $ means relative to the source directory.',
+  `state` enum('RELEASED','ARCHIVED') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'RELEASED' COMMENT 'defines if the directory contains released or archived updates.',
   PRIMARY KEY (`path`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='List of directories where we want to include sql updates.';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='List of directories where we want to include sql updates.';
 
 /*Data for the table `updates_include` */
 
@@ -54993,7 +54991,7 @@ CREATE TABLE `warden_action` (
   `wardenId` smallint unsigned NOT NULL,
   `action` tinyint unsigned DEFAULT NULL,
   PRIMARY KEY (`wardenId`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `warden_action` */
 
@@ -55018,124 +55016,120 @@ CREATE TABLE `world_quest` (
   `CurrencyCount` int NOT NULL DEFAULT '0',
   `Gold` int NOT NULL DEFAULT '0',
   `RewardType` int NOT NULL DEFAULT '0',
-  `ItemList` longtext NOT NULL,
+  `ItemList` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`QuestID`) USING BTREE,
   KEY `ResetTime` (`ResetTime`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `world_quest` */
 
 LOCK TABLES `world_quest` WRITE;
 
 insert  into `world_quest`(`QuestID`,`QuestInfoID`,`QuestSortID`,`VariableID`,`Value`,`Timer`,`StartTime`,`ResetTime`,`CurrencyID`,`CurrencyCount`,`Gold`,`RewardType`,`ItemList`) values 
-(48833,111,8899,14269,1,43200,1767383586,1767426786,0,0,0,5,'121799 121799 1 121799 121799 1 121799 121799 1 121799 121799 1 121799 121799 1 121799 121799 1 121799 121799 1 121799 121799 1 121799 121799 1 121799 121799 1 121799 121799 1 121799 121799 1 121799 121799 1'),
-(48662,135,8899,14154,1,43200,1767383586,1767426786,0,0,0,5,'134157 134157 1 134157 134157 1 134157 134157 1 134157 134157 1 134157 134157 1 134157 134157 1 134157 134157 1 134157 134157 1 134157 134157 1 134157 134157 1 134157 134157 1 134157 134157 1 134157 134157 1'),
-(48735,136,8701,14185,1,86400,1767383586,1767469986,0,0,4915300,2,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(48105,109,8701,13989,4,86400,1767383586,1767469986,0,0,0,5,'121192 121192 1 121192 121192 1 121192 121192 1 121192 121192 1 121192 121192 1 121192 121192 1 121192 121192 1 121192 121192 1 121192 121192 1 121192 121192 1 121192 121192 1 121192 121192 1 121192 121192 1'),
-(48101,109,8701,14205,2,86400,1767383586,1767469986,0,0,0,4,'151243 151243 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(48099,109,8701,14021,1,86400,1767383586,1767469986,0,0,1143600,2,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(48098,109,8701,13931,3,86400,1767383586,1767469986,1220,250,0,3,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(48096,109,8701,13557,2,86400,1767383586,1767469986,0,0,0,6,'0 0 1 143693 143693 1 151006 151006 1 151006 151006 1 143693 143693 1 143693 143693 1 143693 143693 1 141279 141279 1 151006 151006 1 143693 143693 1 141288 141288 1 151006 151006 1 143693 143693 1'),
-(48639,128,8574,14296,1,259200,1767383586,1767642786,1220,0,0,3,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(48615,109,8574,14130,3,86400,1767383586,1767469986,0,0,0,5,'0 0 1 139100 139100 1 139100 139100 1 134302 134302 1 139067 139067 1 134306 134306 1 139100 139100 1 134302 134302 1 134306 134306 1 134306 134306 1 139067 139067 1 139067 139067 1 139067 139067 1'),
-(48284,109,8574,13621,1,86400,1767383586,1767469986,0,0,0,7,'151568 151568 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(47724,109,8574,13671,2,86400,1767383586,1767469986,0,0,0,4,'153165 153165 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(47707,109,8574,13667,1,86400,1767383586,1767469986,0,0,0,5,'0 0 1 150959 150959 1 150959 150959 1 121262 121262 1 139935 139935 1 121110 121110 1 150959 150959 1 121262 121262 1 121110 121110 1 121110 121110 1 139935 139935 1 139935 139935 1 139935 139935 1'),
-(47563,109,8574,13619,2,86400,1767383586,1767469986,0,0,1013100,2,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(47552,136,8574,13623,1,86400,1767383586,1767469986,0,0,0,4,'151247 151247 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(44028,135,7637,12395,3,64800,1767383586,1767448386,0,0,0,5,'121248 121248 1 121248 121248 1 121248 121248 1 121248 121248 1 121248 121248 1 121248 121248 1 121248 121248 1 121248 121248 1 121248 121248 1 121248 121248 1 121248 121248 1 121248 121248 1 121248 121248 1'),
-(43930,109,7637,12360,1,86400,1767383586,1767469986,0,0,908400,2,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(42725,109,7637,11911,1,86400,1767383586,1767469986,0,0,0,4,'139609 139609 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(42071,109,7637,11571,1,86400,1767383586,1767469986,0,0,0,4,'141926 141926 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(42089,109,7637,11576,1,86400,1767383586,1767469986,0,0,0,4,'139617 139617 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41643,117,7637,11286,1,86400,1767383586,1767469986,0,0,0,7,'124124 124124 2 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41318,109,7637,10984,1,86400,1767383586,1767469986,0,0,0,6,'0 0 1 141293 141293 1 140088 140088 1 140088 140088 1 141255 141255 1 140088 140088 1 141293 141293 1 140088 140088 1 141293 141293 1 141293 141293 1 140088 140088 1 140088 140088 1 141255 141255 1'),
-(41303,109,7637,10973,1,86400,1767383586,1767469986,0,0,0,5,'0 0 1 121069 121069 1 121069 121069 1 134345 134345 1 146772 146772 1 134306 134306 1 121069 121069 1 134345 134345 1 134306 134306 1 134306 134306 1 146772 146772 1 146772 146772 1 146772 146772 1'),
-(44303,135,7558,12506,3,86400,1767383586,1767469986,0,0,1204700,2,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(42023,113,7558,12350,1,21600,1767383586,1767405186,1220,350,0,3,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(43324,109,7558,12159,1,86400,1767383586,1767469986,0,0,0,5,'121192 121192 1 121192 121192 1 121192 121192 1 121192 121192 1 121192 121192 1 121192 121192 1 121192 121192 1 121192 121192 1 121192 121192 1 121192 121192 1 121192 121192 1 121192 121192 1 121192 121192 1'),
-(41996,109,7558,11521,1,86400,1767383586,1767469986,0,0,955800,2,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41992,109,7558,11518,1,86400,1767383586,1767469986,0,0,945900,2,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41964,109,7558,11597,1,86400,1767383586,1767469986,1220,425,0,3,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41961,109,7558,11495,1,86400,1767383586,1767469986,0,0,0,4,'139508 139508 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41955,109,7558,11489,1,86400,1767383586,1767469986,0,0,996200,2,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41956,109,7558,11489,2,86400,1767383586,1767469986,0,0,0,5,'0 0 1 134356 134356 1 134356 134356 1 134346 134346 1 121187 121187 1 121741 121741 1 134356 134356 1 134346 134346 1 121741 121741 1 121741 121741 1 121187 121187 1 121187 121187 1 121187 121187 1'),
-(46942,109,7543,13117,3,86400,1767383586,1767469986,0,0,790400,2,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(46933,109,7543,13173,2,86400,1767383586,1767469986,1220,375,0,3,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(46236,109,7543,13207,2,86400,1767383586,1767469986,0,0,0,4,'147485 147485 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(46198,109,7543,13405,2,86400,1767383586,1767469986,0,0,0,4,'147482 147482 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(45934,109,7543,13061,1,86400,1767383586,1767469986,0,0,0,4,'147483 147483 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(46160,109,7543,13141,2,86400,1767383586,1767469986,0,0,0,5,'146858 146858 1 146858 146858 1 146858 146858 1 146858 146858 1 146858 146858 1 146858 146858 1 146858 146858 1 146858 146858 1 146858 146858 1 146858 146858 1 146858 146858 1 146858 146858 1 146858 146858 1'),
-(45930,135,7543,13058,1,86400,1767383586,1767469986,0,0,0,4,'146127 146127 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(45473,109,7543,12994,2,86400,1767383586,1767469986,0,0,0,4,'147482 147482 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(43963,109,7541,12382,1,86400,1767383586,1767469986,0,0,0,7,'124124 124124 3 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(43624,135,7541,12187,3,86400,1767383586,1767469986,0,0,0,4,'139617 139617 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(42067,115,7541,11560,1,86400,1767383586,1767469986,0,0,0,7,'116416 116416 2 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41944,115,7541,11480,1,86400,1767383586,1767469986,0,0,0,7,'116422 116422 6 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41948,115,7541,11490,1,86400,1767383586,1767469986,0,0,0,7,'86143 86143 10 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41927,109,7541,11449,1,86400,1767383586,1767469986,0,0,0,7,'124124 124124 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41794,109,7541,11373,1,86400,1767383586,1767469986,0,0,0,5,'0 0 1 121225 121225 1 121225 121225 1 150976 150976 1 146865 146865 1 121216 121216 1 121225 121225 1 150976 150976 1 121216 121216 1 121216 121216 1 146865 146865 1 146865 146865 1 146865 146865 1'),
-(41678,122,7541,11321,1,86400,1767383586,1767469986,0,0,0,7,'124124 124124 2 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41672,123,7541,11315,1,86400,1767383586,1767469986,0,0,0,7,'124440 124440 30 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41642,117,7541,11285,1,86400,1767383586,1767469986,0,0,0,7,'124439 124439 30 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41555,131,7541,11206,1,259200,1767383586,1767642786,0,0,0,7,'133680 133680 9 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41556,131,7541,11207,1,259200,1767383586,1767642786,0,0,0,7,'133680 133680 5 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41488,120,7541,11138,1,259200,1767383586,1767642786,0,0,0,4,'141872 141872 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41490,120,7541,11140,1,259200,1767383586,1767642786,1220,400,0,3,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41451,109,7541,11122,1,86400,1767383586,1767469986,0,0,0,4,'141931 141931 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41275,130,7541,10941,1,43200,1767383586,1767426786,0,0,0,4,'141872 141872 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(44291,135,7503,11396,3,86400,1767383586,1767469986,0,0,0,4,'139617 139617 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(42064,115,7503,11559,1,86400,1767383586,1767469986,0,0,0,7,'116421 116421 6 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(42025,113,7503,12351,1,21600,1767383586,1767405186,0,0,0,4,'141859 141859 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41838,109,7503,11406,2,86400,1767383586,1767469986,1220,375,0,3,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41766,115,7503,11368,1,86400,1767383586,1767469986,0,0,0,7,'86143 86143 4 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41821,109,7503,11390,2,86400,1767383586,1767469986,0,0,0,5,'0 0 1 121008 121008 1 121008 121008 1 121153 121153 1 136739 136739 1 121324 121324 1 121008 121008 1 121153 121153 1 121324 121324 1 121324 121324 1 136739 136739 1 136739 136739 1 136739 136739 1'),
-(41699,109,7503,11351,2,86400,1767383586,1767469986,0,0,0,4,'139509 139509 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41692,109,7503,11346,1,86400,1767383586,1767469986,1220,450,0,3,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41677,122,7503,11320,1,86400,1767383586,1767469986,0,0,0,7,'124124 124124 9 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41671,123,7503,11314,1,86400,1767383586,1767469986,0,0,0,7,'124442 124442 2 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41647,121,7503,11290,1,86400,1767383586,1767469986,0,0,0,7,'124124 124124 2 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41549,131,7503,11200,1,259200,1767383586,1767642786,0,0,0,7,'133680 133680 7 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41252,130,7503,10917,1,43200,1767383586,1767426786,0,0,0,7,'124108 124108 25 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41244,130,7503,10929,1,43200,1767383586,1767426786,0,0,0,4,'141872 141872 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41210,120,7503,10884,1,259200,1767383586,1767642786,0,0,0,4,'141872 141872 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41013,113,7503,10797,1,21600,1767383586,1767405186,1220,400,0,3,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41208,120,7503,10882,1,259200,1767383586,1767642786,1220,425,0,3,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(39424,109,7503,11131,1,86400,1767383586,1767469986,0,0,0,7,'124124 124124 2 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(42062,115,7502,11557,1,86400,1767383586,1767469986,0,0,0,7,'116419 116419 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41680,122,7502,11323,1,86400,1767383586,1767469986,0,0,0,7,'123919 123919 35 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41674,123,7502,11317,1,86400,1767383586,1767469986,0,0,0,7,'124440 124440 30 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41650,121,7502,13416,1,86400,1767383586,1767469986,0,0,0,7,'124437 124437 45 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41644,117,7502,13418,1,86400,1767383586,1767469986,0,0,0,7,'124124 124124 10 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41638,116,7502,11281,1,86400,1767383586,1767469986,0,0,0,7,'124124 124124 8 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(40277,115,7502,11430,1,86400,1767383586,1767469986,0,0,0,7,'140322 140322 2 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(43605,135,7334,11772,3,86400,1767383586,1767469986,0,0,0,4,'139617 139617 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(42620,109,7334,11753,1,86400,1767383586,1767469986,0,0,0,4,'139508 139508 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(42154,115,7334,11626,1,86400,1767383586,1767469986,0,0,0,7,'116415 116415 2 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(42027,109,7334,11543,1,86400,1767383586,1767469986,0,0,0,5,'0 0 1 139057 139057 1 139057 139057 1 121208 121208 1 134324 134324 1 140030 140030 1 139057 139057 1 140030 140030 1 140030 140030 1 140030 140030 1 134324 134324 1 140030 140030 1 134324 134324 1'),
-(42022,109,7334,11540,1,86400,1767383586,1767469986,0,0,0,4,'141921 141921 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(42021,109,7334,11539,1,86400,1767383586,1767469986,1220,450,0,3,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(42019,109,7334,11538,1,86400,1767383586,1767469986,0,0,0,4,'139612 139612 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(42018,109,7334,11537,1,86400,1767383586,1767469986,0,0,0,4,'139508 139508 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(42014,109,7334,11534,1,86400,1767383586,1767469986,0,0,0,7,'124124 124124 2 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41896,113,7334,12349,1,21600,1767383586,1767405186,0,0,0,4,'141859 141859 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41675,122,7334,11318,1,86400,1767383586,1767469986,0,0,0,7,'123919 123919 40 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41669,123,7334,11312,1,86400,1767383586,1767469986,0,0,0,7,'124442 124442 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41552,131,7334,11203,1,259200,1767383586,1767642786,0,0,0,7,'133680 133680 5 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41611,130,7334,11257,1,43200,1767383586,1767426786,0,0,0,4,'141872 141872 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41481,120,7334,11132,1,259200,1767383586,1767642786,1220,400,0,3,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(41551,131,7334,11202,1,259200,1767383586,1767642786,0,0,0,7,'133680 133680 5 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(42269,112,7541,11682,1,604800,1767383571,1767988371,0,0,0,4,'141932 141932 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(42819,112,7558,12007,1,604800,1767383571,1767988371,0,0,8721200,2,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(43193,112,7334,11979,1,604800,1767383571,1767988371,0,0,0,4,'141932 141932 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(43512,112,7637,12249,1,604800,1767383571,1767988371,0,0,0,4,'141932 141932 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(46945,144,7543,12963,1,604800,1767383571,1767988371,0,0,0,4,'141932 141932 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(47061,144,7543,13427,1,604800,1767383571,1767988371,0,0,0,4,'141932 141932 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(48982,149,9100,14061,1,21600,1767383571,1767405171,0,0,0,3,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(49099,149,9180,14244,1,21600,1767383571,1767405171,0,0,0,3,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(49096,149,9102,14247,1,21600,1767383571,1767405171,0,0,0,3,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(48834,136,8899,14217,1,86400,1767383586,1767469986,1220,1050,0,3,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
-(48875,135,8899,14240,1,43200,1767383586,1767426786,0,0,0,4,'151245 151245 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1');
+(39424,109,7503,11131,1,86400,1768805137,1768891537,1220,375,0,3,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(40277,115,7502,11430,1,86400,1768805137,1768891537,1220,350,0,3,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41013,113,7503,10797,1,21600,1768805137,1768826737,1220,400,0,3,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41144,109,7503,10920,1,86400,1768805137,1768891537,0,0,0,7,'124124 124124 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41145,109,7503,10923,1,86400,1768805137,1768891537,0,0,0,5,'0 0 1 121002 121002 1 121002 121002 1 121044 121044 1 139070 139070 1 134216 134216 1 121002 121002 1 121044 121044 1 134216 134216 1 134216 134216 1 139070 139070 1 139070 139070 1 139070 139070 1'),
+(41209,120,7503,10883,1,259200,1768805137,1769064337,0,0,0,4,'141872 141872 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41240,130,7503,10902,1,86400,1768805137,1768891537,0,0,0,4,'141872 141872 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41315,120,7334,10981,1,86400,1768805137,1768891537,0,0,0,7,'124444 124444 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41317,120,7541,10983,1,86400,1768805137,1768891537,0,0,0,4,'141872 141872 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41340,124,7541,10998,1,43200,1768805137,1768848337,1220,475,0,3,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41482,120,7334,11133,1,259200,1768805137,1769064337,0,0,0,4,'141872 141872 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41560,124,7503,11210,1,259200,1768805137,1769064337,0,0,786500,2,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41564,124,7334,13402,1,259200,1768805137,1769064337,1220,350,0,3,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41569,124,7541,11219,1,259200,1768805137,1769064337,0,0,0,4,'141872 141872 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41582,124,7334,11726,1,43200,1768805137,1768848337,0,0,0,7,'141872 141872 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41609,130,7503,11255,1,43200,1768805137,1768848337,0,0,0,4,'141872 141872 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41610,130,7334,11256,1,43200,1768805137,1768848337,0,0,0,4,'141872 141872 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41611,130,7334,11257,1,43200,1768805137,1768848337,1220,400,0,3,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41638,116,7502,11281,1,86400,1768805137,1768891537,0,0,0,7,'124124 124124 2 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41656,125,7502,13417,1,86400,1768805137,1768891537,0,0,0,7,'130180 130180 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41666,126,7541,11309,1,86400,1768805137,1768891537,0,0,0,7,'124103 124103 30 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41667,126,7637,11310,1,86400,1768805137,1768891537,0,0,0,7,'124124 124124 7 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41668,126,7502,13414,1,86400,1768805137,1768891537,0,0,0,7,'124124 124124 9 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41669,123,7334,11312,1,86400,1768805137,1768891537,0,0,0,7,'124441 124441 10 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41671,123,7503,11314,1,86400,1768805137,1768891537,0,0,0,7,'124124 124124 3 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41672,123,7541,11315,1,86400,1768805137,1768891537,0,0,0,7,'124440 124440 40 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41674,123,7502,11317,1,86400,1768805137,1768891537,0,0,0,7,'124124 124124 10 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41675,122,7334,11318,1,86400,1768805137,1768891537,0,0,0,7,'124124 124124 9 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41677,122,7503,11320,1,86400,1768805137,1768891537,0,0,0,7,'123918 123918 45 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41678,122,7541,11321,1,86400,1768805137,1768891537,0,0,0,7,'124124 124124 6 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41680,122,7502,11323,1,86400,1768805137,1768891537,0,0,0,7,'123918 123918 40 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41705,109,7503,11355,1,86400,1768805137,1768891537,0,0,0,7,'124124 124124 2 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41766,115,7503,11368,1,86400,1768805137,1768891537,0,0,0,7,'116420 116420 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41886,115,7502,11434,1,86400,1768805137,1768891537,0,0,0,7,'98715 98715 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41896,113,7334,12349,1,21600,1768805137,1768826737,0,0,1502300,2,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41930,109,7541,11452,1,86400,1768805137,1768891537,0,0,919900,2,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41936,109,7541,11472,1,86400,1768805137,1768891537,0,0,755800,2,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41949,109,7541,11482,1,86400,1768805137,1768891537,0,0,0,7,'124124 124124 3 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41955,109,7558,11489,1,86400,1768805137,1768891537,0,0,945700,2,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(41956,109,7558,11489,2,86400,1768805137,1768891537,0,0,0,6,'0 0 1 141254 141254 1 141269 141269 1 141269 141269 1 141254 141254 1 141254 141254 1 141254 141254 1 141269 141269 1 151010 151010 1 141254 141254 1 141269 141269 1 141269 141269 1 141254 141254 1'),
+(42013,109,7541,11532,1,86400,1768805137,1768891537,0,0,830300,2,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(42018,109,7334,11537,1,86400,1768805137,1768891537,0,0,0,5,'139990 139990 1 139990 139990 1 139990 139990 1 139990 139990 1 139990 139990 1 139990 139990 1 139990 139990 1 139990 139990 1 139990 139990 1 139990 139990 1 139990 139990 1 139990 139990 1 139990 139990 1'),
+(42019,109,7334,11538,1,86400,1768805137,1768891537,0,0,0,5,'0 0 1 146795 146795 1 146795 146795 1 146795 146795 1 146795 146795 1 146795 146795 1 146795 146795 1 146795 146795 1 146795 146795 1 146795 146795 1 146795 146795 1 146795 146795 1 146795 146795 1'),
+(42021,109,7334,11539,1,86400,1768805137,1768891537,0,0,0,5,'139990 139990 1 139990 139990 1 139990 139990 1 139990 139990 1 139990 139990 1 139990 139990 1 139990 139990 1 139990 139990 1 139990 139990 1 139990 139990 1 139990 139990 1 139990 139990 1 139990 139990 1'),
+(42022,109,7334,11540,1,86400,1768805137,1768891537,0,0,853700,2,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(42023,113,7558,12350,1,21600,1768805137,1768826737,0,0,0,4,'141859 141859 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(42025,113,7503,12351,1,21600,1768805137,1768826737,0,0,0,4,'141859 141859 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(42028,109,7558,11544,1,86400,1768805137,1768891537,0,0,776400,2,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(42062,115,7502,11557,1,86400,1768805137,1768891537,0,0,0,7,'140322 140322 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(42064,115,7503,11559,1,86400,1768805137,1768891537,0,0,0,7,'116374 116374 4 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(42071,109,7637,11571,1,86400,1768805137,1768891537,0,0,0,4,'139615 139615 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(42106,135,7637,11582,1,86400,1768805137,1768891537,0,0,0,4,'139617 139617 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(42154,115,7334,11626,1,86400,1768805137,1768891537,0,0,0,7,'116415 116415 10 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(42269,112,7541,11682,1,604800,1768805498,1769410298,0,0,0,4,'141932 141932 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(42422,128,7502,12212,1,259200,1768805137,1769064337,1220,0,0,3,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(42620,109,7334,11753,1,86400,1768805137,1768891537,0,0,0,5,'0 0 1 134272 134272 1 134272 134272 1 136760 136760 1 121298 121298 1 150984 150984 1 134272 134272 1 136760 136760 1 150984 150984 1 150984 150984 1 121298 121298 1 121298 121298 1 121298 121298 1'),
+(42725,109,7637,11911,1,86400,1768805137,1768891537,0,0,0,4,'141923 141923 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(42819,112,7558,12007,1,604800,1768805498,1769410298,0,0,7768400,4,'141932 141932 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(42830,109,7637,12022,1,86400,1768805137,1768891537,0,0,0,5,'0 0 1 134314 134314 1 134314 134314 1 121042 121042 1 139070 139070 1 134216 134216 1 134314 134314 1 121042 121042 1 134216 134216 1 134216 134216 1 139070 139070 1 139070 139070 1 139070 139070 1'),
+(43193,112,7334,11979,1,604800,1768805498,1769410298,0,0,0,4,'141932 141932 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(43332,109,7558,12167,1,86400,1768805137,1768891537,0,0,0,4,'141930 141930 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(43456,109,7558,12149,2,86400,1768805137,1768891537,1220,475,0,3,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(43512,112,7637,12249,1,604800,1768805498,1769410298,0,0,0,4,'141932 141932 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(43606,135,7334,11753,3,86400,1768805137,1768891537,0,0,0,4,'139617 139617 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(43613,135,7334,12120,3,86400,1768805137,1768891537,0,0,1614200,2,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(43616,135,7503,12193,3,86400,1768805137,1768891537,0,0,0,5,'134376 134376 1 134376 134376 1 134376 134376 1 134376 134376 1 134376 134376 1 134376 134376 1 134376 134376 1 134376 134376 1 134376 134376 1 134376 134376 1 134376 134376 1 134376 134376 1 134376 134376 1'),
+(43627,135,7541,12184,3,86400,1768805137,1768891537,0,0,1870300,2,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(43628,135,7541,12186,3,86400,1768805137,1768891537,0,0,0,5,'0 0 1 139102 139102 1 139102 139102 1 121041 121041 1 121189 121189 1 134380 134380 1 139102 139102 1 121041 121041 1 134380 134380 1 134380 134380 1 121189 121189 1 121189 121189 1 121189 121189 1'),
+(43709,109,7558,12299,1,86400,1768805137,1768891537,0,0,0,7,'124124 124124 3 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(43963,109,7541,12382,1,86400,1768805137,1768891537,0,0,0,4,'139509 139509 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(44028,135,7637,12395,3,86400,1768805137,1768891537,0,0,1324900,2,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(44291,135,7503,11396,3,86400,1768805137,1768891537,0,0,0,4,'139617 139617 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(44302,135,7558,12509,3,86400,1768805137,1768891537,0,0,0,4,'139617 139617 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(44303,135,7558,12506,3,86400,1768805137,1768891537,0,0,0,4,'139617 139617 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(44857,109,7637,12779,1,86400,1768805137,1768891537,1220,475,0,3,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(45743,135,7543,12979,1,86400,1768805137,1768891537,0,0,0,5,'0 0 1 134135 134135 1 134135 134135 1 139077 139077 1 121184 121184 1 121162 121162 1 134135 134135 1 139077 139077 1 121162 121162 1 121162 121162 1 121184 121184 1 121184 121184 1 121184 121184 1'),
+(45797,109,7543,12985,2,86400,1768805137,1768891537,0,0,0,5,'0 0 1 134359 134359 1 134359 134359 1 121210 121210 1 121296 121296 1 146785 146785 1 134359 134359 1 121210 121210 1 146785 146785 1 146785 146785 1 121296 121296 1 121296 121296 1 121296 121296 1'),
+(45878,109,7543,13027,1,86400,1768805137,1768891537,0,0,970200,2,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(46198,109,7543,13405,2,86400,1768805137,1768891537,0,0,0,5,'0 0 1 134183 134183 1 134183 134183 1 140026 140026 1 140026 140026 1 121273 121273 1 134183 134183 1 140026 140026 1 121273 121273 1 121273 121273 1 140026 140026 1 140026 140026 1 140026 140026 1'),
+(46932,109,7543,13173,1,86400,1768805137,1768891537,0,0,0,4,'147482 147482 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(46933,109,7543,13173,2,86400,1768805137,1768891537,1220,350,0,3,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(46945,144,7543,12963,1,604800,1768805498,1769410298,0,0,9039200,2,'141932 141932 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(47061,144,7543,13427,1,604800,1768805498,1769410298,0,0,0,4,'141932 141932 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(47551,109,8574,13619,1,86400,1768805137,1768891537,1220,300,0,3,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(47563,109,8574,13619,2,86400,1768805137,1768891537,0,0,0,4,'153165 153165 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(47624,109,8574,13636,1,86400,1768805137,1768891537,0,0,1226200,2,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(47712,109,8574,13667,2,86400,1768805137,1768891537,0,0,0,5,'0 0 1 139074 139074 1 139074 139074 1 139074 139074 1 139074 139074 1 139074 139074 1 139074 139074 1 139074 139074 1 139074 139074 1 139074 139074 1 139074 139074 1 139074 139074 1 139074 139074 1'),
+(47720,109,8574,13671,1,86400,1768805137,1768891537,0,0,0,4,'151241 151241 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(47828,109,8701,13746,1,86400,1768805137,1768891537,0,0,0,4,'151244 151244 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(47844,109,8701,13684,2,86400,1768805137,1768891537,0,0,0,4,'151242 151242 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(48094,109,8701,14000,1,86400,1768805137,1768891537,0,0,0,4,'151243 151243 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(48095,109,8701,14002,2,86400,1768805137,1768891537,0,0,0,5,'0 0 1 121062 121062 1 121062 121062 1 134255 134255 1 134373 134373 1 146788 146788 1 121062 121062 1 134255 134255 1 146788 146788 1 146788 146788 1 134373 134373 1 134373 134373 1 134373 134373 1'),
+(48099,109,8701,14021,1,86400,1768805137,1768891537,1220,350,0,3,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(48105,109,8701,13989,4,86400,1768805137,1768891537,0,0,0,4,'151244 151244 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(48286,109,8574,13621,2,86400,1768805137,1768891537,0,0,0,5,'121082 121082 1 121082 121082 1 121082 121082 1 121082 121082 1 121082 121082 1 121082 121082 1 121082 121082 1 121082 121082 1 121082 121082 1 121082 121082 1 121082 121082 1 121082 121082 1 121082 121082 1'),
+(48467,136,8574,14011,1,86400,1768805137,1768891537,0,0,0,7,'151568 151568 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(48733,136,8701,14183,1,86400,1768805137,1768891537,0,0,0,4,'151246 151246 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(48830,136,8899,14212,1,86400,1768805137,1768891537,0,0,0,5,'121799 121799 1 121799 121799 1 121799 121799 1 121799 121799 1 121799 121799 1 121799 121799 1 121799 121799 1 121799 121799 1 121799 121799 1 121799 121799 1 121799 121799 1 121799 121799 1 121799 121799 1'),
+(48833,111,8899,14269,1,43200,1768805137,1768848337,0,0,0,7,'151568 151568 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(48875,135,8899,14240,1,43200,1768805137,1768848337,0,0,0,6,'0 0 1 151009 151009 1 151009 151009 1 141266 141266 1 141258 141258 1 141283 141283 1 151009 151009 1 151009 151009 1 151009 151009 1 151009 151009 1 141258 141258 1 151009 151009 1 141266 141266 1'),
+(48952,135,8899,14294,1,43200,1768805137,1768848337,0,0,0,4,'151245 151245 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(48982,149,9100,14246,1,21600,1768805498,1768827098,0,0,0,3,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(49091,149,9127,14245,1,21600,1768805498,1768827098,0,0,0,3,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1'),
+(49099,149,9180,14063,1,21600,1768805498,1768827098,0,0,0,3,'0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1');
 
 UNLOCK TABLES;
 
@@ -55152,7 +55146,7 @@ CREATE TABLE `worldstate_data` (
   `Value` int unsigned NOT NULL DEFAULT '0',
   `RenewTime` bigint unsigned NOT NULL DEFAULT '0' COMMENT 'Time of last renew of WorldState',
   PRIMARY KEY (`VariableID`,`InstanceID`,`Type`,`ConditionID`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='WorldState data storage';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='WorldState data storage';
 
 /*Data for the table `worldstate_data` */
 
@@ -55818,9 +55812,9 @@ DROP TABLE IF EXISTS `worldstates`;
 CREATE TABLE `worldstates` (
   `entry` int unsigned NOT NULL DEFAULT '0',
   `value` int unsigned NOT NULL DEFAULT '0',
-  `comment` tinytext,
+  `comment` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`entry`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='Variable Saves';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='Variable Saves';
 
 /*Data for the table `worldstates` */
 
@@ -55833,23 +55827,23 @@ insert  into `worldstates`(`entry`,`value`,`comment`) values
 (5333,9000000,NULL),
 (5384,1,NULL),
 (5387,0,NULL),
-(20001,1767409200,NULL),
-(20002,1767402000,NULL),
-(20003,1685415600,NULL),
+(20001,1769223600,NULL),
+(20002,1769216400,NULL),
+(20003,1708225200,NULL),
 (20005,1767412800,NULL),
-(20006,1767402000,NULL),
-(20008,1767402000,NULL),
+(20006,1768870800,NULL),
+(20008,1769216400,NULL),
 (20011,1543746251,NULL),
-(20015,1767402000,NULL),
-(20016,8,NULL),
-(20017,3,NULL),
-(20018,10,NULL),
-(20019,1767387600,NULL),
-(20020,1767409200,NULL),
-(20021,1607130000,NULL),
-(20022,1767574800,NULL),
-(20023,47,NULL),
-(20024,1767387600,NULL),
+(20015,1769216400,NULL),
+(20016,9,NULL),
+(20017,10,NULL),
+(20018,6,NULL),
+(20019,1768813200,NULL),
+(20020,1768878000,NULL),
+(20021,1767402000,NULL),
+(20022,1768870800,NULL),
+(20023,48,NULL),
+(20024,1768806000,NULL),
 (20025,0,NULL),
 (20026,0,NULL);
 
