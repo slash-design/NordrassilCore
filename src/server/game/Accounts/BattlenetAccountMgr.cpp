@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2014 TrinityCore <http://www.trinitycore.org/>
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -95,7 +95,7 @@ AccountOpResult Battlenet::AccountMgrNet::LinkWithGameAccount(std::string const&
     if (!bnetAccountId)
         return AccountOpResult::AOR_NAME_NOT_EXIST;
 
-    uint32 gameAccountId = AccountMgrNet::GetId(gameAccountName);
+    uint32 gameAccountId = AccountMgr::GetId(gameAccountName);
     if (!gameAccountId)
         return AccountOpResult::AOR_NAME_NOT_EXIST;
 
@@ -112,7 +112,7 @@ AccountOpResult Battlenet::AccountMgrNet::LinkWithGameAccount(std::string const&
 
 AccountOpResult Battlenet::AccountMgrNet::UnlinkGameAccount(std::string const& gameAccountName)
 {
-    uint32 gameAccountId = AccountMgrNet::GetId(gameAccountName);
+    uint32 gameAccountId = AccountMgr::GetId(gameAccountName);
     if (!gameAccountId)
         return AccountOpResult::AOR_NAME_NOT_EXIST;
 
