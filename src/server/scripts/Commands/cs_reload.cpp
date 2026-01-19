@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -113,7 +113,7 @@ public:
             { "locales_creature",             SEC_ADMINISTRATOR, true,  &HandleReloadLocalesCreatureCommand,            ""},
             { "locales_gameobject",           SEC_ADMINISTRATOR, true,  &HandleReloadLocalesGameobjectCommand,          ""},
             { "locales_gossip_menu_option",   SEC_ADMINISTRATOR, true,  &HandleReloadLocalesGossipMenuOptionCommand,    ""},
-            { "locales_page_text",            SEC_ADMINISTRATOR, true,  &HandleReloadLocalesPageTextCommand,            ""},
+            { "page_text_locale",             SEC_ADMINISTRATOR, true,  &HandleReloadLocalesPageTextCommand,            ""},
             { "locales_points_of_interest",   SEC_ADMINISTRATOR, true,  &HandleReloadLocalesPointsOfInterestCommand,    ""},
             { "locales_quest",                SEC_ADMINISTRATOR, true,  &HandleReloadLocalesQuestCommand,               ""},
             { "mail_level_reward",            SEC_ADMINISTRATOR, true,  &HandleReloadMailLevelRewardCommand,            ""},
@@ -1199,9 +1199,9 @@ public:
 
     static bool HandleReloadLocalesPageTextCommand(ChatHandler* handler, const char* /*args*/)
     {
-        TC_LOG_INFO("misc", "Re-Loading Locales Page Text ... ");
+        TC_LOG_INFO("misc", "Re-Loading Page Text Locale .. ");
         sObjectMgr->LoadPageTextLocales();
-        handler->SendGlobalGMSysMessage("DB table `locales_page_text` reloaded.");
+        handler->SendGlobalGMSysMessage("DB table `page_text_locale` reloaded.");
         return true;
     }
 
