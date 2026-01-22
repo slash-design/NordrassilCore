@@ -8316,6 +8316,18 @@ void Player::SetSkill(uint16 id, uint16 step /*= 0*/, uint16 newVal /*= 0*/, uin
                         if ((*j)->GetMiscValue() == int32(id))
                             (*j)->HandleEffect(this, AURA_EFFECT_HANDLE_SKILL, true);
 
+                // Archaeology: initialize digsites/projects immediately when the skill is learned
+                // (learning can happen via multiple paths; SetSkill() is the reliable common point)
+                if (id == SKILL_ARCHAEOLOGY && sWorld->getBoolConfig(CONFIG_ARCHAEOLOGY_ENABLED))
+                {
+                    GenerateResearchSites();
+                    GenerateResearchProjects();
+
+                    // Rebuild dynamic field so the client gets the POIs without relog
+                    ShowResearchSites();
+                    SendCompletedProjects();
+                }
+
                 // Learn all spells for skill
                 learnSkillRewardedSpells(id, newVal);
                 return;

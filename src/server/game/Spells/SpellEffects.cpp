@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
- * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -4409,13 +4408,6 @@ void Spell::EffectLearnSkill(SpellEffIndex effIndex)
         learnSkillStep = skillStep;
 
     unitTarget->ToPlayer()->SetSkill(skillid, learnSkillStep, std::max<uint16>(skillval, 1), tiermaxval);
-
-    // Archaeology
-    if (skillid == SKILL_ARCHAEOLOGY && !skillval && sWorld->getBoolConfig(CONFIG_ARCHAEOLOGY_ENABLED))
-    {
-        unitTarget->ToPlayer()->GenerateResearchSites();
-        unitTarget->ToPlayer()->GenerateResearchProjects();
-    }
 }
 
 void Spell::EffectIncreaseSkill(SpellEffIndex effIndex)
