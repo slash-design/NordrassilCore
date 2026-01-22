@@ -28,6 +28,8 @@
 #    CONSOLE AND REMOTE ACCESS
 #    CHARACTER DELETE OPTIONS
 #    CUSTOM SERVER OPTIONS
+#	 LOGGING SYSTEM SETTINGS
+#	 ARCHAEOLOGY SETTINGS
 #
 ###################################################################################################
 
@@ -3305,6 +3307,42 @@ Allow.IP.Based.Action.Logging = 0
 
 Loggers=Root Chat updatesql DBErrors GM RA Warden Character Load WorldServer Opcodes Network SI Bg mscript veh spell Items plr Smart skills guild Script comditions units lfg
 
+#
+###################################################################################################
+
+###################################################################################################
+# ARCHAEOLOGY SETTINGS 
+#
+#
+#   Archaeology.Enabled
+#      Description: Enables or disables the Archaeology system globally.
+#                   If disabled, archaeology data won't be saved/loaded and related features
+#                   (digsites, projects, etc.) will not function.
+#           Default: 1 (true)
+
+Archaeology.Enabled = 1
+
+#
+#   Archaeology.RareBaseChance
+#      Description: Base chance (in percent) to roll a rare research project.
+#                   This value is used as a starting chance and is combined with
+#                   Archaeology.RareMaxLevelChance scaled by the player's archaeology skill.
+#                   Effective rare chance is capped at 100%.
+#           Default: 10.0
+
+Archaeology.RareBaseChance = 10.0
+
+#
+#   Archaeology.RareMaxLevelChance
+#      Description: Additional chance (in percent) that scales with archaeology skill up to max skill.
+#                   Formula (as in code):
+#                     min( RareBaseChance + skill * RareMaxLevelChance / 600.0, 100.0 )
+#                   Example with defaults at skill 600:
+#                     10.0 + 600 * 10.0 / 600 = 20.0 (%)
+#           Default: 10.0
+#
+
+Archaeology.RareMaxLevelChance = 10.0
 
 #
 ###################################################################################################
