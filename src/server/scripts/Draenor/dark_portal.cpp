@@ -428,8 +428,11 @@ public:
             SOUTH_SCENE = 159127,
             EASTERN_SCENE = 159126
         };
-        bool GossipHello(Player* player) override
+        bool GossipHello(Player* player, bool isUse) override
         {
+            if (!isUse)
+                return true;
+
             if (go->GetEntry() == 229353)
             {
                 player->CastSpell(player, EASTERN_SCENE, true);
@@ -1412,8 +1415,11 @@ public:
             SPELL_CINEMA = 176159,
 
         };
-        bool GossipHello(Player* player) override
+        bool GossipHello(Player* player, bool isUse) override
         {
+            if (!isUse)
+                return true;
+
             if (player->GetQuestStatus(34445) == QUEST_STATUS_INCOMPLETE)
                 player->CastSpell(player, SPELL_CINEMA, true);
             return false;

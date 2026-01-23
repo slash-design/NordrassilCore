@@ -381,7 +381,7 @@ struct go_bs_demoic_gates : public GameObjectAI
 {
     go_bs_demoic_gates(GameObject* go) : GameObjectAI(go){}
 
-    bool GossipHello(Player* player) override
+    bool GossipHello(Player* player, bool isUse) override
     {
         if (InstanceScript* instance = go->GetInstanceScript())
         {
