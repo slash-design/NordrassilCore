@@ -742,8 +742,14 @@ bool Player::SolveResearchProject(uint32 spellId, SpellCastTargets& targets)
 
 uint32 Player::AddCompletedProject(ResearchProjectEntry const* entry)
 {
+	if (!entry)
+	{
+		TC_LOG_ERROR("player", "Archaeology: AddCompletedProject called with nullptr entry for guid %u.", GetGUIDLow());
+		return 0;
+	}
+
 	for (CompletedProjectList::iterator itr = _completedProjects.begin(); itr != _completedProjects.end(); ++itr)
-		if (itr->entry->ID == entry->ID)
+		if (itr->entry && itr->entry->ID == entry->ID)
 			return ++itr->count;
 
 	_completedProjects.push_back(CompletedProject(entry));
@@ -753,7 +759,7 @@ uint32 Player::AddCompletedProject(ResearchProjectEntry const* entry)
 bool Player::IsCompletedProject(uint32 id, bool onlyRare)
 {
 	for (CompletedProjectList::const_iterator itr = _completedProjects.begin(); itr != _completedProjects.end(); ++itr)
-		if (id == itr->entry->ID && (!onlyRare || itr->entry->Rarity))
+		if (itr->entry && id == itr->entry->ID && (!onlyRare || itr->entry->Rarity))
 			return true;
 
 	return false;
@@ -794,6 +800,13 @@ void Player::_SaveArchaeology(CharacterDatabaseTransaction& trans)
 
 	for (CompletedProjectList::iterator itr = _completedProjects.begin(); itr != _completedProjects.end(); ++itr)
 	{
+		if (!itr->entry)
+		{
+			TC_LOG_ERROR("player", "Archaeology: nullptr entry in _completedProjects for guid %u. Skipping save row.", GetGUIDLow());
+			_archaeologyChanged = true;
+			continue;
+		}
+
 		index = 0;
 		stmt = CharacterDatabase.GetPreparedStatement(CHAR_REP_PLAYER_ARCHAEOLOGY_FINDS);
 		stmt->setUInt64(index++, GetGUIDLow());
@@ -894,6 +907,9 @@ void Player::SendCompletedProjects()
 	WorldPackets::Misc::SetupResearchHistory packet;
 	for (auto const& itr : _completedProjects)
 	{
+		if (!itr.entry)
+			continue;
+
 		WorldPackets::Misc::ResearchHistory data;
 		data.ProjectID = itr.entry->ID;
 		data.FirstCompleted = itr.date;
