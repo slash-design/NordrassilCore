@@ -1,20 +1,19 @@
 /*
-* Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
-* Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
-*
-* This program is free software; you can redistribute it and/or modify it
-* under the terms of the GNU General Public License as published by the
-* Free Software Foundation; either version 2 of the License, or (at your
-* option) any later version.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT
-* ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-* FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
-* more details.
-*
-* You should have received a copy of the GNU General Public License along
-* with this program. If not, see <http://www.gnu.org/licenses/>.
-*/
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include "BattlefieldMgr.h"
 #include "BattlefieldWG.h"
@@ -66,6 +65,14 @@ bool IsPartOfSkillLine(uint32 skillId, uint32 spellId)
             return true;
 
     return false;
+}
+
+SpellSummonPosition const* SpellMgr::GetSpellSummonPosition(uint32 spell_id, SpellEffIndex effIndex) const
+{
+	SpellSummonPositionMap::const_iterator itr = mSpellSummonPositions.find(std::make_pair(spell_id, effIndex));
+	if (itr != mSpellSummonPositions.end())
+		return &itr->second;
+	return NULL;
 }
 
 DiminishingGroup GetDiminishingReturnsGroupForSpell(SpellInfo const* spellproto, bool triggered)
@@ -1316,6 +1323,83 @@ bool SpellArea::IsFitToRequirements(Player const* player, uint32 newZone, uint32
     }
 
     return true;
+}
+
+void SpellMgr::LoadSpellSummonPositions()
+{
+	uint32 oldMSTime = getMSTime();
+
+	mSpellSummonPositions.clear();                                // need for reload case
+
+	//                                               0   1            2      3          4          5          6            7        8
+	QueryResult result = WorldDatabase.Query("SELECT ID, EffectIndex, MapID, PositionX, PositionY, PositionZ, Orientation, PhaseID, Auras FROM spell_summon_position");
+	if (!result)
+	{
+		TC_LOG_INFO("server.loading", ">> Loaded 0 spell summon coordinates. DB table `spell_summon_position` is empty.");
+		return;
+	}
+
+	uint32 count = 0;
+	do
+	{
+		Field* fields = result->Fetch();
+
+		uint32 spellId = fields[0].GetUInt32();
+		SpellEffIndex effIndex = SpellEffIndex(fields[1].GetUInt8());
+
+		SpellSummonPosition st;
+
+		st.target_mapId = fields[2].GetUInt16();
+		st.target_X = fields[3].GetFloat();
+		st.target_Y = fields[4].GetFloat();
+		st.target_Z = fields[5].GetFloat();
+		st.target_Orientation = fields[6].GetFloat();
+		st.target_phaseId = fields[7].GetUInt16();
+
+		Tokenizer tokens(fields[8].GetString(), ' ');
+		uint8 i = 0;
+		st.target_auras.resize(tokens.size());
+		for (Tokenizer::const_iterator itr = tokens.begin(); itr != tokens.end(); ++itr)
+		{
+			uint32 spellId = uint32(atoul(*itr));
+			SpellInfo const* AdditionalSpellInfo = sSpellMgr->GetSpellInfo(spellId);
+			st.target_auras[i++] = spellId;
+		}
+
+		MapEntry const* mapEntry = sMapStore.LookupEntry(st.target_mapId);
+		if (!mapEntry)
+		{
+			TC_LOG_ERROR("sql.sql", "Spell (Id: %u, EffectIndex: %u) is using a non-existant MapID (ID: %u).", spellId, effIndex, st.target_mapId);
+			continue;
+		}
+
+		if (st.target_X == 0 && st.target_Y == 0 && st.target_Z == 0)
+		{
+			TC_LOG_ERROR("sql.sql", "Spell (Id: %u, EffectIndex: %u): target coordinates not provided.", spellId, effIndex);
+			continue;
+		}
+
+		SpellInfo const* spellInfo = GetSpellInfo(spellId);
+		if (!spellInfo)
+		{
+			TC_LOG_ERROR("sql.sql", "Spell (Id: %u) listed in `spell_summon_position` does not exist.", spellId);
+			continue;
+		}
+
+		SpellEffectInfo const* effect = spellInfo->GetEffect(effIndex);
+		if (!effect)
+		{
+			TC_LOG_ERROR("sql.sql", "Spell (Id: %u, EffectIndex: %u) listed in `spell_sumon_position` does not have an effect at index %u.", spellId, effIndex, effIndex);
+			continue;
+		}
+
+		std::pair<uint32, SpellEffIndex> key = std::make_pair(spellId, effIndex);
+		mSpellSummonPositions[key] = st;
+		++count;
+
+	} while (result->NextRow());
+
+	TC_LOG_INFO("server.loading", ">> Loaded %u spell summon coordinates in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
 }
 
 void SpellMgr::LoadSpellRanks()

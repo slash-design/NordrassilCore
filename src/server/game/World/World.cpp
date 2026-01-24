@@ -2021,6 +2021,9 @@ void World::SetInitialWorldSettings()
     TC_LOG_INFO("server.loading", "Loading Spell target coordinates...");
     sSpellMgr->LoadSpellTargetPositions();
 
+	TC_LOG_INFO("server.loading", "Loading Spell summon coordinates...");
+	sSpellMgr->LoadSpellSummonPositions();
+
     TC_LOG_INFO("server.loading", "Loading enchant custom attributes...");
     sSpellMgr->LoadEnchantCustomAttr();
 

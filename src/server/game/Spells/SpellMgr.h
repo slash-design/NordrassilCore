@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
- * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -16,8 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _SPELLMGR_H
-#define _SPELLMGR_H
+#ifndef SPELLMGR_H
+#define SPELLMGR_H
 
 // For static or at-server-startup loaded spell data
 
@@ -548,6 +547,8 @@ enum ProcFlagsHit
     PROC_HIT_MASK_ALL = 0x2FFF,
 };
 
+
+
 enum ProcAttributes
 {
     PROC_ATTR_REQ_EXP_OR_HONOR   = 0x0000010,
@@ -659,6 +660,19 @@ struct SpellTargetPosition
     float  target_Z;
     float  target_Orientation;
 };
+
+struct SpellSummonPosition//new
+{
+	uint32 target_mapId;
+	float  target_X;
+	float  target_Y;
+	float  target_Z;
+	float  target_Orientation;
+	uint16 target_phaseId;
+	std::vector<uint32> target_auras;
+};
+
+typedef std::map<std::pair<uint32 /*spell_id*/, SpellEffIndex /*effIndex*/>, SpellSummonPosition> SpellSummonPositionMap;
 
 // Enum with EffectRadiusIndex and their actual radius
 enum EffectRadiusIndex
@@ -1212,6 +1226,7 @@ class SpellMgr
 
         // Spell target coordinates
         SpellTargetPosition const* GetSpellTargetPosition(uint32 spell_id) const;
+		SpellSummonPosition const* GetSpellSummonPosition(uint32 spell_id, SpellEffIndex effIndex) const;
 
         // Spell Groups table
         SpellSpellGroupMapBounds GetSpellSpellGroupMapBounds(uint32 spell_id) const;
@@ -1300,6 +1315,7 @@ class SpellMgr
         void LoadSpellProcs();
         void LoadSpellBonusess();
         void LoadSpellThreats();
+		void LoadSpellSummonPositions();
         void LoadSkillLineAbilityMap();
         void LoadSpellPetAuras();
         void LoadEnchantCustomAttr();
@@ -1332,6 +1348,7 @@ class SpellMgr
         SpellLearnSkillMap         mSpellLearnSkills;
         SpellLearnSpellMap         mSpellLearnSpells;
         SpellTargetPositionMap     mSpellTargetPositions;
+		SpellSummonPositionMap     mSpellSummonPositions;
         SpellSpellGroupMap         mSpellSpellGroup;
         SpellGroupSpellMap         mSpellGroupSpell;
         SpellGroupStackMap         mSpellGroupStack;

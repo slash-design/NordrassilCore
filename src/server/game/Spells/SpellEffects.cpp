@@ -3891,6 +3891,10 @@ void Spell::EffectSummonType(SpellEffIndex effIndex)
             break;
     }
 
+	SpellSummonPosition const* ssp;
+	if (ssp = sSpellMgr->GetSpellSummonPosition(m_spellInfo->Id, effIndex))
+		*destTarget = WorldLocation(ssp->target_mapId, ssp->target_X, ssp->target_Y, ssp->target_Z, ssp->target_Orientation);
+
     switch (entry)
     {
         case 55659:

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -15,8 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __SPELL_SCRIPT_H
-#define __SPELL_SCRIPT_H
+#ifndef SPELL_SCRIPT_H
+#define SPELL_SCRIPT_H
 
 #include "ObjectGuid.h"
 #include "SpellAuras.h"
