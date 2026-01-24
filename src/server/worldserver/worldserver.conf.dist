@@ -30,6 +30,7 @@
 #    CUSTOM SERVER OPTIONS
 #	 LOGGING SYSTEM SETTINGS
 #	 ARCHAEOLOGY SETTINGS
+#	 BATTLEPAY
 #
 ###################################################################################################
 
@@ -3348,6 +3349,40 @@ Archaeology.RareMaxLevelChance = 10.0
 ###################################################################################################
 
 ###################################################################################################
+# BattlePay
+#
+#   FeatureSystem.BattlePay.Enabled
+#        Description: Not yet implemented
+#        Default:     0 - (Disabled)
+#                     1 - (Enabled)
+
+Bpay.Enabled = 1
+
+#   BattlePay.Currency
+#        Description: Set currency in battle pay
+#        Default:	USD = 1,
+#					GBP = 2,
+#					KRW = 3,
+#					EUR = 4,
+#					RUB = 5,
+#					ARS = 8,
+#					CLP = 9,
+#					MXN = 10,
+#					BRL = 11,
+#					AUD = 12,
+#					CPT = 14,
+#					TPT = 15,
+#					BETA = 16,
+#					JPY = 28,
+#					CAD = 29,
+#					NZD = 30
+
+BattlePay.Currency = 1
+
+#
+###################################################################################################
+
+###################################################################################################
 #
 #  GUILD LEVELING SETTINGS
 #
@@ -4322,15 +4357,8 @@ PvPKill.Announcer = 1
 Auto.Say.Hello = 0
 
 #
-#     Bpay.Enabled
-#        Description: Enable BattlePay ingame shop button (need to fill the database)
-#        Default:     0 (disabled)
-#                     1 (enabled)
-
-Bpay.Enabled = 1
-
-#
 ###################################################################################################
+
 ###################################################################################################
 # UNKNOWN SETTINGS #
 ####################
