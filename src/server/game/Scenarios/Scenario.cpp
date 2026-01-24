@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2014 TrinityCore <http://www.trinitycore.org/>
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -174,44 +174,44 @@ void Scenario::CreateChallenge(Player* player)
 
     switch (m_challengeEntry->ID)
     {
-        case 197: // Eye of Azshara
-            scenarioId = 1169;
-            break;
-        case 198: // Darkheart Thicket
-            scenarioId = 1172;
-            break;
-        case 199: // Black Rook Hold
-            scenarioId = 1166;
-            break;
-        case 200: // Halls of Valor
-            scenarioId = 1046;
-            break;
-        case 206: // Neltharion's Lair
-            scenarioId = 1174;
-            break;
-        case 207: // Vault of the Wardens
-            scenarioId = 1173;
-            break;
-        case 208: // Maw of Souls
-            scenarioId = 1175;
-            break;
-        case 209: // The Arcway
-            scenarioId = 1177;
-            break;
-        case 210: // Court of Stars
-            scenarioId = 1178;
-            break;
-        case 227: // Return to Karazhan: Lower
-            scenarioId = 1309;
-            break;
-        case 233: // Cathedral of Eternal Night
-            scenarioId = 1335;
-            break;
-        case 234: // Return to Karazhan: Upper
-            scenarioId = 1308;
-            break;
-        default:
-            break;
+    case 197: // Eye of Azshara
+        scenarioId = 1169;
+        break;
+    case 198: // Darkheart Thicket
+        scenarioId = 1172;
+        break;
+    case 199: // Black Rook Hold
+        scenarioId = 1166;
+        break;
+    case 200: // Halls of Valor
+        scenarioId = 1046;
+        break;
+    case 206: // Neltharion's Lair
+        scenarioId = 1174;
+        break;
+    case 207: // Vault of the Wardens
+        scenarioId = 1173;
+        break;
+    case 208: // Maw of Souls
+        scenarioId = 1175;
+        break;
+    case 209: // The Arcway
+        scenarioId = 1177;
+        break;
+    case 210: // Court of Stars
+        scenarioId = 1178;
+        break;
+    case 227: // Return to Karazhan: Lower
+        scenarioId = 1309;
+        break;
+    case 233: // Cathedral of Eternal Night
+        scenarioId = 1335;
+        break;
+    case 234: // Return to Karazhan: Upper
+        scenarioId = 1308;
+        break;
+    default:
+        break;
     }
 
     _scenarioEntry = sScenarioStore.LookupEntry(scenarioId);
@@ -260,7 +260,6 @@ uint32 Scenario::GetOutdoorPvPZone() const
     return m_outdoorPvpZone;
 }
 
-
 uint32 Scenario::GetScenarioId() const
 {
     return scenarioId;
@@ -303,11 +302,11 @@ void Scenario::SetCurrentStep(uint8 step)
 
     if (OutdoorPvP* outDoorPvP = GetOutdoorPvP())
         outDoorPvP->SetData(GetOutdoorPvPZone(), currentStep);
-    else if (Map *m = GetMap())
+    else if (Map* m = GetMap())
     {
         if (InstanceMap* i = m->ToInstanceMap())
         {
-            if (InstanceScript *script = i->GetInstanceScript())
+            if (InstanceScript* script = i->GetInstanceScript())
             {
                 script->setScenarioStep(currentStep);
                 script->onScenarionNextStep(currentStep);
@@ -326,21 +325,39 @@ void Scenario::UpdateCurrentStep(bool loading)
     // i_updateLock.lock();
     uint8 oldStep = currentStep;
 
-    for (ScenarioSteps::const_iterator itr = steps.begin(); itr != steps.end(); ++itr)
+    for (uint32 i = 0; i < steps.size(); ++i)
     {
-        //Not check if ctep already complete
-        if (currentStep > (*itr)->OrderIndex)
+        ScenarioStepEntry const* step = steps[i];
+        if (!step)
             continue;
 
-        CriteriaTreeEntry const* criteriaTree = sCriteriaTreeStore.LookupEntry((*itr)->Criteriatreeid);
+        // Not check if step already complete (main-step progression)
+        if (currentStep > step->OrderIndex)
+            continue;
+
+        CriteriaTreeEntry const* criteriaTree = sCriteriaTreeStore.LookupEntry(step->Criteriatreeid);
         if (!criteriaTree)
             continue;
 
-        if (GetAchievementMgr().IsCompletedScenarioTree(criteriaTree))
+        if (!GetAchievementMgr().IsCompletedScenarioTree(criteriaTree))
+            continue;
+
+        if (step->IsBonusObjective())
         {
-            currentStep = (*itr)->OrderIndex + 1;
-            currentTree = GetScenarioCriteriaByStep(currentStep);
+            if (GetStepState(step) != SCENARIO_STEP_DONE)
+            {
+                SetStepState(step, SCENARIO_STEP_DONE);
+
+                if (!loading && step->RewardQuestID)
+                    Reward(true, i);
+            }
+
+            continue;
         }
+
+        // Main step completed -> advance
+        currentStep = step->OrderIndex + 1;
+        currentTree = GetScenarioCriteriaByStep(currentStep);
     }
 
     // TC_LOG_DEBUG("challenge", "UpdateCurrentStep currentStep %u oldStep %u loading %u steps %u", currentStep, oldStep, loading, steps.size());
@@ -351,11 +368,11 @@ void Scenario::UpdateCurrentStep(bool loading)
         {
             if (OutdoorPvP* outDoorPvP = GetOutdoorPvP())
                 outDoorPvP->SetData(GetOutdoorPvPZone(), currentStep);
-            else if (Map *m = GetMap())
+            else if (Map* m = GetMap())
             {
                 if (InstanceMap* i = m->ToInstanceMap())
                 {
-                    if (InstanceScript *script = i->GetInstanceScript())
+                    if (InstanceScript* script = i->GetInstanceScript())
                     {
                         script->setScenarioStep(currentStep);
                         script->onScenarionNextStep(currentStep);
@@ -370,10 +387,9 @@ void Scenario::UpdateCurrentStep(bool loading)
 
         SendStepUpdate();
 
+        // main reward only (bonus rewards handled per bonus objective above)
         if (IsCompleted(false))
             Reward(false, oldStep);
-        else if (hasbonus && IsCompleted(true))
-            Reward(true, oldStep);
     }
 
     if (currentStep < steps.size())
@@ -400,15 +416,11 @@ void Scenario::Reward(bool bonus, uint32 rewardStep)
 {
     // TC_LOG_DEBUG("challenge", "Scenario::Reward bonus %u rewarded %u bonusRewarded %u rewardStep %u", bonus, rewarded, bonusRewarded, rewardStep);
 
-    if (bonus && bonusRewarded)
-        return;
-
+    // Main scenario reward only once
     if (!bonus && rewarded)
         return;
 
-    if (bonus)
-        bonusRewarded = true;
-    else
+    if (!bonus)
         rewarded = true;
 
     ObjectGuid groupGuid;
@@ -418,52 +430,90 @@ void Scenario::Reward(bool bonus, uint32 rewardStep)
     if (!pvpMap && !map)
         return;
 
+    // safety
+    if (rewardStep >= steps.size())
+        return;
+
     Quest const* quest = sQuestDataStore->GetQuestTemplate(steps[rewardStep]->RewardQuestID);
+
+    // Bonus reward = only quest reward (no ScenarioCompleted toast, no LFG finish)
+    if (bonus)
+    {
+        if (pvpMap)
+        {
+            pvpMap->ApplyOnEveryPlayerInZone([quest](Player* player)
+                {
+                    if (player->CanContact())
+                    {
+                        if (quest)
+                            player->AddDelayedEvent(100, [player, quest]() -> void { if (player) player->RewardQuest(quest, 0, nullptr, false); });
+                    }
+                }, GetOutdoorPvPZone());
+        }
+        else if (map)
+        {
+            map->ApplyOnEveryPlayer([&groupGuid, quest](Player* player)
+                {
+                    if (player->CanContact())
+                    {
+                        if (groupGuid.IsEmpty())
+                            groupGuid = player->GetGroup() ? player->GetGroup()->GetGUID() : ObjectGuid::Empty;
+
+                        if (quest)
+                            player->AddDelayedEvent(100, [player, quest]() -> void { if (player) player->RewardQuest(quest, 0, nullptr, false); });
+                    }
+                });
+        }
+
+        // do NOT trigger scenario completion / LFG completion for bonus objectives
+        return;
+    }
+
+    // ---- Main scenario reward flow (unchanged behaviour) ----
 
     if (pvpMap)
     {
         pvpMap->ApplyOnEveryPlayerInZone([quest, this](Player* player)
-        {
-            if (player->CanContact())
             {
+                if (player->CanContact())
+                {
+                    if (quest)
+                        player->AddDelayedEvent(100, [player, quest]() -> void { if (player) player->RewardQuest(quest, 0, nullptr, false); });
 
-                if (quest)
-                    player->AddDelayedEvent(100, [player, quest]() -> void { if (player) player->RewardQuest(quest, 0, nullptr, false); });
+                    player->UpdateAchievementCriteria(CRITERIA_TYPE_COMPLETE_SCENARIO, scenarioId, 1);
+                    player->UpdateAchievementCriteria(CRITERIA_TYPE_COMPLETE_SCENARIO_COUNT, 1);
 
-                player->UpdateAchievementCriteria(CRITERIA_TYPE_COMPLETE_SCENARIO, scenarioId, 1);
-                player->UpdateAchievementCriteria(CRITERIA_TYPE_COMPLETE_SCENARIO_COUNT, 1);
-
-                WorldPackets::Scenario::ScenarioCompleted data;
-                data.ScenarioID = scenarioId;
-                player->SendDirectMessage(data.Write());
-            }
-        }, GetOutdoorPvPZone());
+                    WorldPackets::Scenario::ScenarioCompleted data;
+                    data.ScenarioID = scenarioId;
+                    player->SendDirectMessage(data.Write());
+                }
+            }, GetOutdoorPvPZone());
 
         pvpMap->SetData(GetOutdoorPvPZone(), 100);
     }
     else if (map)
     {
         map->ApplyOnEveryPlayer([&groupGuid, this, quest](Player* player)
-        {
-            if (player->CanContact())
             {
-                if (groupGuid.IsEmpty())
-                    groupGuid = player->GetGroup() ? player->GetGroup()->GetGUID() : ObjectGuid::Empty;
+                if (player->CanContact())
+                {
+                    if (groupGuid.IsEmpty())
+                        groupGuid = player->GetGroup() ? player->GetGroup()->GetGUID() : ObjectGuid::Empty;
 
-                if (_challenge)
-                    player->UpdateAchievementCriteria(CRITERIA_TYPE_COMPLETE_CHALLENGE, _challenge->GetChallengeLevel());
+                    if (_challenge)
+                        player->UpdateAchievementCriteria(CRITERIA_TYPE_COMPLETE_CHALLENGE, _challenge->GetChallengeLevel());
 
-                if (quest)
-                    player->AddDelayedEvent(100, [player, quest]() -> void { if (player) player->RewardQuest(quest, 0, nullptr, false); });
+                    if (quest)
+                        player->AddDelayedEvent(100, [player, quest]() -> void { if (player) player->RewardQuest(quest, 0, nullptr, false); });
 
-                player->UpdateAchievementCriteria(CRITERIA_TYPE_COMPLETE_SCENARIO, scenarioId, 1);
-                player->UpdateAchievementCriteria(CRITERIA_TYPE_COMPLETE_SCENARIO_COUNT, 1);
+                    player->UpdateAchievementCriteria(CRITERIA_TYPE_COMPLETE_SCENARIO, scenarioId, 1);
+                    player->UpdateAchievementCriteria(CRITERIA_TYPE_COMPLETE_SCENARIO_COUNT, 1);
 
-                WorldPackets::Scenario::ScenarioCompleted data;
-                data.ScenarioID = scenarioId;
-                player->SendDirectMessage(data.Write());
-            }
-        });
+                    WorldPackets::Scenario::ScenarioCompleted data;
+                    data.ScenarioID = scenarioId;
+                    player->SendDirectMessage(data.Write());
+                }
+            });
     }
 
     // should not happen
@@ -474,25 +524,25 @@ void Scenario::Reward(bool bonus, uint32 rewardStep)
 
     switch (_scenarioEntry->Type)
     {
-        case SCENARIO_TYPE_DEFAULT:
-        case SCENARIO_TYPE_USE_DUNGEON_DISPLAY:
-        case SCENARIO_TYPE_BOOST_TUTORIAL:
-            if (uint32 dungeonId = sLFGMgr->GetDungeon(groupGuid)) // lfg dungeons are rewarded through lfg
-            {
-                // lfg dungeon that we are in is not current scenario
-                if (dungeonId != dungeonData->id)
-                    return;
+    case SCENARIO_TYPE_DEFAULT:
+    case SCENARIO_TYPE_USE_DUNGEON_DISPLAY:
+    case SCENARIO_TYPE_BOOST_TUTORIAL:
+        if (uint32 dungeonId = sLFGMgr->GetDungeon(groupGuid)) // lfg dungeons are rewarded through lfg
+        {
+            // lfg dungeon that we are in is not current scenario
+            if (dungeonId != dungeonData->id)
+                return;
 
-                sLFGMgr->FinishDungeon(groupGuid, dungeonId);
-            }
-            break;
-        case SCENARIO_TYPE_CHALLENGE_MODE:
-            if (_challenge)
-                _challenge->Complete();
-            break;
-        case SCENARIO_TYPE_LEGION_INVASION: /// The Broken Shore scenario.
-        default:
-            break;
+            sLFGMgr->FinishDungeon(groupGuid, dungeonId);
+        }
+        break;
+    case SCENARIO_TYPE_CHALLENGE_MODE:
+        if (_challenge)
+            _challenge->Complete();
+        break;
+    case SCENARIO_TYPE_LEGION_INVASION: /// The Broken Shore scenario.
+    default:
+        break;
     }
 }
 
@@ -549,7 +599,7 @@ void Scenario::SendStepUpdate(Player* player, bool full)
     {
         for (std::vector<ScenarioSpellData>::const_iterator itr = scSpells->begin(); itr != scSpells->end(); ++itr)
         {
-           // if ((*itr).StepId == state.ActiveSteps)
+            // if ((*itr).StepId == state.ActiveSteps)
             if ((*itr).StepId == GetCurrentStep())
             {
                 WorldPackets::Scenario::ScenarioState::ScenarioSpellUpdate spellUpdate;
@@ -597,7 +647,7 @@ void Scenario::SendStepUpdate(Player* player, bool full)
     }
 }
 
-void Scenario::SendFinishPacket(Player * player)
+void Scenario::SendFinishPacket(Player* player)
 {
     WorldPackets::Scenario::ScenarioState state;
     state.BonusObjectives = GetBonusObjectivesData();
@@ -663,6 +713,33 @@ bool Scenario::CanUpdateCriteria(uint32 criteriaId, uint32 recursTree /*=0*/) co
         }
     }
 
+    if (recursTree == 0)
+    {
+        for (auto const& step : steps)
+        {
+            if (!step || !step->IsBonusObjective())
+                continue;
+
+            auto const& bonusTreeList = sDB2Manager.GetCriteriaTreeList(step->Criteriatreeid);
+            if (!bonusTreeList)
+                continue;
+
+            for (auto const* criteriaTree : *bonusTreeList)
+            {
+                if (!criteriaTree)
+                    continue;
+
+                if (criteriaTree->CriteriaID == 0)
+                {
+                    if (CanUpdateCriteria(criteriaId, criteriaTree->ID))
+                        return true;
+                }
+                else if (criteriaTree->ID == criteriaId)
+                    return true;
+            }
+        }
+    }
+
     return false;
 }
 
@@ -671,7 +748,7 @@ Challenge* Scenario::GetChallenge()
     return _challenge;
 }
 
-void Scenario::SetOutdoorPvP(OutdoorPvP * outdoor, uint32 zone)
+void Scenario::SetOutdoorPvP(OutdoorPvP* outdoor, uint32 zone)
 {
     m_outdoorPvp = outdoor;
     m_outdoorPvpZone = zone;
