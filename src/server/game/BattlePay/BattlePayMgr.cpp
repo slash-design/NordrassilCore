@@ -509,6 +509,7 @@ auto BattlepayManager::ProductFilter(Product product) -> bool
 		{
 		case Battlepay::BattlePet:
 		case Rename:
+		case Battlepay::Item:
 		case Faction:
 		case DeletedCharacter:
 		case Customization:
