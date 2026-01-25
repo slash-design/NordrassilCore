@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -1627,8 +1627,22 @@ void LFGMgr::SendUpdateStatus(ObjectGuid guid, LfgUpdateData const& updateData, 
 
     uint32 queueId = 0;
     LfgQueueData const* queueData = nullptr;
+
+    // In this core, the client expects the Ticket to be included in QueueStatusUpdate.
+    // The Ticket is stored per queueId (RideTicket.Id). However, some code paths (notably
+    // solo/temporary LFG groups) may send updates with an empty dungeon list. When that
+    // happens, the old code derived queueId from the dungeon list and ended up using 0,
+    // causing the server to send an update without the correct Ticket. The client then
+    // keeps showing the player as "listed" until relog.
     if (!updateData.dungeons.empty())
-        queueId = GetQueueId(*updateData.dungeons.begin()&0xFFFFF);
+        queueId = GetQueueId(*updateData.dungeons.begin() & 0xFFFFF);
+    else
+    {
+        // Fallback: use the first active queue for this player.
+        auto it = PlayerDungeons.find(guid);
+        if (it != PlayerDungeons.end() && !it->second.empty())
+            queueId = *it->second.begin();
+    }
 
     WorldPackets::LFG::QueueStatusUpdate update;
     if (auto ticket = GetTicket(player->GetGUID(), queueId))
@@ -1645,7 +1659,10 @@ void LFGMgr::SendUpdateStatus(ObjectGuid guid, LfgUpdateData const& updateData, 
     update.LfgJoined = updateData.updateType != LFG_UPDATETYPE_REMOVED_FROM_QUEUE;
     update.Queued = queued;
 
-    std::transform(updateData.dungeons.begin(), updateData.dungeons.end(), std::back_inserter(update.Slots), [=, this](uint32 dungeonId)
+    // If the caller didn't provide dungeons, try to use stored selections for this queue.
+    LfgDungeonSet const& dungeonSetForSlots = !updateData.dungeons.empty() ? updateData.dungeons : GetSelectedDungeons(guid, queueId);
+
+    std::transform(dungeonSetForSlots.begin(), dungeonSetForSlots.end(), std::back_inserter(update.Slots), [=, this](uint32 dungeonId)
     {
         return GetLFGDungeonEntry(dungeonId);
     });
