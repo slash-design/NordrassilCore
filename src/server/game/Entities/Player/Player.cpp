@@ -201,6 +201,7 @@ m_achievementMgr(sf::safe_ptr<AchievementMgr<Player>>(this))
     m_curSelection.Clear();
 
     m_regenTimer = 0;
+    m_foodEmoteTimerCount = 0;
 
     m_weaponChangeTimer = 0;
     m_statsUpdateTimer = 0;
@@ -2942,6 +2943,7 @@ void Player::RemoveFromWorld()
 void Player::RegenerateAll()
 {
     m_powerRegenTimer[MAX_POWERS] += m_regenTimer;
+    m_foodEmoteTimerCount += m_regenTimer;
 
     for (ChrClassesXPowerTypesEntry const* powerClassEntry : sChrClassesXPowerTypesStore)
     {
@@ -3035,6 +3037,51 @@ void Player::RegenerateAll()
     }
 
     m_regenTimer = 0;
+
+    if (m_foodEmoteTimerCount >= 5000)
+    {
+        bool visualPlayed = false;
+
+        if (auto modRegenAuras = GetAuraEffectsByType(SPELL_AURA_MOD_REGEN))
+        {
+            for (auto itr = modRegenAuras->begin(); itr != modRegenAuras->end(); ++itr)
+            {
+                AuraEffect const* auraEff = *itr;
+                if (!auraEff)
+                    continue;
+
+                if (auraEff->GetBase()->HasEffectType(SPELL_AURA_MOD_REGEN) &&
+                    auraEff->GetSpellInfo()->HasAuraInterruptFlag(AURA_INTERRUPT_FLAG_NOT_SEATED))
+                {
+                    SendPlaySpellVisualKit(0, SPELL_VISUAL_KIT_FOOD, 0);
+                    visualPlayed = true;
+                    break;
+                }
+            }
+        }
+
+        if (!visualPlayed)
+        {
+            if (auto modPowerRegenAuras = GetAuraEffectsByType(SPELL_AURA_MOD_POWER_REGEN))
+            {
+                for (auto itr = modPowerRegenAuras->begin(); itr != modPowerRegenAuras->end(); ++itr)
+                {
+                    AuraEffect const* auraEff = *itr;
+                    if (!auraEff)
+                        continue;
+
+                    if (auraEff->GetBase()->HasEffectType(SPELL_AURA_MOD_POWER_REGEN) &&
+                        auraEff->GetSpellInfo()->HasAuraInterruptFlag(AURA_INTERRUPT_FLAG_NOT_SEATED))
+                    {
+                        SendPlaySpellVisualKit(0, SPELL_VISUAL_KIT_DRINK, 0);
+                        break;
+                    }
+                }
+            }
+        }
+
+        m_foodEmoteTimerCount -= 5000;
+    }
 }
 
 void Player::Regenerate(Powers power, float regenTimer, PowerTypeEntry const* powerEntry)
