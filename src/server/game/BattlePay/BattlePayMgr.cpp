@@ -32,6 +32,7 @@
 #include "CollectionMgr.h"
 #include "SpellInfo.h"
 #include "SpellMgr.h"
+#include "Chat.h"
 
 using namespace Battlepay;
 
@@ -858,26 +859,76 @@ void BattlepayManager::SendPointsBalance()
 		if (!player)
 			return;
 
-		std::ostringstream data;
-		std::ostringstream data1;
-		data1 << player->GetDonateTokens();
-		data << balance;
-		player->SendCustomMessage(GetCustomMessage(CustomMessage::StoreBalance), data);
-		player->SendCustomMessage("Puntos", data1);
+		uint32 credits = player->GetDonateTokens();
 
+		uint32 currencyId = sWorld->getIntConfig(CONFIG_BATTLE_PAY_CURRENCY);
+
+		uint32 currencyStr = LANG_BATTLEPAY_CURRENCY_SYMBOL_USD; // Default
+		switch (currencyId)
+		{
+		case 1:  currencyStr = LANG_BATTLEPAY_CURRENCY_SYMBOL_USD;  break; // USD
+		case 2:  currencyStr = LANG_BATTLEPAY_CURRENCY_SYMBOL_GBP;  break; // GBP
+		case 3:  currencyStr = LANG_BATTLEPAY_CURRENCY_SYMBOL_KRW;  break; // KRW
+		case 4:  currencyStr = LANG_BATTLEPAY_CURRENCY_SYMBOL_EUR;  break; // EUR
+		case 5:  currencyStr = LANG_BATTLEPAY_CURRENCY_SYMBOL_RUB;  break; // RUB
+		case 8:  currencyStr = LANG_BATTLEPAY_CURRENCY_SYMBOL_ARS;  break; // ARS
+		case 9:  currencyStr = LANG_BATTLEPAY_CURRENCY_SYMBOL_CLP;  break; // CLP
+		case 10: currencyStr = LANG_BATTLEPAY_CURRENCY_SYMBOL_MXN;  break; // MXN
+		case 11: currencyStr = LANG_BATTLEPAY_CURRENCY_SYMBOL_BRL;  break; // BRL
+		case 12: currencyStr = LANG_BATTLEPAY_CURRENCY_SYMBOL_AUD;  break; // AUD
+		case 14: currencyStr = LANG_BATTLEPAY_CURRENCY_SYMBOL_CPT;  break; // CPT
+		case 15: currencyStr = LANG_BATTLEPAY_CURRENCY_SYMBOL_TPT;  break; // TPT
+		case 16: currencyStr = LANG_BATTLEPAY_CURRENCY_SYMBOL_BETA; break; // BETA
+		case 28: currencyStr = LANG_BATTLEPAY_CURRENCY_SYMBOL_JPY;  break; // JPY
+		case 29: currencyStr = LANG_BATTLEPAY_CURRENCY_SYMBOL_CAD;  break; // CAD
+		case 30: currencyStr = LANG_BATTLEPAY_CURRENCY_SYMBOL_NZD;  break; // NZD
+		default: break;
+		}
+
+		char const* symbol = player->GetSession()->GetTrinityString(currencyStr);
+
+		ChatHandler(player->GetSession()).PSendSysMessage(
+			player->GetSession()->GetTrinityString(LANG_BATTLEPAY_POINTS_VALUE),
+			credits, symbol
+		);
 	};
 
 	//_session->_queryProcessor.AddQuery(CharacterDatabase.AsyncQuery(stm).WithPreparedCallback(AsyncQuery));
 
 	if (auto player = _session->GetPlayer())
 	{
-		std::ostringstream data;
-		std::ostringstream data1;
-		data1 << player->GetDonateTokens();
-		data << _session->GetAccountId();
-		player->SendCustomMessage(GetCustomMessage(CustomMessage::AccountId), data);
-		player->SendCustomMessage("|cff1eff00 Tus Puntos son: ", data1);
+		uint32 credits = player->GetDonateTokens();
 
+		uint32 currencyId = sWorld->getIntConfig(CONFIG_BATTLE_PAY_CURRENCY);
+
+		uint32 currencyStr = LANG_BATTLEPAY_CURRENCY_SYMBOL_USD; // Default
+		switch (currencyId)
+		{
+		case 1:  currencyStr = LANG_BATTLEPAY_CURRENCY_SYMBOL_USD;  break; // USD
+		case 2:  currencyStr = LANG_BATTLEPAY_CURRENCY_SYMBOL_GBP;  break; // GBP
+		case 3:  currencyStr = LANG_BATTLEPAY_CURRENCY_SYMBOL_KRW;  break; // KRW
+		case 4:  currencyStr = LANG_BATTLEPAY_CURRENCY_SYMBOL_EUR;  break; // EUR
+		case 5:  currencyStr = LANG_BATTLEPAY_CURRENCY_SYMBOL_RUB;  break; // RUB
+		case 8:  currencyStr = LANG_BATTLEPAY_CURRENCY_SYMBOL_ARS;  break; // ARS
+		case 9:  currencyStr = LANG_BATTLEPAY_CURRENCY_SYMBOL_CLP;  break; // CLP
+		case 10: currencyStr = LANG_BATTLEPAY_CURRENCY_SYMBOL_MXN;  break; // MXN
+		case 11: currencyStr = LANG_BATTLEPAY_CURRENCY_SYMBOL_BRL;  break; // BRL
+		case 12: currencyStr = LANG_BATTLEPAY_CURRENCY_SYMBOL_AUD;  break; // AUD
+		case 14: currencyStr = LANG_BATTLEPAY_CURRENCY_SYMBOL_CPT;  break; // CPT
+		case 15: currencyStr = LANG_BATTLEPAY_CURRENCY_SYMBOL_TPT;  break; // TPT
+		case 16: currencyStr = LANG_BATTLEPAY_CURRENCY_SYMBOL_BETA; break; // BETA
+		case 28: currencyStr = LANG_BATTLEPAY_CURRENCY_SYMBOL_JPY;  break; // JPY
+		case 29: currencyStr = LANG_BATTLEPAY_CURRENCY_SYMBOL_CAD;  break; // CAD
+		case 30: currencyStr = LANG_BATTLEPAY_CURRENCY_SYMBOL_NZD;  break; // NZD
+		default: break;
+		}
+
+		char const* symbol = player->GetSession()->GetTrinityString(currencyStr);
+
+		ChatHandler(player->GetSession()).PSendSysMessage(
+			player->GetSession()->GetTrinityString(LANG_BATTLEPAY_POINTS_VALUE),
+			credits, symbol
+		);
 	}
 }
 

@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
- * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -16,8 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __TRINITY_LANGUAGE_H
-#define __TRINITY_LANGUAGE_H
+#ifndef LANGUAGE_H
+#define LANGUAGE_H
 
 enum BroadcastTextIds
 {
@@ -1019,6 +1018,26 @@ enum TrinityStrings
 
     // Garrison
     LANG_LUMBER_RESULT                          = 22000,
+
+    // BattlePay
+    LANG_BATTLEPAY_POINTS_LABEL                 = 22001,
+    LANG_BATTLEPAY_POINTS_VALUE                 = 22002,
+    LANG_BATTLEPAY_CURRENCY_SYMBOL_USD          = 22003,
+    LANG_BATTLEPAY_CURRENCY_SYMBOL_GBP          = 22004,
+    LANG_BATTLEPAY_CURRENCY_SYMBOL_KRW          = 22005,
+    LANG_BATTLEPAY_CURRENCY_SYMBOL_EUR          = 22006,
+    LANG_BATTLEPAY_CURRENCY_SYMBOL_RUB          = 22007,
+    LANG_BATTLEPAY_CURRENCY_SYMBOL_ARS          = 22008,
+    LANG_BATTLEPAY_CURRENCY_SYMBOL_CLP          = 22009,
+    LANG_BATTLEPAY_CURRENCY_SYMBOL_MXN          = 22010,
+    LANG_BATTLEPAY_CURRENCY_SYMBOL_BRL          = 22011,
+    LANG_BATTLEPAY_CURRENCY_SYMBOL_AUD          = 22012,
+    LANG_BATTLEPAY_CURRENCY_SYMBOL_CPT          = 22013,
+    LANG_BATTLEPAY_CURRENCY_SYMBOL_TPT          = 22014,
+    LANG_BATTLEPAY_CURRENCY_SYMBOL_BETA         = 22015,
+    LANG_BATTLEPAY_CURRENCY_SYMBOL_JPY          = 22016,
+    LANG_BATTLEPAY_CURRENCY_SYMBOL_CAD          = 22017,
+    LANG_BATTLEPAY_CURRENCY_SYMBOL_NZD          = 22018,
 
     // NOT RESERVED IDS                   12000-1999999999
     // `db_script_string` table index     2000000000-2000009999 (MIN_DB_SCRIPT_STRING_ID-MAX_DB_SCRIPT_STRING_ID)
