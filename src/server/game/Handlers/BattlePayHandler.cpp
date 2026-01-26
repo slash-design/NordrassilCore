@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -286,7 +286,7 @@ void WorldSession::HandleBattlePayConfirmPurchase(WorldPackets::BattlePay::Confi
 	uint32 blc = player->GetDonateTokens() - purchase->CurrentPrice;
     //GetBattlePayMgr()->SavePurchase(purchase, player->GetDonateTokens(), blc);
     GetBattlePayMgr()->ProcessDelivery(purchase);
-    player->DestroyDonateTokenCount((purchase->CurrentPrice) / 2);
+    player->DestroyDonateTokenCount(purchase->CurrentPrice);
 
 	uint32 _nextId = 1;
 
