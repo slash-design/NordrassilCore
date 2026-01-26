@@ -36,7 +36,6 @@ void AddSC_multi_vendor();
 void AddSC_traffic_commandscript();
 void AddSC_command_donate();
 void AddSC_command_arena();
-void AddSC_npc_profession();
 void AddSC_npc_beastmaster();
 void AddSC_npc_teleguy();
 void AddSC_arena_spectator_script();
@@ -1921,7 +1920,6 @@ void AddCustomScripts()
     AddSC_traffic_commandscript();
     AddSC_command_donate();
     AddSC_command_arena();
-    AddSC_npc_profession();
     AddSC_npc_beastmaster();
     AddSC_npc_teleguy();
     AddSC_Duel();
