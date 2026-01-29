@@ -1,8 +1,19 @@
 /*
-    http://uwow.biz
-    Dungeon : Vault of the Wardens 100-110
-    Encounter: Ashgolm
-*/
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include "ScriptMgr.h"
 #include "ScriptedCreature.h"
@@ -381,7 +392,7 @@ public:
 class spell_brittle : public SpellScriptLoader
 {
 public:
-    spell_brittle() : SpellScriptLoader("spell_brittle") { }
+    spell_brittle() : SpellScriptLoader("spell_brittle") {}
 
     class spell_brittle_AuraScript : public AuraScript
     {
@@ -390,13 +401,13 @@ public:
         void OnRemove(AuraEffect const* aurEff, AuraEffectHandleModes /*mode*/)
         {
             if (Creature* caster = GetCaster()->ToCreature())
-               if (caster->GetEntry() == 95886)
-                caster->AI()->Talk(SAY_BRITTLE);
+                if (caster->GetEntry() == 95886)
+                    caster->AI()->Talk(SAY_BRITTLE);
         }
-        
+
         void Register() override
         {
-            OnEffectRemove += AuraEffectRemoveFn(spell_brittle_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_TRANSFORM, AURA_EFFECT_HANDLE_REAL);
+            OnEffectRemove += AuraEffectRemoveFn(spell_brittle_AuraScript::OnRemove, EFFECT_4, SPELL_AURA_TRANSFORM, AURA_EFFECT_HANDLE_REAL);
         }
     };
 
