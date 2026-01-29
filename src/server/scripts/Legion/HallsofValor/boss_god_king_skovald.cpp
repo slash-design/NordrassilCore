@@ -1,9 +1,19 @@
 /*
-    http://uwow.biz
-    Dungeon : Halls of Valor 100-110
-    Encounter: God King Skovald
-    Normal: 100%, Heroic: 100%, Mythic: 100%
-*/
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include "AreaTriggerAI.h"
 #include "halls_of_valor.h"
@@ -856,51 +866,50 @@ class spell_skovald_drop_aegis : public SpellScriptLoader
 //193983, 193783
 class spell_skovald_aegis_remove : public SpellScriptLoader
 {
-    public:
-        spell_skovald_aegis_remove() : SpellScriptLoader("spell_skovald_aegis_remove") { }
+public:
+    spell_skovald_aegis_remove() : SpellScriptLoader("spell_skovald_aegis_remove") {}
 
-        class spell_skovald_aegis_remove_AuraScript : public AuraScript
+    class spell_skovald_aegis_remove_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_skovald_aegis_remove_AuraScript);
+
+        void OnRemove(AuraEffect const* aurEff, AuraEffectHandleModes /*mode*/)
         {
-            PrepareAuraScript(spell_skovald_aegis_remove_AuraScript);
+            if (!GetTarget())
+                return;
 
-            void OnRemove(AuraEffect const* aurEff, AuraEffectHandleModes /*mode*/)
-            {
-                if (!GetTarget())
-                    return;
-
-                GetTarget()->CastSpell(GetTarget(), 193991, true);
-            }
-
-            void CalculateAmount(AuraEffect const* /*aurEff*/, float& amount, bool& /*canBeRecalculated*/)
-            {
-                amount = -1;
-            }
-
-            void OnAbsorb(AuraEffect* aurEff, DamageInfo& dmgInfo, float& absorbAmount)
-            {
-                if (!GetCaster())
-                    return;
-
-                if (Unit* attacker = dmgInfo.GetAttacker())
-                    if (attacker->GetDistance(GetCaster()) < 5.0f && GetCaster()->isInBack(attacker, M_PI * 0.8f))
-                        absorbAmount = 0;
-                    else
-                        absorbAmount = dmgInfo.GetDamage();
-            }
-
-            void Register() override
-            {
-                OnEffectRemove += AuraEffectRemoveFn(spell_skovald_aegis_remove_AuraScript::OnRemove, EFFECT_1, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
-                OnEffectRemove += AuraEffectRemoveFn(spell_skovald_aegis_remove_AuraScript::OnRemove, EFFECT_1, SPELL_AURA_SCHOOL_ABSORB, AURA_EFFECT_HANDLE_REAL);
-                DoEffectCalcAmount += AuraEffectCalcAmountFn(spell_skovald_aegis_remove_AuraScript::CalculateAmount, EFFECT_1, SPELL_AURA_SCHOOL_ABSORB);
-                OnEffectAbsorb += AuraEffectAbsorbFn(spell_skovald_aegis_remove_AuraScript::OnAbsorb, EFFECT_1, SPELL_AURA_SCHOOL_ABSORB);
-            }
-        };
-
-        AuraScript* GetAuraScript() const override
-        {
-            return new spell_skovald_aegis_remove_AuraScript();
+            GetTarget()->CastSpell(GetTarget(), 193991, true);
         }
+
+        void CalculateAmount(AuraEffect const* /*aurEff*/, float& amount, bool& /*canBeRecalculated*/)
+        {
+            amount = -1;
+        }
+
+        void OnAbsorb(AuraEffect* aurEff, DamageInfo& dmgInfo, float& absorbAmount)
+        {
+            if (!GetCaster())
+                return;
+
+            if (Unit* attacker = dmgInfo.GetAttacker())
+                if (attacker->GetDistance(GetCaster()) < 5.0f && GetCaster()->isInBack(attacker, M_PI * 0.8f))
+                    absorbAmount = 0;
+                else
+                    absorbAmount = dmgInfo.GetDamage();
+        }
+
+        void Register() override
+        {
+            OnEffectRemove += AuraEffectRemoveFn(spell_skovald_aegis_remove_AuraScript::OnRemove, EFFECT_1, SPELL_AURA_ANY, AURA_EFFECT_HANDLE_REAL);
+            DoEffectCalcAmount += AuraEffectCalcAmountFn(spell_skovald_aegis_remove_AuraScript::CalculateAmount, EFFECT_1, SPELL_AURA_ANY);
+            OnEffectAbsorb += AuraEffectAbsorbFn(spell_skovald_aegis_remove_AuraScript::OnAbsorb, EFFECT_1, SPELL_AURA_ANY);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_skovald_aegis_remove_AuraScript();
+    }
 };
 
 //193743
