@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -13,12 +13,6 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
- */
-
-/*
- * Scripts for spells with SPELLFAMILY_DRUID and SPELLFAMILY_GENERIC spells used by druid players.
- * Ordered alphabetically using scriptname.
- * Scriptnames of files in this file should be prefixed with "spell_dru_".
  */
 
 #include "ScriptMgr.h"
@@ -1748,80 +1742,80 @@ class spell_dru_thrash : public SpellScriptLoader
 // Ekowraith, Creator of Worlds - 210667
 class spell_dru_ekowraith_creator_of_worlds : public SpellScriptLoader
 {
-    public:
-        spell_dru_ekowraith_creator_of_worlds() : SpellScriptLoader("spell_dru_ekowraith_creator_of_worlds") { }
+public:
+    spell_dru_ekowraith_creator_of_worlds() : SpellScriptLoader("spell_dru_ekowraith_creator_of_worlds") {}
 
-        class spell_dru_ekowraith_creator_of_worlds_AuraScript : public AuraScript
+    class spell_dru_ekowraith_creator_of_worlds_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_dru_ekowraith_creator_of_worlds_AuraScript);
+
+        uint32 addPct;
+
+        bool Load() override
         {
-            PrepareAuraScript(spell_dru_ekowraith_creator_of_worlds_AuraScript);
-
-            uint32 addPct;
-
-            bool Load() override
-            {
-                addPct = GetSpellInfo()->Effects[EFFECT_7]->CalcValue(GetCaster());
-                return true;
-            }
-
-            void CalculateAmount0(AuraEffect const* aurEff, float & amount, bool & /*canBeRecalculated*/)
-            {
-                if (Unit* caster = GetCaster())
-                {
-                    if(AuraEffect* aurSpell = caster->GetAuraEffect(197524, EFFECT_0)) // Astral Influence
-                        amount += CalculatePct(aurSpell->GetAmount(), addPct);
-                }
-            }
-
-            void CalculateAmount1(AuraEffect const* aurEff, float & amount, bool & /*canBeRecalculated*/)
-            {
-                if (Unit* caster = GetCaster())
-                {
-                    if(AuraEffect* aurSpell = caster->GetAuraEffect(16931, EFFECT_0)) // Thick Hide
-                        amount -= CalculatePct(-aurSpell->GetAmount(), addPct);
-                }
-            }
-
-            void CalculateAmount3(AuraEffect const* aurEff, float & amount, bool & /*canBeRecalculated*/)
-            {
-                if (Unit* caster = GetCaster())
-                {
-                    if(AuraEffect* aurSpell = caster->GetAuraEffect(131768, EFFECT_0)) // Feline Swiftness
-                        amount += CalculatePct(aurSpell->GetAmount(), addPct);
-                }
-            }
-
-            void CalculateAmount5(AuraEffect const* aurEff, float & amount, bool & /*canBeRecalculated*/)
-            {
-                if (Unit* caster = GetCaster())
-                {
-                    if(AuraEffect* aurSpell = caster->GetAuraEffect(197524, EFFECT_1)) // Astral Influence
-                        amount += CalculatePct(aurSpell->GetAmount(), addPct);
-                }
-            }
-
-            void CalculateAmount6(AuraEffect const* aurEff, float & amount, bool & /*canBeRecalculated*/)
-            {
-                if (Unit* caster = GetCaster())
-                {
-                    if(AuraEffect* aurSpell = caster->GetAuraEffect(197524, EFFECT_2)) // Astral Influence
-                        amount += CalculatePct(aurSpell->GetAmount(), addPct);
-                }
-            }
-
-            void Register() override
-            {
-                DoEffectCalcAmount += AuraEffectCalcAmountFn(spell_dru_ekowraith_creator_of_worlds_AuraScript::CalculateAmount0, EFFECT_0, SPELL_AURA_ADD_FLAT_MODIFIER);
-                DoEffectCalcAmount += AuraEffectCalcAmountFn(spell_dru_ekowraith_creator_of_worlds_AuraScript::CalculateAmount1, EFFECT_1, SPELL_AURA_MOD_DAMAGE_PERCENT_TAKEN);
-                DoEffectCalcAmount += AuraEffectCalcAmountFn(spell_dru_ekowraith_creator_of_worlds_AuraScript::CalculateAmount3, EFFECT_3, SPELL_AURA_MOD_SPEED_ALWAYS);
-                DoEffectCalcAmount += AuraEffectCalcAmountFn(spell_dru_ekowraith_creator_of_worlds_AuraScript::CalculateAmount5, EFFECT_5, SPELL_AURA_MOD_AUTO_ATTACK_RANGE);
-                DoEffectCalcAmount += AuraEffectCalcAmountFn(spell_dru_ekowraith_creator_of_worlds_AuraScript::CalculateAmount6, EFFECT_5, SPELL_AURA_ADD_FLAT_MODIFIER);
-            }
-        };
-
-        AuraScript* GetAuraScript() const override
-        {
-            return new spell_dru_ekowraith_creator_of_worlds_AuraScript();
+            addPct = GetSpellInfo()->Effects[EFFECT_7]->CalcValue(GetCaster());
+            return true;
         }
+
+        void CalculateAmount0(AuraEffect const* aurEff, float& amount, bool& /*canBeRecalculated*/)
+        {
+            if (Unit* caster = GetCaster())
+            {
+                if (AuraEffect* aurSpell = caster->GetAuraEffect(197524, EFFECT_0)) // Astral Influence
+                    amount += CalculatePct(aurSpell->GetAmount(), addPct);
+            }
+        }
+
+        void CalculateAmount1(AuraEffect const* aurEff, float& amount, bool& /*canBeRecalculated*/)
+        {
+            if (Unit* caster = GetCaster())
+            {
+                if (AuraEffect* aurSpell = caster->GetAuraEffect(16931, EFFECT_0)) // Thick Hide
+                    amount -= CalculatePct(-aurSpell->GetAmount(), addPct);
+            }
+        }
+
+        void CalculateAmount3(AuraEffect const* aurEff, float& amount, bool& /*canBeRecalculated*/)
+        {
+            if (Unit* caster = GetCaster())
+            {
+                if (AuraEffect* aurSpell = caster->GetAuraEffect(131768, EFFECT_0)) // Feline Swiftness
+                    amount += CalculatePct(aurSpell->GetAmount(), addPct);
+            }
+        }
+
+        void CalculateAmount5(AuraEffect const* aurEff, float& amount, bool& /*canBeRecalculated*/)
+        {
+            if (Unit* caster = GetCaster())
+            {
+                if (AuraEffect* aurSpell = caster->GetAuraEffect(197524, EFFECT_1)) // Astral Influence
+                    amount += CalculatePct(aurSpell->GetAmount(), addPct);
+            }
+        }
+
+        void CalculateAmount6(AuraEffect const* aurEff, float& amount, bool& /*canBeRecalculated*/)
+        {
+            if (Unit* caster = GetCaster())
+            {
+                if (AuraEffect* aurSpell = caster->GetAuraEffect(197524, EFFECT_2)) // Astral Influence
+                    amount += CalculatePct(aurSpell->GetAmount(), addPct);
+            }
+        }
+
+        void Register() override
+        {
+            DoEffectCalcAmount += AuraEffectCalcAmountFn(spell_dru_ekowraith_creator_of_worlds_AuraScript::CalculateAmount0, EFFECT_0, SPELL_AURA_ADD_FLAT_MODIFIER);
+            DoEffectCalcAmount += AuraEffectCalcAmountFn(spell_dru_ekowraith_creator_of_worlds_AuraScript::CalculateAmount1, EFFECT_1, SPELL_AURA_MOD_DAMAGE_PERCENT_TAKEN);
+            DoEffectCalcAmount += AuraEffectCalcAmountFn(spell_dru_ekowraith_creator_of_worlds_AuraScript::CalculateAmount3, EFFECT_3, SPELL_AURA_MOD_SPEED_ALWAYS);
+            DoEffectCalcAmount += AuraEffectCalcAmountFn(spell_dru_ekowraith_creator_of_worlds_AuraScript::CalculateAmount5, EFFECT_5, SPELL_AURA_MOD_AUTO_ATTACK_RANGE);
+            DoEffectCalcAmount += AuraEffectCalcAmountFn(spell_dru_ekowraith_creator_of_worlds_AuraScript::CalculateAmount6, EFFECT_6, SPELL_AURA_ADD_FLAT_MODIFIER);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_dru_ekowraith_creator_of_worlds_AuraScript();
+    }
 };
 
 // 194153, 190984
