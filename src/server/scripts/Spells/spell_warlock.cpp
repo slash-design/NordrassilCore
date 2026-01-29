@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -13,12 +13,6 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
- */
-
-/*
- * Scripts for spells with SPELLFAMILY_WARLOCK and SPELLFAMILY_GENERIC spells used by warlock players.
- * Ordered alphabetically using scriptname.
- * Scriptnames of files in this file should be prefixed with "spell_warl_".
  */
 
 #include "ScriptMgr.h"
@@ -973,31 +967,31 @@ class spell_warl_health_funnel : public SpellScriptLoader
 // Immolate - 157736
 class spell_warl_immolate : public SpellScriptLoader
 {
-    public:
-        spell_warl_immolate() : SpellScriptLoader("spell_warl_immolate") { }
+public:
+    spell_warl_immolate() : SpellScriptLoader("spell_warl_immolate") {}
 
-        class spell_warl_immolate_AuraScript : public AuraScript
+    class spell_warl_immolate_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_warl_immolate_AuraScript);
+
+        void OnApplyOrRemove(AuraEffect const* aurEff, AuraEffectHandleModes /*mode*/)
         {
-            PrepareAuraScript(spell_warl_immolate_AuraScript);
-
-            void OnApplyOrRemove(AuraEffect const* aurEff, AuraEffectHandleModes /*mode*/)
-            {
-                if (Unit* caster = GetCaster())
-                    if (Unit* target = GetUnitOwner())
-                        target->RemoveAurasDueToSpell(205690, caster->GetGUID());
-            }
-
-            void Register() override
-            {
-                OnEffectApply += AuraEffectApplyFn(spell_warl_immolate_AuraScript::OnApplyOrRemove, EFFECT_0, SPELL_AURA_PERIODIC_DAMAGE, AURA_EFFECT_HANDLE_REAL_OR_REAPPLY_MASK);
-                OnEffectRemove += AuraEffectRemoveFn(spell_warl_immolate_AuraScript::OnApplyOrRemove, EFFECT_0, SPELL_AURA_MOD_DAMAGE_PERCENT_TAKEN, AURA_EFFECT_HANDLE_REAL_OR_REAPPLY_MASK);
-            }
-        };
-
-        AuraScript* GetAuraScript() const override
-        {
-            return new spell_warl_immolate_AuraScript();
+            if (Unit* caster = GetCaster())
+                if (Unit* target = GetUnitOwner())
+                    target->RemoveAurasDueToSpell(205690, caster->GetGUID());
         }
+
+        void Register() override
+        {
+            OnEffectApply += AuraEffectApplyFn(spell_warl_immolate_AuraScript::OnApplyOrRemove, EFFECT_0, SPELL_AURA_PERIODIC_DAMAGE, AURA_EFFECT_HANDLE_REAL_OR_REAPPLY_MASK);
+            OnEffectRemove += AuraEffectRemoveFn(spell_warl_immolate_AuraScript::OnApplyOrRemove, EFFECT_0, SPELL_AURA_PERIODIC_DAMAGE, AURA_EFFECT_HANDLE_REAL_OR_REAPPLY_MASK);
+        }
+    };
+
+    AuraScript* GetAuraScript() const override
+    {
+        return new spell_warl_immolate_AuraScript();
+    }
 };
 
 // Soul Harvest - 196098
