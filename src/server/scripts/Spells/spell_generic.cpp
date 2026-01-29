@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -14,13 +14,6 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
- /*
-  * Scripts for spells with SPELLFAMILY_GENERIC which cannot be included in AI script file
-  * of creature using it or can't be bound to any player class.
-  * Ordered alphabetically using scriptname.
-  * Scriptnames of files in this file should be prefixed with "spell_gen_"
-  */
 
 #include "AreaTriggerAI.h"
 #include "AreaTrigger.h"
@@ -5095,7 +5088,7 @@ public:
 class spell_mercenary_contract : public SpellScriptLoader
 {
 public:
-	spell_mercenary_contract() : SpellScriptLoader("spell_mercenary_contract") { }
+	spell_mercenary_contract() : SpellScriptLoader("spell_mercenary_contract") {}
 
 	class spell_mercenary_contract_AuraScript : public AuraScript
 	{
@@ -5196,7 +5189,7 @@ public:
 		void Register() override
 		{
 			AfterEffectApply += AuraEffectApplyFn(spell_mercenary_contract_AuraScript::OnApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
-			AfterEffectRemove += AuraEffectRemoveFn(spell_mercenary_contract_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_TRANSFORM, AURA_EFFECT_HANDLE_REAL);
+			AfterEffectRemove += AuraEffectRemoveFn(spell_mercenary_contract_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
 		}
 	};
 
