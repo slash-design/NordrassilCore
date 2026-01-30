@@ -1,6 +1,19 @@
 /*
-    https://uwow.biz/
-*/
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include "the_emerald_nightmare.h"
 
@@ -1115,17 +1128,17 @@ class spell_elerethe_web_of_pain_filter : public SpellScript
     }
 };
 
-//215300, 215307
-class spell_elerethe_web_of_pain : public AuraScript
+// 215300
+class spell_elerethe_web_of_pain_trigger : public AuraScript
 {
-    PrepareAuraScript(spell_elerethe_web_of_pain);
+    PrepareAuraScript(spell_elerethe_web_of_pain_trigger);
 
     void CalculateAmount(AuraEffect const* /*aurEff*/, float& amount, bool& /*canBeRecalculated*/)
     {
         amount = 100;
     }
 
-    void Absorb(AuraEffect* aurEff, DamageInfo& dmgInfo, float& absorbAmount)
+    void Absorb(AuraEffect* /*aurEff*/, DamageInfo& dmgInfo, float& absorbAmount)
     {
         absorbAmount = 0;
 
@@ -1136,26 +1149,54 @@ class spell_elerethe_web_of_pain : public AuraScript
             GetTarget()->CastCustomSpell(GetCaster(), 233485, &dmg, nullptr, nullptr, true);
     }
 
-    void OnTick(AuraEffect const* aurEff)
+    void OnTick(AuraEffect const* /*aurEff*/)
     {
         if (!GetCaster() || !GetTarget() || GetCaster()->GetMap()->GetDifficultyID() != DIFFICULTY_MYTHIC_RAID)
             return;
 
         GetCaster()->GetMap()->ApplyOnEveryPlayer([&](Player* player)
-        {
-            if (player->GetGUID() == GetCaster()->GetGUID() || player->GetGUID() == GetTarget()->GetGUID())
-                return;
+            {
+                if (player->GetGUID() == GetCaster()->GetGUID() || player->GetGUID() == GetTarget()->GetGUID())
+                    return;
 
-            if (player->IsInBetween(GetCaster(), GetTarget(), 1.0f))
-                player->CastSpell(player, SPELL_PAIN_LASH, true);
-        });
+                if (player->IsInBetween(GetCaster(), GetTarget(), 1.0f))
+                    player->CastSpell(player, SPELL_PAIN_LASH, true);
+            });
     }
 
     void Register() override
     {
-        DoEffectCalcAmount += AuraEffectCalcAmountFn(spell_elerethe_web_of_pain::CalculateAmount, EFFECT_0, SPELL_AURA_SCHOOL_ABSORB);
-        OnEffectAbsorb += AuraEffectAbsorbFn(spell_elerethe_web_of_pain::Absorb, EFFECT_0, SPELL_AURA_SCHOOL_ABSORB);
-        OnEffectPeriodic += AuraEffectPeriodicFn(spell_elerethe_web_of_pain::OnTick, EFFECT_1, SPELL_AURA_PERIODIC_DUMMY);
+        DoEffectCalcAmount += AuraEffectCalcAmountFn(spell_elerethe_web_of_pain_trigger::CalculateAmount, EFFECT_0, SPELL_AURA_SCHOOL_ABSORB);
+        OnEffectAbsorb += AuraEffectAbsorbFn(spell_elerethe_web_of_pain_trigger::Absorb, EFFECT_0, SPELL_AURA_SCHOOL_ABSORB);
+        OnEffectPeriodic += AuraEffectPeriodicFn(spell_elerethe_web_of_pain_trigger::OnTick, EFFECT_1, SPELL_AURA_PERIODIC_DUMMY);
+    }
+};
+
+// 215307
+class spell_elerethe_web_of_pain_base : public AuraScript
+{
+    PrepareAuraScript(spell_elerethe_web_of_pain_base);
+
+    void CalculateAmount(AuraEffect const* /*aurEff*/, float& amount, bool& /*canBeRecalculated*/)
+    {
+        amount = 100;
+    }
+
+    void Absorb(AuraEffect* /*aurEff*/, DamageInfo& dmgInfo, float& absorbAmount)
+    {
+        absorbAmount = 0;
+
+        if (!GetCaster() || !GetTarget() || !dmgInfo.GetAttacker() || dmgInfo.GetAttacker()->IsPlayer())
+            return;
+
+        if (float dmg = dmgInfo.GetDamage())
+            GetTarget()->CastCustomSpell(GetCaster(), 233485, &dmg, nullptr, nullptr, true);
+    }
+
+    void Register() override
+    {
+        DoEffectCalcAmount += AuraEffectCalcAmountFn(spell_elerethe_web_of_pain_base::CalculateAmount, EFFECT_0, SPELL_AURA_SCHOOL_ABSORB);
+        OnEffectAbsorb += AuraEffectAbsorbFn(spell_elerethe_web_of_pain_base::Absorb, EFFECT_0, SPELL_AURA_SCHOOL_ABSORB);
     }
 };
 
@@ -1267,7 +1308,8 @@ void AddSC_boss_elerethe_renferal()
     RegisterCreatureAI(npc_en_venomous_spiderling);
     RegisterAuraScript(spell_elerethe_energy_tracker_transform);
     RegisterSpellScript(spell_elerethe_web_of_pain_filter);
-    RegisterAuraScript(spell_elerethe_web_of_pain);
+    RegisterAuraScript(spell_elerethe_web_of_pain_trigger);
+    RegisterAuraScript(spell_elerethe_web_of_pain_base);
     RegisterSpellScript(spell_elerethe_vile_ambush);
     RegisterSpellScript(spell_elerethe_feeding_time_filter);
     RegisterAuraScript(spell_elerethe_necrotic_venom);
