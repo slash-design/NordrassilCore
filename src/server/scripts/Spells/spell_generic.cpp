@@ -1235,8 +1235,8 @@ public:
 
 		bool Validate(SpellInfo const* /*spell*/) override
 		{
-			if (!sSpellMgr->GetSpellInfo(SPELL_PLANT_CHARGES_CREDIT_ACHIEVEMENT))
-				return false;
+			//	if (!sSpellMgr->GetSpellInfo(SPELL_PLANT_CHARGES_CREDIT_ACHIEVEMENT))
+			//	return false;
 			return true;
 		}
 
