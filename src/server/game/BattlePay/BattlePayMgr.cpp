@@ -451,6 +451,8 @@ void BattlepayManager::ProcessDelivery(Purchase* purchase)
 
 	if (!product.ScriptName.empty())
 		sScriptMgr->OnBattlePayProductDelivery(_session, product);
+
+	SendProductList();
 }
 
 void BattlepayManager::OnPaymentSucess(uint32 newBalance)
@@ -469,20 +471,37 @@ bool BattlepayManager::AlreadyOwnProduct(uint32 itemId) const
 	//if (_existProducts.find(itemId) != _existProducts.end())
 	   // return true;
 
-	auto const& player = _session->GetPlayer();
-	if (player)
+	Player* player = _session->GetPlayer();
+	if (!player)
+		return false;
+
+	// Toys are account-wide, treat them as already owned
+	if (player->GetCollectionMgr()->HasToy(itemId))
+		return true;
+
+	// Most shop entries use an ItemID, but some (e.g. battle pets) may use a CreatureID instead.
+	if (ItemTemplate const* itemTemplate = sObjectMgr->GetItemTemplate(itemId))
 	{
-		auto itemTemplate = sObjectMgr->GetItemTemplate(itemId);
-		if (!itemTemplate)
+		// Bags should be purchasable multiple times
+		if (itemTemplate->GetClass() == ITEM_CLASS_CONTAINER)
 			return false;
 
-		for (auto itr : itemTemplate->Effects)
-			if (itr->TriggerType == ITEM_SPELLTRIGGER_LEARN_SPELL_ID && player->HasSpell(itr->SpellID))
+		// If the player already owns the item (inventory/bank), hide it in the shop
+		if (player->GetItemCount(itemId, true) > 0)
+			return true;
+
+		// Items that teach a spell (mounts, toys-like unlocks, etc.) should be 1x purchasable
+		for (auto const* eff : itemTemplate->Effects)
+			if (eff && eff->TriggerType == ITEM_SPELLTRIGGER_LEARN_SPELL_ID && eff->SpellID && player->HasSpell(eff->SpellID))
 				return true;
 
-		if (player->GetCollectionMgr()->HasToy(itemId))
-			return true;
+		return false;
 	}
+
+	// Battle pets in this core are delivered via creatureId -> speciesId
+	if (BattlePetSpeciesEntry const* species = sDB2Manager.GetSpeciesByCreatureID(itemId))
+		if (player->GetBattlePetCountForSpecies(species->ID) > 0)
+			return true;
 
 	return false;
 }
@@ -565,6 +584,30 @@ auto BattlepayManager::ProductFilter(Product product) -> bool
 
 	if (product.ClassMask && (player->getClassMask() & product.ClassMask) == 0)
 		return false;
+
+	// Products without item entries still need an ownership check
+	// (e.g. mounts are delivered via Product::SpellID)
+	switch (product.WebsiteType)
+	{
+	case Battlepay::Mount:
+		if (product.SpellID && player->GetCollectionMgr()->HasMount(product.SpellID))
+			return false;
+		break;
+	case Battlepay::BattlePet:
+	{
+		uint32 creatureId = product.CreatureID;
+		if (!creatureId && !product.Items.empty())
+			creatureId = product.Items.front().ItemID;
+
+		if (creatureId)
+			if (BattlePetSpeciesEntry const* species = sDB2Manager.GetSpeciesByCreatureID(creatureId))
+				if (player->GetBattlePetCountForSpecies(species->ID) > 0)
+					return false;
+		break;
+	}
+	default:
+		break;
+	}
 
 	for (auto& itr : product.Items)
 	{
