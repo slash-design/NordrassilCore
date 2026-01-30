@@ -1,6 +1,19 @@
 /*
-    https://uwow.biz/
-*/
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include "antorus.h"
 #include "AreaTriggerAI.h"
@@ -1789,26 +1802,16 @@ class spell_argus_aggramar_boon : public AuraScript
     }
 };
 
-//257213, 257214
-class spell_argus_titanforging_energize_periodic : public AuraScript
+// 257213
+class spell_argus_titanforging_energize_controller : public AuraScript
 {
-    PrepareAuraScript(spell_argus_titanforging_energize_periodic);
+    PrepareAuraScript(spell_argus_titanforging_energize_controller);
 
     bool allowCast = false;
     uint8 powerCount = 0;
     float amount = 0.0f;
 
-    void OnReductedTick(AuraEffect const* aurEff)
-    {
-        auto caster = GetCaster();
-        if (!caster)
-            return;
-
-        if (powerCount = caster->GetPower(caster->getPowerType()))
-            caster->SetPower(caster->getPowerType(), powerCount - 1);
-    }
-
-    void OnCheckTick(AuraEffect const* aurEff)
+    void OnCheckTick(AuraEffect const* /*aurEff*/)
     {
         auto caster = GetCaster();
         if (!caster)
@@ -1842,8 +1845,29 @@ class spell_argus_titanforging_energize_periodic : public AuraScript
 
     void Register() override
     {
-        OnEffectPeriodic += AuraEffectPeriodicFn(spell_argus_titanforging_energize_periodic::OnReductedTick, EFFECT_0, SPELL_AURA_PERIODIC_DUMMY);
-        OnEffectPeriodic += AuraEffectPeriodicFn(spell_argus_titanforging_energize_periodic::OnCheckTick, EFFECT_1, SPELL_AURA_PERIODIC_DUMMY);
+        OnEffectPeriodic += AuraEffectPeriodicFn(spell_argus_titanforging_energize_controller::OnCheckTick, EFFECT_1, SPELL_AURA_PERIODIC_DUMMY);
+    }
+};
+
+// 257214
+class spell_argus_titanforging_energy_reducer : public AuraScript
+{
+    PrepareAuraScript(spell_argus_titanforging_energy_reducer);
+
+    void OnReducedTick(AuraEffect const* /*aurEff*/)
+    {
+        auto caster = GetCaster();
+        if (!caster)
+            return;
+
+        uint8 powerCount = caster->GetPower(caster->getPowerType());
+        if (powerCount > 0)
+            caster->SetPower(caster->getPowerType(), powerCount - 1);
+    }
+
+    void Register() override
+    {
+        OnEffectPeriodic += AuraEffectPeriodicFn(spell_argus_titanforging_energy_reducer::OnReducedTick, EFFECT_0, SPELL_AURA_PERIODIC_DUMMY);
     }
 };
 
@@ -2289,7 +2313,8 @@ void AddSC_boss_argus()
     RegisterAuraScript(spell_argus_p4_energize_periodic);
     RegisterAuraScript(spell_argus_initialization_sequence_periodic);
     RegisterAuraScript(spell_argus_aggramar_boon);
-    RegisterAuraScript(spell_argus_titanforging_energize_periodic);
+    RegisterAuraScript(spell_argus_titanforging_energize_controller);
+    RegisterAuraScript(spell_argus_titanforging_energy_reducer);
     RegisterAuraScript(spell_argus_impending_inevitability);
     RegisterSpellScript(spell_argus_sky_and_sea);
     RegisterSpellScript(spell_argus_golganneth_wrath);
