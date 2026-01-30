@@ -438,9 +438,9 @@ struct npc_nythendra_corrupted_vermin : public ScriptedAI
 };
 
 //203095
-class spell_nythendra_rot : public SpellScript
+class spell_nythendra_rot_SpellScript : public SpellScript
 {
-    PrepareSpellScript(spell_nythendra_rot);
+    PrepareSpellScript(spell_nythendra_rot_SpellScript);
 
     uint8 swarmCount = 0;
 
@@ -465,12 +465,12 @@ class spell_nythendra_rot : public SpellScript
 
     void Register() override
     {
-        OnObjectAreaTargetSelect += SpellObjectAreaTargetSelectFn(spell_nythendra_rot::FilterTargets, EFFECT_0, TARGET_UNIT_SRC_AREA_ENTRY);
-        OnHit += SpellHitFn(spell_nythendra_rot::HandleOnHit);
+        OnObjectAreaTargetSelect += SpellObjectAreaTargetSelectFn(spell_nythendra_rot_SpellScript::FilterTargets, EFFECT_0, TARGET_UNIT_SRC_AREA_ENTRY);
+        OnHit += SpellHitFn(spell_nythendra_rot_SpellScript::HandleOnHit);
     }
 };
 
-//204463, 203096
+//204463
 class spell_nythendra_volatile_rot : public AuraScript
 {
     PrepareAuraScript(spell_nythendra_volatile_rot);
@@ -493,6 +493,31 @@ class spell_nythendra_volatile_rot : public AuraScript
     {
         OnEffectRemove += AuraEffectRemoveFn(spell_nythendra_volatile_rot::OnRemove, EFFECT_0, SPELL_AURA_PERIODIC_TRIGGER_SPELL, AURA_EFFECT_HANDLE_REAL);
         OnEffectRemove += AuraEffectRemoveFn(spell_nythendra_volatile_rot::OnRemove, EFFECT_2, SPELL_AURA_MOD_SCALE, AURA_EFFECT_HANDLE_REAL);
+    }
+};
+
+// 203096
+class spell_nythendra_rot : public AuraScript
+{
+    PrepareAuraScript(spell_nythendra_rot);
+
+    void OnRemove(AuraEffect const* aurEff, AuraEffectHandleModes /*mode*/)
+    {
+        if (!GetCaster() || !GetTarget() || GetTargetApplication()->GetRemoveMode() != AURA_REMOVE_BY_EXPIRE)
+            return;
+
+        if (aurEff->GetId() == SPELL_VOLATILE_ROT)
+        {
+            for (uint8 i = 0; i < 4; ++i)
+                GetTarget()->CastSpell(GetTarget(), SPELL_INFESTED_GROUND_VIS, true);
+        }
+        else if (aurEff->GetId() == SPELL_ROT_DOT)
+            GetCaster()->CastSpell(GetTarget(), SPELL_INFESTED_GROUND_AT, true);
+    }
+
+    void Register() override
+    {
+        OnEffectRemove += AuraEffectRemoveFn(spell_nythendra_rot::OnRemove, EFFECT_0, SPELL_AURA_PERIODIC_TRIGGER_SPELL, AURA_EFFECT_HANDLE_REAL);
     }
 };
 
@@ -528,7 +553,7 @@ class spell_nythendra_volatile_rot_dmg : public SpellScript
 class spell_nythendra_infested_ground_rot : public SpellScript
 {
     PrepareSpellScript(spell_nythendra_infested_ground_rot);
-    
+
     void HandleDummy(SpellEffIndex effIndex)
     {
         if (!GetCaster())
@@ -549,11 +574,10 @@ class spell_nythendra_infested_ground_rot : public SpellScript
         WorldLocation* loc = GetHitDest();
         GetCaster()->CastSpell(loc->GetPosition(), SPELL_INFESTED_GROUND_AT, true);
     }
-    
+
     void Register() override
     {
-        OnEffectHit += SpellEffectFn(spell_nythendra_infested_ground_rot::HandleDummy, EFFECT_0, SPELL_EFFECT_DUMMY);
-        OnEffectHit += SpellEffectFn(spell_nythendra_infested_ground_rot::HandleScript, EFFECT_0, SPELL_EFFECT_TRIGGER_MISSILE);
+        OnEffectHit += SpellEffectFn(spell_nythendra_infested_ground_rot::HandleDummy, EFFECT_0, SPELL_EFFECT_ANY);
     }
 };
 
@@ -663,11 +687,14 @@ void AddSC_boss_nythendra()
     RegisterCreatureAI(boss_nythendra);
     RegisterCreatureAI(npc_nythendra_gelatinized_decay);
     RegisterCreatureAI(npc_nythendra_corrupted_vermin);
+
     RegisterAuraScript(spell_nythendra_volatile_rot);
+    RegisterAuraScript(spell_nythendra_rot);
     RegisterSpellScript(spell_nythendra_volatile_rot_dmg);
     RegisterSpellScript(spell_nythendra_infested_ground_rot);
     RegisterAuraScript(spell_nythendra_heart_of_the_swarm);
-    RegisterSpellScript(spell_nythendra_rot);
+    RegisterSpellScript(spell_nythendra_rot_SpellScript);
+
     RegisterSpellScript(spell_nythendra_infested);
     RegisterAuraScript(spell_nythendra_infested_mind);
     RegisterSpellScript(spell_en_befoulment);
