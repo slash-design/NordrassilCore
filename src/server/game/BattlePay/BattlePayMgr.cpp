@@ -169,6 +169,9 @@ void BattlepayManager::ProcessDelivery(Purchase* purchase)
 			for (auto const& itr : product.Items)
 				player->AddBattlePetByCreatureId(itr.ItemID, true, true);
 		break;
+	case Battlepay::Mount:
+		player->GetCollectionMgr()->AddMount(product.SpellID, MountFlags::MOUNT_FLAG_NONE);
+		break;
 	case Rename:
 		if (player)
 			sCharacterService->SetRename(player);
@@ -435,8 +438,6 @@ void BattlepayManager::ProcessDelivery(Purchase* purchase)
 		//    break;
 		//case CategoryPremade:
 		//    break;
-		//case ItemMount:
-		//    break;
 		//case CategoryCharacterManagement:
 		//    break;
 		//case CategoryRealmTransfer:
@@ -546,7 +547,7 @@ auto BattlepayManager::ProductFilter(Product product) -> bool
 			//    break;
 			//case CategoryPremade:
 			//    break;
-		case ItemMount:
+		case Mount:
 			//    break;
 			//case CategoryCharacterManagement:
 			//    break;
@@ -695,8 +696,8 @@ void BattlepayManager::SendProductList()
 		pProduct.UnkInt1 = 0;
 		pProduct.DisplayId = 0;
 		pProduct.ItemId = 0;
-		pProduct.UnkInt4 = 0;
-		pProduct.UnkInt5 = 0;
+		//pProduct.UnkInt4 = 0;
+		//pProduct.UnkInt5 = 0;
 		pProduct.UnkString = "";
 		pProduct.UnkBit = false;
 
@@ -989,8 +990,8 @@ void BattlepayManager::SendBattlePayDistribution(uint32 productId, uint8 status,
 	productData.UnkInt1 = 0;
 	productData.DisplayId = product.DisplayInfoID;
 	productData.ItemId = 0;
-	productData.UnkInt4 = 0;
-	productData.UnkInt5 = 0;
+	productData.SpellID = product.SpellID;
+	productData.CreatureID = product.CreatureID;
 	productData.UnkString = "";
 	productData.Type = 0;
 	productData.UnkBit = false;

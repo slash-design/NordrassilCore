@@ -299,7 +299,7 @@ namespace Battlepay
         PackItems = 18,
         CategoryProfession = 19,
         CategoryPremade = 20,
-        ItemMount = 21,
+        Mount = 21,
         Customization = 22,
         CategoryCharacterManagement = 23,
         CategoryRealmTransfer = 24,
@@ -434,6 +434,8 @@ namespace Battlepay
         uint32 ProductID;
         uint32 Flags;
         uint32 DisplayInfoID;
+        uint32 SpellID;
+        uint32 CreatureID;
         uint32 ClassMask;
         std::string ScriptName;
         uint8 WebsiteType;

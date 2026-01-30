@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
- * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -139,7 +138,7 @@ void BattlePayDataStoreMgr::LoadProduct()
     TC_LOG_INFO("server.loading", "Loading Battlepay products ...");
     _products.clear();
 
-	auto result = WorldDatabase.PQuery("SELECT ProductID, NormalPriceFixedPoint, CurrentPriceFixedPoint, Type, WebsiteType, ChoiceType, Flags, DisplayInfoID, ClassMask, ScriptName FROM battlepay_product");
+	auto result = WorldDatabase.PQuery("SELECT ProductID, NormalPriceFixedPoint, CurrentPriceFixedPoint, Type, WebsiteType, ChoiceType, Flags, DisplayInfoID, SpellID, CreatureID, ClassMask, ScriptName FROM battlepay_product");
 	if (!result)
 		return;
 
@@ -164,8 +163,10 @@ void BattlePayDataStoreMgr::LoadProduct()
 		product.ChoiceType = fields[5].GetUInt8();
 		product.Flags = fields[6].GetUInt32();
 		product.DisplayInfoID = fields[7].GetUInt32();
-		product.ClassMask = fields[8].GetUInt32();
-		product.ScriptName = fields[9].GetString();
+		product.SpellID = fields[8].GetUInt32();
+		product.CreatureID = fields[9].GetUInt32();
+		product.ClassMask = fields[10].GetUInt32();
+		product.ScriptName = fields[11].GetString();
 
 		_products.insert(std::make_pair(product.ProductID, product));
 	} while (result->NextRow());

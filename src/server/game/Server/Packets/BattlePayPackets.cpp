@@ -1,19 +1,19 @@
 /*
-* Copyright (C) 2008-2015 TrinityCore <http://www.trinitycore.org/>
-*
-* This program is free software; you can redistribute it and/or modify it
-* under the terms of the GNU General Public License as published by the
-* Free Software Foundation; either version 2 of the License, or (at your
-* option) any later version.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT
-* ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-* FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
-* more details.
-*
-* You should have received a copy of the GNU General Public License along
-* with this program. If not, see <http://www.gnu.org/licenses/>.
-*/
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include "BattlePayPackets.h"
 
@@ -79,8 +79,8 @@ ByteBuffer& operator<<(ByteBuffer& data, WorldPackets::BattlePay::BattlePayProdu
 	data << product.UnkInt1;
 	data << product.DisplayId;
 	data << product.ItemId;
-	data << product.UnkInt4;
-	data << product.UnkInt5;
+	data << product.SpellID;
+	data << product.CreatureID;
 
     data.WriteBits(product.UnkString.size(), 8);
     data.WriteBit(product.UnkBit);
