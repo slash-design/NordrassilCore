@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
- * Copyright (C) 2006-2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -2810,38 +2809,48 @@ public:
     }
 };
 
-//146999
+// 146999
 class spell_growing_power : public SpellScriptLoader
 {
 public:
-    spell_growing_power() : SpellScriptLoader("spell_growing_power") { }
+    spell_growing_power() : SpellScriptLoader("spell_growing_power") {}
 
     class spell_growing_power_AuraScript : public AuraScript
     {
         PrepareAuraScript(spell_growing_power_AuraScript);
 
-        void OnTick(AuraEffect const* aurEff)
-        {
-            if (GetCaster() && GetCaster()->ToCreature())
-            {
-                if (GetCaster()->GetPower(POWER_ENERGY) <= 99)
-                    GetCaster()->SetPower(POWER_ENERGY, GetCaster()->GetPower(POWER_ENERGY) + 1);
+        uint32 tickTimer = 1000; // 1s
 
-                if (GetCaster()->GetPower(POWER_ENERGY) == 100 && !GetCaster()->HasAura(SPELL_UNSTABLE_IRON_STAR_STUN))
+        void OnUpdate(uint32 diff, AuraEffect* /*aurEff*/)
+        {
+            if (tickTimer <= diff)
+            {
+                tickTimer = 1000;
+
+                Creature* caster = GetCaster() ? GetCaster()->ToCreature() : nullptr;
+                if (!caster)
+                    return;
+
+                if (caster->GetPower(POWER_ENERGY) <= 99)
+                    caster->SetPower(POWER_ENERGY, caster->GetPower(POWER_ENERGY) + 1);
+
+                if (caster->GetPower(POWER_ENERGY) == 100 && !caster->HasAura(SPELL_UNSTABLE_IRON_STAR_STUN))
                 {
-                    GetCaster()->SetPower(POWER_ENERGY, 0);
-                    GetCaster()->ToCreature()->AI()->DoAction(ACTION_MANIFEST_RAGE);
+                    caster->SetPower(POWER_ENERGY, 0);
+                    caster->AI()->DoAction(ACTION_MANIFEST_RAGE);
                 }
             }
+            else
+                tickTimer -= diff;
         }
 
-        void Register()
+        void Register() override
         {
-            OnEffectPeriodic += AuraEffectPeriodicFn(spell_growing_power_AuraScript::OnTick, EFFECT_0, SPELL_AURA_PERIODIC_DUMMY);
+            OnEffectUpdate += AuraEffectUpdateFn(spell_growing_power_AuraScript::OnUpdate, EFFECT_0, SPELL_AURA_MOD_POWER_REGEN);
         }
     };
 
-    AuraScript* GetAuraScript() const
+    AuraScript* GetAuraScript() const override
     {
         return new spell_growing_power_AuraScript();
     }
