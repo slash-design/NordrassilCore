@@ -1,6 +1,19 @@
 /*
-    https://uwow.biz/
-*/
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include "AreaTriggerAI.h"
 #include "tomb_of_sargeras.h"
@@ -1211,7 +1224,7 @@ class spell_sistersmoon_embrace_eclipse : public AuraScript
 
     float damage = 0;
 
-    void CalculateAmount(AuraEffect const* /*aurEff*/, float & amount, bool& /*canBeRecalculated*/)
+    void CalculateAmount(AuraEffect const* /*aurEff*/, float& amount, bool& /*canBeRecalculated*/)
     {
         damage = amount;
     }
@@ -1237,12 +1250,9 @@ class spell_sistersmoon_embrace_eclipse : public AuraScript
 
     void Register() override
     {
-        DoEffectCalcAmount += AuraEffectCalcAmountFn(spell_sistersmoon_embrace_eclipse::CalculateAmount, EFFECT_0, SPELL_AURA_SCHOOL_HEAL_ABSORB);
-        DoEffectCalcAmount += AuraEffectCalcAmountFn(spell_sistersmoon_embrace_eclipse::CalculateAmount, EFFECT_0, SPELL_AURA_SCHOOL_ABSORB);
-        OnEffectRemove += AuraEffectRemoveFn(spell_sistersmoon_embrace_eclipse::OnRemove, EFFECT_0, SPELL_AURA_SCHOOL_HEAL_ABSORB, AURA_EFFECT_HANDLE_REAL);
-        OnEffectRemove += AuraEffectRemoveFn(spell_sistersmoon_embrace_eclipse::OnRemove, EFFECT_0, SPELL_AURA_SCHOOL_ABSORB, AURA_EFFECT_HANDLE_REAL);
-        OnEffectAbsorb += AuraEffectAbsorbFn(spell_sistersmoon_embrace_eclipse::Absorb, EFFECT_0, SPELL_AURA_SCHOOL_HEAL_ABSORB);
-        OnEffectAbsorb += AuraEffectAbsorbFn(spell_sistersmoon_embrace_eclipse::Absorb, EFFECT_0, SPELL_AURA_SCHOOL_ABSORB);
+        DoEffectCalcAmount += AuraEffectCalcAmountFn(spell_sistersmoon_embrace_eclipse::CalculateAmount, EFFECT_0, SPELL_AURA_ANY);
+        OnEffectRemove += AuraEffectRemoveFn(spell_sistersmoon_embrace_eclipse::OnRemove, EFFECT_0, SPELL_AURA_ANY, AURA_EFFECT_HANDLE_REAL);
+        OnEffectAbsorb += AuraEffectAbsorbFn(spell_sistersmoon_embrace_eclipse::Absorb, EFFECT_0, SPELL_AURA_ANY);
     }
 };
 
