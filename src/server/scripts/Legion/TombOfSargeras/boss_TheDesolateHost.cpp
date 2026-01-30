@@ -1,6 +1,19 @@
 /*
-https://uwow.biz/
-*/
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include "AreaTriggerAI.h"
 #include "tomb_of_sargeras.h"
@@ -1837,14 +1850,14 @@ class spell_tos_shattering_scream : public AuraScript
     }
 };
 
-//235113, 235620, 235732, 235734
-class spell_tos_spiritual_barrier_dissonance : public AuraScript
+// 235113, 235620
+class spell_tos_spiritual_barrier_dissonance_visual_aura : public AuraScript
 {
-    PrepareAuraScript(spell_tos_spiritual_barrier_dissonance);
+    PrepareAuraScript(spell_tos_spiritual_barrier_dissonance_visual_aura);
 
     uint32 tickTimer = 3000;
 
-    void OnApply(AuraEffect const* aurEff, AuraEffectHandleModes /*mode*/)
+    void OnApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
     {
         if (GetTarget())
         {
@@ -1866,27 +1879,28 @@ class spell_tos_spiritual_barrier_dissonance : public AuraScript
                         {
                             switch (creature->GetEntry())
                             {
-                                //Real Realm
-                                case NPC_ENGINE_OF_SOULS:
-                                case NPC_REANIMATED_TEMPLAR:
-                                case NPC_GHASTLY_BONEWARDEN:
-                                case NPC_TORMENTED_CRIES_TRIG:
-                                case NPC_FALLEN_PRIESTESS_MIRROR:
-                                case NPC_SOUL_RESIDUE_MIRROR:
-                                    if (isSpiritRealm)
-                                        creature->getThreatManager().modifyThreatPercent(GetTarget(), -100);
-                                    break;
-                                //Spirit Realm
-                                case NPC_SOUL_QUEEN_DEJAHNA:
-                                case NPC_FALLEN_PRIESTESS:
-                                case NPC_SOUL_RESIDUE:
-                                case NPC_REANIMATED_TEMPLAR_MIRROR:
-                                case NPC_GHASTLY_BONEWARDEN_MIRROR:
-                                    if (!isSpiritRealm)
-                                        creature->getThreatManager().modifyThreatPercent(GetTarget(), -100);
-                                    break;
-                                default:
-                                    break;
+                                // Real Realm
+                            case NPC_ENGINE_OF_SOULS:
+                            case NPC_REANIMATED_TEMPLAR:
+                            case NPC_GHASTLY_BONEWARDEN:
+                            case NPC_TORMENTED_CRIES_TRIG:
+                            case NPC_FALLEN_PRIESTESS_MIRROR:
+                            case NPC_SOUL_RESIDUE_MIRROR:
+                                if (isSpiritRealm)
+                                    creature->getThreatManager().modifyThreatPercent(GetTarget(), -100);
+                                break;
+
+                                // Spirit Realm
+                            case NPC_SOUL_QUEEN_DEJAHNA:
+                            case NPC_FALLEN_PRIESTESS:
+                            case NPC_SOUL_RESIDUE:
+                            case NPC_REANIMATED_TEMPLAR_MIRROR:
+                            case NPC_GHASTLY_BONEWARDEN_MIRROR:
+                                if (!isSpiritRealm)
+                                    creature->getThreatManager().modifyThreatPercent(GetTarget(), -100);
+                                break;
+                            default:
+                                break;
                             }
                         }
 
@@ -1896,7 +1910,7 @@ class spell_tos_spiritual_barrier_dissonance : public AuraScript
         }
     }
 
-    void OnRemove(AuraEffect const* aurEff, AuraEffectHandleModes /*mode*/)
+    void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
     {
         if (GetTarget())
         {
@@ -1907,7 +1921,7 @@ class spell_tos_spiritual_barrier_dissonance : public AuraScript
         }
     }
 
-    void OnUpdate(uint32 diff, AuraEffect* auraEffect)
+    void OnUpdate(uint32 diff, AuraEffect* /*auraEffect*/)
     {
         if (tickTimer)
         {
@@ -1936,14 +1950,115 @@ class spell_tos_spiritual_barrier_dissonance : public AuraScript
 
     void Register() override
     {
-        OnEffectApply += AuraEffectRemoveFn(spell_tos_spiritual_barrier_dissonance::OnApply, EFFECT_0, SPELL_AURA_PHASE, AURA_EFFECT_HANDLE_REAL);
-        OnEffectApply += AuraEffectRemoveFn(spell_tos_spiritual_barrier_dissonance::OnApply, EFFECT_1, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
-        OnEffectApply += AuraEffectRemoveFn(spell_tos_spiritual_barrier_dissonance::OnApply, EFFECT_1, SPELL_AURA_PERIODIC_DUMMY, AURA_EFFECT_HANDLE_REAL);
-        OnEffectRemove += AuraEffectRemoveFn(spell_tos_spiritual_barrier_dissonance::OnRemove, EFFECT_0, SPELL_AURA_PHASE, AURA_EFFECT_HANDLE_REAL);
-        OnEffectRemove += AuraEffectRemoveFn(spell_tos_spiritual_barrier_dissonance::OnRemove, EFFECT_1, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
-        OnEffectRemove += AuraEffectRemoveFn(spell_tos_spiritual_barrier_dissonance::OnRemove, EFFECT_1, SPELL_AURA_PERIODIC_DUMMY, AURA_EFFECT_HANDLE_REAL);
-        OnEffectUpdate += AuraEffectUpdateFn(spell_tos_spiritual_barrier_dissonance::OnUpdate, EFFECT_0, SPELL_AURA_PHASE);
-        OnEffectUpdate += AuraEffectUpdateFn(spell_tos_spiritual_barrier_dissonance::OnUpdate, EFFECT_1, SPELL_AURA_PERIODIC_DUMMY);
+        OnEffectApply += AuraEffectRemoveFn(spell_tos_spiritual_barrier_dissonance_visual_aura::OnApply, EFFECT_1, SPELL_AURA_ANY, AURA_EFFECT_HANDLE_REAL);
+        OnEffectRemove += AuraEffectRemoveFn(spell_tos_spiritual_barrier_dissonance_visual_aura::OnRemove, EFFECT_1, SPELL_AURA_ANY, AURA_EFFECT_HANDLE_REAL);
+        OnEffectUpdate += AuraEffectUpdateFn(spell_tos_spiritual_barrier_dissonance_visual_aura::OnUpdate, EFFECT_1, SPELL_AURA_ANY);
+    }
+};
+
+// 235732, 235734
+class spell_tos_spiritual_barrier_dissonance_phase_aura : public AuraScript
+{
+    PrepareAuraScript(spell_tos_spiritual_barrier_dissonance_phase_aura);
+
+    uint32 tickTimer = 3000;
+
+    void OnApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+    {
+        if (GetTarget())
+        {
+            GetTarget()->SetFlag(OBJECT_FIELD_DYNAMIC_FLAGS, UNIT_DYNFLAG_NOT_SELECTABLE_MODEL);
+
+            if (GetTarget()->IsPlayer())
+            {
+                GetTarget()->ToPlayer()->UpdateCustomField();
+
+                bool isSpiritRealm = GetId() == SPELL_SPIRITUAL_BARRIER_SPIRIT_REALM;
+
+                HostileRefManager& refManager = GetTarget()->getHostileRefManager();
+                HostileReference* ref = refManager.getFirst();
+
+                while (ref)
+                {
+                    if (auto unit = ref->getSource()->getOwner())
+                        if (auto creature = unit->ToCreature())
+                        {
+                            switch (creature->GetEntry())
+                            {
+                                // Real Realm
+                            case NPC_ENGINE_OF_SOULS:
+                            case NPC_REANIMATED_TEMPLAR:
+                            case NPC_GHASTLY_BONEWARDEN:
+                            case NPC_TORMENTED_CRIES_TRIG:
+                            case NPC_FALLEN_PRIESTESS_MIRROR:
+                            case NPC_SOUL_RESIDUE_MIRROR:
+                                if (isSpiritRealm)
+                                    creature->getThreatManager().modifyThreatPercent(GetTarget(), -100);
+                                break;
+
+                                // Spirit Realm
+                            case NPC_SOUL_QUEEN_DEJAHNA:
+                            case NPC_FALLEN_PRIESTESS:
+                            case NPC_SOUL_RESIDUE:
+                            case NPC_REANIMATED_TEMPLAR_MIRROR:
+                            case NPC_GHASTLY_BONEWARDEN_MIRROR:
+                                if (!isSpiritRealm)
+                                    creature->getThreatManager().modifyThreatPercent(GetTarget(), -100);
+                                break;
+                            default:
+                                break;
+                            }
+                        }
+
+                    ref = ref->next();
+                }
+            }
+        }
+    }
+
+    void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+    {
+        if (GetTarget())
+        {
+            GetTarget()->RemoveFlag(OBJECT_FIELD_DYNAMIC_FLAGS, UNIT_DYNFLAG_NOT_SELECTABLE_MODEL);
+
+            if (GetTarget()->IsPlayer())
+                GetTarget()->ToPlayer()->UpdateCustomField();
+        }
+    }
+
+    void OnUpdate(uint32 diff, AuraEffect* /*auraEffect*/)
+    {
+        if (tickTimer)
+        {
+            if (tickTimer <= diff)
+            {
+                tickTimer = 3000;
+
+                if (GetUnitOwner() && GetUnitOwner()->GetMap()->IsHeroicPlusRaid() && GetUnitOwner()->IsAlive())
+                {
+                    if (auto instance = GetUnitOwner()->GetInstanceScript())
+                        if (instance->GetBossState(DATA_THE_DESOLATE_HOST) != IN_PROGRESS)
+                            return;
+
+                    if (GetId() == SPELL_SPIRITUAL_BARRIER_VIS_REAL || GetId() == SPELL_SPIRITUAL_BARRIER_REAL_REALM)
+                        GetUnitOwner()->CastSpell(GetUnitOwner(), SPELL_DISSONANCE_REAL_FILTER, true);
+                    else if (GetId() == SPELL_SPIRITUAL_BARRIER_VIS_SPIRIT || GetId() == SPELL_SPIRITUAL_BARRIER_SPIRIT_REALM)
+                        GetUnitOwner()->CastSpell(GetUnitOwner(), SPELL_DISSONANCE_SPIRIT_FILTER, true);
+                }
+                else
+                    tickTimer = 0;
+            }
+            else
+                tickTimer -= diff;
+        }
+    }
+
+    void Register() override
+    {
+        OnEffectApply += AuraEffectRemoveFn(spell_tos_spiritual_barrier_dissonance_phase_aura::OnApply, EFFECT_0, SPELL_AURA_PHASE, AURA_EFFECT_HANDLE_REAL);
+        OnEffectRemove += AuraEffectRemoveFn(spell_tos_spiritual_barrier_dissonance_phase_aura::OnRemove, EFFECT_0, SPELL_AURA_PHASE, AURA_EFFECT_HANDLE_REAL);
+        OnEffectUpdate += AuraEffectUpdateFn(spell_tos_spiritual_barrier_dissonance_phase_aura::OnUpdate, EFFECT_0, SPELL_AURA_PHASE);
     }
 };
 
@@ -2063,6 +2178,7 @@ void AddSC_boss_the_desolate_host()
     RegisterSpellScript(spell_tos_tormented_cries_filter);
     RegisterAuraScript(spell_tos_soulbind);
     RegisterAuraScript(spell_tos_shattering_scream);
-    RegisterAuraScript(spell_tos_spiritual_barrier_dissonance);
+    RegisterAuraScript(spell_tos_spiritual_barrier_dissonance_visual_aura);
+    RegisterAuraScript(spell_tos_spiritual_barrier_dissonance_phase_aura);
     RegisterAreaTriggerAI(at_tos_spirit_presence);
 }
