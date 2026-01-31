@@ -13329,7 +13329,7 @@ bool Player::AddDonateTokenCount(uint32 count)
         return true;
     }
 
-    TC_LOG_ERROR("misc", "AddDonateTokenCount called for player {} without session", GetGUID().ToString());
+    TC_LOG_ERROR("misc", "AddDonateTokenCount called for player %s without session", GetGUID().ToString().c_str());
     return false;
 }
 
