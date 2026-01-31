@@ -1,0 +1,3 @@
+DELETE FROM `trinity_string` WHERE `entry`=12101;
+INSERT INTO `trinity_string` (`entry`, `content_default`, `content_loc3`) VALUES
+(12101, '|cff3DAEFF[Time is Money]|cffFFD800 You receive |cffFF0000%u|cffFFD800 Euro credit for reaching |cffFF0000%u|cffFFD800 minute(s) of playtime.|cffFFD800', '|cff3DAEFF[Zeit ist Geld]|cffFFD800 Du bekommst |cffFF0000%u|cffFFD800 Euro Guthaben, aufgrund |cffFF0000%u|cffFFD800 Minute(n) erreichter Spielzeit.|cffFFD800');

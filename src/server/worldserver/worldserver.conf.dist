@@ -1,5 +1,5 @@
 ################################################
-# Trinity Core World Server configuration file #
+# Destiny Core World Server configuration file #
 ################################################
 [worldserver]
 
@@ -31,6 +31,7 @@
 #	 LOGGING SYSTEM SETTINGS
 #	 ARCHAEOLOGY SETTINGS
 #	 BATTLEPAY
+#	 TIME IS MONEY
 #
 ###################################################################################################
 
@@ -3378,6 +3379,20 @@ Bpay.Enabled = 1
 #					NZD = 30
 
 BattlePay.Currency = 1
+
+#
+###################################################################################################
+
+###################################################################################################
+# TIME IS MONEY
+#
+#         Description: Gives coins and money for players who is online after every X minutes.
+#
+#     Default:  TimeIsMoney.Interval 	= 3600000 (1 hour) [0 - disabled]
+#               TimeIsMoney.Credit    	= 1 (1 Credit)
+
+TimeIsMoney.Interval = 3600000
+TimeIsMoney.Credit   = 1
 
 #
 ###################################################################################################

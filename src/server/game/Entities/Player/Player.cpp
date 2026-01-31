@@ -50,6 +50,7 @@
 #include "CombatPackets.h"
 #include "Common.h"
 #include "ConditionMgr.h"
+#include "Config.h"
 #include "CreatureAI.h"
 #include "DB2Stores.h"
 #include "DatabaseEnv.h"
@@ -280,6 +281,11 @@ m_achievementMgr(sf::safe_ptr<AchievementMgr<Player>>(this))
         m_bgBattlegroundQueueID[j].invitedToInstance = 0;
         m_bgBattlegroundQueueID[j].joinTime = 0;
     }
+
+	// Time is Money
+    ptr_IntervalDefault = sConfigMgr->GetIntDefault("TimeIsMoney.Interval", 0);
+    ptr_Interval = ptr_IntervalDefault;
+    ptr_Credit = sConfigMgr->GetIntDefault("TimeIsMoney.Credit", 0);
 
     m_createdtime = GameTime::GetGameTime();
     m_logintime = GameTime::GetGameTime();
@@ -1516,6 +1522,27 @@ void Player::Update(uint32 p_time)
         if (Unit* charmer = GetCharmer())
             if (charmer->IsCreature() && charmer->IsAlive())
                 UpdateCharmedAI();
+
+    if (ptr_Interval > 0)
+    {
+        if (ptr_Interval <= p_time)
+        {
+            if (!isAFK())
+            {
+                uint32 credit = ptr_Credit;
+                uint32 minutes = ptr_IntervalDefault / 60000;
+
+                ChatHandler(GetSession()).PSendSysMessage(LANG_BATTLE_PAY_TIME_IS_MONEY, credit, minutes);
+
+                AddDonateTokenCount(ptr_Credit);
+                ptr_Interval = ptr_IntervalDefault;
+            }
+        }
+        else
+        {
+            ptr_Interval -= p_time;
+        }
+    }
 
     if (!m_timedquests.empty())
     {
@@ -13286,37 +13313,24 @@ bool Player::DestroyDonateTokenCount(uint32 count)
 
 bool Player::AddDonateTokenCount(uint32 count)
 {
-    // locale copy of balans
-    
-    if (!GetCanUseDonate()) // if this there, then will cancel next buying by all steps
-    {
-        ChatHandler chH = ChatHandler(this);
-        chH.PSendSysMessage(20079);
+    if (count == 0)
         return false;
-    }
-   
-	ModifyCanUseDonate(false);
 
-    LoginDatabaseTransaction trans = LoginDatabase.BeginTransaction();
-    
-    LoginDatabasePreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_UPD_ADD_DONATE_TOKEN);
-    stmt->setUInt32(0, count);
-    stmt->setUInt32(1, GetSession()->GetBattlenetAccountId());
-    trans->Append(stmt);
-    
-    //uint32 guid = GetGUIDLow();
-    //LoginDatabase.CommitTransaction(trans, [guid, count]() -> void
-    //{
-    //    if (Player* target = sObjectMgr->GetPlayerByLowGUID(guid))
-    //    {
-    //        target->ModifyCanUseDonate(true); // succes, return this
-    //        ChatHandler chH = ChatHandler(target);
-    //        chH.PSendSysMessage(20063, count);
-    //    }
-    //    
-    //}); 
-    
-    return true;
+    if (WorldSession* session = GetSession())
+    {
+        // UPDATE battlenet_accounts SET balans = balans + ? WHERE id = ?;
+        LoginDatabasePreparedStatement* stmt =
+            LoginDatabase.GetPreparedStatement(LOGIN_UPD_ADD_DONATE_TOKEN);
+
+        stmt->setUInt32(0, count);                           // +count
+        stmt->setUInt32(1, session->GetBattlenetAccountId()); // WHERE id = ?
+
+        LoginDatabase.Execute(stmt);
+        return true;
+    }
+
+    TC_LOG_ERROR("misc", "AddDonateTokenCount called for player {} without session", GetGUID().ToString());
+    return false;
 }
 
 void Player::UpdateDonateStatistics(int32 entry) const
@@ -32197,7 +32211,7 @@ void Player::UpdateUnderwaterState(Map* m, float x, float y, float z)
         // only meaningful if we're in/under water at the unit position
         if (res & (LIQUID_MAP_IN_WATER | LIQUID_MAP_UNDER_WATER))
         {
-            // Tune factor (0.7f–0.9f).
+            // Tune factor (0.7fâ€“0.9f).
             float headZ = z + (GetCollisionHeight() * 0.9f);
             headUnder = liquid_status.level > headZ;
         }
