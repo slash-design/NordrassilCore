@@ -311,7 +311,7 @@ pEffect SpellEffects[TOTAL_SPELL_EFFECTS] =
     &Spell::EffectGrantBattlePetLevel,                      //225 SPELL_EFFECT_GRANT_BATTLEPET_LEVEL
     &Spell::EffectPlayerMoveWaypoints,                      //226 SPELL_EFFECT_PLAYER_MOVE_WAYPOINTS
     &Spell::EffectTeleportUnits,                            //227 SPELL_EFFECT_TELEPORT
-    &Spell::EffectNULL,                                     //228 SPELL_EFFECT_228
+    &Spell::EffectRecruitFriendSummon,                      //228 SPELL_EFFECT_RECRUIT_FRIEND_SUMMON
     &Spell::EffectNULL,                                     //229 SPELL_EFFECT_SET_FOLLOWER_QUALITY
     &Spell::EffectNULL,                                     //230 SPELL_EFFECT_230
     &Spell::EffectIncreaseFollowerExperience,               //231 SPELL_EFFECT_INCREASE_FOLLOWER_EXPERIENCE
@@ -8337,6 +8337,9 @@ void Spell::EffectSummonRaFFriend(SpellEffIndex effIndex)
     if (!m_caster->IsPlayer() || !unitTarget || !unitTarget->IsPlayer())
         return;
 
+    if (unitTarget->ToPlayer()->GetGroup()->GetGUID() != m_caster->ToPlayer()->GetGroup()->GetGUID())
+        return;
+
     m_caster->CastSpell(unitTarget, m_spellInfo->GetEffect(effIndex, m_diffMode)->TriggerSpell, true);
 }
 
@@ -9870,4 +9873,28 @@ void Spell::EffectModReputation(SpellEffIndex effIndex)
 
     if (auto player = m_caster->ToPlayer())
         player->GetReputationMgr().ModifyReputation(sFactionStore.LookupEntry(effect->MiscValue), effect->BasePoints);
+}
+
+
+void Spell::EffectRecruitFriendSummon(SpellEffIndex /*effIndex*/)
+{
+    // workaround - this effect should not use target map
+    if (effectHandleMode != SPELL_EFFECT_HANDLE_HIT_TARGET)
+        return;
+
+    if (!unitTarget || !unitTarget->IsPlayer())
+        return;
+
+    float x, y, z;
+    m_caster->GetPosition(x, y, z);
+
+    unitTarget->ToPlayer()->SetSummonPoint(m_caster->GetMapId(), x, y, z);
+
+    WorldPackets::Misc::SummonRequest rf;
+    rf.SummonerGUID = m_caster->GetGUID();
+    rf.SummonerVirtualRealmAddress = GetVirtualRealmAddress();
+    rf.AreaID = m_caster->GetCurrentZoneID();
+    rf.SkipStartingArea = true; //@TODO
+    rf.Reason = WorldPackets::Misc::SummonRequest::SummonReason::SPELL;
+    unitTarget->ToPlayer()->SendDirectMessage(rf.Write());
 }

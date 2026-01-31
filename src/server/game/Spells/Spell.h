@@ -351,6 +351,7 @@ class Spell
         void EffectObliterateItem(SpellEffIndex effIndex);
         void EffectBecomeUntargetable(SpellEffIndex effIndex);
         void EffectModReputation(SpellEffIndex effIndex);
+        void EffectRecruitFriendSummon(SpellEffIndex effIndex);
 
         Spell(Unit* caster, SpellInfo const* info, TriggerCastData& triggerData);
         ~Spell();
