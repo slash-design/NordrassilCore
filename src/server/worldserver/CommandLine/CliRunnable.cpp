@@ -1,5 +1,5 @@
 /*
- * This file is part of the TrinityCore Project. See AUTHORS file for Copyright information
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -15,16 +15,11 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/// \addtogroup Trinityd
-/// @{
-/// \file
-
 #include "Common.h"
 #include "ObjectMgr.h"
 #include "World.h"
 #include "WorldSession.h"
 #include "Configuration/Config.h"
-
 #include "AccountMgr.h"
 #include "Chat.h"
 #include "CliRunnable.h"
@@ -107,7 +102,7 @@ void utf8print(void* /*arg*/, const char* str)
 
 void commandFinished(void*, bool /*success*/)
 {
-    printf("TC> ");
+    printf("DC> ");
     fflush(stdout);
 }
 
@@ -141,7 +136,7 @@ void CliThread()
 
     // print this here the first time
     // later it will be printed after command queue updates
-    printf("TC>");
+    printf("DC>");
 
     ///- As long as the World is running (no World::m_stopEvent), get the command line and handle it
     while (!World::IsStopped())
@@ -154,7 +149,7 @@ void CliThread()
         char commandbuf[256];
         command_str = fgets(commandbuf, sizeof(commandbuf), stdin);
 #else
-        command_str = readline("TC>");
+        command_str = readline("DC>");
         rl_bind_key('\t', rl_complete);
 #endif
 
@@ -170,7 +165,7 @@ void CliThread()
             if (!*command_str)
             {
 #if TRINITY_PLATFORM == TRINITY_PLATFORM_WINDOWS
-                printf("TC>");
+                printf("DC>");
 #else
                 free(command_str);
 #endif
@@ -181,7 +176,7 @@ void CliThread()
             if (!consoleToUtf8(command_str, command))         // convert from console encoding to utf8
             {
 #if TRINITY_PLATFORM == TRINITY_PLATFORM_WINDOWS
-                printf("TC>");
+                printf("DC>");
 #else
                 free(command_str);
 #endif
