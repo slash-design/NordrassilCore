@@ -995,6 +995,7 @@ enum TrinityStrings
     LANG_AUTO_BROADCAST                 = 11000,
     LANG_INVALID_REALMID                = 11001,
     LANG_NPC_LIST_CHAT                  = 11002,
+    LANG_COMMAND_RELOAD_MAIL_SERVER     = 11003,
 
     LANG_ARENA_CLOSESEASON_START        = 12000,
     LANG_ARENA_CLOSESEASON_BEG_1_TYPE   = 12001,

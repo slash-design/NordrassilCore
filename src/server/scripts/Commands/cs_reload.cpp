@@ -118,6 +118,7 @@ public:
             { "locales_quest",                SEC_ADMINISTRATOR, true,  &HandleReloadLocalesQuestCommand,               ""},
             { "mail_level_reward",            SEC_ADMINISTRATOR, true,  &HandleReloadMailLevelRewardCommand,            ""},
             { "mail_loot_template",           SEC_ADMINISTRATOR, true,  &HandleReloadLootTemplatesMailCommand,          ""},
+            { "mail_server_template",         SEC_ADMINISTRATOR, true,  &HandleReloadMailServerTemplateCommand,         ""},
             { "milling_loot_template",        SEC_ADMINISTRATOR, true,  &HandleReloadLootTemplatesMillingCommand,       ""},
             { "npc_spellclick_spells",        SEC_ADMINISTRATOR, true,  &HandleReloadSpellClickSpellsCommand,           ""},
             { "npc_trainer",                  SEC_ADMINISTRATOR, true,  &HandleReloadNpcTrainerCommand,                 ""},
@@ -692,6 +693,14 @@ public:
         LootTemplates_Mail.CheckLootRefs();
         handler->SendGlobalGMSysMessage("DB table `mail_loot_template` reloaded.");
         sConditionMgr->LoadConditions(true);
+        return true;
+    }
+
+    static bool HandleReloadMailServerTemplateCommand(ChatHandler* handler, char const* /*args*/)
+    {
+        TC_LOG_INFO("server.loading", "Re-Loading `server_mail_template` table");
+        sObjectMgr->LoadMailServerTemplates();
+        handler->SendGlobalGMSysMessage("DB table `server_mail_template` reloaded.");
         return true;
     }
 

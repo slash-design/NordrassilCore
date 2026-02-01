@@ -525,6 +525,25 @@ struct ScenarioPOI
 typedef std::vector<ScenarioPOI> ScenarioPOIVector;
 typedef std::unordered_map<uint32, ScenarioPOIVector> ScenarioPOIContainer;
 
+struct ServerMail
+{
+    ServerMail() = default;
+    uint32 id{};
+    uint8 reqLevel{};
+    uint32 reqPlayTime{};
+    uint32 moneyA{};
+    uint32 moneyH{};
+    uint32 itemA{};
+    uint32 itemCountA{};
+    uint32 itemH{};
+    uint32 itemCountH{};
+    std::string subject;
+    std::string body;
+    uint8 active{};
+};
+
+typedef std::unordered_map<uint32, ServerMail> ServerMailContainer;
+
 struct GraveYardData
 {
     uint32 safeLocId;
@@ -757,6 +776,7 @@ class ObjectMgr
         void LoadInstanceTemplate();
         void LoadInstanceEncounters();
         void LoadMailLevelRewards();
+        void LoadMailServerTemplates();
         void LoadVehicleTemplateAccessories();
         void LoadPersonalLootTemplate();
         void LoadWorldRateInfo();
@@ -840,6 +860,10 @@ class ObjectMgr
 
         std::vector<TempSummonData> const* GetSummonGroup(uint32 summonerId, SummonerType summonerType, uint8 group) const;
 
+        ServerMailContainer const& GetAllServerMailStore() const
+        {
+            return _serverMailStore;
+        }
 
         CreatureData const* GetCreatureData(ObjectGuid::LowType const& guid) const
         {
@@ -993,6 +1017,8 @@ class ObjectMgr
         uint8 GetCountFromSpawn(uint8 spawnmode, uint32 expansion);
 
         bool IsTransportMap(uint32 mapId) const { return _transportMaps.count(mapId) != 0; }
+
+        void SendServerMail(Player* player, uint32 id, uint32 reqLevel, uint32 reqPlayTime, uint32 rewardMoneyA, uint32 rewardMoneyH, uint32 rewardItemA, uint32 rewardItemCountA, uint32 rewardItemH, uint32 rewardItemCountH, std::string subject, std::string body, uint8 active) const;
 
         void LoadRaceAndClassExpansionRequirements();
         void LoadRealmNames();
@@ -1152,6 +1178,7 @@ class ObjectMgr
         TrinityStringLocaleContainer _trinityStringLocaleStore;
 
         CacheVendorItemContainer _cacheVendorItemStore;
+        ServerMailContainer _serverMailStore;
         CacheDonateVendorItemContainer _cacheDonateVendorItemStore;
         CacheTrainerSpellContainer _cacheTrainerSpellStore;
         PriceForLevelUp _priceforlevelupStore;

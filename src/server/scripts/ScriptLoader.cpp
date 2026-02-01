@@ -133,6 +133,7 @@ void AddSC_fireworks_spectacular();
 void AddSC_custom_events();
 void AddSC_scene_scripts();
 void AddSC_quest_scripts();
+void AddSC_server_mail();
 
 void AddSC_petbattle_abilities();
 void AddSC_PetBattlePlayerScript();
@@ -1444,6 +1445,7 @@ void AddWorldScripts()
     AddSC_custom_events();
     AddSC_scene_scripts();
 	AddSC_quest_scripts();
+    AddSC_server_mail();
     AddSC_petbattle_abilities();
     AddSC_PetBattlePlayerScript();
 #endif

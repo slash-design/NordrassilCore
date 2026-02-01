@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2018 TrinityCore <https://www.trinitycore.org/>
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -15,8 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _CHARACTERDATABASE_H
-#define _CHARACTERDATABASE_H
+#ifndef CHARACTERDATABASE_H
+#define CHARACTERDATABASE_H
 
 #include "MySQLConnection.h"
 
@@ -114,6 +114,8 @@ enum CharacterDatabaseStatements : uint32
     CHAR_SEL_CHARACTER_MAILCOUNT,
     CHAR_SEL_CHARACTER_MAILDATE,
     CHAR_SEL_MAIL_COUNT,
+    CHAR_SEL_MAIL_SERVER_CHARACTER,
+    CHAR_REP_MAIL_SERVER_CHARACTER,
     CHAR_SEL_CHARACTER_SOCIALLIST,
     CHAR_SEL_CHARACTER_HOMEBIND,
     CHAR_SEL_CHARACTER_SPELLCOOLDOWNS,
