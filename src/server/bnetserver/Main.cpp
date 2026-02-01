@@ -46,8 +46,8 @@ using namespace boost::program_options;
 #if TRINITY_PLATFORM == TRINITY_PLATFORM_WINDOWS
 #include "ServiceWin32.h"
 char serviceName[] = "bnetserver";
-char serviceLongName[] = "NordrassilCore bnet service";
-char serviceDescription[] = "NordrassilCore Battle.net emulator authentication service";
+char serviceLongName[] = "DestinyCore bnet service";
+char serviceDescription[] = "DestinyCore Battle.net emulator authentication service";
 /*
 * -1 - not in service mode
 *  0 - stopped
@@ -99,7 +99,7 @@ int main(int argc, char** argv)
 
     sLog->Initialize(nullptr);
 
-    Trinity::Banner::Show("bnetserver", [](char const* text)
+    Destiny::Banner::Show("bnetserver", [](char const* text)
     {
         TC_LOG_INFO("server.bnetserver", "%s", text);
     }, []()

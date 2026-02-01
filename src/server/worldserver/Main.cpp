@@ -1,22 +1,21 @@
 /*
- * Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
- * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
- *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
- */
+  * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
+  *
+  * This program is free software; you can redistribute it and/or modify it
+  * under the terms of the GNU General Public License as published by the
+  * Free Software Foundation; either version 2 of the License, or (at your
+  * option) any later version.
+  *
+  * This program is distributed in the hope that it will be useful, but WITHOUT
+  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+  * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+  * more details.
+  *
+  * You should have received a copy of the GNU General Public License along
+  * with this program. If not, see <http://www.gnu.org/licenses/>.
+  */
 
-/// \addtogroup Trinityd Trinity Daemon
+/// \addtogroup Destinyd Destiny Daemon
 /// @{
 /// \file
 
@@ -29,8 +28,6 @@
 #include <google/protobuf/stubs/common.h>
 #include <openssl/crypto.h>
 #include <openssl/opensslv.h>
-
-
 #include "DatabaseLoader.h"
 #include "AsyncAcceptor.h"
 #include "BattlegroundMgr.h"
@@ -79,8 +76,8 @@ using namespace boost::program_options;
 #ifdef _WIN32
 #include "ServiceWin32.h"
 char serviceName[] = "worldserver";
-char serviceLongName[] = "NordrassilCore world service";
-char serviceDescription[] = "NordrassilCore World of Warcraft emulator world service";
+char serviceLongName[] = "DestinCore world service";
+char serviceDescription[] = "DestinyCore World of Warcraft emulator world service";
 /*
  * -1 - not in service mode
  *  0 - stopped
@@ -160,7 +157,7 @@ extern int main(int argc, char **argv)
 
     sLog->Initialize(sConfigMgr->GetBoolDefault("Log.Async.Enable", false) ? ioContext.get() : nullptr);
 
-    Trinity::Banner::Show("worldserver-daemon", [](char const* text)
+    Destiny::Banner::Show("worldserver-daemon", [](char const* text)
     {
         TC_LOG_INFO("server.worldserver", "%s", text);
     }, []()
