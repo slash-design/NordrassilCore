@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2018 TrinityCore <https://www.trinitycore.org/>
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -15,8 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DB2Metadata_h__
-#define DB2Metadata_h__
+#ifndef DB2METADATA_H
+#define DB2METADATA_H
 
 #include "DB2Meta.h"
 
@@ -244,7 +244,7 @@ struct AreaPOIStateMeta
 {
     static DB2Meta const* Instance()
     {
-        static char const* types = "sbbih";
+        static char const* types = "sbbii";
         static uint8 const arraySizes[5] = { 1, 1, 1, 1, 1 };
         static DB2Meta instance(-1, 5, 0x673BDA80, types, arraySizes, 4);
         return &instance;

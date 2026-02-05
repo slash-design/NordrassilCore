@@ -1015,8 +1015,8 @@ void DB2Manager::LoadStores(std::string const& dataPath, uint32 defaultLocale)
     //LOAD_DB2(sAnimReplacementSetStore);
     //LOAD_DB2(sAreaFarClipOverrideStore);
     LOAD_DB2(sAreaGroupMemberStore);
-    //LOAD_DB2(sAreaPOIStore);
-    //LOAD_DB2(sAreaPOIStateStore);
+    LOAD_DB2(sAreaPOIStore);
+    LOAD_DB2(sAreaPOIStateStore);
     LOAD_DB2(sAreaTableStore);
     LOAD_DB2(sAreaTriggerStore);
     //LOAD_DB2(sAreaTriggerActionSetStore);

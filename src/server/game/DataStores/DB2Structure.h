@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 TrintiyCore <http://www.trinitycore.org/>
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -15,8 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TRINITY_DB2STRUCTURE_H
-#define TRINITY_DB2STRUCTURE_H
+#ifndef DB2STRUCTURE_H
+#define DB2STRUCTURE_H
 
 #include "Common.h"
 #include "DBCEnums.h"
@@ -301,10 +301,10 @@ struct AreaPOIEntry
     uint16      ContinentID;
     uint16      AreaID;
     uint16      WorldStateID;
+    uint16      PortLocID;
     uint8       Importance;
     uint8       Icon;
     int32       PlayerConditionID;
-    int32       PortLocID;
     int32       UiTextureAtlasMemberID;
     int32       MapFloor;
     int32       WmoGroupID;
@@ -318,6 +318,7 @@ struct AreaPOIStateEntry
     uint8       WorldStateValue;
     uint8       IconEnumValue;
     int32       UiTextureAtlasMemberID;
+    uint32      RelationshipData;
 };
 
 // FileOptions: Index, None

@@ -132,12 +132,12 @@ void HotfixDatabaseConnection::DoPrepareStatements()
 
     // AreaPOI.db2
     PrepareStatement(HOTFIX_SEL_AREA_P_O_I, "SELECT ID, Name, Description, Flags, Pos1, Pos2, Pos3, PoiDataType, PoiData, ContinentID, AreaID, "
-        "WorldStateID, Importance, Icon, PlayerConditionID, PortLocID, UiTextureAtlasMemberID, MapFloor, WmoGroupID FROM area_p_o_i", CONNECTION_SYNCH);
+        "WorldStateID, PortLocID, Importance, Icon, PlayerConditionID, UiTextureAtlasMemberID, MapFloor, WmoGroupID FROM area_p_o_i", CONNECTION_SYNCH);
     PREPARE_MAX_ID_STMT(HOTFIX_SEL_AREA_P_O_I, "SELECT MAX(ID) + 1 FROM area_p_o_i", CONNECTION_SYNCH);
     PREPARE_LOCALE_STMT(HOTFIX_SEL_AREA_P_O_I, "SELECT ID, Name_lang, Description_lang FROM area_p_o_i_locale WHERE locale = ?", CONNECTION_SYNCH);
 
     // AreaPOIState.db2
-    PrepareStatement(HOTFIX_SEL_AREA_P_O_I_STATE, "SELECT ID, Description, WorldStateValue, IconEnumValue, UiTextureAtlasMemberID"
+    PrepareStatement(HOTFIX_SEL_AREA_P_O_I_STATE, "SELECT ID, Description, WorldStateValue, IconEnumValue, UiTextureAtlasMemberID, RelationshipData"
         " FROM area_p_o_i_state", CONNECTION_SYNCH);
     PREPARE_MAX_ID_STMT(HOTFIX_SEL_AREA_P_O_I_STATE, "SELECT MAX(ID) + 1 FROM area_p_o_i_state", CONNECTION_SYNCH);
     PREPARE_LOCALE_STMT(HOTFIX_SEL_AREA_P_O_I_STATE, "SELECT ID, Description_lang FROM area_p_o_i_state_locale WHERE locale = ?", CONNECTION_SYNCH);
