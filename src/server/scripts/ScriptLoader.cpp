@@ -32,7 +32,6 @@ void AddSC_event_april();
 void AddSC_Loskutik();
 void AddSC_midsummer_fire_festival();
 void AddSC_multi_vendor();
-void AddSC_traffic_commandscript();
 void AddSC_npc_beastmaster();
 void AddSC_npc_teleguy();
 void AddSC_arena_spectator_script();
@@ -105,6 +104,7 @@ void AddSC_server_commandscript();
 void AddSC_tele_commandscript();
 void AddSC_ticket_commandscript();
 void AddSC_titles_commandscript();
+void AddSC_traffic_commandscript();
 void AddSC_wp_commandscript();
 void AddSC_test_commandscript();
 
@@ -1418,6 +1418,7 @@ void AddCommandScripts()
     AddSC_tele_commandscript();
     AddSC_ticket_commandscript();
     AddSC_titles_commandscript();
+    AddSC_traffic_commandscript();
     AddSC_wp_commandscript();
     AddSC_test_commandscript();
 }
@@ -1919,7 +1920,6 @@ void AddCustomScripts()
     AddSC_Loskutik();
     AddSC_midsummer_fire_festival();
     AddSC_multi_vendor();
-    AddSC_traffic_commandscript();
     AddSC_npc_beastmaster();
     AddSC_npc_teleguy();
     AddSC_Duel();

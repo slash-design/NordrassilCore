@@ -237,6 +237,13 @@ void WorldSession::SendPacket(WorldPacket const* packet, bool forced /*= false*/
     uint32 start_time = getMSTime();
     const_cast<WorldPacket*>(packet)->FlushBits();
 
+    // TRAFFIC COUNTERS
+    if (opcode < OPCODE_COUNT)
+    {
+        ++World::SendCount[opcode];
+        World::SendSize[opcode] += packetSize;
+    }
+
     if (m_Socket[conIdx]) // http://pastebin.com/8ntVgj49
         m_Socket[conIdx]->SendPacket(*packet);
 
