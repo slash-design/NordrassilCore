@@ -1,13 +1,30 @@
+/*
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "ScriptMgr.h"
 #include "ObjectMgr.h"
 #include "Chat.h"
 #include "Player.h"
 #include "DatabaseEnv.h"
 
-class command_donate : public CommandScript
+class donate_commandscript : public CommandScript
 {
 public:
-    command_donate() : CommandScript("command_donate") { }
+    donate_commandscript() : CommandScript("donate_commandscript") { }
 
     std::vector<ChatCommand> GetCommands() const override
     {
@@ -770,9 +787,7 @@ class mount_set_display_ground : public BasicEvent
    };
 };
 
-
-
-void AddSC_command_donate()
+void AddSC_donate_commandscript()
 {
-    new command_donate();
+    new donate_commandscript();
 }
