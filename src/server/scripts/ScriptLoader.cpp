@@ -27,7 +27,6 @@ void AddSC_BattlePay_Services();
 void AddSC_BattlePay_Professions();
 
 // Customs
-void AddSC_event_april();
 void AddSC_Loskutik();
 void AddSC_midsummer_fire_festival();
 void AddSC_multi_vendor();
@@ -1910,7 +1909,6 @@ void AddBattlePayScripts()
 void AddCustomScripts()
 {
 #ifdef SCRIPTS
-    AddSC_event_april();
     AddSC_Loskutik();
     AddSC_midsummer_fire_festival();
     AddSC_multi_vendor();
