@@ -32,7 +32,6 @@ void AddSC_Loskutik();
 void AddSC_midsummer_fire_festival();
 void AddSC_multi_vendor();
 void AddSC_npc_beastmaster();
-void AddSC_npc_teleguy();
 void AddSC_arena_spectator_script();
 void AddSC_Duel();
 void AddSC_npc_quest_giver();
@@ -1918,7 +1917,6 @@ void AddCustomScripts()
     AddSC_midsummer_fire_festival();
     AddSC_multi_vendor();
     AddSC_npc_beastmaster();
-    AddSC_npc_teleguy();
     AddSC_Duel();
     AddSC_arena_spectator_script();
     AddSC_npc_quest_giver();
