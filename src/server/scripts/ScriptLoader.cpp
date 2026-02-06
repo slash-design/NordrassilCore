@@ -35,7 +35,6 @@ void AddSC_npc_beastmaster();
 void AddSC_npc_teleguy();
 void AddSC_arena_spectator_script();
 void AddSC_Duel();
-void AddSC_custom_arena_1v1();
 void AddSC_GOMove_commandscript();
 void AddSC_npc_quest_giver();
 void AddSC_npc_PetBattleTrainer();
@@ -1923,7 +1922,6 @@ void AddCustomScripts()
     AddSC_npc_teleguy();
     AddSC_Duel();
     AddSC_arena_spectator_script();
-    AddSC_custom_arena_1v1();
     AddSC_GOMove_commandscript();
     AddSC_npc_quest_giver();
     AddSC_npc_PetBattleTrainer();
