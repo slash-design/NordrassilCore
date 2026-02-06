@@ -24,7 +24,6 @@ void AddSC_battleground_kotmogu();
 void AddSC_battleground_shado_pan();
 
 void AddSC_BattlePay_Services();
-void AddSC_WhoLoggedScripts();
 void AddSC_BattlePay_Professions();
 
 // Customs
