@@ -31,7 +31,6 @@ void AddSC_BattlePay_Professions();
 void AddSC_event_april();
 void AddSC_Loskutik();
 void AddSC_midsummer_fire_festival();
-void AddSC_bracket_commandscript();
 void AddSC_multi_vendor();
 void AddSC_traffic_commandscript();
 void AddSC_npc_beastmaster();
@@ -1919,7 +1918,6 @@ void AddCustomScripts()
     AddSC_event_april();
     AddSC_Loskutik();
     AddSC_midsummer_fire_festival();
-    AddSC_bracket_commandscript();
     AddSC_multi_vendor();
     AddSC_traffic_commandscript();
     AddSC_npc_beastmaster();
