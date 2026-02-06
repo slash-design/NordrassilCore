@@ -1,3 +1,20 @@
+/*
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "ScriptMgr.h"
 #include "ObjectMgr.h"
 #include "Chat.h"
@@ -6,10 +23,10 @@
 #include "GlobalFunctional.h"
 #include "DatabaseEnv.h"
 
-class command_arena : public CommandScript
+class arena_commandscript : public CommandScript
 {
 public:
-    command_arena() : CommandScript("command_arena") { }
+    arena_commandscript() : CommandScript("arena_commandscript") {}
 
     std::vector<ChatCommand> GetCommands() const override
     {
@@ -37,34 +54,26 @@ public:
 
         static std::vector<ChatCommand> customCommandTable =
         {
-            { "arenasliver",    SEC_GAMEMASTER,     false, &HandleArenaSliverCommand,           ""},
-            { "unarenasliver",  SEC_GAMEMASTER,     false, &HandleUnArenaSliverCommand,         ""},
-            { "lootcleanid",    SEC_GAMEMASTER,     false, &HandleLootCleanIdCommand,           ""},
-            { "unlootcleanid",  SEC_GAMEMASTER,     false, &HandleUnLootCleanIdCommand,         ""},
-            { "recoveryitem",   SEC_ADMINISTRATOR,  false, &HandleRecoveryItemCommand,          ""},
-            { "unrecoveryitem", SEC_ADMINISTRATOR,  false, &HandleUnRecoveryItemCommand,        ""},
-            { "listname",       SEC_GAMEMASTER,     false, &HandleListChangeName,               ""},
-            { "modmoney",       SEC_ADMINISTRATOR,  false, &HandleModMoneyCommand,              ""},
-            { "antiflood",      SEC_GAMEMASTER,     false, NULL,                                "", antifloodCommandTable},
-            { "pvebug",         SEC_GAMEMASTER,     false, &HandlePvEBugCommand,                ""},
-            { "cleanachievement",SEC_GAMEMASTER,    false, &HandleCleanPvEAchievements,         ""},
-            { "cleanguildachiev",SEC_GAMEMASTER,    false, &HandleCleanGuildAchievements,       ""},
-            { "cleanprestige",  SEC_GAMEMASTER,     false, &HandleCleanPrestige,                ""},
-            { "cancelbanscore",  SEC_GAMEMASTER,     false, &HandleCancelBanScore,                ""}
+            { "arenasliver",     SEC_GAMEMASTER,     false, &HandleArenaSliverCommand,           ""},
+            { "unarenasliver",   SEC_GAMEMASTER,     false, &HandleUnArenaSliverCommand,         ""},
+            { "lootcleanid",     SEC_GAMEMASTER,     false, &HandleLootCleanIdCommand,           ""},
+            { "unlootcleanid",   SEC_GAMEMASTER,     false, &HandleUnLootCleanIdCommand,         ""},
+            { "recoveryitem",    SEC_ADMINISTRATOR,  false, &HandleRecoveryItemCommand,          ""},
+            { "unrecoveryitem",  SEC_ADMINISTRATOR,  false, &HandleUnRecoveryItemCommand,        ""},
+            { "listname",        SEC_GAMEMASTER,     false, &HandleListChangeName,               ""},
+            { "modmoney",        SEC_ADMINISTRATOR,  false, &HandleModMoneyCommand,              ""},
+            { "antiflood",       SEC_GAMEMASTER,     false, NULL,                                "", antifloodCommandTable},
+            { "pvebug",          SEC_GAMEMASTER,     false, &HandlePvEBugCommand,                ""},
+            { "cleanachievement",SEC_GAMEMASTER,     false, &HandleCleanPvEAchievements,         ""},
+            { "cleanguildachiev",SEC_GAMEMASTER,     false, &HandleCleanGuildAchievements,       ""},
+            { "cleanprestige",   SEC_GAMEMASTER,     false, &HandleCleanPrestige,                ""},
+            { "cancelbanscore",  SEC_GAMEMASTER,     false, &HandleCancelBanScore,               ""}
         };
-
-        // static ChatCommand logCommandTable[] =
-        // {
-            // { "addchar",        SEC_GAMEMASTER,     false, &HandleAddCharCommand,               ""},
-            // { "removechar",     SEC_GAMEMASTER,     false, &HandleRemoveCharCommand,            ""},
-            // { NULL,             0,                  false, NULL,                                ""}
-        // };
 
         static std::vector<ChatCommand> commandTable =
         {
             { "custom",         SEC_GAMEMASTER,     false, NULL,                                "", customCommandTable },
             { "arena",          SEC_GAMEMASTER,     false, NULL,                                "", arenaCommandTable }
-            // { "log",            SEC_GAMEMASTER,   false, NULL,                                  "", logCommandTable }
         };
 
         return commandTable;
@@ -128,13 +137,13 @@ public:
 
         char* tail = strtok(NULL, "");
 
-        // get from tail next item str
+        // Get the next item token from the remaining args
         while (char* itemStr = strtok(tail, " "))
         {
-            // and get new tail
+            // Advance the tail for the next iteration
             tail = strtok(NULL, "");
 
-            // parse item str
+            // Parse item token
             char* itemIdStr = strtok(itemStr, ":");
             char* itemCountStr = strtok(NULL, " ");
 
@@ -163,13 +172,13 @@ public:
 
         char* tail = strtok(NULL, "");
 
-        // get from tail next item str
+        // Get the next item token from the remaining args
         while (char* itemStr = strtok(tail, " "))
         {
-            // and get new tail
+            // Advance the tail for the next iteration
             tail = strtok(NULL, "");
 
-            // parse item str
+            // Parse item token
             char* itemIdStr = strtok(itemStr, ":");
             char* itemCountStr = strtok(NULL, " ");
 
@@ -203,13 +212,13 @@ public:
 
         char* tail = strtok(NULL, "");
 
-        // get from tail next item str
+        // Get the next item token from the remaining args
         while (char* itemStr = strtok(tail, " "))
         {
-            // and get new tail
+            // Advance the tail for the next iteration
             tail = strtok(NULL, "");
 
-            // parse item str
+            // Parse item token
             char* itemIdStr = strtok(itemStr, ":");
             char* itemCountStr = strtok(NULL, " ");
 
@@ -237,28 +246,28 @@ public:
             return false;
 
         QueryResult result;
-        if(target)
+        if (target)
             result = CharacterDatabase.PQuery("SELECT * FROM log_rename WHERE guid = %u", uint32(target->GetGUID().GetCounter()));
-        else if(target_guid)
+        else if (target_guid)
             result = CharacterDatabase.PQuery("SELECT * FROM log_rename WHERE guid = %u", uint32(target_guid.GetCounter()));
         else
             result = CharacterDatabase.PQuery("SELECT * FROM log_rename WHERE newName = '%s' or oldName = '%s'", target_name.c_str(), target_name.c_str());
 
-        if(result)
+        if (result)
         {
             do
             {
-                Field * fetch = result->Fetch();
+                Field* fetch = result->Fetch();
                 ObjectGuid::LowType guid = fetch[0].GetUInt32();
                 std::string date = fetch[1].GetString();
                 std::string oldname = fetch[2].GetString();
                 std::string newname = fetch[3].GetString();
 
                 handler->PSendSysMessage(20029, 0, guid, newname.c_str(), oldname.c_str(), date.c_str());
-            } while ( result->NextRow() );
+            } while (result->NextRow());
         }
         else
-            handler->PSendSysMessage("Cant find change name.");
+            handler->PSendSysMessage("Can't find rename history.");
         return true;
     }
 
@@ -272,13 +281,13 @@ public:
 
         char* tail = strtok(NULL, "");
 
-        // get from tail next item str
+        // Get the next item token from the remaining args
         while (char* itemStr = strtok(tail, " "))
         {
-            // and get new tail
+            // Advance the tail for the next iteration
             tail = strtok(NULL, "");
 
-            // parse item str
+            // Parse item token
             char* itemIdStr = strtok(itemStr, ":");
             char* itemCountStr = strtok(NULL, " ");
 
@@ -310,16 +319,16 @@ public:
         if (!handler->extractPlayerTarget((char*)args, &target, &target_guid, &target_name))
             return false;
 
-        //sLog->outString("giud: %u", target_guid);
+        //sLog->outString("guid: %u", target_guid);
         QueryResult bracketsResult = CharacterDatabase.PQuery("SELECT * FROM character_brackets_info WHERE guid = '%u' AND `bracket` = '%u'", target_guid.GetGUIDLow(), type);
         if (bracketsResult)
         {
             CharacterDatabase.PQuery("DELETE FROM character_brackets_info WHERE guid = '%u' AND `bracket` = '%u'", target_guid.GetGUIDLow(), type);
-            handler->PSendSysMessage("Player: \"%s\" was deleted bracket %u stats.", target_name.c_str(), type);
+            handler->PSendSysMessage("Player: \"%s\" bracket %u stats have been deleted.", target_name.c_str(), type);
             return true;
         }
 
-        handler->PSendSysMessage("Cant find player bracket %u stats.", type);
+        handler->PSendSysMessage("Can't find player bracket %u stats.", type);
         handler->SetSentErrorMessage(true);
         return false;
     }
@@ -327,7 +336,8 @@ public:
     static bool HandleCloseSeasonCommand(ChatHandler* handler, const char* args)
     {
         bool debugOnly = bool(strtok((char*)args, " "));
-        sLog->outArenaSeason("Окончание сезона Зима 2018 %s", debugOnly ? "debugOnly" : "");
+        sLog->outArenaSeason("End of season: Winter 2018 %s", debugOnly ? "debugOnly" : "");
+
         // by default:
         // 0 type - 0.1%
         // 1 type - 0.5%
@@ -357,19 +367,19 @@ public:
             if (teamResult && teamResult->GetRowCount())
             {
                 uint32 playerCount = teamResult->GetRowCount();
-                if (playerCount < 10) // Stop if player not full
+                if (playerCount < 10) // Stop if there are not enough participants
                 {
-                    sLog->outArenaSeason("Недостаточно участников для выборки playerCount %u", playerCount);
+                    sLog->outArenaSeason("Not enough participants for selection, playerCount %u", playerCount);
                     return false;
                 }
 
-                sLog->outArenaSeason("Количество участников для выборки playerCount %u", playerCount);
+                sLog->outArenaSeason("Number of participants for selection, playerCount %u", playerCount);
 
                 uint32 firstWinCount = CalculatePct(playerCount, 0.1f);
                 uint32 secondWinCount = CalculatePct(playerCount, 0.5f);
-                uint32 thirdWinCount  = CalculatePct(playerCount, 3.0f);
-                uint32 fothWinCount  = CalculatePct(playerCount, 10.0f);
-                uint32 fifthWinCount  = CalculatePct(playerCount, 35.0f);
+                uint32 thirdWinCount = CalculatePct(playerCount, 3.0f);
+                uint32 fothWinCount = CalculatePct(playerCount, 10.0f);
+                uint32 fifthWinCount = CalculatePct(playerCount, 35.0f);
 
                 uint32 teamNumber = 1;
                 do
@@ -385,8 +395,8 @@ public:
                     member.rating = Fields[4].GetUInt32();
                     member.account = Fields[5].GetUInt32();
 
-                    // Season Гладиатор / Gladiator
-                    if(teamNumber <= firstWinCount)
+                    // Season Gladiator / Gladiator
+                    if (teamNumber <= firstWinCount)
                     {
                         member.tokenCount += 500; // 1000
                         member.achievList.insert(12010);
@@ -396,8 +406,8 @@ public:
                         member.active = true;
                     }
 
-                    // Гладиатор / Gladiator
-                    if(teamNumber <= secondWinCount)
+                    // Gladiator / Gladiator
+                    if (teamNumber <= secondWinCount)
                     {
                         member.tokenCount += 300; // 500
                         member.achievList.insert(12045);
@@ -406,8 +416,8 @@ public:
                         member.active = true;
                     }
 
-                    // Дуэлянт / Duelist
-                    if(teamNumber <= thirdWinCount)
+                    // Duelist / Duelist
+                    if (teamNumber <= thirdWinCount)
                     {
                         member.tokenCount += 50; // 200
                         member.achievList.insert(12034);
@@ -416,8 +426,8 @@ public:
                         member.active = true;
                     }
 
-                    // Фаворит / Rival
-                    if(teamNumber <= fothWinCount)
+                    // Rival / Rival
+                    if (teamNumber <= fothWinCount)
                     {
                         member.tokenCount += 50; // 150
                         member.achievList.insert(12035);
@@ -426,8 +436,8 @@ public:
                         member.active = true;
                     }
 
-                    // Претендент / Challenger
-                    if(teamNumber <= fifthWinCount)
+                    // Challenger / Challenger
+                    if (teamNumber <= fifthWinCount)
                     {
                         member.tokenCount += 100; // 100
                         member.achievList.insert(12036);
@@ -436,23 +446,22 @@ public:
                         member.active = true;
                     }
 
-                    // Всем у кого больше 1800 рейта
-                    if(member.rating > 1800)
+                    // Everyone with rating above 1800
+                    if (member.rating > 1800)
                     {
                         member.itemList.insert(149443);
                         member.active = true;
                     }
 
                     teamNumber++;
-                }
-                while (teamResult->NextRow());
+                } while (teamResult->NextRow());
 
                 for (auto& member : memberList)
                 {
                     if (!member.second.active)
                         continue;
 
-                    if(!debugOnly)
+                    if (!debugOnly)
                     {
                         if (QueryResult result = LoginDatabase.PQuery("SELECT battlenet_account FROM account where id = %u", member.second.account))
                         {
@@ -460,30 +469,36 @@ public:
                             LoginDatabase.PQuery("UPDATE `battlenet_accounts` SET `balans` = `balans` + '%u' WHERE `id` = '%u';", member.second.tokenCount, battlenetID);
                         }
                     }
+
                     std::ostringstream achivStr;
                     for (auto& achiv : member.second.achievList)
                     {
                         achivStr << achiv << ",";
-                        if(!debugOnly)
+                        if (!debugOnly)
                             CharacterDatabase.PQuery("INSERT INTO `character_reward` (`owner_guid`, `type`, `id`, `count`) VALUES('%u','1','%u','0')", member.first, achiv);
                     }
+
                     std::ostringstream titleStr;
                     for (auto& title : member.second.titleList)
                     {
                         titleStr << title << ",";
-                        if(!debugOnly)
+                        if (!debugOnly)
                             CharacterDatabase.PQuery("INSERT INTO `character_reward` (`owner_guid`, `type`, `id`, `count`) VALUES('%u','2','%u','0')", member.first, title);
                     }
+
                     std::ostringstream itemStr;
                     for (auto& item : member.second.itemList)
                     {
                         itemStr << item << ",";
-                        if(!debugOnly)
+                        if (!debugOnly)
                             CharacterDatabase.PQuery("INSERT INTO `character_reward` (`owner_guid`, `type`, `id`, `count`) VALUES('%u','3','%u','1')", member.first, item);
                     }
 
-                    sLog->outArenaSeason("For %u place in the top 2vs2 got %s(%u) token=%u, achiv=(%s), title=(%s), item(%s), winnings %u, игр %u, rating %u %s",
-                    member.second.teamNumber, member.second.name.c_str(), member.first, member.second.tokenCount, achivStr.str().c_str(), titleStr.str().c_str(), itemStr.str().c_str(), member.second.wins, member.second.games, member.second.rating, debugOnly ? "debugOnly" : "");
+                    sLog->outArenaSeason("For %u place in the top 2vs2 got %s(%u) token=%u, achiv=(%s), title=(%s), item(%s), winnings %u, games %u, rating %u %s",
+                        member.second.teamNumber, member.second.name.c_str(), member.first, member.second.tokenCount,
+                        achivStr.str().c_str(), titleStr.str().c_str(), itemStr.str().c_str(),
+                        member.second.wins, member.second.games, member.second.rating,
+                        debugOnly ? "debugOnly" : "");
                 }
             }
             else
@@ -512,13 +527,13 @@ public:
             if (teamResult && teamResult->GetRowCount())
             {
                 uint32 playerCount = teamResult->GetRowCount();
-                if (playerCount < 10) // Stop if player not full
+                if (playerCount < 10) // Stop if there are not enough participants
                 {
-                    sLog->outArenaSeason("Insufficient number of participants playerCount %u", playerCount);
+                    sLog->outArenaSeason("Insufficient number of participants, playerCount %u", playerCount);
                     return false;
                 }
 
-                sLog->outArenaSeason("Number of participants playerCount %u", playerCount);
+                sLog->outArenaSeason("Number of participants, playerCount %u", playerCount);
 
                 uint32 teamNumber = 1;
                 do
@@ -534,17 +549,16 @@ public:
                     member.rating = Fields[4].GetUInt32();
                     member.account = Fields[5].GetUInt32();
 
-                    // Всем у кого больше 1800 рейта
-                    if(member.rating > 1800)
+                    // Everyone with rating above 1800
+                    if (member.rating > 1800)
                         member.itemList.insert(103533);
 
                     teamNumber++;
-                }
-                while (teamResult->NextRow());
+                } while (teamResult->NextRow());
 
                 for (auto& member : memberList)
                 {
-                    if(!debugOnly)
+                    if (!debugOnly)
                     {
                         if (QueryResult result = LoginDatabase.PQuery("SELECT battlenet_account FROM account where id = %u", member.second.account))
                         {
@@ -552,213 +566,44 @@ public:
                             LoginDatabase.PQuery("UPDATE `battlenet_accounts` SET `balans` = `balans` + '%u' WHERE `id` = '%u';", member.second.tokenCount, battlenetID);
                         }
                     }
+
                     std::ostringstream achivStr;
                     for (auto& achiv : member.second.achievList)
                     {
                         achivStr << achiv << ",";
-                        if(!debugOnly)
+                        if (!debugOnly)
                             CharacterDatabase.PQuery("INSERT INTO `character_reward` (`owner_guid`, `type`, `id`, `count`) VALUES('%u','1','%u','0')", member.first, achiv);
                     }
+
                     std::ostringstream titleStr;
                     for (auto& title : member.second.titleList)
                     {
                         titleStr << title << ",";
-                        if(!debugOnly)
+                        if (!debugOnly)
                             CharacterDatabase.PQuery("INSERT INTO `character_reward` (`owner_guid`, `type`, `id`, `count`) VALUES('%u','2','%u','0')", member.first, title);
                     }
+
                     std::ostringstream itemStr;
                     for (auto& item : member.second.itemList)
                     {
                         itemStr << item << ",";
-                        if(!debugOnly)
+                        if (!debugOnly)
                             CharacterDatabase.PQuery("INSERT INTO `character_reward` (`owner_guid`, `type`, `id`, `count`) VALUES('%u','3','%u','1')", member.first, item);
                     }
 
                     sLog->outArenaSeason("For %u place in top 3vs3 got %s(%u) token=%u, achiv=(%s), title=(%s), item(%s), wins %u, games %u, rating %u %s",
-                    member.second.teamNumber, member.second.name.c_str(), member.first, member.second.tokenCount, achivStr.str().c_str(), titleStr.str().c_str(), itemStr.str().c_str(), member.second.wins, member.second.games, member.second.rating, debugOnly ? "debugOnly" : "");
+                        member.second.teamNumber, member.second.name.c_str(), member.first, member.second.tokenCount,
+                        achivStr.str().c_str(), titleStr.str().c_str(), itemStr.str().c_str(),
+                        member.second.wins, member.second.games, member.second.rating,
+                        debugOnly ? "debugOnly" : "");
                 }
             }
             else
                 sLog->outArenaSeason("Insufficient number of participants %s", debugOnly ? "debugOnly" : "");
         }
 
-        // by default:
-        // 1 - top offlokie 0.1%
-        // 2 - top offlokie 0.5%
-        // 3 - top offlokie 3%
-        // 4 - top offlokie 10%
-        // 5 - top offlokie 35%
-        // 5c5
-        // {
-            // if(QueryResult arenaWinner = CharacterDatabase.PQuery("SELECT ch.guid, ch.name, oldWins, oldGames, oldRating FROM `character_brackets_info` cbi LEFT JOIN characters ch ON ch.guid = cbi.guid WHERE `bracket` = 2 and oldRating > 1000 AND oldWins > 49 AND ch.`name` != ''  ORDER BY oldRating DESC, oldWins DESC"))
-            // {
-                // uint32 count = 1;
-                // uint32 playerCount = arenaWinner->GetRowCount();
-                // uint32 firstWinTypeCount = uint32(playerCount * 0.001f);
-                // if(firstWinTypeCount < 5)
-                    // firstWinTypeCount = 5;
-                // uint32 secondWinTypeCount = uint32(playerCount * 0.005f);
-                // if(secondWinTypeCount < 5)
-                    // secondWinTypeCount = 5;
-                // uint32 thirdWinTypeCount  = uint32(playerCount * 0.03f);
-                // if(thirdWinTypeCount < 5)
-                    // thirdWinTypeCount = 5;
-                // uint32 fothWinTypeCount  = uint32(playerCount * 0.1f);
-                // if(fothWinTypeCount < 5)
-                    // fothWinTypeCount = 5;
-                // uint32 fifthWinTypeCount  = uint32(playerCount * 0.35f);
-                // if(fifthWinTypeCount < 5)
-                    // fifthWinTypeCount = 5;
-
-                // do
-                // {
-                    // Field* Fields = arenaWinner->Fetch();
-                    // uint32 guid = uint32(Fields[0].GetUInt64());
-                    // std::string name = Fields[1].GetString();
-                    // uint32 wins = Fields[2].GetUInt32();
-                    // uint32 games = Fields[3].GetUInt32();
-                    // uint32 rating = Fields[4].GetUInt32();
-
-                    // //Season achivement Гладиатор / Gladiator
-                    // if(count <= firstWinTypeCount)
-                    // {
-                        // if(!debugOnly)
-                        // {
-                            // CharacterDatabase.PQuery("INSERT INTO `character_reward` (`owner_guid`, `type`, `id`, `count`) VALUES('%u','3','%u','1')", guid, 85785);
-                            // CharacterDatabase.PQuery("INSERT INTO `character_reward` (`owner_guid`, `type`, `id`, `count`) VALUES('%u','3','%u','200')", guid, 38186);
-                            // CharacterDatabase.PQuery("INSERT INTO `character_reward` (`owner_guid`, `type`, `id`, `count`) VALUES('%u','1','%u','0')", guid, 6938);
-                            // CharacterDatabase.PQuery("INSERT INTO `character_reward` (`owner_guid`, `type`, `id`, `count`) VALUES('%u','2','%u','0')", guid, 281);
-                        // }
-
-                        // sLog->outArenaSeason("За %u место в топе 5на5(0.1) получил %s(%u) efir=200, item=85785, achiv=6938, title=281, побед %u, игр %u, рейтинг %u", count, name.c_str(), guid, wins, games, rating);
-                    // }
-
-                    // //Гладиатор / Gladiator
-                    // if(count <= secondWinTypeCount)
-                    // {
-                        // if(!debugOnly)
-                        // {
-                            // CharacterDatabase.PQuery("INSERT INTO `character_reward` (`owner_guid`, `type`, `id`, `count`) VALUES('%u','3','%u','250')", guid, 38186);
-                            // CharacterDatabase.PQuery("INSERT INTO `character_reward` (`owner_guid`, `type`, `id`, `count`) VALUES('%u','1','%u','0')", guid, 2091);
-                            // CharacterDatabase.PQuery("INSERT INTO `character_reward` (`owner_guid`, `type`, `id`, `count`) VALUES('%u','2','%u','0')", guid, 42);
-                        // }
-
-                        // sLog->outArenaSeason("За %u место в топе 5на5(0.5) получил %s(%u) efir=250, achiv=2091, title=42, побед %u, игр %u, рейтинг %u", count, name.c_str(), guid, wins, games, rating);
-                    // }
-
-                    // //Дуэлянт / Duelist
-                    // if(count <= thirdWinTypeCount)
-                    // {
-                        // if(!debugOnly)
-                        // {
-                            // CharacterDatabase.PQuery("INSERT INTO `character_reward` (`owner_guid`, `type`, `id`, `count`) VALUES('%u','1','%u','0')", guid, 2092);
-                            // CharacterDatabase.PQuery("INSERT INTO `character_reward` (`owner_guid`, `type`, `id`, `count`) VALUES('%u','2','%u','0')", guid, 43);
-                        // }
-
-                        // sLog->outArenaSeason("За %u место в топе 5на5(3.0) получил %s(%u) achiv=2092, title=43, побед %u, игр %u, рейтинг %u", count, name.c_str(), guid, wins, games, rating);
-                    // }
-
-                    // //Фаворит / Rival
-                    // if(count <= fothWinTypeCount)
-                    // {
-                        // if(!debugOnly)
-                        // {
-                            // CharacterDatabase.PQuery("INSERT INTO `character_reward` (`owner_guid`, `type`, `id`, `count`) VALUES('%u','1','%u','0')", guid, 2093);
-                            // CharacterDatabase.PQuery("INSERT INTO `character_reward` (`owner_guid`, `type`, `id`, `count`) VALUES('%u','2','%u','0')", guid, 44);
-                        // }
-
-                        // sLog->outArenaSeason("За %u место в топе 5на5(10.0) получил %s(%u) achiv=2093, title=44, побед %u, игр %u, рейтинг %u", count, name.c_str(), guid, wins, games, rating);
-                    // }
-
-                    // //Претендент / Challenger
-                    // if(count <= fifthWinTypeCount)
-                    // {
-                        // if(!debugOnly)
-                        // {
-                            // CharacterDatabase.PQuery("INSERT INTO `character_reward` (`owner_guid`, `type`, `id`, `count`) VALUES('%u','1','%u','0')", guid, 2090);
-                            // CharacterDatabase.PQuery("INSERT INTO `character_reward` (`owner_guid`, `type`, `id`, `count`) VALUES('%u','2','%u','0')", guid, 45);
-                        // }
-
-                        // sLog->outArenaSeason("За %u место в топе 5на5(35.0) получил %s(%u) achiv=2090, title=45, побед %u, игр %u, рейтинг %u", count, name.c_str(), guid, wins, games, rating);
-                    // }
-                    // count++;
-                // }
-                // while (arenaWinner->NextRow());
-            // }
-        // }
-
-        // by default:
-        // 1 - top offlokie 0.5%
-        // RBG
-        // {
-            // if(QueryResult arenaWinner = CharacterDatabase.PQuery("SELECT ch.guid, ch.name, oldWins, oldGames, oldRating, ch.race, ch.account FROM `character_brackets_info` cbi LEFT JOIN characters ch ON ch.guid = cbi.guid WHERE `bracket` = 3 and oldRating > 1000 AND oldWins > 49 AND ch.`name` != ''  ORDER BY oldRating DESC, oldWins DESC"))
-            // {
-                // uint32 count = 1;
-                // uint32 playerCount = arenaWinner->GetRowCount();
-                // uint32 firstWinTypeCount = uint32(playerCount * 0.005f);
-                // if(firstWinTypeCount < 10)
-                    // firstWinTypeCount = 10;
-
-                // do
-                // {
-                    // Field* Fields = arenaWinner->Fetch();
-                    // uint32 guid = uint32(Fields[0].GetUInt64());
-                    // std::string name = Fields[1].GetString();
-                    // uint32 wins = Fields[2].GetUInt32();
-                    // uint32 games = Fields[3].GetUInt32();
-                    // uint32 rating = Fields[4].GetUInt32();
-                    // uint32 team = Player::TeamForRace(Fields[5].GetUInt8());
-                    // uint32 account = Fields[6].GetUInt32();
-                    // uint32 achivement = team == HORDE ? 6941 : 6942;
-
-                    // //Season achivement Герой Орды / Hero of the Horde / Hero of the Alliance / Герой Альянса
-                    // if(count <= firstWinTypeCount)
-                    // {
-                        // if(!debugOnly)
-                        // {
-                            // if (QueryResult result = LoginDatabase.PQuery("SELECT battlenet_account FROM account where id = %u", account))
-                            // {
-                                // uint32 battlenetID = (*result)[0].GetUInt32();
-                                // LoginDatabase.PQuery("UPDATE `battlenet_accounts` SET `balans` = `balans` + '%u' WHERE `id` = '%u';", 500, battlenetID);
-                                // sLog->outArenaSeason("UPDATE `battlenet_accounts` SET `balans` = `balans` + '%u' WHERE `id` = '%u';", 500, battlenetID);
-                            // }
-                            // CharacterDatabase.PQuery("INSERT INTO `character_reward` (`owner_guid`, `type`, `id`, `count`) VALUES('%u','1','%u','0')", guid, achivement);
-                        // }
-
-                        // sLog->outArenaSeason("За %u место в топе РБГ(0.5) получил %s(%u) efir=250, achiv=%u побед %u, игр %u, рейтинг %u", count, name.c_str(), guid, achivement, wins, games, rating);
-                    // }
-                    // count++;
-                // }
-                // while (arenaWinner->NextRow());
-            // }
-        // }
-
         return true;
     }
-
-    // static bool HandleAddCharCommand(ChatHandler* handler, const char* args)
-    // {
-        // std::string name = args;
-        // if (ObjectGuid guid = sObjectMgr->GetPlayerGUIDByName(name))
-        // {
-            // sObjectMgr->AddCharToDupeLog(guid);
-            // handler->PSendSysMessage("Added.");
-        // }
-
-        // return true;
-    // }
-
-    // static bool HandleRemoveCharCommand(ChatHandler* handler, const char* args)
-    // {
-        // std::string name = args;
-        // if (ObjectGuid guid = sObjectMgr->GetPlayerGUIDByName(name))
-        // {
-            // sObjectMgr->RemoveCharFromDupeList(guid);
-            // handler->PSendSysMessage("Removed.");
-        // }
-
-        // return true;
-    // }
     
     static bool HandleModMoneyCommand(ChatHandler* handler, const char* args)
     {
@@ -1142,7 +987,7 @@ public:
     }
 };
 
-void AddSC_command_arena()
+void AddSC_arena_commandscript()
 {
-    new command_arena();
+    new arena_commandscript();
 }

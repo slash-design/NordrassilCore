@@ -34,7 +34,6 @@ void AddSC_midsummer_fire_festival();
 void AddSC_bracket_commandscript();
 void AddSC_multi_vendor();
 void AddSC_traffic_commandscript();
-void AddSC_command_arena();
 void AddSC_npc_beastmaster();
 void AddSC_npc_teleguy();
 void AddSC_arena_spectator_script();
@@ -71,6 +70,7 @@ void AddSC_holiday_spell_scripts();
 //Commands
 void AddSC_account_commandscript();
 void AddSC_achievement_commandscript();
+void AddSC_arena_commandscript();
 void AddSC_ban_commandscript();
 void AddSC_battlenet_account_commandscript();
 void AddSC_battlepay_commandscript();
@@ -1383,6 +1383,7 @@ void AddCommandScripts()
 {
     AddSC_account_commandscript();
     AddSC_achievement_commandscript();
+    AddSC_arena_commandscript();
     AddSC_ban_commandscript();
     AddSC_battlenet_account_commandscript();
 	AddSC_battlepay_commandscript();
@@ -1921,7 +1922,6 @@ void AddCustomScripts()
     AddSC_bracket_commandscript();
     AddSC_multi_vendor();
     AddSC_traffic_commandscript();
-    AddSC_command_arena();
     AddSC_npc_beastmaster();
     AddSC_npc_teleguy();
     AddSC_Duel();
