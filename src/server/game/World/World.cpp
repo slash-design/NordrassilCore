@@ -1589,8 +1589,6 @@ void World::LoadConfigSettings(bool reload)
 	m_int_configs[CONFIG_PLAYER_LEGION_LEGENDARY_EQUIP_COUNT] = sConfigMgr->GetIntDefault("Player.LegionLegendaryEquipCount", 0);
 	m_bool_configs[CONFIG_PLAYER_ALLOW_PVP_TALENTS_ALL_THE_TIME] = sConfigMgr->GetBoolDefault("Player.AllowPVPTalentsAllTheTime", false);
 
-	m_bool_configs[CONFIG_AUTO_SAY_HELLO] = sConfigMgr->GetBoolDefault("Auto.Say.Hello", false);
-
 	// PvP Template Stads
 	m_int_configs[CONFIG_PVP_TEMPLATE_MAIN_STAD] = sConfigMgr->GetIntDefault("PvP.TemplateMainStad", 0);
 	m_int_configs[CONFIG_PVP_TEMPLATE_STAMINA_STAD] = sConfigMgr->GetIntDefault("PvP.TemplateStaminaStad", 0);

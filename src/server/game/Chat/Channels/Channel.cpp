@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2008-2012 TrinityCore <http://www.trinitycore.org/>
- * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
+ * This file is part of the DestinyCore Project. See AUTHORS file for Copyright information
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -299,18 +298,6 @@ void Channel::JoinChannel(Player* player, std::string const& pass, bool /*client
     };
 
     SendToOne(builder, guid);
-
-    //JoinNotify(guid);
-	if (sWorld->getBoolConfig(CONFIG_AUTO_SAY_HELLO))
-	{
-		if (IsConstant() && !IsWorld())
-		{
-			std::string text("Hello everyone!");
-			WorldPackets::Chat::Chat packet;
-			packet.Initialize(CHAT_MSG_CHANNEL, LANG_UNIVERSAL, player, player, text, 0, _channelName);
-			player->SendDirectMessage(packet.Write());
-		}
-	}
     
     if (!IsConstant()) // Custom channel handling
     {

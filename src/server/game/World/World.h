@@ -26,7 +26,6 @@
 #include "SharedDefines.h"
 #include "DatabaseEnvFwd.h"
 #include "Opcodes.h"
-//#include "QueryCallbackProcessor.h"
 #include "WorldPacket.h"
 #include "Threading/LockedQueue.h"
 #include <safe_ptr.h>
@@ -241,7 +240,6 @@ enum WorldBoolConfigs
 	CONFIG_PLAYER_CONTROL_GUARDIAN_PETS,
 	CONFIG_PLAYER_UNLIMITED_LEGION_LEGENDARIES,
 	CONFIG_PLAYER_ALLOW_PVP_TALENTS_ALL_THE_TIME,
-    CONFIG_AUTO_SAY_HELLO,
 	CONFIG_ENABLE_CUSTOM_STAD,
     BOOL_CONFIG_VALUE_COUNT
 };

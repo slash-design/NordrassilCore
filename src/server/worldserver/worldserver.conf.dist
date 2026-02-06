@@ -4342,39 +4342,6 @@ LFG.SoloMode = 0
 ###################################################################################################
 
 ###################################################################################################
-# Custom settings #
-###################
-#
-#     KilledByCreature.Announcer
-#        Description: Announce everyone on the server, if a player killed by a creature.
-#                     This can be usefull with the Hardcode Mode.
-#        Default:     0 (disabled)
-#                     1 (enabled)
-
-KilledByCreature.Announcer = 1
-
-#
-#     PvPKill.Announcer
-#        Description: Announce everyone on the server, if a player killed by another player.
-#                     This can be usefull with the Hardcode Mode.
-#        Default:     0 (disabled)
-#                     1 (enabled)
-
-PvPKill.Announcer = 1
-
-#
-#    Who-logged.console
-#        Description: Shows in the console who logged into the game.
-#        Default:     0 (disabled)
-#                     1 (enabled)
-
-
-Auto.Say.Hello = 0
-
-#
-###################################################################################################
-
-###################################################################################################
 # UNKNOWN SETTINGS #
 ####################
 #
