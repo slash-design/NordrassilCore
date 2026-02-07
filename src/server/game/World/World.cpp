@@ -1515,14 +1515,6 @@ void World::LoadConfigSettings(bool reload)
     m_int_configs[CONFIG_WORLD_QUEST_MIN_ITEMLEVEL]  = sConfigMgr->GetIntDefault("WorldQuest.ItemLevel.Min", 805);
     m_int_configs[CONFIG_WORLD_QUEST_ITEMLEVEL_CAP]  = sConfigMgr->GetIntDefault("WorldQuest.ItemLevel.Max", 855);
 
-    //Reset Duel Cooldown
-    m_bool_configs[CONFIG_DUEL_RESET_COOLDOWN_ON_START] = sConfigMgr->GetBoolDefault("DuelReset.Cooldown.OnStart", false);
-    m_bool_configs[CONFIG_DUEL_RESET_COOLDOWN_ON_FINISH] = sConfigMgr->GetBoolDefault("DuelReset.Cooldown.OnFinish", false);
-    m_bool_configs[CONFIG_DUEL_RESET_COOLDOWN_IN_DUEL_ZONE] = sConfigMgr->GetBoolDefault("DuelReset.Cooldown.In.Duel.Zone", false);
-    m_bool_configs[CONFIG_DUEL_RESET_COOLDOWN_IN_ELWYNN_AND_DUROTAR] = sConfigMgr->GetBoolDefault("DuelReset.Cooldown.In.Elwynn.and.Durotar", false);
-    m_bool_configs[CONFIG_DUEL_RESET_COOLDOWN_MAX_ENERGY_ON_START] = sConfigMgr->GetBoolDefault("DuelReset.Cooldown.Max.Energy.OnStart", false);
-    m_bool_configs[CONFIG_DUEL_RESET_COOLDOWN_RESET_ENERGY_ON_START] = sConfigMgr->GetBoolDefault("DuelReset.Cooldown.Reset.Energy.OnStart", false);
-
     // Cross Faction BG
     m_bool_configs[CONFIG_CROSSFACTIONBG] = sConfigMgr->GetBoolDefault("MixedBGs", false);
 

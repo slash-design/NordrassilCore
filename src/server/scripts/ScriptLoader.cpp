@@ -31,7 +31,6 @@ void AddSC_Loskutik();
 void AddSC_midsummer_fire_festival();
 void AddSC_multi_vendor();
 void AddSC_arena_spectator_script();
-void AddSC_Duel();
 void AddSC_npc_PetBattleTrainer();
 void AddSC_darkmoon();
 void AddSC_event_tarecgosa();
@@ -1912,7 +1911,6 @@ void AddCustomScripts()
     AddSC_Loskutik();
     AddSC_midsummer_fire_festival();
     AddSC_multi_vendor();
-    AddSC_Duel();
     AddSC_arena_spectator_script();
     AddSC_npc_PetBattleTrainer();
     AddSC_darkmoon();
