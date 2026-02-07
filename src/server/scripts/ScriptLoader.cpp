@@ -29,7 +29,6 @@ void AddSC_BattlePay_Professions();
 // Customs
 void AddSC_Loskutik();
 void AddSC_midsummer_fire_festival();
-void AddSC_multi_vendor();
 void AddSC_arena_spectator_script();
 void AddSC_npc_PetBattleTrainer();
 void AddSC_darkmoon();
@@ -1911,7 +1910,6 @@ void AddCustomScripts()
 #ifdef SCRIPTS
     AddSC_Loskutik();
     AddSC_midsummer_fire_festival();
-    AddSC_multi_vendor();
     AddSC_arena_spectator_script();
     AddSC_npc_PetBattleTrainer();
     AddSC_darkmoon();
