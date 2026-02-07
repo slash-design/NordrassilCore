@@ -28,10 +28,8 @@ void AddSC_BattlePay_Professions();
 
 // Customs
 void AddSC_Loskutik();
-void AddSC_midsummer_fire_festival();
 void AddSC_arena_spectator_script();
 void AddSC_npc_PetBattleTrainer();
-void AddSC_darkmoon();
 void Addsc_dalaran_invasion();
 void AddSC_solocraft();
 void AddLfgSoloScripts();
@@ -144,6 +142,10 @@ void AddSC_boss_ammunae();
 void AddSC_boss_isiset();
 void AddSC_boss_setesh();
 void AddSC_boss_rajh();
+
+// Events
+void AddSC_darkmoon();
+void AddSC_midsummer_fire_festival();
 
 //kalimdor
 void AddSC_blackfathom_deeps();              //Blackfathom Depths
@@ -1344,6 +1346,7 @@ void AddScripts()
 	AddLegionScripts();
     AddDraenorScripts();
     AddEasternKingdomsScripts();
+    EventsScripts();
     AddPandarieScripts();
 #endif
 }
@@ -1909,10 +1912,8 @@ void AddCustomScripts()
 {
 #ifdef SCRIPTS
     AddSC_Loskutik();
-    AddSC_midsummer_fire_festival();
     AddSC_arena_spectator_script();
     AddSC_npc_PetBattleTrainer();
-    AddSC_darkmoon();
     Addsc_dalaran_invasion();
     AddSC_solocraft();
     AddLfgSoloScripts();
@@ -2421,6 +2422,14 @@ void AddEasternKingdomsScripts()
     AddSC_western_plaguelands();
     AddSC_westfall();
     AddSC_wetlands();
+#endif
+}
+
+void EventsScripts()
+{
+#ifdef SCRIPTS
+    AddSC_darkmoon();
+    AddSC_midsummer_fire_festival();
 #endif
 }
 
