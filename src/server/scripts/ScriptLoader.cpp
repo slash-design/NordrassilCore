@@ -1336,6 +1336,7 @@ void AddScripts()
     AddSpellScripts();
     AddCommandScripts();
     AddBattlegroundScripts();
+    AddBattlePayScripts();
 #ifdef SCRIPTS
     AddWorldScripts();
     AddKalimdorScripts();
@@ -1900,7 +1901,6 @@ void AddBattlegroundScripts()
     AddSC_battleground_kotmogu();
     AddSC_battleground_shado_pan();
 }
-
 
 void AddBattlePayScripts()
 {

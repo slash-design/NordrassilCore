@@ -28,7 +28,7 @@ void AddNorthrendScripts();
 void AddBattlegroundScripts();
 void AddOutdoorPvPScripts();
 void AddCustomScripts();
-void AddSC_BattlePayScripts();
+void AddBattlePayScripts();
 void AddSC_AshranMgr();
 void AddSC_AshranNPCAlliance();
 void AddSC_AshranNPCHorde();
